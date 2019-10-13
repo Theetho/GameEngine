@@ -1,81 +1,81 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Fichiers sources">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="include">
+      <UniqueIdentifier>{89AF369E-F58E-B539-FEA6-40106A051C9B}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fichiers d%27en-tête">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="include\KHR">
+      <UniqueIdentifier>{7D5AC031-E90F-3927-7204-33FEDEB82F2B}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fichiers de ressources">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="include\Maths">
+      <UniqueIdentifier>{B57273A3-2133-EFD9-EA6D-385756ED33B6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core">
-      <UniqueIdentifier>{c09e9f4e-f6f2-43bf-84b5-c1ca79eaac85}</UniqueIdentifier>
+    <Filter Include="include\glad">
+      <UniqueIdentifier>{30A0DB69-1C03-6B0E-C588-A3C4B1CA3691}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Maths">
-      <UniqueIdentifier>{fccfa171-dcd1-4230-9b6e-49b146dd279e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Parsers">
-      <UniqueIdentifier>{66198624-4ae3-483d-8eb0-1028550fbe89}</UniqueIdentifier>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\glad.c">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Window.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ConfigFile.cpp">
-      <Filter>Parsers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Application.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="include\Maths\Matrix.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\Maths.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Window.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Maths\Matrix.h">
-      <Filter>Maths</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Maths\Vec2.h">
-      <Filter>Maths</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Maths\Vec3.h">
-      <Filter>Maths</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Maths\Vec4.h">
-      <Filter>Maths</Filter>
+    <ClInclude Include="include\Application.h">
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\ConfigFile.h">
-      <Filter>Parsers</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Application.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Export.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Engine.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="include\glad\glad.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\EntryPoint.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+      <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="include\Export.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\KHR\khrplatform.h">
+      <Filter>include\KHR</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Log.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Maths.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Maths\Matrix.h">
+      <Filter>include\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Maths\Vec2.h">
+      <Filter>include\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Maths\Vec3.h">
+      <Filter>include\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Maths\Vec4.h">
+      <Filter>include\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Window.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\glad\glad.h">
+      <Filter>include\glad</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Application.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ConfigFile.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Log.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Window.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\glad.c">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

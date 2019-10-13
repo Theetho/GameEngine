@@ -1,0 +1,32 @@
+﻿  Application.cpp
+  ConfigFile.cpp
+D:\C++ Projects\GameEngine\Engine\src\Application.cpp(1,10): fatal error C1083: Impossible d'ouvrir le fichier include : 'Application.h' : No such file or directory
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(62,46): warning C4251: 'Engine::ConfigFile::m_fields' : class 'std::map<std::string,std::string,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>' nécessite une interface DLL pour être utilisé(e) par les clients de class 'Engine::ConfigFile'
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(62,46): warning C4251:         with
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(62,46): warning C4251:         [
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(62,46): warning C4251:             _Kty=std::string,
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(62,46): warning C4251:             _Ty=std::string
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(62,46): warning C4251:         ]
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(62): message : voir la déclaration de 'std::map<std::string,std::string,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>'
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(62): message :         with
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(62): message :         [
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(62): message :             _Kty=std::string,
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(62): message :             _Ty=std::string
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(62): message :         ]
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(63,46): warning C4251: 'Engine::ConfigFile::m_index' : class 'std::map<unsigned int,std::string,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>' nécessite une interface DLL pour être utilisé(e) par les clients de class 'Engine::ConfigFile'
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(63,46): warning C4251:         with
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(63,46): warning C4251:         [
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(63,46): warning C4251:             _Kty=unsigned int,
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(63,46): warning C4251:             _Ty=std::string
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(63,46): warning C4251:         ]
+  Log.cpp
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(63): message : voir la déclaration de 'std::map<unsigned int,std::string,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>'
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(63): message :         with
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(63): message :         [
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(63): message :             _Kty=unsigned int,
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(63): message :             _Ty=std::string
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(63): message :         ]
+  Window.cpp
+D:\C++ Projects\GameEngine\Engine\src\Log.cpp(1,10): fatal error C1083: Impossible d'ouvrir le fichier include : 'Log.h' : No such file or directory
+  Génération de code en cours...
+D:\C++ Projects\GameEngine\Engine\src\Window.cpp(1,10): fatal error C1083: Impossible d'ouvrir le fichier include : 'Window.h' : No such file or directory

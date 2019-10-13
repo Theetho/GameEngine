@@ -1,0 +1,117 @@
+﻿  GameApplication.cpp
+D:\C++ Projects\GameEngine\Engine\include\Application.h(8,2): error C2079: 'Application' utilise une class de 'Engine::ENGINE_API' non défini
+D:\C++ Projects\GameEngine\Engine\include\Application.h(9,2): error C2059: erreur de syntaxe : 'public'
+D:\C++ Projects\GameEngine\Engine\include\Application.h(11,23): error C2588: '::~Application' : destructeur global non conforme
+D:\C++ Projects\GameEngine\Engine\include\Application.h(11,25): error C2575: 'Application' : seules les fonctions membres et les bases peuvent être virtuelles
+D:\C++ Projects\GameEngine\Engine\include\Application.h(11,25): error C4430: spécificateur de type manquant - int est pris en compte par défaut. Remarque : C++ ne prend pas en charge int par défaut
+D:\C++ Projects\GameEngine\Engine\include\Application.h(11,25): error C2365: 'Engine::Application' : redéfinition ; la précédente définition était 'variable de données'
+D:\C++ Projects\GameEngine\Engine\include\Application.h(7): message : voir la déclaration de 'Engine::Application'
+D:\C++ Projects\GameEngine\Engine\include\Application.h(12,21): error C2575: 'run' : seules les fonctions membres et les bases peuvent être virtuelles
+D:\C++ Projects\GameEngine\Engine\include\Application.h(16,13): error C2143: erreur de syntaxe : absence de ';' avant '*'
+D:\C++ Projects\GameEngine\Engine\include\Application.h(16,13): error C4430: spécificateur de type manquant - int est pris en compte par défaut. Remarque : C++ ne prend pas en charge int par défaut
+D:\C++ Projects\GameEngine\Engine\include\Application.h(16,34): error C4430: spécificateur de type manquant - int est pris en compte par défaut. Remarque : C++ ne prend pas en charge int par défaut
+D:\C++ Projects\GameEngine\Engine\include\Application.h(17,1): error C2059: erreur de syntaxe : '}'
+D:\C++ Projects\GameEngine\Engine\include\Application.h(17,1): error C2143: erreur de syntaxe : absence de ';' avant '}'
+D:\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\cctype(33,1): error C2143: erreur de syntaxe : absence de ';' avant '{'
+D:\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\cctype(33,1): error C2447: '{' : en-tête de fonction manquant (liste formelle à l'ancien format ?)
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(10,2): error C2079: 'ConfigFile' utilise une class de 'Engine::ENGINE_API' non défini
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(11,2): error C2059: erreur de syntaxe : 'public'
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(13,14): error C2588: '::~ConfigFile' : destructeur global non conforme
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(13,16): error C4430: spécificateur de type manquant - int est pris en compte par défaut. Remarque : C++ ne prend pas en charge int par défaut
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(13,16): error C2365: 'Engine::ConfigFile' : redéfinition ; la précédente définition était 'variable de données'
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(9): message : voir la déclaration de 'Engine::ConfigFile'
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(19,3): error C2270: 'get_str' : modificateurs non autorisés sur les fonctions non membres
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(20,11): error C2355: 'this' : ne peut être référencé qu'à l'intérieur de fonctions membres non static ou d'initialiseurs de membres de données non static
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(23,3): error C2270: 'get_int' : modificateurs non autorisés sur les fonctions non membres
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(24,21): error C2355: 'this' : ne peut être référencé qu'à l'intérieur de fonctions membres non static ou d'initialiseurs de membres de données non static
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(27,3): error C2270: 'get_double' : modificateurs non autorisés sur les fonctions non membres
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(28,21): error C2355: 'this' : ne peut être référencé qu'à l'intérieur de fonctions membres non static ou d'initialiseurs de membres de données non static
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(31,3): error C2270: 'get_float' : modificateurs non autorisés sur les fonctions non membres
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(32,30): error C2355: 'this' : ne peut être référencé qu'à l'intérieur de fonctions membres non static ou d'initialiseurs de membres de données non static
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(35,3): error C2270: 'get_char' : modificateurs non autorisés sur les fonctions non membres
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(36,11): error C2355: 'this' : ne peut être référencé qu'à l'intérieur de fonctions membres non static ou d'initialiseurs de membres de données non static
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(41,3): error C2270: 'get_str' : modificateurs non autorisés sur les fonctions non membres
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(42,11): error C2355: 'this' : ne peut être référencé qu'à l'intérieur de fonctions membres non static ou d'initialiseurs de membres de données non static
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(42,29): error C2065: 'm_index' : identificateur non déclaré
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(45,3): error C2270: 'get_int' : modificateurs non autorisés sur les fonctions non membres
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(46,21): error C2355: 'this' : ne peut être référencé qu'à l'intérieur de fonctions membres non static ou d'initialiseurs de membres de données non static
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(46,39): error C2065: 'm_index' : identificateur non déclaré
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(49,3): error C2270: 'get_double' : modificateurs non autorisés sur les fonctions non membres
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(50,21): error C2355: 'this' : ne peut être référencé qu'à l'intérieur de fonctions membres non static ou d'initialiseurs de membres de données non static
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(50,39): error C2065: 'm_index' : identificateur non déclaré
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(53,3): error C2270: 'get_float' : modificateurs non autorisés sur les fonctions non membres
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(54,30): error C2355: 'this' : ne peut être référencé qu'à l'intérieur de fonctions membres non static ou d'initialiseurs de membres de données non static
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(54,47): error C2065: 'm_index' : identificateur non déclaré
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(57,3): error C2270: 'get_char' : modificateurs non autorisés sur les fonctions non membres
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(58,11): error C2355: 'this' : ne peut être référencé qu'à l'intérieur de fonctions membres non static ou d'initialiseurs de membres de données non static
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(58,29): error C2065: 'm_index' : identificateur non déclaré
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(61,2): error C2059: erreur de syntaxe : 'private'
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(65,1): error C2059: erreur de syntaxe : '}'
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(65,1): error C2143: erreur de syntaxe : absence de ';' avant '}'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(9,1): error C2143: erreur de syntaxe : absence de ';' avant '{'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(9,1): error C2447: '{' : en-tête de fonction manquant (liste formelle à l'ancien format ?)
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(158,1): error C4430: spécificateur de type manquant - int est pris en compte par défaut. Remarque : C++ ne prend pas en charge int par défaut
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(158,33): error C2988: impossible de reconnaître la définition/déclaration de modèle
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(158,33): error C2143: erreur de syntaxe : absence de ',' avant '<'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(159,1): error C2803: 'operator +' doit avoir au moins un paramètre de type classe
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(163,1): error C4430: spécificateur de type manquant - int est pris en compte par défaut. Remarque : C++ ne prend pas en charge int par défaut
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(163,33): error C2988: impossible de reconnaître la définition/déclaration de modèle
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(163,33): error C2143: erreur de syntaxe : absence de ',' avant '<'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(164,1): error C2803: 'operator -' doit avoir au moins un paramètre de type classe
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(168,1): error C4430: spécificateur de type manquant - int est pris en compte par défaut. Remarque : C++ ne prend pas en charge int par défaut
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(168,33): error C2988: impossible de reconnaître la définition/déclaration de modèle
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(168,33): error C2143: erreur de syntaxe : absence de ',' avant '<'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(169,1): error C2803: 'operator *' doit avoir au moins un paramètre de type classe
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(173,1): error C4430: spécificateur de type manquant - int est pris en compte par défaut. Remarque : C++ ne prend pas en charge int par défaut
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(173,33): error C2988: impossible de reconnaître la définition/déclaration de modèle
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(173,33): error C2143: erreur de syntaxe : absence de ',' avant '<'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(174,1): error C2803: 'operator /' doit avoir au moins un paramètre de type classe
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(174,1): error C2805: nombre de paramètres insuffisant pour l'opérateur binaire 'operator /'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(178,1): error C4430: spécificateur de type manquant - int est pris en compte par défaut. Remarque : C++ ne prend pas en charge int par défaut
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(178,54): error C2988: impossible de reconnaître la définition/déclaration de modèle
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(178,54): error C2143: erreur de syntaxe : absence de ',' avant '<'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(186,1): error C4430: spécificateur de type manquant - int est pris en compte par défaut. Remarque : C++ ne prend pas en charge int par défaut
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(186,28): error C2988: impossible de reconnaître la définition/déclaration de modèle
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(186,28): error C2143: erreur de syntaxe : absence de ',' avant '<'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(192,13): error C2143: erreur de syntaxe : absence de ';' avant '<'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(192,13): error C4430: spécificateur de type manquant - int est pris en compte par défaut. Remarque : C++ ne prend pas en charge int par défaut
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(193,13): error C2059: erreur de syntaxe : '<'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(194,13): error C2059: erreur de syntaxe : '<'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Vec3.h(195,13): error C2059: erreur de syntaxe : '<'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(261,40): error C2988: impossible de reconnaître la définition/déclaration de modèle
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(359): message : voir la référence à l'instanciation classe modèle 'Matrix<T,line,column>' en cours de compilation
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(261,40): error C2143: erreur de syntaxe : absence de ')' avant '<'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(261,40): error C2143: erreur de syntaxe : absence de ';' avant '<'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(261,1): error C2238: jetons inattendus avant ';'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(261,1): error C2988: impossible de reconnaître la définition/déclaration de modèle
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(261,1): error C2059: erreur de syntaxe : '<'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(261,1): error C2059: erreur de syntaxe : ')'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(262,1): error C2334: jetons inattendus avant '{' ; corps apparent de la fonction ignoré
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(270,57): error C2988: impossible de reconnaître la définition/déclaration de modèle
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(270,57): error C2143: erreur de syntaxe : absence de ')' avant '<'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(270,57): error C2143: erreur de syntaxe : absence de ';' avant '<'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(270,1): error C2238: jetons inattendus avant ';'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(270,1): error C2988: impossible de reconnaître la définition/déclaration de modèle
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(270,1): error C2059: erreur de syntaxe : '<'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(270,1): error C2059: erreur de syntaxe : ')'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(271,1): error C2334: jetons inattendus avant '{' ; corps apparent de la fonction ignoré
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(286,36): error C2988: impossible de reconnaître la définition/déclaration de modèle
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(286,36): error C2143: erreur de syntaxe : absence de ')' avant '<'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(286,36): error C2143: erreur de syntaxe : absence de ';' avant '<'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(286,1): error C2238: jetons inattendus avant ';'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(286,1): error C2988: impossible de reconnaître la définition/déclaration de modèle
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(286,1): error C2059: erreur de syntaxe : '<'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(286,1): error C2059: erreur de syntaxe : ')'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(287,1): error C2334: jetons inattendus avant '{' ; corps apparent de la fonction ignoré
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(325,27): error C2988: impossible de reconnaître la définition/déclaration de modèle
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(325,27): error C2143: erreur de syntaxe : absence de ')' avant '<'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(325,27): error C2143: erreur de syntaxe : absence de ';' avant '<'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(325,1): error C2238: jetons inattendus avant ';'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(325,1): error C2988: impossible de reconnaître la définition/déclaration de modèle
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(325,1): error C2059: erreur de syntaxe : '<'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(325,1): error C2059: erreur de syntaxe : ')'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(326,1): error C2334: jetons inattendus avant '{' ; corps apparent de la fonction ignoré
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(342,7): error C2988: impossible de reconnaître la définition/déclaration de modèle
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(342,7): error C2059: erreur de syntaxe : '='
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(342,1): error C2238: jetons inattendus avant ';'
+D:\C++ Projects\GameEngine\Engine\include\Maths\Matrix.h(342,1): fatal error C1003: le nombre d'erreurs est supérieur à 100 ; arrêt de la compilation

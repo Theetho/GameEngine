@@ -1,10 +1,11 @@
 #pragma once
 
+#include "Export.h"
 #include <SFML/Window.hpp>
 
 namespace Engine
 {
-	class Window
+	class ENGINE_API Window
 	{
 		sf::Window m_window;
 

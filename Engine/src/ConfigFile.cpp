@@ -15,12 +15,11 @@ namespace Engine
 	void ConfigFile::parse(const std::string& cf)
 	{
 		unsigned int index = 0;
+		std::string key = "";
+		std::string value = "";
+		PARSING state = PARSING::KEY;
 		for (auto& it : cf)
 		{
-			std::string key = "";
-			std::string value = "";
-			PARSING state = PARSING::KEY;
-
 			if (it == ':')
 			{
 				state = PARSING::VALUE;
@@ -33,7 +32,7 @@ namespace Engine
 				key = "";
 				value = "";
 			}
-			else
+			else if (it != ' ')
 			{
 				switch (state)
 				{
