@@ -6,4 +6,3 @@ del Engine\Engine.vcxproj
 echo Deleting Game\Game.vcxproj...
 del Game\Game.vcxproj
 call vendor\premake\premake5.exe vs2019
-PAUSE

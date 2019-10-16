@@ -1,8 +1,21 @@
 #pragma once
 
-#include <string>
-#include <map>
 #include "Export.h"
+
+/* Format:
+ *		For a window for example :
+ *
+ *		width: 1280\n\
+ *		height: 720\n\
+ *		title: GameEngine\n\
+ *		depthBit: 24\n\
+ *		stencilBit: 8\n\
+ *		antialiasingLevel: 4\n\
+ *		majorVersion: 4\n\
+ *		minorVersion: 0\n
+ *
+ */
+
 
 namespace Engine
 {

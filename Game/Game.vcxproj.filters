@@ -12,9 +12,15 @@
     <ClInclude Include="include\GameApplication.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="include\pch.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GameApplication.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pch.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

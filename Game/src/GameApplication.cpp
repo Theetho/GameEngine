@@ -1,4 +1,5 @@
-#include "../include/GameApplication.h"
+#include "pch.h"
+#include "GameApplication.h"
 
 GameApplication::GameApplication()
 	: Application()
@@ -6,10 +7,6 @@ GameApplication::GameApplication()
 }
 
 GameApplication::~GameApplication()
-{
-}
-
-void GameApplication::run()
 {
 }
 

@@ -4,14 +4,8 @@
     <Filter Include="include">
       <UniqueIdentifier>{89AF369E-F58E-B539-FEA6-40106A051C9B}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\KHR">
-      <UniqueIdentifier>{7D5AC031-E90F-3927-7204-33FEDEB82F2B}</UniqueIdentifier>
-    </Filter>
     <Filter Include="include\Maths">
       <UniqueIdentifier>{B57273A3-2133-EFD9-EA6D-385756ED33B6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\glad">
-      <UniqueIdentifier>{30A0DB69-1C03-6B0E-C588-A3C4B1CA3691}</UniqueIdentifier>
     </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
@@ -27,14 +21,17 @@
     <ClInclude Include="include\Engine.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="include\EnginePch.h">
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="include\EntryPoint.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Event.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Export.h">
       <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\KHR\khrplatform.h">
-      <Filter>include\KHR</Filter>
     </ClInclude>
     <ClInclude Include="include\Log.h">
       <Filter>include</Filter>
@@ -57,9 +54,6 @@
     <ClInclude Include="include\Window.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\glad\glad.h">
-      <Filter>include\glad</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
@@ -68,13 +62,16 @@
     <ClCompile Include="src\ConfigFile.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\EnginePch.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Event.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="src\Log.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Window.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\glad.c">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

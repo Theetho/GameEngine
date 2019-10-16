@@ -1,6 +1,6 @@
 #pragma once
 
-#include <iostream>
+#include "EnginePch.h"
 
 #include "Application.h"
 #include "ConfigFile.h"
@@ -9,3 +9,7 @@
 #include "Window.h"
 
 #include "EntryPoint.h"
+
+#ifdef ENGINE_WINDOWS
+	#include "Window.h"
+#endif

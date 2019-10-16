@@ -4,6 +4,8 @@ workspace "GameEngine"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-x64"
 
+include "Engine/vendor/GLFW/"
+
 project "Engine"
 	location "Engine"
 	kind "SharedLib"
@@ -11,16 +13,19 @@ project "Engine"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+	pchheader "%{prj.name}Pch.h"
+	pchsource "%{prj.name}/src/%{prj.name}Pch.cpp"
+
 	files
 	{
 		"%{prj.name}/include/**.h",
 		"%{prj.name}/src/**.cpp",
-		"%{prj.name}/src/**.c"
 	}
 
 	includedirs
 	{
 		"%{prj.name}/vendor/spdlog/include",
+		"%{prj.name}/vendor/GLFW/include",
 		"%{prj.name}/include"
 	}
 
@@ -36,12 +41,8 @@ project "Engine"
 
 	links
 	{
-		"opengl32.lib",
-		"sfml-graphics.lib",
-		"sfml-system.lib",
-		"sfml-window.lib",
-		"sfml-audio.lib",
-		"sfml-network.lib"
+		"GLFW",
+		"opengl32.lib"
 	}
 
 	defines
@@ -63,7 +64,7 @@ project "Engine"
 		optimize "On"
 	filter "configurations:Distribution"
 		defines "ENGINE_DISTRIBUTION"
-		optimize "On"
+		optimize "On"	
 
 project "Game"
 	location "Game"
@@ -73,6 +74,8 @@ project "Game"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+	pchheader "pch.h"
+	pchsource "%{prj.name}/src/pch.cpp"
 	files
 	{
 		"%{prj.name}/include/**.h",
@@ -83,18 +86,15 @@ project "Game"
 	includedirs
 	{
 		"Engine/vendor/spdlog/include",
-		"Engine/include"
+		"Engine/include",
+		"%{prj.name}/include"
 	}
 	
 	links
 	{
 		"Engine",
 		"opengl32.lib",
-		"sfml-graphics.lib",
-		"sfml-system.lib",
-		"sfml-window.lib",
-		"sfml-audio.lib",
-		"sfml-network.lib"
+		"glfw3.lib"
 	}
 	
 	libdirs

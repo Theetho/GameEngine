@@ -7,6 +7,5 @@ class GameApplication : public Engine::Application
 public:
 	GameApplication();
 	~GameApplication();
-	void run();
 };
 

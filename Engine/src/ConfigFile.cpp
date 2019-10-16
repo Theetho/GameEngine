@@ -1,4 +1,5 @@
-#include "../include/ConfigFile.h"
+#include "EnginePch.h"
+#include "ConfigFile.h"
 
 namespace Engine
 {

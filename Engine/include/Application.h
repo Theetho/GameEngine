@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Export.h"
+#include "Window.h"
 
 namespace Engine
 {
@@ -9,7 +10,10 @@ namespace Engine
 	public:
 		Application();
 		virtual ~Application();
-		virtual void run();
+		void run();
+	private:
+		std::unique_ptr<Window> m_window;
+		bool					m_running = true;
 	};
 
 	// Has to be define by the game
