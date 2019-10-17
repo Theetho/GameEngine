@@ -4,7 +4,8 @@ workspace "GameEngine"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-x64"
 
-include "Engine/vendor/GLFW/"
+include "Engine/vendor/GLFW"
+include "Engine/vendor/glad"
 
 project "Engine"
 	location "Engine"
@@ -26,6 +27,7 @@ project "Engine"
 	{
 		"%{prj.name}/vendor/spdlog/include",
 		"%{prj.name}/vendor/GLFW/include",
+		"%{prj.name}/vendor/glad/include",
 		"%{prj.name}/include"
 	}
 
@@ -42,6 +44,7 @@ project "Engine"
 	links
 	{
 		"GLFW",
+		"GLAD",
 		"opengl32.lib"
 	}
 
@@ -86,6 +89,8 @@ project "Game"
 	includedirs
 	{
 		"Engine/vendor/spdlog/include",
+		"Engine/vendor/GLFW/include",
+		"Engine/vendor/glad/include",
 		"Engine/include",
 		"%{prj.name}/include"
 	}
@@ -93,8 +98,7 @@ project "Game"
 	links
 	{
 		"Engine",
-		"opengl32.lib",
-		"glfw3.lib"
+		"opengl32.lib"
 	}
 	
 	libdirs

@@ -1,0 +1,65 @@
+﻿  pch.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\minwindef.h(130,1): warning C4005: 'APIENTRY' : redéfinition de macro
+D:\C++ Projects\GameEngine\Engine\vendor\glad\include\glad\glad.h(32): message : voir la définition précédente de 'APIENTRY'
+D:\C++ Projects\GameEngine\Engine\include\Log.h(24,56): warning C4251: 'Engine::Log::s_engineLogger' : class 'std::shared_ptr<spdlog::logger>' nécessite une interface DLL pour être utilisé(e) par les clients de class 'Engine::Log'
+D:\C++ Projects\GameEngine\Engine\vendor\spdlog\include\spdlog\details\registry.h(33): message : voir la déclaration de 'std::shared_ptr<spdlog::logger>'
+D:\C++ Projects\GameEngine\Engine\include\Log.h(25,53): warning C4251: 'Engine::Log::s_appLogger' : class 'std::shared_ptr<spdlog::logger>' nécessite une interface DLL pour être utilisé(e) par les clients de class 'Engine::Log'
+D:\C++ Projects\GameEngine\Engine\vendor\spdlog\include\spdlog\details\registry.h(33): message : voir la déclaration de 'std::shared_ptr<spdlog::logger>'
+D:\C++ Projects\GameEngine\Engine\include\Window.h(56,20): warning C4251: 'Engine::Window::m_data' : struct 'Engine::Window::WindowData' nécessite une interface DLL pour être utilisé(e) par les clients de class 'Engine::Window'
+D:\C++ Projects\GameEngine\Engine\include\Window.h(14): message : voir la déclaration de 'Engine::Window::WindowData'
+D:\C++ Projects\GameEngine\Engine\include\LayerStack.h(21,34): warning C4251: 'Engine::LayerStack::m_stack' : class 'std::vector<Engine::Layer *,std::allocator<_Ty>>' nécessite une interface DLL pour être utilisé(e) par les clients de class 'Engine::LayerStack'
+D:\C++ Projects\GameEngine\Engine\include\LayerStack.h(21,34): warning C4251:         with
+D:\C++ Projects\GameEngine\Engine\include\LayerStack.h(21,34): warning C4251:         [
+D:\C++ Projects\GameEngine\Engine\include\LayerStack.h(21,34): warning C4251:             _Ty=Engine::Layer *
+D:\C++ Projects\GameEngine\Engine\include\LayerStack.h(21,34): warning C4251:         ]
+D:\C++ Projects\GameEngine\Engine\include\LayerStack.h(17): message : voir la déclaration de 'std::vector<Engine::Layer *,std::allocator<_Ty>>'
+D:\C++ Projects\GameEngine\Engine\include\LayerStack.h(17): message :         with
+D:\C++ Projects\GameEngine\Engine\include\LayerStack.h(17): message :         [
+D:\C++ Projects\GameEngine\Engine\include\LayerStack.h(17): message :             _Ty=Engine::Layer *
+D:\C++ Projects\GameEngine\Engine\include\LayerStack.h(17): message :         ]
+D:\C++ Projects\GameEngine\Engine\include\LayerStack.h(22,41): warning C4251: 'Engine::LayerStack::m_insert' : class 'std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>' nécessite une interface DLL pour être utilisé(e) par les clients de class 'Engine::LayerStack'
+D:\C++ Projects\GameEngine\Engine\include\LayerStack.h(22,41): warning C4251:         with
+D:\C++ Projects\GameEngine\Engine\include\LayerStack.h(22,41): warning C4251:         [
+D:\C++ Projects\GameEngine\Engine\include\LayerStack.h(22,41): warning C4251:             _Ty=Engine::Layer *
+D:\C++ Projects\GameEngine\Engine\include\LayerStack.h(22,41): warning C4251:         ]
+D:\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\vector(380): message : voir la déclaration de 'std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>'
+D:\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\vector(380): message :         with
+D:\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\vector(380): message :         [
+D:\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\vector(380): message :             _Ty=Engine::Layer *
+D:\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\vector(380): message :         ]
+D:\C++ Projects\GameEngine\Engine\include\Application.h(19,35): warning C4251: 'Engine::Application::m_window' : class 'std::unique_ptr<Engine::Window,std::default_delete<_Ty>>' nécessite une interface DLL pour être utilisé(e) par les clients de class 'Engine::Application'
+D:\C++ Projects\GameEngine\Engine\include\Application.h(19,35): warning C4251:         with
+D:\C++ Projects\GameEngine\Engine\include\Application.h(19,35): warning C4251:         [
+D:\C++ Projects\GameEngine\Engine\include\Application.h(19,35): warning C4251:             _Ty=Engine::Window
+D:\C++ Projects\GameEngine\Engine\include\Application.h(19,35): warning C4251:         ]
+D:\C++ Projects\GameEngine\Engine\include\Application.h(19): message : voir la déclaration de 'std::unique_ptr<Engine::Window,std::default_delete<_Ty>>'
+D:\C++ Projects\GameEngine\Engine\include\Application.h(19): message :         with
+D:\C++ Projects\GameEngine\Engine\include\Application.h(19): message :         [
+D:\C++ Projects\GameEngine\Engine\include\Application.h(19): message :             _Ty=Engine::Window
+D:\C++ Projects\GameEngine\Engine\include\Application.h(19): message :         ]
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(75,46): warning C4251: 'Engine::ConfigFile::m_fields' : class 'std::map<std::string,std::string,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>' nécessite une interface DLL pour être utilisé(e) par les clients de class 'Engine::ConfigFile'
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(75,46): warning C4251:         with
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(75,46): warning C4251:         [
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(75,46): warning C4251:             _Kty=std::string,
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(75,46): warning C4251:             _Ty=std::string
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(75,46): warning C4251:         ]
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(75): message : voir la déclaration de 'std::map<std::string,std::string,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>'
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(75): message :         with
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(75): message :         [
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(75): message :             _Kty=std::string,
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(75): message :             _Ty=std::string
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(75): message :         ]
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(76,46): warning C4251: 'Engine::ConfigFile::m_index' : class 'std::map<unsigned int,std::string,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>' nécessite une interface DLL pour être utilisé(e) par les clients de class 'Engine::ConfigFile'
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(76,46): warning C4251:         with
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(76,46): warning C4251:         [
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(76,46): warning C4251:             _Kty=unsigned int,
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(76,46): warning C4251:             _Ty=std::string
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(76,46): warning C4251:         ]
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(76): message : voir la déclaration de 'std::map<unsigned int,std::string,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>'
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(76): message :         with
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(76): message :         [
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(76): message :             _Kty=unsigned int,
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(76): message :             _Ty=std::string
+D:\C++ Projects\GameEngine\Engine\include\ConfigFile.h(76): message :         ]
+  GameApplication.cpp
+  Game.vcxproj -> D:\C++ Projects\GameEngine\Game\..\bin\Debug-windows-x64\Game\Game.exe
