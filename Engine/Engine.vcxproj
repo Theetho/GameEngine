@@ -159,6 +159,7 @@
     <ClInclude Include="include\EntryPoint.h" />
     <ClInclude Include="include\Event.h" />
     <ClInclude Include="include\Export.h" />
+    <ClInclude Include="include\InputCodes.h" />
     <ClInclude Include="include\Layer.h" />
     <ClInclude Include="include\LayerStack.h" />
     <ClInclude Include="include\Log.h" />
@@ -168,6 +169,7 @@
     <ClInclude Include="include\Maths\Vec3.h" />
     <ClInclude Include="include\Maths\Vec4.h" />
     <ClInclude Include="include\Window.h" />
+    <ClInclude Include="include\Input.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
@@ -176,6 +178,7 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\Event.cpp" />
+    <ClCompile Include="src\Input.cpp" />
     <ClCompile Include="src\Layer.cpp" />
     <ClCompile Include="src\LayerStack.cpp" />
     <ClCompile Include="src\Log.cpp" />

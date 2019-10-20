@@ -70,16 +70,17 @@ namespace Engine
 
 		struct MouseButtonEvent
 		{
-			int code;
+			int button;
 
-			void operator()(int code)
+			void operator()(int button)
 			{
-				this->code = code;
+				this->button = button;
 			}
 		};
 
 		enum Type
 		{
+			None,
 			Resized,
 			Closed,
 			TextEntered,

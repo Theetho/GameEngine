@@ -60,6 +60,12 @@
     <ClInclude Include="include\Window.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="include\Input.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\InputCodes.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
@@ -84,6 +90,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Window.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

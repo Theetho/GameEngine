@@ -1,6 +1,7 @@
 #include "EnginePch.h"
 #include "Window.h"
 #include "ConfigFile.h"
+#include "Log.h"
 
 namespace Engine
 {
@@ -9,6 +10,9 @@ namespace Engine
 
 	bool Window::s_GLFWInitialized(false);
 
+	Window::Window()
+	{
+	}
 	Window::~Window()
 	{
 	}
@@ -152,12 +156,12 @@ namespace Engine
 				if (action == GLFW_PRESS)
 				{
 					event.type = Event::MouseButtonPressed;
-					event.keyEvent(button);
+					event.mouseButtonEvent(button);
 				}
 				else if (action == GLFW_RELEASE)
 				{
 					event.type = Event::MouseButtonReleased;
-					event.keyEvent(button);
+					event.mouseButtonEvent(button);
 				}
 
 				data.eventCallback(event);

@@ -6,7 +6,9 @@
 #include <map>
 #include <functional>
 
-#include "glad/glad.h"
-#include "GLFW/glfw3.h"
+#ifdef ENGINE_WINDOWS
+	#include "glad/glad.h"
+	#include "GLFW/glfw3.h"
+#endif // ENGINE_WINDOWS
 
-#include "Log.h"
+#include "InputCodes.h"

@@ -29,10 +29,13 @@ namespace Engine
 			{
 			}
 		};
+		Window();
 		virtual ~Window();
 
-		virtual void onUpdate(const double& delta) = 0;
-		virtual void resize(const unsigned int& width, const unsigned int& height) = 0;
+		virtual void  onUpdate(const double& delta) = 0;
+		virtual void  resize(const unsigned int& width, const unsigned int& height) = 0;
+		
+		virtual void* getOSWindow() = 0;
 
 		inline void			setEventCallback(const EventCallbackFunction& eventCallback)
 		{
@@ -64,8 +67,11 @@ namespace Engine
 		WindowWindows(const WindowData& windowData);
 		~WindowWindows();
 
-		void onUpdate(const double& delta) override;
-		void resize(const unsigned int& width, const unsigned int& height);
+		void  onUpdate(const double& delta) override;
+		void  resize(const unsigned int& width, const unsigned int& height);
+
+		inline void* getOSWindow() { return m_window; }
+
 	private:
 		GLFWwindow* m_window;
 

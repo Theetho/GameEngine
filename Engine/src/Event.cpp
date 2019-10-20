@@ -48,12 +48,12 @@ namespace Engine
 				break;
 			case Event::Type::MouseButtonPressed:
 				ss	<< "Mouse button pressed event : "
-					<< event->mouseButtonEvent.code
+					<< event->mouseButtonEvent.button
 					<< '\n';
 				break;
 			case Event::Type::MouseButtonReleased:
 				ss	<< "Mouse button released event : "
-					<< event->mouseButtonEvent.code
+					<< event->mouseButtonEvent.button
 					<< '\n';
 				break;
 			default: 
