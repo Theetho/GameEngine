@@ -5,6 +5,7 @@
 #include <sstream>
 #include <map>
 #include <functional>
+#include <initializer_list>
 
 #ifdef ENGINE_WINDOWS
 	#include "glad/glad.h"

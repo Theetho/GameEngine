@@ -3,6 +3,7 @@
 #include "Export.h"
 #include "Maths/Vec2.h"
 #include "Event.h"
+#include "GraphicsContext.h"
 
 namespace Engine
 {
@@ -26,8 +27,7 @@ namespace Engine
 				: title(title)
 				, width(width)
 				, height(height)
-			{
-			}
+			{}
 		};
 		Window();
 		virtual ~Window();
@@ -73,7 +73,8 @@ namespace Engine
 		inline void* getOSWindow() { return m_window; }
 
 	private:
-		GLFWwindow* m_window;
+		GLFWwindow*			m_window;
+		GraphicsContext*	m_context;
 
 		void initialize(const WindowData& windowData);
 		void shutdown();

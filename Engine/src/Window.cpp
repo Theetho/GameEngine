@@ -18,10 +18,12 @@ namespace Engine
 	}
 	Window* Window::create(const Window::WindowData& windowData)
 	{
+#ifdef ENGINE_WINDOWS
 		return new WindowWindows(windowData);
+#endif // ENGINE_WINDOWS
 	}
 
-/// Window's implementation on Windows
+/// Windows window
 
 	WindowWindows::WindowWindows(const WindowData& windowData)
 	{
@@ -34,7 +36,7 @@ namespace Engine
 	void WindowWindows::onUpdate(const double& delta)
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(m_window);
+		m_context->swapBuffers();
 	}
 	void WindowWindows::resize(const unsigned int& width, const unsigned int& height)
 	{
@@ -43,7 +45,7 @@ namespace Engine
 
 		glfwSetWindowSize(m_window, width, height);
 
-		ENGINE_LOG_INFO("Resized the window {0} to {1} x {2}",
+		ENGINE_LOG_TRACE("Resized the window {0} to {1} x {2}",
 						 m_data.title, width, height);
 	}
 	void WindowWindows::initialize(const WindowData& windowData)
@@ -51,11 +53,6 @@ namespace Engine
 		m_data.width =	windowData.width;
 		m_data.height = windowData.height;
 		m_data.title =	windowData.title;
-
-		ENGINE_LOG_INFO(
-			"Creating a window \"{0}\", {1} x {2}",
-			m_data.title, m_data.width, m_data.height
-		);
 
 		if (!s_GLFWInitialized)
 		{
@@ -71,19 +68,23 @@ namespace Engine
 			nullptr, nullptr
 		);
 
-		glfwMakeContextCurrent(m_window);
-
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		ENGINE_ASSERT(status, "Failed to initialize GLAD");
+		m_context = new OpenGLContext(m_window);
+		m_context->initialize();
 
 		glfwSetWindowUserPointer(m_window, &m_data);
 
 		this->setCallbacks();
+
+		ENGINE_LOG_TRACE(
+			"Creating a window \"{0}\", {1} x {2}",
+			m_data.title, m_data.width, m_data.height
+		);
 	}
 	void WindowWindows::shutdown()
 	{
 		glfwDestroyWindow(m_window);
-		ENGINE_LOG_INFO("Closed the window \"{0}\"", m_data.title);
+		ENGINE_LOG_TRACE("Closed the window \"{0}\"", m_data.title);
+		delete m_context;
 	}
 	void WindowWindows::setCallbacks()
 	{

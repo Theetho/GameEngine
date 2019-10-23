@@ -152,6 +152,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\Buffer.h" />
+    <ClInclude Include="include\GraphicsContext.h" />
     <ClInclude Include="include\Application.h" />
     <ClInclude Include="include\ConfigFile.h" />
     <ClInclude Include="include\Engine.h" />
@@ -170,8 +172,13 @@
     <ClInclude Include="include\Maths\Vec4.h" />
     <ClInclude Include="include\Window.h" />
     <ClInclude Include="include\Input.h" />
+    <ClInclude Include="include\Shader.h" />
+    <ClInclude Include="include\VertexArray.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Buffer.cpp" />
+    <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\GraphicsContext.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\ConfigFile.cpp" />
     <ClCompile Include="src\EnginePch.cpp">
@@ -183,6 +190,7 @@
     <ClCompile Include="src\LayerStack.cpp" />
     <ClCompile Include="src\Log.cpp" />
     <ClCompile Include="src\Window.cpp" />
+    <ClCompile Include="src\VertexArray.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\GLFW\GLFW.vcxproj">

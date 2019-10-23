@@ -17,11 +17,13 @@ namespace Engine
 
 	Input* Input::create()
 	{
+#ifdef ENGINE_WINDOWS
 		return new InputWindows;
+#endif // ENGINE_WINDOWS
 	}
 
 
-/// Input Windows
+/// Windows input 
 	InputWindows::InputWindows()
 		: Input()
 	{
