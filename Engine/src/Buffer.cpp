@@ -1,5 +1,6 @@
 #include "EnginePch.h"
 #include "Buffer.h"
+#include "Renderer.h"
 
 namespace Engine
 {
@@ -28,19 +29,30 @@ namespace Engine
 
 	VertexBuffer* VertexBuffer::create(float* vertices, const unsigned int& size)
 	{
-#ifdef ENGINE_WINDOWS
-		return new OpenGLVertexBuffer(vertices, size);
-#endif // ENGINE_WINDOWS
+		switch (Renderer::getAPI())
+		{
+		case Engine::RendererAPI::None:
+			ENGINE_ASSERT(false, "Api not supported");
+		case Engine::RendererAPI::OpenGL:
+			return new OpenGLVertexBuffer(vertices, size);
+		}
 
+		return nullptr;
 	}
 
 	// Index buffer
 
 	IndexBuffer* IndexBuffer::create(unsigned int* indices, const unsigned int& size)
 	{
-#ifdef ENGINE_WINDOWS
-		return new OpenGLIndexBuffer(indices, size);
-#endif // ENGINE_WINDOWS
+		switch (Renderer::getAPI())
+		{
+		case Engine::RendererAPI::None:
+			ENGINE_ASSERT(false, "Api not supported");
+		case Engine::RendererAPI::OpenGL:
+			return new OpenGLIndexBuffer(indices, size);
+		}	
+
+		return nullptr;
 	}
 
 /// OpenGL buffers
@@ -51,7 +63,7 @@ namespace Engine
 		: m_id(0)
 		, m_layout({})
 	{
-		glGenBuffers(1, &m_id);
+		glCreateBuffers(1, &m_id);
 
 		glBindBuffer(GL_ARRAY_BUFFER, m_id);
 		glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
@@ -67,7 +79,7 @@ namespace Engine
 		: m_id(0)
 		, m_count(count)
 	{
-		glGenBuffers(1, &m_id);
+		glCreateBuffers(1, &m_id);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_id);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), indices, GL_STATIC_DRAW);

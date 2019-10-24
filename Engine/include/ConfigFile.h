@@ -19,7 +19,7 @@
 
 namespace Engine
 {
-	class ENGINE_API ConfigFile
+	class ConfigFile
 	{
 	public:
 		ConfigFile(const std::string& cf);

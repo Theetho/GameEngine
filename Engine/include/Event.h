@@ -11,7 +11,7 @@
 
 namespace Engine
 {
-	class ENGINE_API Event
+	class Event
 	{
 	public:
 		struct SizeEvent
@@ -30,7 +30,7 @@ namespace Engine
 		{
 			unsigned int text;
 
-			void operator()(unsigned int text)
+			void operator()(const unsigned int& text)
 			{
 				this->text = text;
 			}
@@ -40,7 +40,7 @@ namespace Engine
 		{
 			int code;
 
-			void operator()(int code)
+			void operator()(const int& code)
 			{
 				this->code = code;
 			}
@@ -48,9 +48,9 @@ namespace Engine
 		
 		struct MouseScrolledEvent
 		{
-			float delta;
+			double delta;
 
-			void operator()(float delta)
+			void operator()(const double& delta)
 			{
 				this->delta = delta;
 			}
@@ -72,7 +72,7 @@ namespace Engine
 		{
 			int button;
 
-			void operator()(int button)
+			void operator()(const int& button)
 			{
 				this->button = button;
 			}

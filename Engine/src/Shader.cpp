@@ -1,14 +1,21 @@
 #include "EnginePch.h"
 #include "Shader.h"
 #include "Log.h"
+#include "Renderer.h"
 
 namespace Engine
 {
 	Shader* Shader::create(const std::string& vertex, const std::string& fragment)
 	{
-#ifdef ENGINE_WINDOWS
-		return new OpenGLShader(vertex, fragment);
-#endif // ENGINE_WINDOWS
+		switch (Renderer::getAPI())
+		{
+		case Engine::RendererAPI::None:
+			ENGINE_ASSERT(false, "Api not supported");
+		case Engine::RendererAPI::OpenGL:
+			return new OpenGLShader(vertex, fragment);
+		}
+
+		return nullptr;
 	}
 
 /// OpenGL shader

@@ -1,13 +1,20 @@
 #include "EnginePch.h"
 #include "VertexArray.h"
+#include "Renderer.h"
 
 namespace Engine
 {
 	VertexArray* VertexArray::create()
 	{
-#ifdef ENGINE_WINDOWS
-		return new OpenGLVertexArray();
-#endif // ENGINE_WINDOWS
+		switch (Renderer::getAPI())
+		{
+		case Engine::RendererAPI::None:
+			ENGINE_ASSERT(false, "Api not supported");
+		case Engine::RendererAPI::OpenGL:
+			return new OpenGLVertexArray();
+		}
+
+		return nullptr;
 	}
 
 	OpenGLVertexArray::OpenGLVertexArray()

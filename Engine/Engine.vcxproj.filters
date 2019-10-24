@@ -15,6 +15,9 @@
     <ClInclude Include="include\Application.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="include\Buffer.h">
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="include\ConfigFile.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -31,6 +34,15 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Export.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GraphicsContext.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Input.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\InputCodes.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Layer.h">
@@ -57,30 +69,24 @@
     <ClInclude Include="include\Maths\Vec4.h">
       <Filter>include\Maths</Filter>
     </ClInclude>
-    <ClInclude Include="include\Window.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Input.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\InputCodes.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GraphicsContext.h">
+    <ClInclude Include="include\Renderer.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Shader.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\Buffer.h">
+    <ClInclude Include="include\VertexArray.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\VertexArray.h">
+    <ClInclude Include="include\Window.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Buffer.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\ConfigFile.cpp">
@@ -92,6 +98,12 @@
     <ClCompile Include="src\Event.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\GraphicsContext.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="src\Layer.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -101,22 +113,16 @@
     <ClCompile Include="src\Log.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Window.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Input.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GraphicsContext.cpp">
+    <ClCompile Include="src\Renderer.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Shader.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Buffer.cpp">
+    <ClCompile Include="src\VertexArray.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\VertexArray.cpp">
+    <ClCompile Include="src\Window.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

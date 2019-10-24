@@ -41,6 +41,8 @@ namespace Engine
 		case ShaderDataType::Bool:		return sizeof(bool);
 		default:						ENGINE_ASSERT(false, "Unknow shader data type");
 		}
+
+		return 0;
 	}
 
 	static unsigned int shaderDataTypeToGLType(const ShaderDataType& type)
@@ -61,6 +63,8 @@ namespace Engine
 		case ShaderDataType::Bool:		return GL_BOOL;
 		default:						ENGINE_ASSERT(false, "Unknow shader data type");
 		}
+
+		return 0;
 	}
 
 
@@ -102,6 +106,8 @@ namespace Engine
 			case ShaderDataType::Bool:		return 1;
 			default:						ENGINE_ASSERT(false, "Unknow shader data type");
 			}
+			
+			return 0;
 		}
 	};
 	

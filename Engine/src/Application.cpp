@@ -59,8 +59,8 @@ namespace Engine
 		float squareVertices[7 * 4] = {
 			-0.75f, -0.75f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
 			 0.75f, -0.75f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-			 0.75f,  0.75f, 0.0f,	0.0f, 0.0f, 1.0f, 1.0f,
-			-0.75f,  0.75f, 0.0f,	0.0f, 1.0f, 1.0f, 1.0f
+			 0.75f,  0.75f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+			-0.75f,  0.75f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f
 		};
 
 		std::shared_ptr<VertexBuffer> squareVbo;

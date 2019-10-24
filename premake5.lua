@@ -9,8 +9,11 @@ include "Engine/vendor/glad"
 
 project "Engine"
 	location "Engine"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
+	
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
@@ -32,53 +35,51 @@ project "Engine"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 
-	libdirs
-	{
-		"lib/windows/x64"
-	}
+		libdirs
+		{
+			"lib/windows/x64"
+		}
 
-	links
-	{
-		"GLFW",
-		"GLAD",
-		"opengl32.lib"
-	}
+		links
+		{
+			"GLFW",
+			"GLAD",
+			"opengl32.lib"
+		}
 
-	defines
-	{
-		"ENGINE_WINDOWS",
-		"ENGINE_BUILD_DLL"
-	}
-
-	postbuildcommands
-	{
-		("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Game")
-	}
+		defines
+		{
+			"ENGINE_WINDOWS"
+		}
 
 	filter "configurations:Debug"
 		defines "ENGINE_DEBUG"
-		symbols "On"
+		runtime "Debug"
+		symbols "on"
 	filter "configurations:Release"
 		defines "ENGINE_RELEASE"
-		optimize "On"
+		runtime "Release"
+		optimize "on"
 	filter "configurations:Distribution"
 		defines "ENGINE_DISTRIBUTION"
-		optimize "On"	
+		runtime "Release"
+		optimize "on"	
 
 project "Game"
 	location "Game"
 	kind "ConsoleApp"
 	language "C++"
-	architecture "x64"
+	cppdialect "C++17"
+	staticruntime "on"
+	
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
 	pchheader "pch.h"
 	pchsource "%{prj.name}/src/pch.cpp"
+	
 	files
 	{
 		"%{prj.name}/include/**.h",
@@ -107,21 +108,22 @@ project "Game"
 	}
 	
 	filter "system:windows"
-		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 	
-	defines
-	{
-		"ENGINE_WINDOWS"
-	}
+		defines
+		{
+			"ENGINE_WINDOWS"
+		}
 	
 	filter "configurations:Debug"
 		defines "ENGINE_DEBUG"
+		runtime "Debug"
 		symbols "On"
 	filter "configurations:Release"
 		defines "ENGINE_RELEASE"
+		runtime "Release"
 		optimize "On"
 	filter "configurations:Distribution"
 		defines "ENGINE_DISTRIBUTION"
+		runtime "Release"
 		optimize "On"
