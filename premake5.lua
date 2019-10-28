@@ -6,6 +6,7 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-x64"
 
 include "Engine/vendor/GLFW"
 include "Engine/vendor/glad"
+include "Engine/vendor/glm"
 
 project "Engine"
 	location "Engine"
@@ -18,20 +19,21 @@ project "Engine"
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
 	pchheader "%{prj.name}Pch.h"
-	pchsource "%{prj.name}/src/%{prj.name}Pch.cpp"
+	pchsource "%{prj.name}/%{prj.name}Pch.cpp"
 
 	files
 	{
-		"%{prj.name}/include/**.h",
-		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/*/*.h",
+		"%{prj.name}/*.h",
+		"%{prj.name}/*/*.cpp",
+		"%{prj.name}/*.cpp"
 	}
 
 	includedirs
 	{
-		"%{prj.name}/vendor/spdlog/include",
-		"%{prj.name}/vendor/GLFW/include",
-		"%{prj.name}/vendor/glad/include",
-		"%{prj.name}/include"
+		"%{prj.name}/vendor/*/include",
+		"%{prj.name}/vendor/glm",
+		"%{prj.name}"
 	}
 
 	filter "system:windows"
@@ -78,22 +80,20 @@ project "Game"
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
 	pchheader "pch.h"
-	pchsource "%{prj.name}/src/pch.cpp"
+	pchsource "%{prj.name}/pch.cpp"
 	
 	files
 	{
-		"%{prj.name}/include/**.h",
-		"%{prj.name}/src/**.cpp",
-		"%{prj.name}/src/**.c"
+		"%{prj.name}/**.h",
+		"%{prj.name}/**.cpp"
 	}
 
 	includedirs
 	{
-		"Engine/vendor/spdlog/include",
-		"Engine/vendor/GLFW/include",
-		"Engine/vendor/glad/include",
-		"Engine/include",
-		"%{prj.name}/include"
+		"Engine/vendor/*/include",
+		"Engine/..",
+		"Engine/vendor/glm",
+		"%{prj.name}"
 	}
 	
 	links

@@ -1,129 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="include">
-      <UniqueIdentifier>{89AF369E-F58E-B539-FEA6-40106A051C9B}</UniqueIdentifier>
+    <Filter Include="Core">
+      <UniqueIdentifier>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\Maths">
-      <UniqueIdentifier>{B57273A3-2133-EFD9-EA6D-385756ED33B6}</UniqueIdentifier>
+    <Filter Include="Entity">
+      <UniqueIdentifier>{A2E9DAB0-8E8B-0587-7746-19DB63878CD7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src">
-      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    <Filter Include="Renderer">
+      <UniqueIdentifier>{7CCE658F-689B-C09A-91B4-AE427DE0F528}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{23A78D7C-0FDE-8E0D-B8CA-7410A4E00A0F}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Application.h">
-      <Filter>include</Filter>
+    <ClInclude Include="Core.h" />
+    <ClInclude Include="Core\Application.h">
+      <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="include\Buffer.h">
-      <Filter>include</Filter>
+    <ClInclude Include="Core\Camera3D.h">
+      <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="include\ConfigFile.h">
-      <Filter>include</Filter>
+    <ClInclude Include="Core\EntryPoint.h">
+      <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="include\Engine.h">
-      <Filter>include</Filter>
+    <ClInclude Include="Core\Event.h">
+      <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="include\EnginePch.h">
-      <Filter>include</Filter>
+    <ClInclude Include="Core\Input.h">
+      <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="include\EntryPoint.h">
-      <Filter>include</Filter>
+    <ClInclude Include="Core\InputCodes.h">
+      <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="include\Event.h">
-      <Filter>include</Filter>
+    <ClInclude Include="Core\Layer.h">
+      <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="include\Export.h">
-      <Filter>include</Filter>
+    <ClInclude Include="Core\LayerStack.h">
+      <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="include\GraphicsContext.h">
-      <Filter>include</Filter>
+    <ClInclude Include="Core\Log.h">
+      <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="include\Input.h">
-      <Filter>include</Filter>
+    <ClInclude Include="Core\Window.h">
+      <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="include\InputCodes.h">
-      <Filter>include</Filter>
+    <ClInclude Include="Engine.h" />
+    <ClInclude Include="EnginePch.h" />
+    <ClInclude Include="Entity\Transform.h">
+      <Filter>Entity</Filter>
     </ClInclude>
-    <ClInclude Include="include\Layer.h">
-      <Filter>include</Filter>
+    <ClInclude Include="Maths.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Renderer\Buffer.h">
+      <Filter>Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="include\LayerStack.h">
-      <Filter>include</Filter>
+    <ClInclude Include="Renderer\GraphicsContext.h">
+      <Filter>Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="include\Log.h">
-      <Filter>include</Filter>
+    <ClInclude Include="Renderer\RenderCommand.h">
+      <Filter>Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="include\Maths.h">
-      <Filter>include</Filter>
+    <ClInclude Include="Renderer\Renderer.h">
+      <Filter>Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="include\Maths\Matrix.h">
-      <Filter>include\Maths</Filter>
+    <ClInclude Include="Renderer\RendererAPI.h">
+      <Filter>Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="include\Maths\Vec2.h">
-      <Filter>include\Maths</Filter>
+    <ClInclude Include="Renderer\Shader.h">
+      <Filter>Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="include\Maths\Vec3.h">
-      <Filter>include\Maths</Filter>
+    <ClInclude Include="Renderer\VertexArray.h">
+      <Filter>Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="include\Maths\Vec4.h">
-      <Filter>include\Maths</Filter>
+    <ClInclude Include="Util.h" />
+    <ClInclude Include="Util\Color.h">
+      <Filter>Util</Filter>
     </ClInclude>
-    <ClInclude Include="include\Renderer.h">
-      <Filter>include</Filter>
+    <ClInclude Include="Util\ConfigFile.h">
+      <Filter>Util</Filter>
     </ClInclude>
-    <ClInclude Include="include\Shader.h">
-      <Filter>include</Filter>
+    <ClInclude Include="Util\Matrix.h">
+      <Filter>Util</Filter>
     </ClInclude>
-    <ClInclude Include="include\VertexArray.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Window.h">
-      <Filter>include</Filter>
+    <ClInclude Include="Renderer\Material.h">
+      <Filter>Renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Application.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="Core\Application.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Buffer.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="Core\Camera3D.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\ConfigFile.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="Core\Event.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\EnginePch.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="Core\Input.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Event.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="Core\Layer.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\GraphicsContext.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="Core\LayerStack.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Input.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="Core\Log.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Layer.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="Core\Window.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\LayerStack.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="EnginePch.cpp" />
+    <ClCompile Include="Entity\Transform.cpp">
+      <Filter>Entity</Filter>
     </ClCompile>
-    <ClCompile Include="src\Log.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="Renderer\Buffer.cpp">
+      <Filter>Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="Renderer\GraphicsContext.cpp">
+      <Filter>Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Shader.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="Renderer\RenderCommand.cpp">
+      <Filter>Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\VertexArray.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="Renderer\Renderer.cpp">
+      <Filter>Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Window.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="Renderer\RendererAPI.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Shader.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\VertexArray.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\Color.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\ConfigFile.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\Matrix.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Material.cpp">
+      <Filter>Renderer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
