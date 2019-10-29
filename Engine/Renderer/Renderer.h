@@ -19,8 +19,8 @@ namespace Engine
 		);
 
 		static void submit(
-			const std::shared_ptr<Shader>& shader,
-			const std::shared_ptr<VertexArray>& vao
+			const Ref<Shader>& shader,
+			const Ref<VertexArray>& vao
 		);
 
 		static void endScene();

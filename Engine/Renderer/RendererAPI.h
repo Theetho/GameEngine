@@ -24,7 +24,7 @@ namespace Engine
 		virtual void clear() = 0;
 
 		virtual void drawIndexed(
-			const std::shared_ptr<VertexArray>& vao
+			const Ref<VertexArray>& vao
 		) = 0;
 	public:
 		static API s_api;
@@ -50,7 +50,7 @@ namespace Engine
 		}
 		
 		inline void drawIndexed(
-			const std::shared_ptr<VertexArray>& vao
+			const Ref<VertexArray>& vao
 		) override
 		{
 			glDrawElements(GL_TRIANGLES, vao->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);

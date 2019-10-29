@@ -18,7 +18,7 @@ namespace Engine
 	}
 	
 	void RenderCommand::drawIndexed(
-		const std::shared_ptr<VertexArray>& vao
+		const Ref<VertexArray>& vao
 	)
 	{
 		s_renderer->drawIndexed(vao);

@@ -35,7 +35,7 @@ namespace Engine
 	}
 	
 	void OpenGLVertexArray::addVertexBuffer(
-		const std::shared_ptr<VertexBuffer>& vbo
+		const Ref<VertexBuffer>& vbo
 	)
 	{
 		glBindVertexArray(m_id);
@@ -64,7 +64,7 @@ namespace Engine
 	}
 	
 	void OpenGLVertexArray::addIndexBuffer(
-		const std::shared_ptr<IndexBuffer>& ibo
+		const Ref<IndexBuffer>& ibo
 	)
 	{
 		glBindVertexArray(m_id);

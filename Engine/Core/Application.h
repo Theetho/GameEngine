@@ -46,12 +46,11 @@ namespace Engine
 		}
 
 	private:
-		std::unique_ptr<Window>		  m_window;
-
-		bool		m_running = true;
-		LayerStack	m_layerStack;
-		double		m_time = 0.0, m_deltaTime = 0.0;
-		double		m_FPS_CAP = 1.0 / 60.0;
+		Scope<Window> m_window;
+		bool		  m_running = true;
+		LayerStack	  m_layerStack;
+		double		  m_time = 0.0, m_deltaTime = 0.0;
+		double		  m_FPS_CAP = 1.0 / 60.0;
 	private:
 		static Application* s_instance;
 	};

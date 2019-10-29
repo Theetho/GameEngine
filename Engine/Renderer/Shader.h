@@ -58,6 +58,87 @@ namespace Engine
 			glUseProgram(0);
 		}
 
+		// Int
+		inline void uploadUniform(
+			const std::string& name,
+			const int& value
+		)
+		{
+			glUniform1i(
+				getLocation(name),
+				value
+			);
+		}
+
+		// Float
+		inline void uploadUniform(
+			const std::string& name,
+			const float& value
+		)
+		{
+			glUniform1f(
+				getLocation(name),
+				value
+			);
+		}
+
+		// Vec2
+		inline void uploadUniform(
+			const std::string& name,
+			const Vec2& vector
+		)
+		{
+			glUniform2f(
+				getLocation(name),
+				vector.x,
+				vector.y
+			);
+		}
+
+		// Vec3
+		inline void uploadUniform(
+			const std::string& name,
+			const Vec3& vector
+		)
+		{
+			glUniform3f(
+				getLocation(name),
+				vector.x,
+				vector.y,
+				vector.z
+			);
+		}
+
+		// Vec4
+		inline void uploadUniform(
+			const std::string& name,
+			const Vec4& vector
+		)
+		{
+			glUniform4f(
+				getLocation(name),
+				vector.x,
+				vector.y,
+				vector.z,
+				vector.w
+			);
+		}
+
+		// Mat3
+		inline void uploadUniform(
+			const std::string& name,
+			const Mat3& matrix
+		)
+		{
+			glUniformMatrix3fv(
+				getLocation(name),
+				1,
+				GL_FALSE,
+				glm::value_ptr(matrix)
+			);
+		}
+
+		// Mat4
 		inline void uploadUniform(
 			const std::string& name,
 			const Mat4& matrix

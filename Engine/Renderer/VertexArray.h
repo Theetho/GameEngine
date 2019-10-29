@@ -17,27 +17,27 @@ namespace Engine
 		virtual void unbind() const = 0;
 
 		virtual void addVertexBuffer(
-			const std::shared_ptr<VertexBuffer>& vbo
+			const Ref<VertexBuffer>& vbo
 		) = 0;
 
 		virtual void addIndexBuffer(
-			const std::shared_ptr<IndexBuffer>& vbo
+			const Ref<IndexBuffer>& vbo
 		) = 0;
 
-		virtual inline const std::vector<std::shared_ptr<VertexBuffer>>& getVertexBuffers() const
+		virtual inline const std::vector<Ref<VertexBuffer>>& getVertexBuffers() const
 		{
 			return m_vbos;
 		}
 		
-		virtual inline const std::shared_ptr<IndexBuffer>				 getIndexBuffer() const
+		virtual inline const Ref<IndexBuffer>				 getIndexBuffer() const
 		{
 			return m_ibo;
 		}
 
 		static VertexArray* create();
 	protected:
-		std::vector<std::shared_ptr<VertexBuffer>> m_vbos;
-		std::shared_ptr<IndexBuffer>			   m_ibo;
+		std::vector<Ref<VertexBuffer>> m_vbos;
+		Ref<IndexBuffer>			   m_ibo;
 	};
 
 /// OpenGL vertex array
@@ -60,11 +60,11 @@ namespace Engine
 		}
 
 		void addVertexBuffer(
-			const std::shared_ptr<VertexBuffer>& vbo
+			const Ref<VertexBuffer>& vbo
 		) override;
 		
 		void addIndexBuffer(
-			const std::shared_ptr<IndexBuffer>& vbo
+			const Ref<IndexBuffer>& vbo
 		) override;
 
 	private:

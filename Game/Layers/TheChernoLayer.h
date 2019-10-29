@@ -18,9 +18,9 @@ public:
 
 	virtual void onEvent(Engine::Event& event) override;
 private:
-	std::shared_ptr<Engine::Shader>		  m_shader;
-	std::shared_ptr<Engine::VertexArray>  m_vao;
-	std::shared_ptr<Engine::VertexArray>  m_squareVao;
-	Engine::Camera3D					  m_camera;
+	Engine::Ref<Engine::Shader>		 m_shader;
+	Engine::Ref<Engine::VertexArray> m_vao;
+	Engine::Ref<Engine::VertexArray> m_squareVao;
+	Engine::Camera3D				 m_camera;
 };
 

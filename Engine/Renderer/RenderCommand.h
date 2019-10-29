@@ -19,7 +19,7 @@ namespace Engine
 		static void clear();
 
 		static void drawIndexed(
-			const std::shared_ptr<VertexArray>& vao
+			const Ref<VertexArray>& vao
 		);
 	private:
 		static RendererAPI* s_renderer;

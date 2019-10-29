@@ -23,7 +23,7 @@ void TheChernoLayer::onAttach()
 		 0.0f,  0.5f, 0.0f,	0.0f, 0.0f, 1.0f, 1.0f
 	};
 
-	std::shared_ptr<Engine::VertexBuffer> vbo;
+	Engine::Ref<Engine::VertexBuffer> vbo;
 	vbo.reset(Engine::VertexBuffer::create(vertices, sizeof(vertices)));
 
 	vbo->setLayout({
@@ -38,7 +38,7 @@ void TheChernoLayer::onAttach()
 		0, 1, 2
 	};
 
-	std::shared_ptr<Engine::IndexBuffer> ibo;
+	Engine::Ref<Engine::IndexBuffer> ibo;
 	ibo.reset(Engine::IndexBuffer::create(indices, sizeof(indices) / sizeof(unsigned int)));
 
 	m_vao->addIndexBuffer(ibo);
@@ -54,7 +54,7 @@ void TheChernoLayer::onAttach()
 		-0.75f,  0.75f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f
 	};
 
-	std::shared_ptr<Engine::VertexBuffer> squareVbo;
+	Engine::Ref<Engine::VertexBuffer> squareVbo;
 	squareVbo.reset(Engine::VertexBuffer::create(squareVertices, sizeof(squareVertices)));
 
 	squareVbo->setLayout({
@@ -69,7 +69,7 @@ void TheChernoLayer::onAttach()
 		2, 3, 0
 	};
 
-	std::shared_ptr<Engine::IndexBuffer> squareIbo;
+	Engine::Ref<Engine::IndexBuffer> squareIbo;
 	squareIbo.reset(Engine::IndexBuffer::create(squareIndices, sizeof(squareIndices) / sizeof(unsigned int)));
 
 	m_squareVao->addIndexBuffer(squareIbo);
