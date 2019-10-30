@@ -4,6 +4,7 @@
 namespace Engine
 {
 	RenderCommand* Renderer::s_renderCommand = new RenderCommand();
+
 	Renderer::SceneData Renderer::s_sceneData;
 
 	void Renderer::beginScene(

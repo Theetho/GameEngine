@@ -1,4 +1,4 @@
-﻿  Shader.cpp
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\minwindef.h(130,1): warning C4005: 'APIENTRY' : redéfinition de macro
-D:\C++ Projects\GameEngine\Engine\Vendor\glad\include\glad\glad.h(32): message : voir la définition précédente de 'APIENTRY'
+﻿  Texture.cpp
+D:\C++ Projects\GameEngine\Engine\Renderer\Texture.cpp(26,96): warning C4267: 'initialisation' : conversion de 'size_t' en 'int', perte possible de données
+D:\C++ Projects\GameEngine\Engine\Renderer\Texture.cpp(54): warning C4715: 'Engine::Texture2D::create' : les chemins de contrôle ne retournent pas tous une valeur
   Engine.vcxproj -> D:\C++ Projects\GameEngine\Engine\..\bin\Debug-windows-x64\Engine\Engine.lib

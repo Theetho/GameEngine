@@ -8,6 +8,11 @@ namespace Engine
 	class Texture
 	{
 	public:
+		Texture(
+			const std::string& filePath,
+			const std::string& name
+		);
+
 		virtual ~Texture()
 		{
 
@@ -29,25 +34,50 @@ namespace Engine
 			return m_height;
 		}
 	
-		static void setFolder(
+		inline static void setFolder(
 			const std::string& folder
-		);
+		)
+		{
+			s_folder = folder;
+		}
+		
+		inline virtual void setName(
+			const std::string& name
+		)
+		{
+			m_name = name;
+		}
+
+		inline virtual std::string getName() const
+		{
+			return m_name;
+		}
+
 
 	protected:
 		static std::string s_folder;
+		std::string m_name;
 		unsigned int m_width, m_height;
 	};
+
 /// Texture2D
+	
 	class Texture2D : public Texture
 	{
 	public:
+		Texture2D(
+			const std::string& filePath,
+			const std::string& name
+		);
+
 		virtual ~Texture2D()
 		{
 
 		}
 		
 		static Ref<Texture2D> create(
-			const std::string& texturePath
+			const std::string& filePath,
+			const std::string& name = ""
 		);
 	};
 
@@ -57,7 +87,8 @@ namespace Engine
 	{
 	public:
 		OpenGLTexture(
-			const std::string& texturePath
+			const std::string& filePath,
+			const std::string& name
 		);
 		
 		~OpenGLTexture();

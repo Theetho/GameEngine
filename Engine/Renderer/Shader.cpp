@@ -10,8 +10,27 @@ namespace Engine
 
 	std::string Shader::s_folderPath = "";
 
+	Shader::Shader(
+		const std::string& filePath,
+		const std::string& name
+	)
+		: m_name(name)
+	{
+		// Setting the name of the shader
+		if (m_name == "")
+		{
+			auto lastSlash = filePath.find_last_of("/\\");
+			lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
+			auto lastDot = filePath.rfind('.');
+			int count = lastDot == std::string::npos ? filePath.size() - lastSlash : lastDot - lastSlash;
+
+			m_name = filePath.substr(lastSlash, count);
+		}
+	}
+
 	Ref<Shader> Shader::create(
-		const std::string& shaderPath
+		const std::string& filePath,
+		const std::string& name
 	)
 	{
 		ENGINE_ASSERT(s_folderSrc != "", "No folder for the shader files");
@@ -20,7 +39,7 @@ namespace Engine
 		case Engine::API::None:
 			ENGINE_ASSERT(false, "Api not supported");
 		case Engine::API::OpenGL:
-			return std::make_shared<OpenGLShader>(shaderPath);
+			return std::make_shared<OpenGLShader>(filePath, name);
 		}
 
 		return nullptr;
@@ -29,12 +48,14 @@ namespace Engine
 /// OpenGL shader
 
 	OpenGLShader::OpenGLShader(
-		const std::string& shaderPath
+		const std::string& filePath,
+		const std::string& name
 	)
-		: m_id(0)
+		: Shader(filePath, name)
+		, m_id(0)
 	{
 		// Retrieve the source code of every shaders
-		readFile(s_folderPath + shaderPath);
+		readFile(s_folderPath + filePath);
 		
 		std::vector<unsigned int> ids;
 
@@ -188,5 +209,4 @@ namespace Engine
 			ENGINE_LOG_ERROR("Can't open the file : {0}", filePath.c_str());
 		}
 	}
-
 }

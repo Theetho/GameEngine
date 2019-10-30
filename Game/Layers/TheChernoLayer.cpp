@@ -14,7 +14,7 @@ TheChernoLayer::~TheChernoLayer()
 void TheChernoLayer::onAttach()
 {
 	// Shader
-	m_shader = Engine::Shader::create("cubeV.glsl");
+	auto& shader = Engine::AssetManager::getShaderLibrary().load("texture.glsl");
 
 	m_cubes.push_back(Cube(1.0f, Engine::Transform(Engine::Vec3(-2, 0, -2))));
 	m_cubes.push_back(Cube(1.0f, Engine::Transform(Engine::Vec3(-2, 0,  0))));
@@ -26,10 +26,10 @@ void TheChernoLayer::onAttach()
 	m_cubes.push_back(Cube(1.0f, Engine::Transform(Engine::Vec3( 2, 0,  0))));
 	m_cubes.push_back(Cube(1.0f, Engine::Transform(Engine::Vec3( 2, 0,  2))));
 	
-	m_texture = Engine::Texture2D::create("ground.jpg");
+	Engine::AssetManager::getTexture2DLibrary().load("ground.jpg");
 
-	m_shader->bind();
-	std::dynamic_pointer_cast<Engine::OpenGLShader>(m_shader)->uploadUniform(
+	shader->bind();
+	std::dynamic_pointer_cast<Engine::OpenGLShader>(shader)->uploadUniform(
 		"u_texture",
 		0
 	);
@@ -52,11 +52,14 @@ void TheChernoLayer::onUpdate(const double& delta)
 
 	Engine::Renderer::beginScene(m_camera);
 
-	m_texture->bind(0);
+	auto& texture = Engine::AssetManager::getTexture2DLibrary().get("ground");
+	auto& shader  = Engine::AssetManager::getShaderLibrary().get("texture");
+
+	texture->bind(0);
 	for (auto& cube : m_cubes)
 	{
 		Engine::Renderer::submit(
-			m_shader, 
+			shader,
 			cube.getVao(),
 			cube.getTransform()
 		);

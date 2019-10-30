@@ -143,6 +143,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Core\AssetManager.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="Core\Application.h" />
     <ClInclude Include="Core\Camera3D.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Entity\Entity.h" />
     <ClInclude Include="Entity\Transform.h" />
+    <ClInclude Include="Renderer\Library.h" />
     <ClInclude Include="Maths.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Renderer\Buffer.h" />
@@ -177,6 +179,7 @@
     <ClInclude Include="Vendor\stb\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Core\AssetManager.cpp" />
     <ClCompile Include="Core\Application.cpp" />
     <ClCompile Include="Core\Camera3D.cpp" />
     <ClCompile Include="Core\Event.cpp" />
@@ -190,6 +193,7 @@
     </ClCompile>
     <ClCompile Include="Entity\Entity.cpp" />
     <ClCompile Include="Entity\Transform.cpp" />
+    <ClCompile Include="Renderer\Library.cpp" />
     <ClCompile Include="Renderer\Buffer.cpp" />
     <ClCompile Include="Renderer\GraphicsContext.cpp" />
     <ClCompile Include="Renderer\Material.cpp" />

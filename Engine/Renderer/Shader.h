@@ -10,6 +10,11 @@ namespace Engine
 	class Shader
 	{
 	public:
+		Shader(
+			const std::string& filePath,
+			const std::string& name = ""
+		);
+
 		virtual ~Shader() 
 		{
 		}
@@ -19,7 +24,8 @@ namespace Engine
 		virtual void unbind() const = 0;
 
 		static Ref<Shader> create(
-			const std::string& shaderPath
+			const std::string& filePath,
+			const std::string& name = ""
 		);
 
 		static void setFolder(
@@ -28,11 +34,25 @@ namespace Engine
 		{
 			s_folderPath = folderPath;
 		}
+
+		inline virtual void setName(
+			const std::string& name
+		)
+		{
+			m_name = name;
+		}
+		
+		inline virtual std::string getName() const
+		{
+			return m_name;
+		}
+	
 	protected:
 		virtual void readFile(
 			const std::string& filePath
 		) = 0;
 		static std::string s_folderPath;
+		std::string m_name;
 	};
 
 /// OpenGL shader
@@ -41,7 +61,8 @@ namespace Engine
 	{
 	public:
 		OpenGLShader(
-			const std::string& shaderPath
+			const std::string& filePath,
+			const std::string& name
 		);
 		
 		~OpenGLShader();

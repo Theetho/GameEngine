@@ -16,8 +16,6 @@ public:
 
 	virtual void onEvent(Engine::Event& event) override;
 private:
-	Engine::Ref<Engine::Shader>		 m_shader;
-	Engine::Ref<Engine::Texture2D>	 m_texture;
 	Engine::Camera3D				 m_camera;
 	
 	std::vector<Cube> m_cubes;

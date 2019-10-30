@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/Application.h"
+#include "Core/AssetManager.h"
 #include "Core/Camera3D.h"
 #include "Core/Event.h"
 #include "Core/Input.h"

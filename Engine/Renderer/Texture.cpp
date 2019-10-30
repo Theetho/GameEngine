@@ -9,15 +9,39 @@ namespace Engine
 
 	std::string Texture::s_folder = "";
 
-	void Texture::setFolder(const std::string& folder)
+	Texture::Texture(
+		const std::string& filePath,
+		const std::string& name
+	)
+		: m_name(name)
+		, m_width(0)
+		, m_height(0)
 	{
-		s_folder = folder;
+		// Setting the name of the shader
+		if (m_name == "")
+		{
+			auto lastSlash = filePath.find_last_of("/\\");
+			lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
+			auto lastDot = filePath.rfind('.');
+			int count = lastDot == std::string::npos ? filePath.size() - lastSlash : lastDot - lastSlash;
+
+			m_name = filePath.substr(lastSlash, count);
+		}
 	}
 
 /// Texture2D
 
+	Texture2D::Texture2D(
+		const std::string& filePath,
+		const std::string& name
+	)
+		: Texture(filePath, name)
+	{
+	}
+
 	Ref<Texture2D> Texture2D::create(
-		const std::string& texturePath
+		const std::string& filePath,
+		const std::string& name
 	)
 	{
 		switch (Renderer::getAPI())
@@ -25,23 +49,25 @@ namespace Engine
 		case Engine::API::None:
 			ENGINE_ASSERT(false, "Api not supported");
 		case Engine::API::OpenGL:
-			return std::make_shared<OpenGLTexture>(texturePath);
+			return std::make_shared<OpenGLTexture>(filePath, name);
 		}
 	}
 
 /// OpenGL Texture
 
 	OpenGLTexture::OpenGLTexture(
-		const std::string& texturePath
+		const std::string& filePath,
+		const std::string& name
 	)
-		: m_id(0)
+		: Texture2D(filePath, name)
+		, m_id(0)
 	{
 		ENGINE_ASSERT(s_folder != "", "No folder for the textures files");
 
 		stbi_set_flip_vertically_on_load(1);
 
 		int w, h, c;
-		stbi_uc* data = stbi_load((s_folder + texturePath).c_str(), &w, &h, &c, 0);
+		stbi_uc* data = stbi_load((s_folder + filePath).c_str(), &w, &h, &c, 0);
 		ENGINE_ASSERT(data, "Failed to load the texture");
 		
 		m_width  = w;

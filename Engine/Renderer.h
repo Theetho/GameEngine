@@ -2,6 +2,7 @@
 
 #include "Renderer/Buffer.h"
 #include "Renderer/GraphicsContext.h"
+#include "Renderer/Library.h"
 #include "Renderer/Material.h"
 #include "Renderer/RenderCommand.h"
 #include "Renderer/Renderer.h"
