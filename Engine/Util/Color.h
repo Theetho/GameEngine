@@ -51,6 +51,7 @@ namespace Engine
 		static Color Navy;
 		static Color Fuchsia;
 		static Color Purple;
+		static Color Sand;
 
 	private:
 		void clip(

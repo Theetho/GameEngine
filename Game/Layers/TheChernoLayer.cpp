@@ -2,7 +2,8 @@
 #include "TheChernoLayer.h"
 
 TheChernoLayer::TheChernoLayer()
- : m_camera()
+	: m_camera(Engine::Vec3(0, 1, 5))
+	, m_cubes()
 {
 }
 
@@ -12,72 +13,29 @@ TheChernoLayer::~TheChernoLayer()
 
 void TheChernoLayer::onAttach()
 {
-	// Triangle
-	// VAO
-	m_vao.reset(Engine::VertexArray::create());
-
-	// VBO
-	float vertices[7 * 3] = {
-		-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-		 0.0f,  0.5f, 0.0f,	0.0f, 0.0f, 1.0f, 1.0f
-	};
-
-	Engine::Ref<Engine::VertexBuffer> vbo;
-	vbo.reset(Engine::VertexBuffer::create(vertices, sizeof(vertices)));
-
-	vbo->setLayout({
-		{ Engine::ShaderDataType::Float3, "in_position" },
-		{ Engine::ShaderDataType::Float4, "in_color" }
-	});
-
-	m_vao->addVertexBuffer(vbo);
-
-	// IBO
-	unsigned int indices[3]{
-		0, 1, 2
-	};
-
-	Engine::Ref<Engine::IndexBuffer> ibo;
-	ibo.reset(Engine::IndexBuffer::create(indices, sizeof(indices) / sizeof(unsigned int)));
-
-	m_vao->addIndexBuffer(ibo);
-
-	// Square
-
-	m_squareVao.reset(Engine::VertexArray::create());
-
-	float squareVertices[7 * 4] = {
-		-0.75f, -0.75f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		 0.75f, -0.75f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-		 0.75f,  0.75f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
-		-0.75f,  0.75f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f
-	};
-
-	Engine::Ref<Engine::VertexBuffer> squareVbo;
-	squareVbo.reset(Engine::VertexBuffer::create(squareVertices, sizeof(squareVertices)));
-
-	squareVbo->setLayout({
-		{ Engine::ShaderDataType::Float3, "in_position" },
-		{ Engine::ShaderDataType::Float4, "in_color" }
-		});
-
-	m_squareVao->addVertexBuffer(squareVbo);
-
-	unsigned int squareIndices[6]{
-		0, 1, 2,
-		2, 3, 0
-	};
-
-	Engine::Ref<Engine::IndexBuffer> squareIbo;
-	squareIbo.reset(Engine::IndexBuffer::create(squareIndices, sizeof(squareIndices) / sizeof(unsigned int)));
-
-	m_squareVao->addIndexBuffer(squareIbo);
-
 	// Shader
-	m_shader.reset(Engine::Shader::create("1stV.glsl", "1stF.glsl"));
+	m_shader = Engine::Shader::create("cubeV.glsl");
 
-	Engine::RenderCommand::setClearColor(Engine::Color::Teal);
+	m_cubes.push_back(Cube(1.0f, Engine::Transform(Engine::Vec3(-2, 0, -2))));
+	m_cubes.push_back(Cube(1.0f, Engine::Transform(Engine::Vec3(-2, 0,  0))));
+	m_cubes.push_back(Cube(1.0f, Engine::Transform(Engine::Vec3(-2, 0,  2))));
+	m_cubes.push_back(Cube(1.0f, Engine::Transform(Engine::Vec3( 0, 0, -2))));
+	m_cubes.push_back(Cube(1.0f, Engine::Transform(Engine::Vec3( 0, 0,  0))));
+	m_cubes.push_back(Cube(1.0f, Engine::Transform(Engine::Vec3( 0, 0,  2))));
+	m_cubes.push_back(Cube(1.0f, Engine::Transform(Engine::Vec3( 2, 0, -2))));
+	m_cubes.push_back(Cube(1.0f, Engine::Transform(Engine::Vec3( 2, 0,  0))));
+	m_cubes.push_back(Cube(1.0f, Engine::Transform(Engine::Vec3( 2, 0,  2))));
+	
+	m_texture = Engine::Texture2D::create("ground.jpg");
+
+	m_shader->bind();
+	std::dynamic_pointer_cast<Engine::OpenGLShader>(m_shader)->uploadUniform(
+		"u_texture",
+		0
+	);
+
+	/// For clear color : https://www.toutes-les-couleurs.com/code-couleur-rvb.php
+	Engine::RenderCommand::setClearColor(Engine::Color(254, 254, 224));
 	Engine::Input::toggleCursor();
 }
 
@@ -94,8 +52,15 @@ void TheChernoLayer::onUpdate(const double& delta)
 
 	Engine::Renderer::beginScene(m_camera);
 
-	Engine::Renderer::submit(m_shader, m_squareVao);
-	Engine::Renderer::submit(m_shader, m_vao);
+	m_texture->bind(0);
+	for (auto& cube : m_cubes)
+	{
+		Engine::Renderer::submit(
+			m_shader, 
+			cube.getVao(),
+			cube.getTransform()
+		);
+	}
 
 	Engine::Renderer::endScene();
 	// -----------------

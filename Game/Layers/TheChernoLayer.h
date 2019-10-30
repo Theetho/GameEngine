@@ -1,8 +1,6 @@
 #pragma once
 
-#include "Engine/Core/Layer.h"
-#include "Engine/Renderer/Shader.h"
-#include "Engine/Renderer/VertexArray.h"
+#include "Models/Cube.h"
 
 class TheChernoLayer : public Engine::Layer
 {
@@ -19,8 +17,9 @@ public:
 	virtual void onEvent(Engine::Event& event) override;
 private:
 	Engine::Ref<Engine::Shader>		 m_shader;
-	Engine::Ref<Engine::VertexArray> m_vao;
-	Engine::Ref<Engine::VertexArray> m_squareVao;
+	Engine::Ref<Engine::Texture2D>	 m_texture;
 	Engine::Camera3D				 m_camera;
+	
+	std::vector<Cube> m_cubes;
 };
 

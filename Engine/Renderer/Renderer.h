@@ -2,6 +2,7 @@
 
 #include "RenderCommand.h"
 #include "Shader.h"
+#include "Entity/Transform.h"
 #include "Core/Camera3D.h"
 
 namespace Engine
@@ -20,7 +21,8 @@ namespace Engine
 
 		static void submit(
 			const Ref<Shader>& shader,
-			const Ref<VertexArray>& vao
+			const Ref<VertexArray>& vao,
+			const Transform& transform
 		);
 
 		static void endScene();

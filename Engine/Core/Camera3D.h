@@ -9,7 +9,7 @@ namespace Engine
 	{
 	public:
 		Camera3D(
-			const Vec3& position = Vec3(0.0f, 0.0f, 1.0f)
+			const Vec3& position = Vec3(0.0f, 0.0f, 0.0f)
 		);
 
 		~Camera3D();

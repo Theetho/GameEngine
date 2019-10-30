@@ -13,6 +13,12 @@
     <Filter Include="Util">
       <UniqueIdentifier>{23A78D7C-0FDE-8E0D-B8CA-7410A4E00A0F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Vendor">
+      <UniqueIdentifier>{935FDCD7-7F01-07AE-68BC-1A0254FD8DFE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendor\stb">
+      <UniqueIdentifier>{6BAF7327-5767-B574-C06E-8ED0AC455065}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h" />
@@ -48,6 +54,10 @@
     </ClInclude>
     <ClInclude Include="Engine.h" />
     <ClInclude Include="EnginePch.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="Entity\Entity.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
     <ClInclude Include="Entity\Transform.h">
       <Filter>Entity</Filter>
     </ClInclude>
@@ -57,6 +67,9 @@
       <Filter>Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\GraphicsContext.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Material.h">
       <Filter>Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\RenderCommand.h">
@@ -69,6 +82,9 @@
       <Filter>Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Shader.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Texture.h">
       <Filter>Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\VertexArray.h">
@@ -84,8 +100,8 @@
     <ClInclude Include="Util\Matrix.h">
       <Filter>Util</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\Material.h">
-      <Filter>Renderer</Filter>
+    <ClInclude Include="Vendor\stb\stb_image.h">
+      <Filter>Vendor\stb</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -114,6 +130,9 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="EnginePch.cpp" />
+    <ClCompile Include="Entity\Entity.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
     <ClCompile Include="Entity\Transform.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
@@ -121,6 +140,9 @@
       <Filter>Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\GraphicsContext.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Material.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\RenderCommand.cpp">
@@ -135,6 +157,9 @@
     <ClCompile Include="Renderer\Shader.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\Texture.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="Renderer\VertexArray.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
@@ -147,8 +172,8 @@
     <ClCompile Include="Util\Matrix.cpp">
       <Filter>Util</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer\Material.cpp">
-      <Filter>Renderer</Filter>
+    <ClCompile Include="Vendor\stb\stb_image.cpp">
+      <Filter>Vendor\stb</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 ﻿  EnginePch.cpp
   Application.cpp
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\minwindef.h(130,1): warning C4005: 'APIENTRY' : redéfinition de macro
-D:\C++ Projects\GameEngine\Engine\vendor\glad\include\glad\glad.h(32): message : voir la définition précédente de 'APIENTRY'
+D:\C++ Projects\GameEngine\Engine\Vendor\glad\include\glad\glad.h(32): message : voir la définition précédente de 'APIENTRY'
   Camera3D.cpp
 D:\C++ Projects\GameEngine\Engine\Core\Application.cpp(41,21): warning C4244: 'argument' : conversion de 'double' en 'DWORD', perte possible de données
 D:\C++ Projects\GameEngine\Engine\Core\Camera3D.cpp(46,35): warning C4244: '+=' : conversion de 'double' en 'T', perte possible de données
@@ -23,25 +23,33 @@ D:\C++ Projects\GameEngine\Engine\Core\Camera3D.cpp(52,26): warning C4244: 'init
 D:\C++ Projects\GameEngine\Engine\Core\Camera3D.cpp(53,26): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\minwindef.h(130,1): warning C4005: 'APIENTRY' : redéfinition de macro
   Window.cpp
-D:\C++ Projects\GameEngine\Engine\vendor\glad\include\glad\glad.h(32): message : voir la définition précédente de 'APIENTRY'
+D:\C++ Projects\GameEngine\Engine\Vendor\glad\include\glad\glad.h(32): message : voir la définition précédente de 'APIENTRY'
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\minwindef.h(130,1): warning C4005: 'APIENTRY' : redéfinition de macro
+  Entity.cpp
   Transform.cpp
   Buffer.cpp
   GraphicsContext.cpp
-D:\C++ Projects\GameEngine\Engine\vendor\glad\include\glad\glad.h(32): message : voir la définition précédente de 'APIENTRY'
+D:\C++ Projects\GameEngine\Engine\Vendor\glad\include\glad\glad.h(32): message : voir la définition précédente de 'APIENTRY'
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\minwindef.h(130,1): warning C4005: 'APIENTRY' : redéfinition de macro
   Material.cpp
   RenderCommand.cpp
   Renderer.cpp
   RendererAPI.cpp
   Shader.cpp
-D:\C++ Projects\GameEngine\Engine\vendor\glad\include\glad\glad.h(32): message : voir la définition précédente de 'APIENTRY'
+D:\C++ Projects\GameEngine\Engine\Vendor\glad\include\glad\glad.h(32): message : voir la définition précédente de 'APIENTRY'
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\minwindef.h(130,1): warning C4005: 'APIENTRY' : redéfinition de macro
+  Texture.cpp
   VertexArray.cpp
-D:\C++ Projects\GameEngine\Engine\vendor\glad\include\glad\glad.h(32): message : voir la définition précédente de 'APIENTRY'
+D:\C++ Projects\GameEngine\Engine\Vendor\glad\include\glad\glad.h(32): message : voir la définition précédente de 'APIENTRY'
   Color.cpp
-  ConfigFile.cpp
-  Matrix.cpp
   Génération de code en cours...
 D:\C++ Projects\GameEngine\Engine\Renderer\VertexArray.cpp(60,4): warning C4312: 'cast de type' : la conversion de 'const unsigned int' en 'const void *' d'une taille supérieure
+D:\C++ Projects\GameEngine\Engine\Renderer\Texture.cpp(30): warning C4715: 'Engine::Texture2D::create' : les chemins de contrôle ne retournent pas tous une valeur
+D:\C++ Projects\GameEngine\Engine\Renderer\Buffer.cpp(63): warning C4715: 'Engine::IndexBuffer::create' : les chemins de contrôle ne retournent pas tous une valeur
+  Compilation en cours...
+  ConfigFile.cpp
+  Matrix.cpp
+  stb_image.cpp
+  Génération de code en cours...
+D:\C++ Projects\GameEngine\Engine\Renderer\Buffer.cpp(47): warning C4715: 'Engine::VertexBuffer::create' : les chemins de contrôle ne retournent pas tous une valeur
   Engine.vcxproj -> D:\C++ Projects\GameEngine\Engine\..\bin\Release-windows-x64\Engine\Engine.lib

@@ -7,14 +7,14 @@ namespace Engine
 
 /// Abstract base class
 
-	VertexArray* VertexArray::create()
+	Ref<VertexArray> VertexArray::create()
 	{
 		switch (Renderer::getAPI())
 		{
 		case Engine::API::None:
 			ENGINE_ASSERT(false, "Api not supported");
 		case Engine::API::OpenGL:
-			return new OpenGLVertexArray();
+			return std::make_shared<OpenGLVertexArray>();
 		}
 
 		return nullptr;

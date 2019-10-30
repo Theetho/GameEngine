@@ -18,9 +18,8 @@ namespace Engine
 
 		virtual void unbind() const = 0;
 
-		static Shader* create(
-			const std::string& vertexPath,
-			const std::string& fragmentPath
+		static Ref<Shader> create(
+			const std::string& shaderPath
 		);
 
 		static void setFolder(
@@ -30,9 +29,9 @@ namespace Engine
 			s_folderPath = folderPath;
 		}
 	protected:
-		std::string getSrc(
+		virtual void readFile(
 			const std::string& filePath
-		);
+		) = 0;
 		static std::string s_folderPath;
 	};
 
@@ -42,8 +41,7 @@ namespace Engine
 	{
 	public:
 		OpenGLShader(
-			const std::string& vertexPath,
-			const std::string& fragmentPath
+			const std::string& shaderPath
 		);
 		
 		~OpenGLShader();
@@ -153,8 +151,22 @@ namespace Engine
 		}
 
 	private:
-		unsigned int m_id;
+		unsigned int compile(
+			const std::string& src,
+			const GLenum& shaderType
+		);
 
+		void link(
+			const std::vector<unsigned int>& ids
+		);
+
+	private:
+		unsigned int m_id;
+		std::unordered_map<GLenum, std::string> m_shaderSources;
+		
+		void readFile(
+			const std::string& filePath
+		) override;
 		inline int getLocation(const std::string& name) const
 		{
 			return glGetUniformLocation(m_id, name.c_str());

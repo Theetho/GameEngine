@@ -26,13 +26,15 @@ project "Engine"
 		"%{prj.name}/*/*.h",
 		"%{prj.name}/*.h",
 		"%{prj.name}/*/*.cpp",
-		"%{prj.name}/*.cpp"
+		"%{prj.name}/*.cpp",
+		"%{prj.name}/Vendor/stb/*"
 	}
 
 	includedirs
 	{
-		"%{prj.name}/vendor/*/include",
-		"%{prj.name}/vendor/glm",
+		"%{prj.name}/Vendor/*/include",
+		"%{prj.name}/Vendor/glm",
+		"%{prj.name}/Vendor/stb",
 		"%{prj.name}"
 	}
 
@@ -90,9 +92,10 @@ project "Game"
 
 	includedirs
 	{
-		"Engine/vendor/*/include",
+		"Engine/Vendor/*/include",
 		"Engine/..",
-		"Engine/vendor/glm",
+		"Engine/Vendor/glm",
+		"Engine/Vendor/stb",
 		"%{prj.name}"
 	}
 	

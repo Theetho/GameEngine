@@ -21,7 +21,7 @@ namespace Engine
 		) = 0;
 
 		virtual void addIndexBuffer(
-			const Ref<IndexBuffer>& vbo
+			const Ref<IndexBuffer>& ibo
 		) = 0;
 
 		virtual inline const std::vector<Ref<VertexBuffer>>& getVertexBuffers() const
@@ -34,7 +34,7 @@ namespace Engine
 			return m_ibo;
 		}
 
-		static VertexArray* create();
+		static Ref<VertexArray> create();
 	protected:
 		std::vector<Ref<VertexBuffer>> m_vbos;
 		Ref<IndexBuffer>			   m_ibo;

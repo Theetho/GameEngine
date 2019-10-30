@@ -15,11 +15,15 @@ namespace Engine
 
 	void Renderer::submit(
 		const Ref<Shader>& shader,
-		const Ref<VertexArray>& vao
+		const Ref<VertexArray>& vao,
+		const Transform& transform
 	)
 	{
 		shader->bind();
-		std::dynamic_pointer_cast<OpenGLShader>(shader)->uploadUniform("u_VP", s_sceneData.VP);
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->uploadUniform(
+			"u_MVP",
+			s_sceneData.VP * transform.getModel()
+		);
 		vao->bind();
 		s_renderCommand->drawIndexed(vao);
 	}

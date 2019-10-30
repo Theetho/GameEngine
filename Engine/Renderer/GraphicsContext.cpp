@@ -12,6 +12,7 @@ namespace Engine
 		: m_window(window)
 	{
 		ENGINE_ASSERT(m_window, "Window is nullptr");
+
 	}
 
 	OpenGLContext::~OpenGLContext()
@@ -27,6 +28,11 @@ namespace Engine
 		ENGINE_LOG_INFO("  -> Vendor   : {0}", glGetString(GL_VENDOR));
 		ENGINE_LOG_INFO("  -> Renderer : {0}", glGetString(GL_RENDERER));
 		ENGINE_LOG_INFO("  -> Version  : {0}", glGetString(GL_VERSION));
+		
+		glEnable(GL_DEPTH_TEST);
+
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
 	void OpenGLContext::swapBuffers()

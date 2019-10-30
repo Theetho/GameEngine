@@ -1,9 +1,9 @@
 d:\c++ projects\gameengine\bin-int\release-windows-x64\engine\engine.pch
 d:\c++ projects\gameengine\bin-int\release-windows-x64\engine\engine.pdb
 d:\c++ projects\gameengine\bin-int\release-windows-x64\engine\enginepch.obj
-d:\c++ projects\gameengine\bin-int\release-windows-x64\engine\matrix.obj
 d:\c++ projects\gameengine\bin-int\release-windows-x64\engine\configfile.obj
 d:\c++ projects\gameengine\bin-int\release-windows-x64\engine\color.obj
+d:\c++ projects\gameengine\bin-int\release-windows-x64\engine\texture.obj
 d:\c++ projects\gameengine\bin-int\release-windows-x64\engine\vertexarray.obj
 d:\c++ projects\gameengine\bin-int\release-windows-x64\engine\shader.obj
 d:\c++ projects\gameengine\bin-int\release-windows-x64\engine\rendererapi.obj
@@ -21,6 +21,8 @@ d:\c++ projects\gameengine\bin-int\release-windows-x64\engine\input.obj
 d:\c++ projects\gameengine\bin-int\release-windows-x64\engine\event.obj
 d:\c++ projects\gameengine\bin-int\release-windows-x64\engine\camera3d.obj
 d:\c++ projects\gameengine\bin-int\release-windows-x64\engine\application.obj
+d:\c++ projects\gameengine\bin-int\release-windows-x64\engine\matrix.obj
+d:\c++ projects\gameengine\bin-int\release-windows-x64\engine\entity.obj
 d:\c++ projects\gameengine\bin\release-windows-x64\engine\engine.lib
 d:\c++ projects\gameengine\engine\..\bin\release-windows-x64\engine\engine.lib
 d:\c++ projects\gameengine\bin-int\release-windows-x64\engine\engine.tlog\cl.command.1.tlog

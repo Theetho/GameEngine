@@ -19,6 +19,7 @@ namespace Engine
 	Color Color::Navy(0.0f, 0.0f, 0.5f);
 	Color Color::Fuchsia(1.0f, 0.0f, 1.0f);
 	Color Color::Purple(0.5f, 0.0f, 0.5f);
+	Color Color::Sand(253, 241, 184);
 
 	Color::Color(
 		const float& r,

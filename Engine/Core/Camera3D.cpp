@@ -14,7 +14,7 @@ namespace Engine
 		, m_projection(Matrix::projection())
 		, m_VP()
 		, m_pitch(20.0f)
-		, m_yaw(0.0f)
+		, m_yaw(-20.0f)
 		, m_speed(2.0f)
 		, m_mouseSpeed(0.02f)
 		, m_forwardSpeed(0.0f)

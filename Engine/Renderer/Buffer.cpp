@@ -32,7 +32,7 @@ namespace Engine
 
 	// Vertex buffer
 
-	VertexBuffer* VertexBuffer::create(
+	Ref<VertexBuffer> VertexBuffer::create(
 		float* vertices, 
 		const unsigned int& size
 	)
@@ -42,15 +42,13 @@ namespace Engine
 		case Engine::API::None:
 			ENGINE_ASSERT(false, "Api not supported");
 		case Engine::API::OpenGL:
-			return new OpenGLVertexBuffer(vertices, size);
+			return std::make_shared<OpenGLVertexBuffer>(vertices, size);
 		}
-
-		return nullptr;
 	}
 
 	// Index buffer
 
-	IndexBuffer* IndexBuffer::create(
+	Ref<IndexBuffer> IndexBuffer::create(
 		unsigned int* indices,
 		const unsigned int& size
 	)
@@ -60,10 +58,8 @@ namespace Engine
 		case Engine::API::None:
 			ENGINE_ASSERT(false, "Api not supported");
 		case Engine::API::OpenGL:
-			return new OpenGLIndexBuffer(indices, size);
+			return std::make_shared<OpenGLIndexBuffer>(indices, size);
 		}	
-
-		return nullptr;
 	}
 
 /// OpenGL buffers
