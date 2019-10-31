@@ -141,14 +141,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Core\GameApplication.h" />
-    <ClInclude Include="Layers\TheChernoLayer.h" />
+    <ClInclude Include="Layers\MazeLayer.h" />
     <ClInclude Include="Models\Cube.h" />
+    <ClInclude Include="Models\Maze.h" />
+    <ClInclude Include="Util\FileLoader.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\GameApplication.cpp" />
-    <ClCompile Include="Layers\TheChernoLayer.cpp" />
+    <ClCompile Include="Layers\MazeLayer.cpp" />
     <ClCompile Include="Models\Cube.cpp" />
+    <ClCompile Include="Models\Maze.cpp" />
+    <ClCompile Include="Util\FileLoader.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

@@ -27,12 +27,14 @@ namespace Engine
 
 }
 
-#define ENGINE_LOG_INFO(...) ::Engine::Log::getEngineLogger()->info(__VA_ARGS__)
-#define ENGINE_LOG_TRACE(...) ::Engine::Log::getEngineLogger()->trace(__VA_ARGS__)
-#define ENGINE_LOG_DEBUG(...) ::Engine::Log::getEngineLogger()->debug(__VA_ARGS__)
-#define ENGINE_LOG_WARN(...) ::Engine::Log::getEngineLogger()->warn(__VA_ARGS__)
-#define ENGINE_LOG_ERROR(...) ::Engine::Log::getEngineLogger()->error(__VA_ARGS__)
-#define ENGINE_LOG_CRITICAL(...) ::Engine::Log::getEngineLogger()->critical(__VA_ARGS__)
+#ifdef ENGINE_FILES
+	#define ENGINE_LOG_INFO(...) ::Engine::Log::getEngineLogger()->info(__VA_ARGS__)
+	#define ENGINE_LOG_TRACE(...) ::Engine::Log::getEngineLogger()->trace(__VA_ARGS__)
+	#define ENGINE_LOG_DEBUG(...) ::Engine::Log::getEngineLogger()->debug(__VA_ARGS__)
+	#define ENGINE_LOG_WARN(...) ::Engine::Log::getEngineLogger()->warn(__VA_ARGS__)
+	#define ENGINE_LOG_ERROR(...) ::Engine::Log::getEngineLogger()->error(__VA_ARGS__)
+	#define ENGINE_LOG_CRITICAL(...) ::Engine::Log::getEngineLogger()->critical(__VA_ARGS__)
+#endif
 
 #define APP_LOG_INFO(...) ::Engine::Log::getAppLogger()->info(__VA_ARGS__)
 #define APP_LOG_TRACE(...) ::Engine::Log::getAppLogger()->trace(__VA_ARGS__)

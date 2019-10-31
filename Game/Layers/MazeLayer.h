@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Models/Cube.h"
+#include "Models/Maze.h"
 
-class TheChernoLayer : public Engine::Layer
+class MazeLayer : public Engine::Layer
 {
 public:
-	TheChernoLayer();
-	~TheChernoLayer();
+	MazeLayer();
+	~MazeLayer();
 
 	virtual void onAttach() override;
 
@@ -16,8 +16,7 @@ public:
 
 	virtual void onEvent(Engine::Event& event) override;
 private:
-	Engine::Camera3D				 m_camera;
-	
-	std::vector<Cube> m_cubes;
+	Engine::Camera3D   m_camera;	
+	Engine::Scope<Maze> m_maze;
 };
 

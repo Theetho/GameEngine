@@ -1,13 +1,13 @@
 #include "pch.h"
 #include "GameApplication.h"
-#include "Layers/TheChernoLayer.h"
+#include "Layers/MazeLayer.h"
 
 GameApplication::GameApplication()
 	: Application()
 {
 	Engine::Shader::setFolder("Assets/Shaders/");
 	Engine::Texture::setFolder("Assets/Textures/");
-	this->pushLayer(new TheChernoLayer());
+	this->pushLayer(new MazeLayer());
 }
 
 GameApplication::~GameApplication()

@@ -55,6 +55,7 @@ project "Engine"
 
 		defines
 		{
+			"ENGINE_FILES",
 			"ENGINE_WINDOWS"
 		}
 

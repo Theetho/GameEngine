@@ -1,6 +1,7 @@
 #include "EnginePch.h"
 #include "Texture.h"
 #include "Renderer.h"
+#include "Core/Log.h"
 
 namespace Engine
 {
@@ -68,7 +69,12 @@ namespace Engine
 
 		int w, h, c;
 		stbi_uc* data = stbi_load((s_folder + filePath).c_str(), &w, &h, &c, 0);
-		ENGINE_ASSERT(data, "Failed to load the texture");
+		
+		if (!data)
+		{
+			data = stbi_load("../Engine/Assets/Textures/error.png", &w, &h, &c, 0);
+			ENGINE_LOG_WARN("Failed to load the texture : {0}", filePath);
+		}
 		
 		m_width  = w;
 		m_height = h;

@@ -22,6 +22,13 @@ namespace Engine
 			Event& event
 		);
 
+		inline void setPosition(
+			const Vec3& position
+		)
+		{
+			m_position = position;
+		}
+
 		inline const Vec3& getPosition() const
 		{
 			return m_position;

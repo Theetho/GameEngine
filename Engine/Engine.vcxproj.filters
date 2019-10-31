@@ -25,6 +25,9 @@
     <ClInclude Include="Core\Application.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="Core\AssetManager.h">
+      <Filter>Core</Filter>
+    </ClInclude>
     <ClInclude Include="Core\Camera3D.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -69,6 +72,9 @@
     <ClInclude Include="Renderer\GraphicsContext.h">
       <Filter>Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\Library.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="Renderer\Material.h">
       <Filter>Renderer</Filter>
     </ClInclude>
@@ -103,15 +109,12 @@
     <ClInclude Include="Vendor\stb\stb_image.h">
       <Filter>Vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\Library.h">
-      <Filter>Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\AssetManager.h">
-      <Filter>Core</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Application.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\AssetManager.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\Camera3D.cpp">
@@ -148,6 +151,9 @@
     <ClCompile Include="Renderer\GraphicsContext.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\Library.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="Renderer\Material.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
@@ -180,12 +186,6 @@
     </ClCompile>
     <ClCompile Include="Vendor\stb\stb_image.cpp">
       <Filter>Vendor\stb</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer\Library.cpp">
-      <Filter>Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\AssetManager.cpp">
-      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

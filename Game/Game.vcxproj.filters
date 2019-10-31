@@ -10,16 +10,25 @@
     <Filter Include="Models">
       <UniqueIdentifier>{096F8DC3-F510-B899-DECB-CBEDCA0C3FEA}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{23A78D7C-0FDE-8E0D-B8CA-7410A4E00A0F}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\GameApplication.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Layers\TheChernoLayer.h">
+    <ClInclude Include="Layers\MazeLayer.h">
       <Filter>Layers</Filter>
     </ClInclude>
     <ClInclude Include="Models\Cube.h">
       <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Maze.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\FileLoader.h">
+      <Filter>Util</Filter>
     </ClInclude>
     <ClInclude Include="pch.h" />
   </ItemGroup>
@@ -27,11 +36,17 @@
     <ClCompile Include="Core\GameApplication.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Layers\TheChernoLayer.cpp">
+    <ClCompile Include="Layers\MazeLayer.cpp">
       <Filter>Layers</Filter>
     </ClCompile>
     <ClCompile Include="Models\Cube.cpp">
       <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Maze.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\FileLoader.cpp">
+      <Filter>Util</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp" />
   </ItemGroup>

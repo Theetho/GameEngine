@@ -207,6 +207,7 @@ namespace Engine
 		else
 		{
 			ENGINE_LOG_ERROR("Can't open the file : {0}", filePath.c_str());
+			ENGINE_ASSERT(file, "Can't find the shader file");
 		}
 	}
 }

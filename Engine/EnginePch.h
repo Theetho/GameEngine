@@ -17,11 +17,11 @@
 #include "Core/InputCodes.h"
 
 #ifdef ENGINE_ENABLE_ASSERTS
-#define APP_ASSERT(x, ...) { if(!(x)) { APP_LOG_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
-#define ENGINE_ASSERT(x, ...) { if(!(x)) { ENGINE_LOG_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+	#define ENGINE_ASSERT(x, ...) { if(!(x)) { ENGINE_LOG_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+	#define APP_ASSERT(x, ...) { if(!(x)) { APP_LOG_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
 #else
-#define APP_ASSERT(x, ...)
-#define ENGINE_ASSERT(x, ...)
+	#define ENGINE_ASSERT(x, ...)
+	#define APP_ASSERT(x, ...)
 #endif
 
 namespace Engine
