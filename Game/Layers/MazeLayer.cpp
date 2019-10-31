@@ -14,20 +14,21 @@ MazeLayer::~MazeLayer()
 void MazeLayer::onAttach()
 {
 	// Shader
-	auto& shader = Engine::AssetManager::getShaderLibrary().load("texture.glsl");
+	auto& shader = Engine::AssetManager::getShaderLibrary().load("color.glsl");
 
-	m_maze = FileLoader::loadMaze("Assets/MazeFiles/1st.mz");
+	m_maze = FileLoader::loadMaze("Assets/MazeFiles/maze.mz");
 
-	m_camera.setPosition(m_maze->getEntry());
+	Cube cube;
+
+	m_character.setVao(cube.getVao());
+
+	m_character.setPosition(m_maze->getEntry());
+	m_character.getCameraController().setOffset(Engine::Vec3(0.0f, 5.0f, 3.0f));
+	m_camera.getControlled(&m_character.getCameraController());
 
 	Engine::AssetManager::getTexture2DLibrary().load("snow.jpg");
 	Engine::AssetManager::getTexture2DLibrary().load("hedge.jpg");
-
-	shader->bind();
-	std::dynamic_pointer_cast<Engine::OpenGLShader>(shader)->uploadUniform(
-		"u_texture",
-		0
-	);
+	Engine::AssetManager::getTexture2DLibrary().load("ground.jpg");
 
 	/// For clear color : https://www.toutes-les-couleurs.com/code-couleur-rvb.php
 	Engine::RenderCommand::setClearColor(Engine::Color::Black);
@@ -40,6 +41,8 @@ void MazeLayer::onDetach()
 
 void MazeLayer::onUpdate(const double& delta)
 {
+	m_character.onUpdate(delta);
+
 	m_camera.onUpdate(delta);
 
 	// --- Rendering ---
@@ -47,16 +50,17 @@ void MazeLayer::onUpdate(const double& delta)
 
 	Engine::Renderer::beginScene(m_camera);
 
-	auto& ground = Engine::AssetManager::getTexture2DLibrary().get("snow");
+	auto& snow = Engine::AssetManager::getTexture2DLibrary().get("snow");
+	auto& ground = Engine::AssetManager::getTexture2DLibrary().get("ground");
 	auto& wall = Engine::AssetManager::getTexture2DLibrary().get("hedge");
-	auto& shader  = Engine::AssetManager::getShaderLibrary().get("texture");
+	auto& shader  = Engine::AssetManager::getShaderLibrary().get("color");
 
-	wall->bind(0);
-	//shader->bind();
-	//std::dynamic_pointer_cast<Engine::OpenGLShader>(shader)->uploadUniform(
-	//	"u_color",
-	//	Engine::Color::DarkGreen
-	//);
+	//wall->bind();
+	shader->bind();
+	std::dynamic_pointer_cast<Engine::OpenGLShader>(shader)->uploadUniform(
+		"u_color",
+		Engine::Color::Navy
+	);
 	for (auto& cube : m_maze->getWalls())
 	{
 		Engine::Renderer::submit(
@@ -66,11 +70,11 @@ void MazeLayer::onUpdate(const double& delta)
 		);
 	}
 
-	ground->bind(0);
-	//std::dynamic_pointer_cast<Engine::OpenGLShader>(shader)->uploadUniform(
-	//	"u_color",
-	//	Engine::Color::Green
-	//);
+	//snow->bind();
+	std::dynamic_pointer_cast<Engine::OpenGLShader>(shader)->uploadUniform(
+		"u_color",
+		Engine::Color::Teal
+	);
 	for (auto& cube : m_maze->getGround())
 	{
 		Engine::Renderer::submit(
@@ -79,6 +83,17 @@ void MazeLayer::onUpdate(const double& delta)
 			cube.getTransform()
 		);
 	}
+
+	//ground->bind();
+	std::dynamic_pointer_cast<Engine::OpenGLShader>(shader)->uploadUniform(
+		"u_color",
+		Engine::Color::Yellow
+	);
+	Engine::Renderer::submit(
+		shader,
+		m_character.getVao(),
+		m_character.getTransform()
+	);
 
 	Engine::Renderer::endScene();
 	// -----------------

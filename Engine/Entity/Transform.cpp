@@ -14,7 +14,7 @@ namespace Engine
 		, m_scale(scale)
 		, m_model()
 	{
-		setModel();
+		updateModel();
 	}
 
 	Transform::~Transform()

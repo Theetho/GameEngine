@@ -19,6 +19,21 @@ namespace Engine
 			return m_model;
 		}
 
+		inline Vec3& getPosition()
+		{
+			return m_position;
+		}
+
+		inline Vec3& getRotation()
+		{
+			return m_rotation;
+		}
+
+		inline Vec3& getScale()
+		{
+			return m_scale;
+		}
+
 		inline const Vec3& getPosition() const
 		{
 			return m_position;
@@ -37,19 +52,24 @@ namespace Engine
 		inline void setPosition(const Vec3& position)
 		{
 			m_position = position;
-			setModel();
+			updateModel();
 		}
 
 		inline void setRotation(const Vec3& rotation)
 		{
 			m_rotation = rotation;
-			setModel();
+			updateModel();
 		}
 
 		inline void setScale(const Vec3& scale)
 		{
 			m_scale = scale;
-			setModel();
+			updateModel();
+		}
+		
+		inline void updateModel()
+		{
+			m_model = Matrix::model(m_position, m_rotation, m_scale);
 		}
 	private:
 		Vec3 m_position;
@@ -57,11 +77,6 @@ namespace Engine
 		Vec3 m_scale;
 
 		Mat4 m_model;
-
-		inline void setModel()
-		{
-			m_model = Matrix::model(m_position, m_rotation, m_scale);
-		}
 	};
 }
 

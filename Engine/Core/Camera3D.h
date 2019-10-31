@@ -5,6 +5,8 @@
 
 namespace Engine
 {
+	class CameraController;
+
 	class Camera3D
 	{
 	public:
@@ -21,6 +23,15 @@ namespace Engine
 		void onEvent(
 			Event& event
 		);
+
+		inline void getControlled(
+			const CameraController* controller
+		)
+		{
+			m_controller = controller;
+			m_yaw   = 0.0f;
+			m_pitch = 60.0f;
+		}
 
 		inline void setPosition(
 			const Vec3& position
@@ -66,9 +77,11 @@ namespace Engine
 
 		Vec3 m_position;
 
-		float m_speed, m_mouseSpeed;
+		float m_speed, m_mouseSpeed, m_rotationSpeed;
 		float m_forwardSpeed, m_strafeSpeed;
 		float m_pitch, m_yaw;
+
+		const CameraController* m_controller;
 
 		void updateVP();
 	};

@@ -11,7 +11,9 @@ public:
 	);
 	~Cube();
 
-	void onUpdate() override;
+	void onUpdate(
+		const double& delta
+	) override;
 	
 	inline const Engine::Ref<Engine::VertexArray>& getVao() const
 	{

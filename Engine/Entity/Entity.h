@@ -17,7 +17,9 @@ namespace Engine
 		
 		virtual ~Entity();
 
-		virtual void onUpdate() = 0;
+		virtual void onUpdate(
+			const double& delta
+		) = 0;
 
 		// Return 'this' so it is possible to 
 		// concatenate setters
@@ -66,7 +68,24 @@ namespace Engine
 			return m_texture;
 		}
 
-	private:
+		inline const Transform& getTransform() const
+		{
+			return m_transform;
+		}
+
+		inline const Material* getMaterial() const
+		{
+			if (m_material)
+				return m_material;
+		}
+
+		inline const Texture* getTexture() const
+		{
+			if (m_texture)
+				return m_texture;
+		}
+
+	protected:
 		Transform m_transform;
 		Material* m_material;
 		Texture*  m_texture;

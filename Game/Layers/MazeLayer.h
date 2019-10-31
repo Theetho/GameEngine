@@ -16,7 +16,8 @@ public:
 
 	virtual void onEvent(Engine::Event& event) override;
 private:
-	Engine::Camera3D   m_camera;	
+	Engine::Camera3D    m_camera;
+	Engine::Character   m_character;
 	Engine::Scope<Maze> m_maze;
 };
 

@@ -90,6 +90,8 @@ Cube::~Cube()
 {
 }
 
-void Cube::onUpdate()
+void Cube::onUpdate(
+	const double& delta
+)
 {
 }

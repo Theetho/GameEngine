@@ -19,8 +19,8 @@ namespace Engine
 		);
 
 		inline static Mat4 projection(
-			const double& aspectRatio = 16.0/9.0,
 			const double& fov = 70.0,
+			const double& aspectRatio = 16.0/9.0,
 			const double& _near = 0.1,
 			const double& _far = 100.0
 		)
