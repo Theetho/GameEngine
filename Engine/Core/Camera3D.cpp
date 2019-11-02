@@ -2,7 +2,7 @@
 #include "Camera3D.h"
 #include "Input.h"
 #include "Util/Matrix.h"
-#include "Entity/CameraController.h"
+#include "GameObject/CameraController.h"
 
 namespace Engine
 {
@@ -34,7 +34,13 @@ namespace Engine
 	{
 		if (m_controller)
 		{
-			m_position = m_controller->getTransform().getPosition() + m_controller->getOffset();
+			if (m_controller->isJumping())
+			{
+				m_position.x = m_controller->getTransform().getPosition().x + m_controller->getOffset().x;
+				m_position.z = m_controller->getTransform().getPosition().z + m_controller->getOffset().z;
+			}
+			else
+				m_position = m_controller->getTransform().getPosition() + m_controller->getOffset();
 		}
 		else
 		{
@@ -74,7 +80,7 @@ namespace Engine
 				distance_forward * cos(glm::radians(180 - m_yaw))
 				+ distance_sideway * sin(glm::radians(180 - m_yaw));
 
-			m_position += glm::vec3(dx, 0.f, dz);
+			m_position += Vec3(dx, 0.f, dz);
 
 			// Update the pitch and yaw
 			auto mouse_rel = Input::getMouseOffset();

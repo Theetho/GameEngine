@@ -1,9 +1,10 @@
 #pragma once
-#include "Entity.h"
+
+#include "GameObject.h"
 
 namespace Engine
 {
-	class CameraController : public Entity
+	class CameraController : public GameObject
 	{
 	public:
 		CameraController();
@@ -11,6 +12,10 @@ namespace Engine
 
 		void onUpdate(
 			const double& delta
+		) override;
+
+		void onEvent(
+			Event& event
 		) override;
 
 		inline void setOffset(
@@ -26,14 +31,7 @@ namespace Engine
 		}
 
 	private:
-		float m_speed, m_rotationSpeed;
-		float m_forwardSpeed, m_strafeSpeed;
-
 		Vec3 m_offset;
-
-		void move(
-			const double& delta
-		);
 	};
 }
 

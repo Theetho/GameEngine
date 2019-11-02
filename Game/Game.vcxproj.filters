@@ -4,6 +4,9 @@
     <Filter Include="Core">
       <UniqueIdentifier>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject">
+      <UniqueIdentifier>{D652F52D-C20A-377B-2B12-10D717E9D16B}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Layers">
       <UniqueIdentifier>{157446C0-0116-7196-EAD0-84EAD611F8E6}</UniqueIdentifier>
     </Filter>
@@ -18,11 +21,14 @@
     <ClInclude Include="Core\GameApplication.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="GameObject\Cube.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Player.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
     <ClInclude Include="Layers\MazeLayer.h">
       <Filter>Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\Cube.h">
-      <Filter>Models</Filter>
     </ClInclude>
     <ClInclude Include="Models\Maze.h">
       <Filter>Models</Filter>
@@ -36,11 +42,14 @@
     <ClCompile Include="Core\GameApplication.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\Cube.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Player.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
     <ClCompile Include="Layers\MazeLayer.cpp">
       <Filter>Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="Models\Cube.cpp">
-      <Filter>Models</Filter>
     </ClCompile>
     <ClCompile Include="Models\Maze.cpp">
       <Filter>Models</Filter>

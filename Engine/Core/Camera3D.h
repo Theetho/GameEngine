@@ -76,6 +76,7 @@ namespace Engine
 		Mat4 m_VP;
 
 		Vec3 m_position;
+		Vec3 m_direction;
 
 		float m_speed, m_mouseSpeed, m_rotationSpeed;
 		float m_forwardSpeed, m_strafeSpeed;

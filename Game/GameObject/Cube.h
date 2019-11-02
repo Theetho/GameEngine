@@ -1,6 +1,6 @@
 #pragma once
 
-class Cube : public Engine::Entity
+class Cube : public Engine::GameObject
 {
 public:
 	explicit Cube(

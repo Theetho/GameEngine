@@ -20,11 +20,11 @@ void MazeLayer::onAttach()
 
 	Cube cube;
 
-	m_character.setVao(cube.getVao());
+	m_player.setVao(cube.getVao());
 
-	m_character.setPosition(m_maze->getEntry());
-	m_character.getCameraController().setOffset(Engine::Vec3(0.0f, 5.0f, 3.0f));
-	m_camera.getControlled(&m_character.getCameraController());
+	m_player.setPosition(m_maze->getEntry());
+	m_player.getCameraController().setOffset(Engine::Vec3(0.0f, 5.0f, 3.0f));
+	m_camera.getControlled(&m_player.getCameraController());
 
 	Engine::AssetManager::getTexture2DLibrary().load("snow.jpg");
 	Engine::AssetManager::getTexture2DLibrary().load("hedge.jpg");
@@ -41,7 +41,7 @@ void MazeLayer::onDetach()
 
 void MazeLayer::onUpdate(const double& delta)
 {
-	m_character.onUpdate(delta);
+	m_player.onUpdate(delta);
 
 	m_camera.onUpdate(delta);
 
@@ -91,8 +91,8 @@ void MazeLayer::onUpdate(const double& delta)
 	);
 	Engine::Renderer::submit(
 		shader,
-		m_character.getVao(),
-		m_character.getTransform()
+		m_player.getVao(),
+		m_player.getTransform()
 	);
 
 	Engine::Renderer::endScene();
@@ -102,4 +102,5 @@ void MazeLayer::onUpdate(const double& delta)
 void MazeLayer::onEvent(Engine::Event& event)
 {
 	m_camera.onEvent(event);
+	m_player.onEvent(event);
 }

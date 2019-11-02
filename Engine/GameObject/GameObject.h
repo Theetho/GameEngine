@@ -3,27 +3,36 @@
 #include "Transform.h"
 #include "Renderer/Material.h"
 #include "Renderer/Texture.h"
+#include "Component/Component.h"
 
 namespace Engine
 {
-	class Entity
+	class GameObject
 	{
 	public:
-		Entity(
+		GameObject(
 			const Transform& transform = Transform(),
 			Material* material = nullptr,
 			Texture* texture = nullptr
 		);
 		
-		virtual ~Entity();
+		virtual ~GameObject();
 
 		virtual void onUpdate(
 			const double& delta
-		) = 0;
+		);
+
+		virtual void onEvent(
+			Event& event
+		);
+
+		virtual bool isJumping() const;
+
+		virtual bool isMoving() const;
 
 		// Return 'this' so it is possible to 
 		// concatenate setters
-		inline Entity& setTransform(
+		inline GameObject& setTransform(
 			const Transform& transform
 		)
 		{
@@ -33,7 +42,7 @@ namespace Engine
 
 		// Return 'this' so it is possible to 
 		// concatenate setters
-		inline Entity& setMaterial(
+		inline GameObject& setMaterial(
 			Material* material
 		)
 		{
@@ -43,7 +52,7 @@ namespace Engine
 
 		// Return 'this' so it is possible to 
 		// concatenate setters
-		inline Entity& setTexture(
+		inline GameObject& setTexture(
 			Texture* texture
 		)
 		{
@@ -85,10 +94,44 @@ namespace Engine
 				return m_texture;
 		}
 
+		template<typename T>
+		T* getComponent(
+		)
+		{
+			static_assert(std::is_base_of<Component, T>::value, "T is not a component");
+			T tmp;
+			std::string name = tmp.getName();
+			for (auto component : m_components)
+			{
+				if (component->getName() == name)
+					return static_cast<T*>(component);
+			}
+
+			return nullptr;
+		}
+
+		template<typename T>
+		const T* getComponent(
+		) const
+		{
+			static_assert(std::is_base_of<Component, T>::value, "T is not a component");
+			T tmp;
+			std::string name = tmp.getName();
+			for (auto component : m_components)
+			{
+				if (component->getName() == name)
+					return static_cast<T*>(component);
+			}
+
+			return nullptr;
+		}
+
 	protected:
 		Transform m_transform;
 		Material* m_material;
 		Texture*  m_texture;
+
+		std::vector<Component*> m_components;
 	};
 }
 

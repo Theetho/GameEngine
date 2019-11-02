@@ -7,7 +7,7 @@ Cube::Cube(
 	Engine::Material* material,
 	Engine::Texture* texture
 )
-	: Engine::Entity(transform, material, texture)
+	: Engine::GameObject(transform, material, texture)
 	, m_size((size) / 2.0f)
 {
 	m_vao = Engine::VertexArray::create();
@@ -94,4 +94,5 @@ void Cube::onUpdate(
 	const double& delta
 )
 {
+	GameObject::onUpdate(delta);
 }
