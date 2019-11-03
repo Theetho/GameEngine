@@ -5,9 +5,7 @@ class Cube : public Engine::GameObject
 public:
 	explicit Cube(
 		const float& size = 1.0,
-		const Engine::Transform& transform = Engine::Transform(),
-		Engine::Material* material = nullptr,
-		Engine::Texture* texture = nullptr
+		const Engine::Transform& transform = Engine::Transform()
 	);
 	~Cube();
 

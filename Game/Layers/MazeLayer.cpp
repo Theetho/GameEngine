@@ -3,7 +3,7 @@
 #include "Util/FileLoader.h"
 
 MazeLayer::MazeLayer()
-	: m_camera(Engine::Vec3(0, 1, 5))
+	: m_camera(m_player, Engine::Vec3(0.0f, 5.0f, -3.0f))
 {
 }
 
@@ -21,10 +21,8 @@ void MazeLayer::onAttach()
 	Cube cube;
 
 	m_player.setVao(cube.getVao());
-
 	m_player.setPosition(m_maze->getEntry());
-	m_player.getCameraController().setOffset(Engine::Vec3(0.0f, 5.0f, 3.0f));
-	m_camera.getControlled(&m_player.getCameraController());
+	m_player.getTransform().setScale(0.5f);
 
 	Engine::AssetManager::getTexture2DLibrary().load("snow.jpg");
 	Engine::AssetManager::getTexture2DLibrary().load("hedge.jpg");

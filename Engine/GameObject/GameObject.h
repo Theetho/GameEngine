@@ -11,9 +11,7 @@ namespace Engine
 	{
 	public:
 		GameObject(
-			const Transform& transform = Transform(),
-			Material* material = nullptr,
-			Texture* texture = nullptr
+			const Transform& transform = Transform()
 		);
 		
 		virtual ~GameObject();
@@ -40,58 +38,14 @@ namespace Engine
 			return *this;
 		}
 
-		// Return 'this' so it is possible to 
-		// concatenate setters
-		inline GameObject& setMaterial(
-			Material* material
-		)
-		{
-			m_material = material;
-			return *this;
-		}
-
-		// Return 'this' so it is possible to 
-		// concatenate setters
-		inline GameObject& setTexture(
-			Texture* texture
-		)
-		{
-			m_texture = texture;
-			return *this;
-		}
-
 		inline Transform& getTransform()
 		{
 			return m_transform;
 		}
 
-		inline Material* getMaterial()
-		{
-			if (m_material)
-				return m_material;
-		}
-
-		inline Texture* getTexture()
-		{
-			if (m_texture)
-			return m_texture;
-		}
-
 		inline const Transform& getTransform() const
 		{
 			return m_transform;
-		}
-
-		inline const Material* getMaterial() const
-		{
-			if (m_material)
-				return m_material;
-		}
-
-		inline const Texture* getTexture() const
-		{
-			if (m_texture)
-				return m_texture;
 		}
 
 		template<typename T>
@@ -128,10 +82,34 @@ namespace Engine
 
 	protected:
 		Transform m_transform;
-		Material* m_material;
-		Texture*  m_texture;
 
 		std::vector<Component*> m_components;
+	};
+
+	class DynamicObject : public GameObject
+	{
+	public:
+		DynamicObject(
+			const Transform& transform = Transform()
+		);
+		virtual ~DynamicObject()
+		{
+		}
+
+		inline void setDirection(
+			const Vec3& direction
+		)
+		{
+			m_direction = direction;
+		}
+
+		inline const Vec3& getDirection() const
+		{
+			return m_direction;
+		}
+
+	protected:
+		Vec3 m_direction;
 	};
 }
 

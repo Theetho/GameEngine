@@ -23,11 +23,12 @@ namespace Engine
 		const Camera3D& camera
 	)
 	{
-		Mat4 matrix(1.f);
-		matrix = glm::rotate(matrix, glm::radians(camera.getPitch()), { 1, 0, 0 });
-		matrix = glm::rotate(matrix, glm::radians(camera.getYaw()), { 0, 1, 0 });
-		matrix = glm::translate(matrix, -camera.getPosition());
-
-		return matrix;
+		//Mat4 matrix(1.f);
+		//matrix = glm::rotate(matrix, glm::radians(camera.getPitch()), { 1, 0, 0 });
+		//matrix = glm::rotate(matrix, glm::radians(camera.getYaw()), { 0, 1, 0 });
+		//matrix = glm::translate(matrix, -camera.getPosition());
+		//
+		//return matrix;
+		return glm::lookAt(camera.getPosition(), camera.getTarget(), camera.getUp());
 	}
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-class Player : public Engine::GameObject
+class Player : public Engine::DynamicObject
 {
 public:
 	Player();
@@ -27,7 +27,6 @@ public:
 	)
 	{
 		m_transform.setPosition(position);
-		m_cameraController.getTransform().setPosition(position);
 	}
 
 	// TEMPORARY
@@ -36,19 +35,9 @@ public:
 		return m_vao;
 	}
 
-	inline Engine::CameraController& getCameraController()
-	{
-		return m_cameraController;
-	}
-
-	inline const Engine::CameraController& getCameraController() const
-	{
-		return m_cameraController;
-	}
 private:
 	// TEMPORARY
 	Engine::Ref<Engine::VertexArray> m_vao;
-	Engine::CameraController         m_cameraController;
 };
 
 

@@ -2,9 +2,10 @@
 #include "Player.h"
 
 Player::Player()
-	: GameObject()
-	, m_cameraController()
+	: DynamicObject()
 {
+	m_components.push_back(new Engine::PhysicsComponent(this));
+	m_components.push_back(new Engine::MovementComponent(this));
 }
 
 Player::~Player()
@@ -16,11 +17,13 @@ void Player::onUpdate(
 )
 {
 	GameObject::onUpdate(delta);
-	m_cameraController.onUpdate(delta);
-	m_transform.setPosition(m_cameraController.getTransform().getPosition());
+	m_direction = getComponent<Engine::MovementComponent>()->getDirection();
 }
 
 void Player::onEvent(Engine::Event& event)
 {
-	m_cameraController.onEvent(event);
+	if (event.type == Engine::Event::KeyPressed && event.keyEvent.code == ENGINE_KEY_SPACE)
+	{
+		getComponent<Engine::PhysicsComponent>()->jump();
+	}
 }

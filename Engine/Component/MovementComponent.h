@@ -22,6 +22,11 @@ namespace Engine
 			return "Movement";
 		}
 		
+		inline const Vec3& getDirection() const
+		{
+			return m_movement.direction;
+		}
+
 		inline bool isMoving() const
 		{
 			return m_movement.forward || m_movement.strafe;
@@ -33,7 +38,7 @@ namespace Engine
 		struct Speed
 		{
 			const float velocity = 0.1f;
-			const float rotation = 150.0f;
+			const float rotation = 200.0f;
 			const float max		 = 5.0f;
 			float forward;
 			float strafe;
@@ -42,19 +47,15 @@ namespace Engine
 
 		struct Movement
 		{
-			bool  forward;
-			bool  strafe;
-			float dx;
-			float dy;
-			float dz;
+			bool forward;
+			bool strafe;
+			Vec3 direction;
 
 			inline void reset()
 			{
-				forward  = false;
-				strafe   = false;
-				dx		 = 0.0f;
-				dy		 = 0.0f;
-				dz		 = 0.0f;
+				forward   = false;
+				strafe    = false;
+				direction = Vec3(0.0f, 0.0f, 0.0f);
 			}
 		};
 		Movement m_movement;
@@ -71,6 +72,14 @@ namespace Engine
 			}
 		};
 		Distance m_distance;
+
+		struct Axis
+		{
+			Vec3 up = Vec3(0.0, 1.0, 0.0);
+			Vec3 forward = Vec3(0.0, 0.0, 1.0);
+			Vec3 strafe;
+		};
+		Axis m_axis;
 
 		void clapSpeed(
 			float& speed,

@@ -70,11 +70,10 @@ namespace Engine
 		
 		if (!m_layerStack.isEmpty())
 		{
-			auto layer = m_layerStack.end() - 1;
+			auto layer = m_layerStack.end();
 			while (layer != m_layerStack.begin() && !event.isHandled())
 			{
-				(*layer)->onEvent(event);
-				--layer;
+				(*--layer)->onEvent(event);
 			}
 		}
 		

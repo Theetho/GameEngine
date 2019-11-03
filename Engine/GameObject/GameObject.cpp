@@ -5,13 +5,9 @@
 namespace Engine
 {
 	GameObject::GameObject(
-		const Transform& transform,
-		Material* material,
-		Texture* texture
+		const Transform& transform
 	)
 		: m_transform(transform)
-		, m_material(material)
-		, m_texture(texture)
 	{
 	}
 
@@ -48,5 +44,13 @@ namespace Engine
 	bool GameObject::isMoving() const
 	{
 		return getComponent<MovementComponent>()->isMoving();
+	}
+
+	DynamicObject::DynamicObject(
+		const Transform& transform
+	)
+		: GameObject(transform)
+		, m_direction(0.0f, 0.0f, 0.0f)
+	{
 	}
 }

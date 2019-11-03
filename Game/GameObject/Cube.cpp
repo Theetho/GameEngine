@@ -3,11 +3,9 @@
 
 Cube::Cube(
 	const float& size,
-	const Engine::Transform& transform,
-	Engine::Material* material,
-	Engine::Texture* texture
+	const Engine::Transform& transform
 )
-	: Engine::GameObject(transform, material, texture)
+	: Engine::GameObject(transform)
 	, m_size((size) / 2.0f)
 {
 	m_vao = Engine::VertexArray::create();

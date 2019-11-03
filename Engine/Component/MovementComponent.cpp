@@ -13,6 +13,7 @@ namespace Engine
 		, m_transform(&owner->getTransform())
 		, m_speed()
 		, m_movement()
+		, m_distance()
 	{
 	}
 
@@ -54,9 +55,13 @@ namespace Engine
 		}
 
 		if (Input::isKeyPressed(ENGINE_KEY_Q))
-			m_transform->getRotation().z -= m_speed.rotation * delta;
+		{
+			m_transform->getRotation().y += m_speed.rotation * delta;
+		}
 		if (Input::isKeyPressed(ENGINE_KEY_E))
-			m_transform->getRotation().z += m_speed.rotation * delta;
+		{
+			m_transform->getRotation().y -= m_speed.rotation * delta;
+		}
 
 		clapSpeed(m_speed.forward, friction, m_movement.forward);
 		clapSpeed(m_speed.strafe, friction, m_movement.strafe);
@@ -64,18 +69,18 @@ namespace Engine
 		// Move the GameObject along two axis only : 
 		// forward and sideways
 		m_distance.forward  = m_speed.forward * delta;
-		m_distance.strafe = m_speed.strafe * delta;
+		m_distance.strafe   = m_speed.strafe  * delta;
 	
-		m_movement.dx =
-			m_distance.forward * sin(glm::radians(180 - m_transform->getRotation().z))
-		  - m_distance.strafe  * cos(glm::radians(180 - m_transform->getRotation().z));
+		m_movement.direction.x =
+			m_distance.forward * sin(glm::radians(/*180 - */m_transform->getRotation().y))
+		  - m_distance.strafe  * cos(glm::radians(/*180 - */m_transform->getRotation().y));
 
-		m_movement.dz =
-			m_distance.forward * cos(glm::radians(180 - m_transform->getRotation().z))
-		  + m_distance.strafe  * sin(glm::radians(180 - m_transform->getRotation().z));
-
-		m_transform->getPosition() += Vec3(m_movement.dx, 0.f, m_movement.dz);
-		m_transform->updateModel();
+		m_movement.direction.z =
+			m_distance.forward * cos(glm::radians(/*180 - */m_transform->getRotation().y))
+		  + m_distance.strafe  * sin(glm::radians(/*180 - */m_transform->getRotation().y));
+	
+		m_transform->getPosition() += Vec3(m_movement.direction.x, 0.f, m_movement.direction.z);
+		m_transform->updateModel(); 
 	}
 
 	void MovementComponent::clapSpeed(

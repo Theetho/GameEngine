@@ -67,6 +67,14 @@ namespace Engine
 			updateModel();
 		}
 		
+		inline void setScale(const float& scale)
+		{
+			m_scale.x = scale;
+			m_scale.y = scale;
+			m_scale.z = scale;
+			updateModel();
+		}
+
 		inline void updateModel()
 		{
 			m_model = Matrix::model(m_position, m_rotation, m_scale);

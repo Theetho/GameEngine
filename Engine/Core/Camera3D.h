@@ -5,54 +5,47 @@
 
 namespace Engine
 {
-	class CameraController;
+	class DynamicObject;
 
 	class Camera3D
 	{
 	public:
 		Camera3D(
-			const Vec3& position = Vec3(0.0f, 0.0f, 0.0f)
+			const Vec3& position = Vec3(0.0f, 1.0f, 0.0f),
+			const Vec3& target = Vec3(0.0f, 0.0f, 0.0f),
+			const Vec3& up = Vec3(0.0f, 1.0f, 0.0f)
 		);
 
-		~Camera3D();
+		virtual ~Camera3D();
 
-		void onUpdate(
+		virtual void onUpdate(
 			const double& delta
 		);
 
-		void onEvent(
+		virtual void onEvent(
 			Event& event
 		);
-
-		inline void getControlled(
-			const CameraController* controller
-		)
-		{
-			m_controller = controller;
-			m_yaw   = 0.0f;
-			m_pitch = 60.0f;
-		}
 
 		inline void setPosition(
 			const Vec3& position
 		)
 		{
-			m_position = position;
+			m_axis.position = position;
 		}
 
 		inline const Vec3& getPosition() const
 		{
-			return m_position;
+			return m_axis.position;
 		}
 
-		inline const float getPitch() const 
+		inline const Vec3& getTarget() const
 		{
-			return m_pitch; 
+			return m_axis.target;
 		}
-
-		inline const float getYaw() const
-		{ 
-			return m_yaw;
+		
+		inline const Vec3& getUp() const
+		{
+			return m_axis.up;
 		}
 
 		inline const Mat4& getView() const
@@ -70,21 +63,66 @@ namespace Engine
 			return m_VP;
 		}
 
-	private:
+	protected:
 		Mat4 m_view;
 		Mat4 m_projection;
 		Mat4 m_VP;
 
-		Vec3 m_position;
-		Vec3 m_direction;
+		struct Axis
+		{
+			Vec3 position;
+			Vec3 target;
+			Vec3 up;
 
-		float m_speed, m_mouseSpeed, m_rotationSpeed;
-		float m_forwardSpeed, m_strafeSpeed;
-		float m_pitch, m_yaw;
-
-		const CameraController* m_controller;
+			Axis(
+				const Vec3& position,
+				const Vec3& target,
+				const Vec3& up
+			)
+				: position(position)
+				, target(target)
+				, up(up)
+			{
+			}
+		};
+		Axis m_axis;
 
 		void updateVP();
+	};
+
+	class Camera3DLocked : public Camera3D
+	{
+	public:
+		Camera3DLocked(
+			const DynamicObject& target,
+			const Vec3& offset
+		);
+		~Camera3DLocked();
+
+		void onUpdate(
+			const double& delta
+		) override;
+
+		void onEvent(
+			Event& event
+		) override;
+
+		inline void setOffset(
+			const Vec3& offset
+		)
+		{
+			m_offset = offset;
+		}
+
+		inline const Vec3& getOffset() const
+		{
+			return m_offset;
+		}
+
+	private:
+		const DynamicObject& m_target;
+		
+		Vec3 m_offset;
 	};
 }
 
