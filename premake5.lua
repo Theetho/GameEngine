@@ -4,9 +4,8 @@ workspace "GameEngine"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-x64"
 
-include "Engine/vendor/GLFW"
-include "Engine/vendor/glad"
-include "Engine/vendor/glm"
+include "Engine/Vendor/GLFW"
+include "Engine/Vendor/glad"
 
 project "Engine"
 	location "Engine"
@@ -27,7 +26,9 @@ project "Engine"
 		"%{prj.name}/*.h",
 		"%{prj.name}/*/*.cpp",
 		"%{prj.name}/*.cpp",
-		"%{prj.name}/Vendor/stb/*"
+		"%{prj.name}/Vendor/stb/*",
+		"%{prj.name}/Vendor/glm/glm/**.hpp",
+		"%{prj.name}/Vendor/glm/glm/**.inl",
 	}
 
 	includedirs
