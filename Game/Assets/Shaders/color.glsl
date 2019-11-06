@@ -1,5 +1,5 @@
 #type vertex
-#version 460 core
+#version 330 core
 
 layout (location = 0) in vec3 in_position;
 
@@ -10,7 +10,7 @@ void main()
 	gl_Position = u_MVP * vec4(in_position, 1.0);
 }
 #type fragment
-#version 460 core
+#version 330 core
 
 layout (location = 0) out vec4 out_color;
 

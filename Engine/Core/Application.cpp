@@ -24,6 +24,8 @@ namespace Engine
 		m_window->setEventCallback(
 			bind_function(Application::onEvent)
 		);
+
+		m_collisionSystem = CollisionSystem::Get();
 	}
 
 	Application::~Application()
@@ -48,6 +50,8 @@ namespace Engine
 			}
 			// ---------------
 			
+			m_collisionSystem->onUpdate(m_deltaTime);
+
 			m_window->onUpdate(m_deltaTime);
 		}
 	}

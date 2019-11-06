@@ -79,6 +79,11 @@ namespace Engine
 			m_distance.forward * cos(glm::radians(/*180 - */m_transform->getRotation().y))
 		  + m_distance.strafe  * sin(glm::radians(/*180 - */m_transform->getRotation().y));
 	
+		if (m_owner->isColliding())
+		{
+			m_movement.direction = - m_movement.direction;
+		}
+
 		m_transform->getPosition() += Vec3(m_movement.direction.x, 0.f, m_movement.direction.z);
 		m_transform->updateModel(); 
 	}

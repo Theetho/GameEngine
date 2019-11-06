@@ -82,6 +82,12 @@ Cube::Cube(
 		);
 
 	m_vao->addIndexBuffer(ibo);
+
+	auto collider = new Engine::BoxCollider(this, Engine::Vec3(), size, size, size);
+	
+//	m_components.push_back(collider);
+	
+	Engine::CollisionSystem::addCollider(collider);
 }
 
 Cube::~Cube()

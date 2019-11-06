@@ -7,6 +7,7 @@
 #include "Renderer/Shader.h"
 #include "Renderer/Buffer.h"
 #include "Renderer/VertexArray.h"
+#include "System/CollisionSystem.h"
 
 namespace Engine
 {
@@ -46,11 +47,12 @@ namespace Engine
 		}
 
 	private:
-		Scope<Window> m_window;
-		bool		  m_running = true;
-		LayerStack	  m_layerStack;
-		double		  m_time = 0.0, m_deltaTime = 0.0;
-		double		  m_FPS_CAP = 1.0 / 60.0;
+		Scope<Window>		   m_window;
+		CollisionSystem*	   m_collisionSystem;
+		bool				   m_running = true;
+		LayerStack			   m_layerStack;
+		double				   m_time = 0.0, m_deltaTime = 0.0;
+		double				   m_FPS_CAP = 1.0 / 60.0;
 	private:
 		static Application* s_instance;
 	};

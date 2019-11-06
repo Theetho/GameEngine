@@ -9,7 +9,7 @@ namespace Engine
 	{
 	public:
 		PhysicsComponent(
-			GameObject* owner = nullptr
+			GameObject* owner
 		);
 		~PhysicsComponent();
 

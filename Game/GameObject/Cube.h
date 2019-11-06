@@ -3,10 +3,11 @@
 class Cube : public Engine::GameObject
 {
 public:
-	explicit Cube(
-		const float& size = 1.0,
+	Cube(
+		const float& size,
 		const Engine::Transform& transform = Engine::Transform()
 	);
+
 	~Cube();
 
 	void onUpdate(

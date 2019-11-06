@@ -1,82 +1,84 @@
 #pragma once
 
+#include "Component/Component.h"
 #include "Maths.h"
 
 namespace Engine
 {
-	template<unsigned int dimension>
-	class Collider
+	class CollisionSystem;
+
+	class Collider : public Component
 	{
-		using Vec = glm::vec<dimension, float>;
 	public:
 		Collider(
-			const Vec& center
-		)
-			: m_center(center)
-		{
-		}
+			GameObject* owner,
+			const Vec3& center
+		);
 
 		virtual ~Collider()
+		{}
+
+		void onUpdate(const double& delta) override;
+		
+		inline std::string getName() override
 		{
+			return "Collider";
 		}
-
-		template<unsigned int dim>
-		bool collide(
-			const Collider* other
-		)
-		{
-			float distance = glm::distance(m_center, other->m_center);
-			float distanceMin = m_length + m_center->m_length;
-
-			if (distance <= distanceMin)
-				return true;
-			return false;
-		}
-
 	protected:
-		Vec   m_center;
-		float m_length;
+		Vec3 m_center;
+		Vec3 m_offset;
 	};
 
-	class BoxCollider : public Collider<3>
+	class BoxCollider : public Collider
 	{
 	public:
 		BoxCollider(
+			GameObject* owner,
 			const Vec3& center,
-			const Vec3& boundaries
+			const float& width,
+			const float& height,
+			const float& depth
 		);
 
-		~BoxCollider()
-		{
-		}
+		~BoxCollider();
+
 	private:
-		Vec3 m_boundaries;
+		friend CollisionSystem;
+
+		// Top Right Front point (x, y, z) / 2
+		Vec3  m_max;
+		// Bottom Left Back point (-x, -y, -z) / 2
+		Vec3  m_min;
 	};
-	
-	class SphereCollider : public Collider<3>
+
+	class SphereCollider : public Collider
 	{
 	public:
 		SphereCollider(
+			GameObject* owner,
 			const Vec3& center,
 			const float& radius
 		);
-		~SphereCollider()
-		{
-		}
+
+		~SphereCollider();
+
 	private:
+		friend CollisionSystem;
+
 		float m_radius;
 	};
-	
-	class RectangleCollider : public Collider<2>
+
+	class PointCollider : public Collider
 	{
-	};
-	
-	class CircleCollider : public Collider<2>
-	{
-	};
-	
-	template<unsigned int dimension>
-	class PointCollider : public Collider<dimension>
-	{
+	public:
+		PointCollider(
+			GameObject* owner,
+			const Vec3& center
+		);
+
+		~PointCollider();
+
+	private:
+		friend CollisionSystem;
 	};
 }

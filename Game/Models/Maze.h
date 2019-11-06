@@ -12,26 +12,26 @@ public:
 	~Maze();
 
 	inline void addWalls(
-		const Cube& cube
+		Cube* cube
 	)
 	{
 		m_walls.push_back(cube);
 	}
 
 	inline void addGround(
-		const Cube& cube
+		Cube* cube
 	)
 	{
 		m_ground.push_back(cube);
 	}
 
-	inline Cube& operator[](const unsigned int& index)
+	inline Cube* operator[](const unsigned int& index)
 	{
 		if (index < m_walls.size())
 			return m_walls[index];
 	}
 
-	inline const Cube& operator[](const unsigned int& index) const
+	inline const Cube* operator[](const unsigned int& index) const
 	{
 		if (index < m_walls.size())
 			return m_walls[index];
@@ -61,19 +61,19 @@ public:
 		m_exit = exit;
 	}
 
-	inline std::vector<Cube>& getWalls()
+	inline std::vector<Cube*>& getWalls()
 	{
 		return m_walls;
 	}
 
-	inline std::vector<Cube>& getGround()
+	inline std::vector<Cube*>& getGround()
 	{
 		return m_ground;
 	}
 
 private:
-	std::vector<Cube> m_walls;
-	std::vector<Cube> m_ground;
+	std::vector<Cube*> m_walls;
+	std::vector<Cube*> m_ground;
 	unsigned int m_width, m_height;
 	Engine::Vec3 m_entry, m_exit;
 };

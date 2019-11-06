@@ -6,5 +6,6 @@
 #include "Util.h"
 #include "Component.h"
 #include "GameObject.h"
+#include "System.h"
 
 #include "Core/EntryPoint.h"

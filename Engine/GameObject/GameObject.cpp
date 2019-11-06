@@ -4,10 +4,12 @@
 
 namespace Engine
 {
+
 	GameObject::GameObject(
 		const Transform& transform
 	)
 		: m_transform(transform)
+		, m_isColliding(false)
 	{
 	}
 
@@ -38,12 +40,22 @@ namespace Engine
 	
 	bool GameObject::isJumping() const
 	{
-		return getComponent<PhysicsComponent>()->isJumping();
+		auto component = getComponent<PhysicsComponent>();
+		if (component)
+		{
+			return component->isJumping();
+		}
+		return false;
 	}
 
 	bool GameObject::isMoving() const
 	{
-		return getComponent<MovementComponent>()->isMoving();
+		auto component = getComponent<MovementComponent>();
+		if (component)
+		{
+			return component->isMoving();
+		}
+		return false;
 	}
 
 	DynamicObject::DynamicObject(

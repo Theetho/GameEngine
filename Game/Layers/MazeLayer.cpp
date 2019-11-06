@@ -18,7 +18,7 @@ void MazeLayer::onAttach()
 
 	m_maze = FileLoader::loadMaze("Assets/MazeFiles/maze.mz");
 
-	Cube cube;
+	Cube cube(1.0f);
 
 	m_player.setVao(cube.getVao());
 	m_player.setPosition(m_maze->getEntry());
@@ -63,8 +63,8 @@ void MazeLayer::onUpdate(const double& delta)
 	{
 		Engine::Renderer::submit(
 			shader,
-			cube.getVao(),
-			cube.getTransform()
+			cube->getVao(),
+			cube->getTransform()
 		);
 	}
 
@@ -77,8 +77,8 @@ void MazeLayer::onUpdate(const double& delta)
 	{
 		Engine::Renderer::submit(
 			shader,
-			cube.getVao(),
-			cube.getTransform()
+			cube->getVao(),
+			cube->getTransform()
 		);
 	}
 
@@ -87,6 +87,7 @@ void MazeLayer::onUpdate(const double& delta)
 		"u_color",
 		Engine::Color::Yellow
 	);
+
 	Engine::Renderer::submit(
 		shader,
 		m_player.getVao(),

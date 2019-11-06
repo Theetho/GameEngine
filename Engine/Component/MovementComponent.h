@@ -9,7 +9,7 @@ namespace Engine
 	{
 	public:
 		MovementComponent(
-			GameObject* owner = nullptr
+			GameObject* owner
 		);
 		~MovementComponent();
 

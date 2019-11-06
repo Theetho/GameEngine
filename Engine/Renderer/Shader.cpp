@@ -173,6 +173,7 @@ namespace Engine
 		std::string source = "";
 		std::ifstream file(filePath.c_str(), std::ios::in, std::ios::binary );
 
+		
 		if (file.is_open())
 		{
 			std::string line;
@@ -180,33 +181,40 @@ namespace Engine
 			{
 				// When the shader type changes, the previous
 				// one is pushed in the shader source code map
-				if (line[0] == '#')
+				if (line == "#type vertex")
 				{
 					if (type && source != "")
 					{
 						m_shaderSources[type] = source;
 						source = "";
 					}
-
-					if (line == "#type vertex")
-						type = GL_VERTEX_SHADER;
-					else if (line == "#type fragment")
-						type = GL_FRAGMENT_SHADER;
-					else
-						ENGINE_ASSERT(false, "Unknow shader type");
+					type = GL_VERTEX_SHADER;
+				}
+				else if (line == "#type fragment")
+				{
+					if (type && source != "")
+					{
+						m_shaderSources[type] = source;
+						source = "";
+					}
+					type = GL_FRAGMENT_SHADER;
 				}
 				else
+				{
 					source += line + '\n';
+				}
 			}
 			// Push the last shader source code
 			if (type && source != "")
+			{
 				m_shaderSources[type] = source;
+			}
 			
 			file.close();
 		}
 		else
 		{
-			ENGINE_LOG_ERROR("Can't open the file : {0}", filePath.c_str());
+			ENGINE_LOG_ERROR("Can't open the file : {0}", filePath);
 			ENGINE_ASSERT(file, "Can't find the shader file");
 		}
 	}

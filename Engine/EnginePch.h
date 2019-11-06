@@ -7,6 +7,9 @@
 #include <map>
 #include <functional>
 #include <initializer_list>
+#include <algorithm>
+#include <unordered_set>
+#include <set>
 #include <stb_image.h>
 
 #ifdef ENGINE_WINDOWS

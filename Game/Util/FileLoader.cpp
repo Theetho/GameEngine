@@ -48,28 +48,28 @@ Engine::Scope<Maze> FileLoader::loadMaze(
 			switch (digit)
 			{
 			case '0':
-				maze->addGround(Cube(size, Engine::Transform(position)));
+				maze->addGround(new Cube(size, Engine::Transform(position)));
 
 				break;
 
 			case '1':
 				position.y = -position.y;
 				
-				maze->addWalls(Cube(size, Engine::Transform(position)));
+				maze->addWalls(new Cube(size, Engine::Transform(position)));
 
 				break;
 
 			case 'i':
-				maze->addGround(Cube(size, Engine::Transform(position)));
+				maze->addGround(new Cube(size, Engine::Transform(position)));
 
-				maze->setEntry(maze->getGround().back().getTransform().getPosition() + Engine::Vec3(0.0f, size, 0.0f));
+				maze->setEntry(maze->getGround().back()->getTransform().getPosition() + Engine::Vec3(0.0f, size, 0.0f));
 
 				break;
 
 			case 'o':
-				maze->addGround(Cube(size, Engine::Transform(position)));
+				maze->addGround(new Cube(size, Engine::Transform(position)));
 
-				maze->setExit(maze->getGround().back().getTransform().getPosition() + Engine::Vec3(0.0f, size, 0.0f));
+				maze->setExit(maze->getGround().back()->getTransform().getPosition() + Engine::Vec3(0.0f, size, 0.0f));
 
 				break;
 

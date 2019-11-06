@@ -8,7 +8,7 @@ namespace Engine
 	{
 	public:
 		Component(
-			GameObject* owner = nullptr
+			GameObject* owner
 		);
 		virtual ~Component();
 

@@ -28,6 +28,18 @@ namespace Engine
 
 		virtual bool isMoving() const;
 
+		virtual bool isColliding() const
+		{
+			return m_isColliding;
+		}
+		
+		virtual void isColliding(
+			const bool& is
+		)
+		{
+			m_isColliding = is;
+		}
+
 		// Return 'this' so it is possible to 
 		// concatenate setters
 		inline GameObject& setTransform(
@@ -53,7 +65,7 @@ namespace Engine
 		)
 		{
 			static_assert(std::is_base_of<Component, T>::value, "T is not a component");
-			T tmp;
+			T tmp(nullptr);
 			std::string name = tmp.getName();
 			for (auto component : m_components)
 			{
@@ -69,7 +81,7 @@ namespace Engine
 		) const
 		{
 			static_assert(std::is_base_of<Component, T>::value, "T is not a component");
-			T tmp;
+			T tmp(nullptr);
 			std::string name = tmp.getName();
 			for (auto component : m_components)
 			{
@@ -82,7 +94,7 @@ namespace Engine
 
 	protected:
 		Transform m_transform;
-
+		bool      m_isColliding;
 		std::vector<Component*> m_components;
 	};
 
