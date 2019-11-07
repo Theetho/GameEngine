@@ -32,7 +32,7 @@ namespace Engine
 
 	// Vertex buffer
 
-	Ref<VertexBuffer> VertexBuffer::create(
+	Ref<VertexBuffer> VertexBuffer::Create(
 		float* vertices, 
 		const unsigned int& size
 	)
@@ -48,7 +48,7 @@ namespace Engine
 
 	// Index buffer
 
-	Ref<IndexBuffer> IndexBuffer::create(
+	Ref<IndexBuffer> IndexBuffer::Create(
 		unsigned int* indices,
 		const unsigned int& size
 	)

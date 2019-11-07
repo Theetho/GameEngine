@@ -28,7 +28,7 @@ namespace Engine
 		}
 	}
 
-	Ref<Shader> Shader::create(
+	Ref<Shader> Shader::Create(
 		const std::string& filePath,
 		const std::string& name
 	)

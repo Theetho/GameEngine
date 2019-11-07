@@ -1,4 +1,7 @@
 .vs/
 *.pdf
 *.user
-bin-int/
+./bin-int/*.obj
+./bin-int/*.tlog
+./bin-int/*.pch
+./bin

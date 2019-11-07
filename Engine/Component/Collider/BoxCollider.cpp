@@ -1,5 +1,6 @@
 #include "EnginePch.h"
 #include "BoxCollider.h"
+#include "System/CollisionSystem.h"
 
 namespace Engine
 {
@@ -11,9 +12,13 @@ namespace Engine
 		const float& depth
 	)
 		: Collider(owner, center)
-		, m_max(Vec3(width, height, depth) / 2.0f)
-		, m_min(Vec3(-width, -height, -depth) / 2.0f)
+		, m_width(width / 2.0f)
+		, m_height(height / 2.0f)
+		, m_depth(depth / 2.0f)
+		, m_max(center + Vec3(m_width, m_height, m_depth))
+		, m_min(center - Vec3(m_width, m_height, m_depth))
 	{
+		CollisionSystem::AddCollider(this);
 	}
 
 	BoxCollider::BoxCollider(
@@ -22,7 +27,11 @@ namespace Engine
 		: Collider(other.m_owner, other.m_center)
 		, m_max(other.m_max)
 		, m_min(other.m_min)
+		, m_width(other.m_width)
+		, m_height(other.m_height)
+		, m_depth(other.m_depth)
 	{
+		CollisionSystem::AddCollider(this);
 	}
 
 	BoxCollider::BoxCollider(
@@ -31,12 +40,18 @@ namespace Engine
 		: Collider(other.m_owner, other.m_center)
 		, m_max(other.m_max)
 		, m_min(other.m_min)
+		, m_width(other.m_width)
+		, m_height(other.m_height)
+		, m_depth(other.m_depth)
 	{
+		CollisionSystem::AddCollider(this);
 	}
 
 	BoxCollider& BoxCollider::operator=(const BoxCollider& other)
 	{
 		*this = BoxCollider(other);
+
+		CollisionSystem::AddCollider(this);
 
 		return *this;
 	}
@@ -45,10 +60,23 @@ namespace Engine
 	{
 		*this = BoxCollider(other);
 
+		CollisionSystem::AddCollider(this);
+
 		return *this;
 	}
 
 	BoxCollider::~BoxCollider()
 	{
+		CollisionSystem::RemoveCollider(this);
+	}
+	
+	void BoxCollider::onUpdate(const double& delta)
+	{
+		if (m_owner.isMoving() || m_owner.isJumping())
+		{
+			m_center = m_owner.getTransform().getPosition() + m_offset;
+			m_max    = m_center + Vec3(m_width, m_height, m_depth);
+			m_min	 = m_center - Vec3(m_width, m_height, m_depth);
+		}
 	}
 }

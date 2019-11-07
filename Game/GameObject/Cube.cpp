@@ -8,7 +8,7 @@ Cube::Cube(
 	: GameObject(transform)
 	, m_size((size) / 2.0f)
 {
-	m_vao = Engine::VertexArray::create();
+	m_vao = Engine::VertexArray::Create();
 
 	float vertices[] = {
 		-m_size, -m_size, -m_size, 1,0,
@@ -43,7 +43,7 @@ Cube::Cube(
 	};
 
 	Engine::Ref<Engine::VertexBuffer> vbo = 
-		Engine::VertexBuffer::create(
+		Engine::VertexBuffer::Create(
 			vertices, 
 			sizeof(vertices)
 		);
@@ -76,19 +76,16 @@ Cube::Cube(
 	};
 
 	Engine::Ref<Engine::IndexBuffer> ibo = 
-		Engine::IndexBuffer::create(
+		Engine::IndexBuffer::Create(
 			indices, 
 			sizeof(indices) / sizeof(unsigned int)
 		);
 
 	m_vao->addIndexBuffer(ibo);
 	
-	//m_components.push_back(collider);
-	
-	Engine::CollisionSystem::AddCollider(
-		std::make_shared<Engine::BoxCollider>(
+	m_components.push_back(std::make_shared<Engine::BoxCollider>(
 			*this,
-			Engine::Vec3(),
+			m_transform.getPosition(),
 			size, size, size
 		)
 	);

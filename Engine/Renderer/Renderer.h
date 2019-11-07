@@ -15,17 +15,17 @@ namespace Engine
 			return s_renderCommand->getAPI();
 		}
 	
-		static void beginScene(
+		static void BeginScene(
 			Camera3D& camera
 		);
 
-		static void submit(
+		static void Submit(
 			const Ref<Shader>& shader,
 			const Ref<VertexArray>& vao,
 			const Transform& transform
 		);
 
-		static void endScene();
+		static void EndScene();
 
 	private:
 		static RenderCommand* s_renderCommand;

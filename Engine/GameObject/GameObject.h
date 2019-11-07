@@ -84,13 +84,16 @@ namespace Engine
 		
 			std::variant<Ref<T>, void*> result;
 			
+			result = static_cast<void*>(nullptr);
+			
 			for (auto component : m_components)
 			{
 				if (component->getType() == type)
+				{
 					result = std::dynamic_pointer_cast<T>(component);
+					break;
+				}
 			}
-
-			result = static_cast<void*>(nullptr);
 
 			return result;
 		}
@@ -103,13 +106,16 @@ namespace Engine
 			
 			std::variant<Ref<T>, void*> result;
 
+			result = static_cast<void*>(nullptr);
+			
 			for (auto component : m_components)
 			{
 				if (component->getType() == type)
+				{
 					result = std::dynamic_pointer_cast<T>(component);
+					break;
+				}
 			}
-
-			result = static_cast<void*>(nullptr);
 
 			return result;
 		}

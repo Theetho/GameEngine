@@ -34,7 +34,7 @@ namespace Engine
 			return m_ibo;
 		}
 
-		static Ref<VertexArray> create();
+		static Ref<VertexArray> Create();
 	protected:
 		std::vector<Ref<VertexBuffer>> m_vbos;
 		Ref<IndexBuffer>			   m_ibo;

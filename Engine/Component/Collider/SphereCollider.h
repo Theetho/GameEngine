@@ -30,6 +30,10 @@ namespace Engine
 
 		~SphereCollider();
 
+		void onUpdate(
+			const double& delta
+		) override;
+
 		inline const float& getRadius() const
 		{
 			return m_radius;

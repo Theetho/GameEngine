@@ -18,44 +18,57 @@ namespace Engine
 
 	void CollisionSystem::onUpdate(const double& delta)
 	{
-		bool colision;
-
-		std::vector<Ref<BoxCollider>>    boxes;
-		std::vector<Ref<SphereCollider>> spheres;
-		std::vector<Ref<PointCollider>>  points;
+		bool collision = false;
 
 		if (m_boxes.size())
 		{
 			for (unsigned int i = 0; i < m_boxes.size(); ++i)
 			{
-				auto& box = m_boxes[i];
+				auto box = m_boxes[i];
+				box->getOwner().isColliding(false);
+				collision = false;
+
 				if(box->getOwner().isMoving() || box->getOwner().isJumping())
 				{
-					for (unsigned int j = i + 1; j < m_boxes.size(); ++j)
+					for (unsigned int j = 0; j < m_boxes.size() && !collision ; ++j)
 					{
-						auto& otherBox = m_boxes[j];
+						auto otherBox = m_boxes[j];
+						otherBox->getOwner().isColliding(false);
 
-						colision = collide(*box, *otherBox);
-
-						box->getOwner().isColliding(colision);
-						otherBox->getOwner().isColliding(colision);
+						if (box != otherBox && collide(*box, *otherBox))
+						{
+							box->getOwner().isColliding(true);
+							otherBox->getOwner().isColliding(true);
+							collision = true;
+						}
 					}
 
-					for (Ref<SphereCollider> sphere : m_spheres)
+					if (!collision)
 					{
-						colision = collide(*box, *sphere);
-
-						box->getOwner().isColliding(colision);
-						sphere->getOwner().isColliding(colision);
-
+						for (SphereCollider* sphere : m_spheres)
+						{
+							if (collide(*box, *sphere))
+							{
+								box->getOwner().isColliding(true);
+								sphere->getOwner().isColliding(true);
+								collision = true;
+								break;
+							}
+						}
 					}
 
-					for (Ref<PointCollider> point : m_points)
+					if (!collision)
 					{
-						colision = collide(*box, *point);
-
-						box->getOwner().isColliding(colision);
-						point->getOwner().isColliding(colision);
+						for (PointCollider* point : m_points)
+						{
+							if (collide(*box, *point))
+							{
+								box->getOwner().isColliding(true);
+								point->getOwner().isColliding(true);
+								collision = true;
+								break;
+							}
+						}
 					}
 				}
 			}
@@ -64,25 +77,27 @@ namespace Engine
 		{
 			for (unsigned int i = 0; i < m_spheres.size(); ++i)
 			{
-				auto& sphere = m_spheres[i];
+				auto sphere = m_spheres[i];
 				if (sphere->getOwner().isMoving() || sphere->getOwner().isJumping())
 				{
 					for (unsigned int j = i + 1; j < m_spheres.size(); ++j)
 					{
-						auto& otherSphere = m_spheres[j];
+						auto otherSphere = m_spheres[j];
 
-						colision = collide(*sphere, *otherSphere);
-
-						sphere->getOwner().isColliding(colision);
-						otherSphere->getOwner().isColliding(colision);
+						if (collide(*sphere, *otherSphere))
+						{
+							sphere->getOwner().isColliding(true);
+							otherSphere->getOwner().isColliding(true);
+						}
 					}
 
-					for (Ref<PointCollider> point : m_points)
+					for (PointCollider* point : m_points)
 					{
-						colision = collide(*sphere, *point);
-
-						sphere->getOwner().isColliding(colision);
-						point->getOwner().isColliding(colision);
+						if (collide(*sphere, *point))
+						{
+							sphere->getOwner().isColliding(true);
+							point->getOwner().isColliding(true);
+						}
 					}
 				}
 			}
@@ -91,17 +106,18 @@ namespace Engine
 		{
 			for (unsigned int i = 0; i < m_points.size(); ++i)
 			{
-				auto& point = m_points[i];
+				auto point = m_points[i];
 				if (point->getOwner().isMoving() || point->getOwner().isJumping())
 				{
 					for (unsigned int j = i + 1; j < m_points.size(); ++j)
 					{
-						auto& otherPoint = m_points[j];
+						auto otherPoint = m_points[j];
 
-						colision = collide(*point, *otherPoint);
-
-						point->getOwner().isColliding(colision);
-						otherPoint->getOwner().isColliding(colision);
+						if (collide(*point, *otherPoint))
+						{
+							point->getOwner().isColliding(true);
+							otherPoint->getOwner().isColliding(true);
+						}
 					}
 				}
 			}
@@ -124,7 +140,7 @@ namespace Engine
 	)
 	{
 		float distance = glm::distance(s1.getCenter(), s2.getCenter());
-		return distance < (s1.getRadius() + s2.getRadius());
+		return distance <= (s1.getRadius() + s2.getRadius());
 	}
 
 	bool CollisionSystem::collide(
@@ -146,7 +162,7 @@ namespace Engine
 
 		float distance = glm::distance(Vec3(x, y, z), s.getCenter());
 
-		return distance < s.getRadius();
+		return distance <= s.getRadius();
 	}
 
 	bool CollisionSystem::collide(
@@ -162,9 +178,9 @@ namespace Engine
 		const PointCollider& p
 	)
 	{
-		return (p.getCenter().x > b.getMin().x && p.getCenter().x < b.getMax().x) &&
-			   (p.getCenter().y > b.getMin().y && p.getCenter().y < b.getMax().y) &&
-			   (p.getCenter().z > b.getMin().z && p.getCenter().z < b.getMax().z);
+		return (p.getCenter().x >= b.getMin().x && p.getCenter().x <= b.getMax().x) &&
+			   (p.getCenter().y >= b.getMin().y && p.getCenter().y <= b.getMax().y) &&
+			   (p.getCenter().z >= b.getMin().z && p.getCenter().z <= b.getMax().z);
 	}
 
 	bool CollisionSystem::collide(
@@ -181,7 +197,7 @@ namespace Engine
 	)
 	{
 		float distance = glm::distance(s.getCenter(), p.getCenter());
-		return distance < s.getRadius();
+		return distance <= s.getRadius();
 	}
 
 	bool CollisionSystem::collide(

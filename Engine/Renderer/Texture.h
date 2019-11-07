@@ -75,7 +75,7 @@ namespace Engine
 
 		}
 		
-		static Ref<Texture2D> create(
+		static Ref<Texture2D> Create(
 			const std::string& filePath,
 			const std::string& name = ""
 		);

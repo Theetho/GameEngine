@@ -40,7 +40,7 @@ namespace Engine
 			s_instance->toggleCursorImplementation();
 		}
 
-		static Input* create();
+		static Input* Create();
 	protected:
 		virtual bool isKeyPressedImplementation(
 			const int& keycode

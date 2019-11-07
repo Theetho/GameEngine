@@ -17,7 +17,7 @@ namespace Engine
 	{
 	}
 
-	Window* Window::create(
+	Window* Window::Create(
 		const Window::WindowData& windowData
 	)
 	{

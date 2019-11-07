@@ -18,7 +18,7 @@ namespace Engine
 	{
 	}
 
-	Input* Input::create()
+	Input* Input::Create()
 	{
 #ifdef ENGINE_WINDOWS
 		return new InputWindows;

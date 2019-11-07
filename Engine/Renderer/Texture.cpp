@@ -40,7 +40,7 @@ namespace Engine
 	{
 	}
 
-	Ref<Texture2D> Texture2D::create(
+	Ref<Texture2D> Texture2D::Create(
 		const std::string& filePath,
 		const std::string& name
 	)

@@ -1,6 +1,6 @@
 #include "EnginePch.h"
 #include "ColliderComponent.h"
-#include "GameObject/GameObject.h"
+#include "Core/Log.h"
 
 namespace Engine
 {
@@ -14,7 +14,37 @@ namespace Engine
 		: Component(owner)
 		, m_center(center)
 		, m_offset(center - owner.getTransform().getPosition())
-	{}
+	{
+		m_vao = VertexArray::Create();
+
+		float vertices[] = {
+			0.0f, 0.0f, 0.0f
+		};
+
+		Engine::Ref<Engine::VertexBuffer> vbo =
+			Engine::VertexBuffer::Create(
+				vertices,
+				sizeof(vertices)
+			);
+
+		vbo->setLayout({
+			{Engine::ShaderDataType::Float3, "in_position"},
+		});
+
+		m_vao->addVertexBuffer(vbo);
+
+		unsigned int indices[] = {
+			0
+		};
+
+		Engine::Ref<Engine::IndexBuffer> ibo =
+			Engine::IndexBuffer::Create(
+				indices,
+				sizeof(indices) / sizeof(unsigned int)
+			);
+
+		m_vao->addIndexBuffer(ibo);
+	}
 
 	Collider::Collider(const Collider & other)
 		: Component(other.m_owner)
@@ -44,12 +74,5 @@ namespace Engine
 		m_center = other.m_center;
 
 		return *this;
-	}
-
-	void Collider::onUpdate(
-		const double& delta
-	)
-	{
-		m_center = m_owner.getTransform().getPosition() + m_offset;
 	}
 }

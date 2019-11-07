@@ -13,8 +13,7 @@ Player::Player()
 		)
 	);
 
-	Engine::CollisionSystem::AddCollider(
-		std::make_shared<Engine::BoxCollider>(
+	m_components.push_back(std::make_shared<Engine::BoxCollider>(
 			*this,
 			m_transform.getPosition(),
 			1.0f, 1.0f, 1.0f

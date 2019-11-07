@@ -72,24 +72,24 @@ namespace Engine
 	
 	bool GameObject::isJumping() const
 	{
-		//auto variant = getComponent<Component::Type::Physics, PhysicsComponent>();
-		//
-		//if (auto component = std::get_if<Ref<PhysicsComponent>>(&variant))
-		//{
-		//	return (*component)->isJumping();
-		//}
+		auto variant = getComponent<Component::Type::Physics, PhysicsComponent>();
+		
+		if (auto component = std::get_if<Ref<PhysicsComponent>>(&variant))
+		{
+			return (*component)->isJumping();
+		}
 		
 		return false;
 	}
 
 	bool GameObject::isMoving() const
 	{
-		//auto variant = getComponent<Component::Type::Movement, MovementComponent>();
-		//
-		//if (auto component = std::get_if<Ref<MovementComponent>>(&variant))
-		//{
-		//	return (*component)->isMoving();
-		//}
+		auto variant = getComponent<Component::Type::Movement, MovementComponent>();
+		
+		if (auto component = std::get_if<Ref<MovementComponent>>(&variant))
+		{
+			return (*component)->isMoving();
+		}
 		
 		return false;
 	}

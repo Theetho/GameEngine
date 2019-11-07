@@ -32,6 +32,10 @@ namespace Engine
 
 		~BoxCollider();
 
+		void onUpdate(
+			const double& delta
+		) override;
+
 		inline const Vec3& getMax() const
 		{
 			return m_max;
@@ -43,6 +47,7 @@ namespace Engine
 		}
 
 	private:
+		const float m_width, m_height, m_depth;
 		// Top Right Front point (x, y, z) / 2
 		Vec3  m_max;
 		// Bottom Left Back point (-x, -y, -z) / 2

@@ -20,7 +20,7 @@ namespace Engine
 		ENGINE_ASSERT(!s_instance, "Application already created");
 		s_instance = this;
 
-		m_window = Scope<Window>(Window::create());
+		m_window = Scope<Window>(Window::Create());
 		m_window->setEventCallback(
 			bind_function(Application::onEvent)
 		);

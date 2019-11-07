@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Component/Component.h"
+#include "GameObject/GameObject.h"
+#include "Renderer/VertexArray.h"
 #include "Maths.h"
 
 namespace Engine
@@ -32,8 +34,6 @@ namespace Engine
 		virtual ~Collider()
 		{}
 
-		void onUpdate(const double& delta) override;
-		
 		inline Type getType() override
 		{
 			return Type::Collider;
@@ -44,6 +44,7 @@ namespace Engine
 			return m_center;
 		}
 
+		Ref<VertexArray> m_vao;
 	protected:
 		Vec3 m_center;
 		Vec3 m_offset;

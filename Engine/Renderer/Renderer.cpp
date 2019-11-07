@@ -7,14 +7,14 @@ namespace Engine
 
 	Renderer::SceneData Renderer::s_sceneData;
 
-	void Renderer::beginScene(
+	void Renderer::BeginScene(
 		Camera3D& camera
 	)
 	{
 		s_sceneData.VP = camera.getVP();
 	}
 
-	void Renderer::submit(
+	void Renderer::Submit(
 		const Ref<Shader>& shader,
 		const Ref<VertexArray>& vao,
 		const Transform& transform
@@ -29,7 +29,7 @@ namespace Engine
 		s_renderCommand->drawIndexed(vao);
 	}
 
-	void Renderer::endScene()
+	void Renderer::EndScene()
 	{
 	}
 }

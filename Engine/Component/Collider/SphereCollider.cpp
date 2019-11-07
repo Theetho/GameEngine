@@ -1,5 +1,6 @@
 #include "EnginePch.h"
 #include "SphereCollider.h"
+#include "System/CollisionSystem.h"
 
 namespace Engine
 {
@@ -11,6 +12,7 @@ namespace Engine
 		: Collider(owner, center)
 		, m_radius(radius)
 	{
+		CollisionSystem::AddCollider(this);
 	}
 
 	SphereCollider::SphereCollider(
@@ -19,6 +21,7 @@ namespace Engine
 		: Collider(other.m_owner, other.m_center)
 		, m_radius(other.m_radius)
 	{
+		CollisionSystem::AddCollider(this);
 	}
 
 	SphereCollider::SphereCollider(
@@ -27,12 +30,15 @@ namespace Engine
 		: Collider(other.m_owner, other.m_center)
 		, m_radius(other.m_radius)
 	{
+		CollisionSystem::AddCollider(this);
 	}
 
 	SphereCollider& SphereCollider::operator=(const SphereCollider& other)
 	{
 		*this = SphereCollider(other);
 
+		CollisionSystem::AddCollider(this);
+		
 		return *this;
 	}
 
@@ -40,10 +46,18 @@ namespace Engine
 	{
 		*this = SphereCollider(other);
 
+		CollisionSystem::AddCollider(this);
+		
 		return *this;
 	}
 
 	SphereCollider::~SphereCollider()
 	{
+		CollisionSystem::RemoveCollider(this);
+	}
+
+	void SphereCollider::onUpdate(const double& delta)
+	{
+		m_center = m_owner.getTransform().getPosition() + m_offset;
 	}
 }

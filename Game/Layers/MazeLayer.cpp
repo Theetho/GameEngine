@@ -22,7 +22,7 @@ void MazeLayer::onAttach()
 
 	m_player.setVao(cube.getVao());
 	m_player.setPosition(m_maze->getEntry());
-	m_player.getTransform().setScale(0.5f);
+//	m_player.getTransform().setScale(0.5f);
 
 	Engine::AssetManager::getTexture2DLibrary().load("snow.jpg");
 	Engine::AssetManager::getTexture2DLibrary().load("hedge.jpg");
@@ -46,66 +46,61 @@ void MazeLayer::onUpdate(const double& delta)
 	// --- Rendering ---
 	Engine::RenderCommand::clear();
 
-	Engine::Renderer::beginScene(m_camera);
+	Engine::Renderer::BeginScene(m_camera);
 
 	auto& snow = Engine::AssetManager::getTexture2DLibrary().get("snow");
 	auto& ground = Engine::AssetManager::getTexture2DLibrary().get("ground");
 	auto& wall = Engine::AssetManager::getTexture2DLibrary().get("hedge");
 	auto& shader  = Engine::AssetManager::getShaderLibrary().get("color");
+	auto& openglShader = std::dynamic_pointer_cast<Engine::OpenGLShader>(shader);
+	
+	Engine::Color* drawColor;
+
 
 	//wall->bind();
-	shader->bind();
-	std::dynamic_pointer_cast<Engine::OpenGLShader>(shader)->uploadUniform(
-		"u_color",
-		Engine::Color::Navy
-	);
+	openglShader->bind();
+
+	drawColor = &Engine::Color::Navy;
+	openglShader->uploadUniform("u_color",*drawColor);
 	for (auto& cube : m_maze->getWalls())
 	{
-		Engine::Renderer::submit(
-			shader,
+		Engine::Renderer::Submit(
+			openglShader,
 			cube->getVao(),
 			cube->getTransform()
 		);
 	}
 
 	//snow->bind();
-	std::dynamic_pointer_cast<Engine::OpenGLShader>(shader)->uploadUniform(
-		"u_color",
-		Engine::Color::Teal
-	);
+	drawColor = &Engine::Color::Teal;
+	openglShader->uploadUniform("u_color", *drawColor);
 	for (auto& cube : m_maze->getGround())
 	{
-		Engine::Renderer::submit(
-			shader,
+		Engine::Renderer::Submit(
+			openglShader,
 			cube->getVao(),
 			cube->getTransform()
 		);
 	}
 
-	//ground->bind();
-	Engine::Color* playerColor;
-
+	//ground->bind()
 	if (m_player.isColliding())
 	{
-		playerColor = &Engine::Color::Red;
+		drawColor = &Engine::Color::Red;
 	}
 	else
 	{
-		playerColor = &Engine::Color::Yellow;
+		drawColor = &Engine::Color::Yellow;
 	}
+	openglShader->uploadUniform("u_color", *drawColor);
 
-	std::dynamic_pointer_cast<Engine::OpenGLShader>(shader)->uploadUniform(
-		"u_color",
-		*playerColor
-	);
-
-	Engine::Renderer::submit(
-		shader,
+	Engine::Renderer::Submit(
+		openglShader,
 		m_player.getVao(),
 		m_player.getTransform()
 	);
 
-	Engine::Renderer::endScene();
+	Engine::Renderer::EndScene();
 	// -----------------
 }
 

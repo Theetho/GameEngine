@@ -24,7 +24,7 @@ namespace Engine
 		const std::string& filePath
 	)
 	{
-		auto shader = Shader::create(filePath);
+		auto shader = Shader::Create(filePath);
 
 		if (!exists(shader->getName()))
 		{
@@ -47,7 +47,7 @@ namespace Engine
 	{
 		if (!exists(name))
 		{
-			m_shaders[name] = Shader::create(filePath);
+			m_shaders[name] = Shader::Create(filePath);
 
 			m_shaders[name]->setName(name);
 
@@ -98,7 +98,7 @@ namespace Engine
 		const std::string& filePath
 	)
 	{
-		auto texture = Texture2D::create(filePath);
+		auto texture = Texture2D::Create(filePath);
 
 		if (!exists(texture->getName()))
 		{
@@ -121,7 +121,7 @@ namespace Engine
 	{
 		if (!exists(name))
 		{
-			m_textures[name] = Texture2D::create(filePath);
+			m_textures[name] = Texture2D::Create(filePath);
 
 			m_textures[name]->setName(name);
 

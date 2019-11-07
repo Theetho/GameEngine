@@ -29,6 +29,10 @@ namespace Engine
 
 		~PointCollider();
 
+		void onUpdate(
+			const double& delta
+		) override;
+
 	private:
 	};
 }

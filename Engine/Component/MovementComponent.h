@@ -37,11 +37,18 @@ namespace Engine
 
 		struct Speed
 		{
-			const float velocity = 0.1f;
-			const float rotation = 200.0f;
-			const float max		 = 5.0f;
+			//const float velocity  = 0.1f;
+			const float velocity  = 10.0f;
+			const float rotation  = 200.0f;
+			const float max		  = 5.0f;
 			float forward;
 			float strafe;
+
+			inline void reset()
+			{
+				forward = 0.0f;
+				strafe  = 0.0f;
+			}
 		};
 		Speed m_speed;
 

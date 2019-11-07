@@ -16,8 +16,7 @@ namespace Engine
 
 		inline static Ref<CollisionSystem> Create()
 		{
-			s_instance = std::make_shared<CollisionSystem>();
-			return s_instance;
+			return std::make_shared<CollisionSystem>();
 		}
 
 		inline static Ref<CollisionSystem> Get()
@@ -26,7 +25,7 @@ namespace Engine
 		}
 
 		static void AddCollider(
-			Ref<BoxCollider> collider
+			BoxCollider* collider
 		)
 		{
 			if (s_instance)
@@ -34,7 +33,7 @@ namespace Engine
 		}
 		
 		static void AddCollider(
-			Ref<SphereCollider> collider
+			SphereCollider* collider
 		)
 		{
 			if (s_instance)
@@ -42,18 +41,69 @@ namespace Engine
 		}
 
 		static void AddCollider(
-			Ref<PointCollider> collider
+			PointCollider* collider
 		)
 		{
 			if (s_instance)
 				s_instance->m_points.push_back(collider);
 		}
+
+		static void RemoveCollider(
+			BoxCollider* collider
+		)
+		{
+			if (s_instance)
+			{
+				auto& boxes = s_instance->m_boxes;
+				for (unsigned int i = 0; i < boxes.size(); ++i)
+				{
+					if (boxes[i] == collider)
+					{
+						boxes.erase(boxes.begin() + i, boxes.begin() + i + 1);
+					}
+				}
+			}
+		}
+
+		static void RemoveCollider(
+			SphereCollider* collider
+		)
+		{
+			if (s_instance)
+			{
+				auto& spheres = s_instance->m_spheres;
+				for (unsigned int i = 0; i < spheres.size(); ++i)
+				{
+					if (spheres[i] == collider)
+					{
+						spheres.erase(spheres.begin() + i, spheres.begin() + i + 1);
+					}
+				}
+			}
+		}
+
+		static void RemoveCollider(
+			PointCollider* collider
+		)
+		{
+			if (s_instance)
+			{
+				auto& points = s_instance->m_points;
+				for (unsigned int i = 0; i < points.size(); ++i)
+				{
+					if (points[i] == collider)
+					{
+						points.erase(points.begin() + i, points.begin() + i + 1);
+					}
+				}
+			}
+		}
+		std::vector<BoxCollider*>    m_boxes;
 	private:
 		static Ref<CollisionSystem> s_instance;
 
-		std::vector<Ref<BoxCollider>>    m_boxes;
-		std::vector<Ref<SphereCollider>> m_spheres;
-		std::vector<Ref<PointCollider>>  m_points;
+		std::vector<SphereCollider*> m_spheres;
+		std::vector<PointCollider*>  m_points;
 
 		bool collide(
 			const BoxCollider& b1,

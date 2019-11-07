@@ -7,7 +7,7 @@ namespace Engine
 
 /// Abstract base class
 
-	Ref<VertexArray> VertexArray::create()
+	Ref<VertexArray> VertexArray::Create()
 	{
 		switch (Renderer::getAPI())
 		{

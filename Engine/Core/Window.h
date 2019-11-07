@@ -65,7 +65,7 @@ namespace Engine
 			return m_data.title;
 		}
 
-		static Window* create(
+		static Window* Create(
 			const WindowData& windowData = WindowData()
 		);
 	protected:
