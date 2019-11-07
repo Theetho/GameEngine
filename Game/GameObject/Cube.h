@@ -4,7 +4,7 @@ class Cube : public Engine::GameObject
 {
 public:
 	Cube(
-		const float& size,
+		const float& size = 1.0f,
 		const Engine::Transform& transform = Engine::Transform()
 	);
 

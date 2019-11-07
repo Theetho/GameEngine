@@ -4,13 +4,22 @@
 Player::Player()
 	: DynamicObject()
 {
-	m_components.push_back(new Engine::PhysicsComponent(this));
-	m_components.push_back(new Engine::MovementComponent(this));
+	m_components.push_back(std::make_shared<Engine::PhysicsComponent>(
+			*this
+		)
+	);
+	m_components.push_back(std::make_shared<Engine::MovementComponent>(
+			*this
+		)
+	);
 
-	auto collider = new Engine::BoxCollider(this, Engine::Vec3(), 1.0f, 1.0f, 1.0f);
-	//m_components.push_back(collider);
-
-	Engine::CollisionSystem::addCollider(collider);
+	Engine::CollisionSystem::AddCollider(
+		std::make_shared<Engine::BoxCollider>(
+			*this,
+			m_transform.getPosition(),
+			1.0f, 1.0f, 1.0f
+		)
+	);
 }
 
 Player::~Player()
@@ -22,13 +31,19 @@ void Player::onUpdate(
 )
 {
 	GameObject::onUpdate(delta);
-	m_direction = getComponent<Engine::MovementComponent>()->getDirection();
+	auto variant = getComponent<Engine::Component::Type::Movement, Engine::MovementComponent>();
+
+	if (auto movement = std::get_if<Engine::Ref<Engine::MovementComponent>>(&variant))
+		m_direction = (*movement)->getDirection();
 }
 
 void Player::onEvent(Engine::Event& event)
 {
 	if (event.type == Engine::Event::KeyPressed && event.keyEvent.code == ENGINE_KEY_SPACE)
 	{
-		getComponent<Engine::PhysicsComponent>()->jump();
+		auto variant = getComponent <Engine::Component::Type::Physics, Engine::PhysicsComponent > ();
+
+		if (auto physics = std::get_if<Engine::Ref<Engine::PhysicsComponent>>(&variant))
+			(*physics)->jump();
 	}
 }

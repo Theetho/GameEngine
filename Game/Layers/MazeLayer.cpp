@@ -83,9 +83,20 @@ void MazeLayer::onUpdate(const double& delta)
 	}
 
 	//ground->bind();
+	Engine::Color* playerColor;
+
+	if (m_player.isColliding())
+	{
+		playerColor = &Engine::Color::Red;
+	}
+	else
+	{
+		playerColor = &Engine::Color::Yellow;
+	}
+
 	std::dynamic_pointer_cast<Engine::OpenGLShader>(shader)->uploadUniform(
 		"u_color",
-		Engine::Color::Yellow
+		*playerColor
 	);
 
 	Engine::Renderer::submit(
