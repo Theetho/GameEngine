@@ -43,8 +43,6 @@ namespace Engine
 		{
 			return m_center;
 		}
-
-		Ref<VertexArray> m_vao;
 	protected:
 		Vec3 m_center;
 		Vec3 m_offset;

@@ -98,56 +98,63 @@ namespace Engine
 				}
 			}
 		}
-		std::vector<BoxCollider*>    m_boxes;
 	private:
 		static Ref<CollisionSystem> s_instance;
 
+		std::vector<BoxCollider*>    m_boxes;
 		std::vector<SphereCollider*> m_spheres;
 		std::vector<PointCollider*>  m_points;
 
+		// Check only if moving objects collide with at least one other object
+		// (stop when the first collision is found for each moving object) 
+		void checkForOneCollision();
+
+		// Check for collision between every object (even the static ones)
+		void checkForAllCollision();
+
 		bool collide(
-			const BoxCollider& b1,
-			const BoxCollider& b2
+			const BoxCollider* b1,
+			const BoxCollider* b2
 		);
 
 		bool collide(
-			const SphereCollider& s1,
-			const SphereCollider& s2
+			const SphereCollider* s1,
+			const SphereCollider* s2
 		);
 
 		bool collide(
-			const PointCollider& p1,
-			const PointCollider& p2
+			const PointCollider* p1,
+			const PointCollider* p2
 		);
 
 		bool collide(
-			const BoxCollider& b,
-			const SphereCollider& s
+			const BoxCollider* b,
+			const SphereCollider* s
 		);
 
 		bool collide(
-			const SphereCollider& s,
-			const BoxCollider& b
+			const SphereCollider* s,
+			const BoxCollider* b
 		);
 
 		bool collide(
-			const BoxCollider& b,
-			const PointCollider& p
+			const BoxCollider* b,
+			const PointCollider* p
 		);
 
 		bool collide(
-			const PointCollider& p,
-			const BoxCollider& b
+			const PointCollider* p,
+			const BoxCollider* b
 		);
 
 		bool collide(
-			const SphereCollider& s,
-			const PointCollider& p
+			const SphereCollider* s,
+			const PointCollider* p
 		);
 
 		bool collide(
-			const PointCollider& p,
-			const SphereCollider& s
+			const PointCollider* p,
+			const SphereCollider* s
 		);
 	};
 }

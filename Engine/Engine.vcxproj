@@ -143,6 +143,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Util\Benchmark.h" />
     <ClInclude Include="Component\Collider.h" />
     <ClInclude Include="Component\Collider\BoxCollider.h" />
     <ClInclude Include="Component\Collider\PointCollider.h" />
@@ -558,6 +559,7 @@
     <ClInclude Include="Vendor\stb\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Util\Benchmark.cpp" />
     <ClCompile Include="Component\Collider\BoxCollider.cpp" />
     <ClCompile Include="Component\Collider\ColliderComponent.cpp" />
     <ClCompile Include="Component\Collider\PointCollider.cpp" />

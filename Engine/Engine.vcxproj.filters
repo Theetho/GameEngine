@@ -1253,6 +1253,7 @@
     <ClInclude Include="Component\Collider\SphereCollider.h" />
     <ClInclude Include="Component\Collider\PointCollider.h" />
     <ClInclude Include="Component\Collider.h" />
+    <ClInclude Include="Util\Benchmark.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\Component.cpp">
@@ -1347,5 +1348,6 @@
     <ClCompile Include="Component\Collider\BoxCollider.cpp" />
     <ClCompile Include="Component\Collider\SphereCollider.cpp" />
     <ClCompile Include="Component\Collider\PointCollider.cpp" />
+    <ClCompile Include="Util\Benchmark.cpp" />
   </ItemGroup>
 </Project>

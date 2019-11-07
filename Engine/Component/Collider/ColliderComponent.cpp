@@ -15,35 +15,6 @@ namespace Engine
 		, m_center(center)
 		, m_offset(center - owner.getTransform().getPosition())
 	{
-		m_vao = VertexArray::Create();
-
-		float vertices[] = {
-			0.0f, 0.0f, 0.0f
-		};
-
-		Engine::Ref<Engine::VertexBuffer> vbo =
-			Engine::VertexBuffer::Create(
-				vertices,
-				sizeof(vertices)
-			);
-
-		vbo->setLayout({
-			{Engine::ShaderDataType::Float3, "in_position"},
-		});
-
-		m_vao->addVertexBuffer(vbo);
-
-		unsigned int indices[] = {
-			0
-		};
-
-		Engine::Ref<Engine::IndexBuffer> ibo =
-			Engine::IndexBuffer::Create(
-				indices,
-				sizeof(indices) / sizeof(unsigned int)
-			);
-
-		m_vao->addIndexBuffer(ibo);
 	}
 
 	Collider::Collider(const Collider & other)

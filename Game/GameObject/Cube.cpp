@@ -84,9 +84,9 @@ Cube::Cube(
 	m_vao->addIndexBuffer(ibo);
 	
 	m_components.push_back(std::make_shared<Engine::BoxCollider>(
-			*this,
-			m_transform.getPosition(),
-			size, size, size
+		*this,
+		m_transform.getPosition(),
+		size, size, size
 		)
 	);
 }
