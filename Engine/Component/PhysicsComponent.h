@@ -9,7 +9,7 @@ namespace Engine
 	{
 	public:
 		PhysicsComponent(
-			GameObject* owner
+			GameObject& owner
 		);
 		~PhysicsComponent();
 
@@ -17,9 +17,9 @@ namespace Engine
 			const double& delta
 		);
 		
-		inline std::string getName()
+		inline Type getType() override
 		{
-			return "Physics";
+			return Type::Physics;
 		}
 
 		inline float getGravity() const
@@ -46,12 +46,10 @@ namespace Engine
 
 		inline bool isJumping() const
 		{
-			if (m_transform)
-				return m_transform->getPosition().y > s_groundLevel;
-			return false;
+			return m_transform.getPosition().y > s_groundLevel;
 		}
 	private:
-		Transform* m_transform;
+		Transform& m_transform;
 		static const float s_groundLevel;
 		
 		struct Force

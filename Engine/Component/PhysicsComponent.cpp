@@ -9,10 +9,10 @@ namespace Engine
 	const float PhysicsComponent::s_groundLevel = 0.5f;
 
 	PhysicsComponent::PhysicsComponent(
-		GameObject* owner
+		GameObject& owner
 	)
 		: Component(owner)
-		, m_transform(&owner->getTransform())
+		, m_transform(owner.getTransform())
 		, m_jump()
 		, m_percentage(1.0f, 1.0f)
 	{
@@ -26,7 +26,7 @@ namespace Engine
 		const double& delta
 	)
 	{
-		Vec3& position = m_transform->getPosition();
+		Vec3& position = m_transform.getPosition();
 		
 		// Gravity
 		if (!m_jump.isJumping && position.y > s_groundLevel)

@@ -9,6 +9,7 @@
 #include <initializer_list>
 #include <algorithm>
 #include <unordered_set>
+#include <variant>
 #include <set>
 #include <stb_image.h>
 
@@ -34,4 +35,7 @@ namespace Engine
 
 	template<typename T>
 	using Ref = std::shared_ptr<T>;
+
+	template<typename T>
+	using Weak = std::weak_ptr<T>;
 }

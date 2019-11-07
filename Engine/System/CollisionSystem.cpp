@@ -2,105 +2,107 @@
 #include "CollisionSystem.h"
 #include "GameObject/GameObject.h"
 #include "Component/MovementComponent.h"
-#include "Component/ColliderComponent.h"
 
 namespace Engine
 {
-	CollisionSystem* CollisionSystem::s_instance = nullptr;
+	Ref<CollisionSystem> CollisionSystem::s_instance = CollisionSystem::Create();
+
+	CollisionSystem::CollisionSystem()
+	{
+		ENGINE_ASSERT(!s_instance, "A collision system instance already exists");
+	}
+
+	CollisionSystem::~CollisionSystem()
+	{
+	}
 
 	void CollisionSystem::onUpdate(const double& delta)
 	{
 		bool colision;
 
-		std::set<BoxCollider*>    boxes;
-		std::set<SphereCollider*> spheres;
-		std::set<PointCollider*>  points;
+		std::vector<Ref<BoxCollider>>    boxes;
+		std::vector<Ref<SphereCollider>> spheres;
+		std::vector<Ref<PointCollider>>  points;
 
 		if (m_boxes.size())
 		{
-			for (BoxCollider* box : m_boxes)
+			for (unsigned int i = 0; i < m_boxes.size(); ++i)
 			{
-
-				if (box->m_owner->isMoving() || box->m_owner->isJumping())
+				auto& box = m_boxes[i];
+				if(box->getOwner().isMoving() || box->getOwner().isJumping())
 				{
-					for (BoxCollider* otherBox : m_boxes)
+					for (unsigned int j = i + 1; j < m_boxes.size(); ++j)
 					{
-						if (box != otherBox && !boxes.count(otherBox))
-						{
-							colision = collide(*box, *otherBox);
+						auto& otherBox = m_boxes[j];
 
-							box->m_owner->isColliding(colision);
-							otherBox->m_owner->isColliding(colision);
-						}
+						colision = collide(*box, *otherBox);
+
+						box->getOwner().isColliding(colision);
+						otherBox->getOwner().isColliding(colision);
 					}
 
-					boxes.insert(box);
-
-					for (SphereCollider* sphere : m_spheres)
+					for (Ref<SphereCollider> sphere : m_spheres)
 					{
 						colision = collide(*box, *sphere);
 
-						box->m_owner->isColliding(colision);
-						sphere->m_owner->isColliding(colision);
+						box->getOwner().isColliding(colision);
+						sphere->getOwner().isColliding(colision);
 
 					}
-					for (PointCollider* point : m_points)
+
+					for (Ref<PointCollider> point : m_points)
 					{
 						colision = collide(*box, *point);
 
-						box->m_owner->isColliding(colision);
-						point->m_owner->isColliding(colision);
+						box->getOwner().isColliding(colision);
+						point->getOwner().isColliding(colision);
 					}
 				}
 			}
 		}
 		else if (m_spheres.size())
 		{
-			for (SphereCollider* sphere : m_spheres)
+			for (unsigned int i = 0; i < m_spheres.size(); ++i)
 			{
-				if (sphere->m_owner->isMoving() || sphere->m_owner->isJumping())
+				auto& sphere = m_spheres[i];
+				if (sphere->getOwner().isMoving() || sphere->getOwner().isJumping())
 				{
-					for (SphereCollider* otherSphere : m_spheres)
+					for (unsigned int j = i + 1; j < m_spheres.size(); ++j)
 					{
-						if (sphere != otherSphere && !spheres.count(otherSphere))
-						{
-							colision = collide(*sphere, *otherSphere);
+						auto& otherSphere = m_spheres[j];
 
-							sphere->m_owner->isColliding(colision);
-							otherSphere->m_owner->isColliding(colision);
-						}
+						colision = collide(*sphere, *otherSphere);
+
+						sphere->getOwner().isColliding(colision);
+						otherSphere->getOwner().isColliding(colision);
 					}
 
-					spheres.insert(sphere);
-
-					for (PointCollider* point : m_points)
+					for (Ref<PointCollider> point : m_points)
 					{
 						colision = collide(*sphere, *point);
 
-						sphere->m_owner->isColliding(colision);
-						point->m_owner->isColliding(colision);
+						sphere->getOwner().isColliding(colision);
+						point->getOwner().isColliding(colision);
 					}
 				}
 			}
 		}
 		else if (m_points.size())
 		{
-			for (PointCollider* point : m_points)
+			for (unsigned int i = 0; i < m_points.size(); ++i)
 			{
-				if (point->m_owner->isMoving() || point->m_owner->isJumping())
+				auto& point = m_points[i];
+				if (point->getOwner().isMoving() || point->getOwner().isJumping())
 				{
-					for (PointCollider* otherPoint : m_points)
+					for (unsigned int j = i + 1; j < m_points.size(); ++j)
 					{
-						if (point != otherPoint && !points.count(otherPoint))
-						{
-							colision = collide(*point, *otherPoint);
+						auto& otherPoint = m_points[j];
 
-							point->m_owner->isColliding(colision);
-							otherPoint->m_owner->isColliding(colision);
-						}
+						colision = collide(*point, *otherPoint);
+
+						point->getOwner().isColliding(colision);
+						otherPoint->getOwner().isColliding(colision);
 					}
-
-					points.insert(point);
 				}
 			}
 		}
@@ -111,9 +113,9 @@ namespace Engine
 		const BoxCollider& b2
 	)
 	{
-		return (b1.m_min.x < b2.m_max.x && b1.m_max.x > b2.m_min.x) &&
-			   (b1.m_min.y < b2.m_max.y && b1.m_max.y > b2.m_min.y) &&
-			   (b1.m_min.z < b2.m_max.z && b1.m_max.z > b2.m_min.z);
+		return (b1.getMin().x < b2.getMax().x && b1.getMax().x > b2.getMin().x) &&
+			   (b1.getMin().y < b2.getMax().y && b1.getMax().y > b2.getMin().y) &&
+			   (b1.getMin().z < b2.getMax().z && b1.getMax().z > b2.getMin().z);
 	}
 
 	bool CollisionSystem::collide(
@@ -121,8 +123,8 @@ namespace Engine
 		const SphereCollider& s2
 	)
 	{
-		float distance = glm::distance(s1.m_center, s2.m_center);
-		return distance < (s1.m_radius + s2.m_radius);
+		float distance = glm::distance(s1.getCenter(), s2.getCenter());
+		return distance < (s1.getRadius() + s2.getRadius());
 	}
 
 	bool CollisionSystem::collide(
@@ -130,7 +132,7 @@ namespace Engine
 		const PointCollider& p2
 	)
 	{
-		return p1.m_center == p2.m_center;
+		return p1.getCenter() == p2.getCenter();
 	}
 
 	bool CollisionSystem::collide(
@@ -138,13 +140,13 @@ namespace Engine
 		const SphereCollider& s
 	)
 	{
-		float x = std::max(b.m_min.x, std::min(s.m_center.x, b.m_max.x));
-		float y = std::max(b.m_min.y, std::min(s.m_center.y, b.m_max.y));
-		float z = std::max(b.m_min.z, std::min(s.m_center.z, b.m_max.z));
+		float x = std::max(b.getMin().x, std::min(s.getCenter().x, b.getMax().x));
+		float y = std::max(b.getMin().y, std::min(s.getCenter().y, b.getMax().y));
+		float z = std::max(b.getMin().z, std::min(s.getCenter().z, b.getMax().z));
 
-		float distance = glm::distance(Vec3(x, y, z), s.m_center);
+		float distance = glm::distance(Vec3(x, y, z), s.getCenter());
 
-		return distance < s.m_radius;
+		return distance < s.getRadius();
 	}
 
 	bool CollisionSystem::collide(
@@ -160,9 +162,9 @@ namespace Engine
 		const PointCollider& p
 	)
 	{
-		return (p.m_center.x > b.m_min.x && p.m_center.x < b.m_max.x) &&
-			   (p.m_center.y > b.m_min.y && p.m_center.y < b.m_max.y) &&
-			   (p.m_center.z > b.m_min.z && p.m_center.z < b.m_max.z);
+		return (p.getCenter().x > b.getMin().x && p.getCenter().x < b.getMax().x) &&
+			   (p.getCenter().y > b.getMin().y && p.getCenter().y < b.getMax().y) &&
+			   (p.getCenter().z > b.getMin().z && p.getCenter().z < b.getMax().z);
 	}
 
 	bool CollisionSystem::collide(
@@ -178,8 +180,8 @@ namespace Engine
 		const PointCollider& p
 	)
 	{
-		float distance = glm::distance(s.m_center, p.m_center);
-		return distance < s.m_radius;
+		float distance = glm::distance(s.getCenter(), p.getCenter());
+		return distance < s.getRadius();
 	}
 
 	bool CollisionSystem::collide(

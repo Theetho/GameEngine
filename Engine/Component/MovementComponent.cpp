@@ -7,10 +7,10 @@
 namespace Engine
 {
 	MovementComponent::MovementComponent(
-		GameObject* owner
+		GameObject& owner
 	)
 		: Component(owner)
-		, m_transform(&owner->getTransform())
+		, m_transform(owner.getTransform())
 		, m_speed()
 		, m_movement()
 		, m_distance()
@@ -27,40 +27,48 @@ namespace Engine
 	{
 		m_movement.reset();
 	
-		auto physics = m_owner->getComponent<PhysicsComponent>();
+		auto variant = m_owner.getComponent<Component::Type::Physics, PhysicsComponent>();
 
-		float friction = physics->getFriction();
+		float friction = 0.0f;
+
+		if (auto physics = std::get_if<Ref<PhysicsComponent>>(&variant))
+			friction = (*physics)->getFriction();
+
 
 		// Update the GameObject's position
 		if (Input::isKeyPressed(ENGINE_KEY_W))
 		{
 			m_speed.forward += m_speed.velocity;
 			m_movement.forward = true;
+			std::cout << "W" << std::endl;
 		}
 		if (Input::isKeyPressed(ENGINE_KEY_S))
 		{
 			m_speed.forward -= m_speed.velocity;
 			m_movement.forward = true;
+			std::cout << "S" << std::endl;
 		}
 
 		if (Input::isKeyPressed(ENGINE_KEY_A))
 		{
 			m_speed.strafe -= m_speed.velocity;
 			m_movement.strafe = true;
+			std::cout << "A" << std::endl;
 		}
 		if (Input::isKeyPressed(ENGINE_KEY_D))
 		{
 			m_speed.strafe += m_speed.velocity;
 			m_movement.strafe = true;
+			std::cout << "D" << std::endl;
 		}
 
 		if (Input::isKeyPressed(ENGINE_KEY_Q))
 		{
-			m_transform->getRotation().y += m_speed.rotation * delta;
+			m_transform.getRotation().y += m_speed.rotation * delta;
 		}
 		if (Input::isKeyPressed(ENGINE_KEY_E))
 		{
-			m_transform->getRotation().y -= m_speed.rotation * delta;
+			m_transform.getRotation().y -= m_speed.rotation * delta;
 		}
 
 		clapSpeed(m_speed.forward, friction, m_movement.forward);
@@ -72,20 +80,20 @@ namespace Engine
 		m_distance.strafe   = m_speed.strafe  * delta;
 	
 		m_movement.direction.x =
-			m_distance.forward * sin(glm::radians(/*180 - */m_transform->getRotation().y))
-		  - m_distance.strafe  * cos(glm::radians(/*180 - */m_transform->getRotation().y));
+			m_distance.forward * sin(glm::radians(/*180 - */m_transform.getRotation().y))
+		  - m_distance.strafe  * cos(glm::radians(/*180 - */m_transform.getRotation().y));
 
 		m_movement.direction.z =
-			m_distance.forward * cos(glm::radians(/*180 - */m_transform->getRotation().y))
-		  + m_distance.strafe  * sin(glm::radians(/*180 - */m_transform->getRotation().y));
+			m_distance.forward * cos(glm::radians(/*180 - */m_transform.getRotation().y))
+		  + m_distance.strafe  * sin(glm::radians(/*180 - */m_transform.getRotation().y));
 	
-		if (m_owner->isColliding())
+		if (m_owner.isColliding())
 		{
 			m_movement.direction = - m_movement.direction;
 		}
 
-		m_transform->getPosition() += Vec3(m_movement.direction.x, 0.f, m_movement.direction.z);
-		m_transform->updateModel(); 
+		m_transform.getPosition() += Vec3(m_movement.direction.x, 0.f, m_movement.direction.z);
+		m_transform.updateModel(); 
 	}
 
 	void MovementComponent::clapSpeed(

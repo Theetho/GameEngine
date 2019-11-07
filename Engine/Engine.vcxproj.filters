@@ -1244,16 +1244,17 @@
     <ClInclude Include="Vendor\stb\stb_image.h">
       <Filter>Vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="Component\ColliderComponent.h">
-      <Filter>Component</Filter>
-    </ClInclude>
     <ClInclude Include="System\CollisionSystem.h" />
     <ClInclude Include="System.h" />
+    <ClInclude Include="Component\Collider\ColliderComponent.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\Collider\BoxCollider.h" />
+    <ClInclude Include="Component\Collider\SphereCollider.h" />
+    <ClInclude Include="Component\Collider\PointCollider.h" />
+    <ClInclude Include="Component\Collider.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Component\ColliderComponent.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
     <ClCompile Include="Component\Component.cpp">
       <Filter>Component</Filter>
     </ClCompile>
@@ -1340,5 +1341,11 @@
       <Filter>Vendor\stb</Filter>
     </ClCompile>
     <ClCompile Include="System\CollisionSystem.cpp" />
+    <ClCompile Include="Component\Collider\ColliderComponent.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\Collider\BoxCollider.cpp" />
+    <ClCompile Include="Component\Collider\SphereCollider.cpp" />
+    <ClCompile Include="Component\Collider\PointCollider.cpp" />
   </ItemGroup>
 </Project>

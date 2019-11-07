@@ -1,55 +1,59 @@
 #pragma once
+#include "Component/Collider.h"
 
 namespace Engine
 {
-	class BoxCollider;
-	class SphereCollider;
-	class PointCollider;
-
 	class CollisionSystem
 	{
 	public:
+		CollisionSystem();
+
+		~CollisionSystem();
+
 		void onUpdate(
 			const double& delta
 		);
 
-		static CollisionSystem* Get()
+		inline static Ref<CollisionSystem> Create()
 		{
-			if (!s_instance)
-				s_instance = new CollisionSystem;
+			s_instance = std::make_shared<CollisionSystem>();
 			return s_instance;
 		}
 
-		static void addCollider(
-			BoxCollider* collider
+		inline static Ref<CollisionSystem> Get()
+		{
+			return s_instance;
+		}
+
+		static void AddCollider(
+			Ref<BoxCollider> collider
 		)
 		{
-			s_instance->m_boxes.insert(collider);
+			if (s_instance)
+				s_instance->m_boxes.push_back(collider);
 		}
 		
-		static void addCollider(
-			SphereCollider* collider
+		static void AddCollider(
+			Ref<SphereCollider> collider
 		)
 		{
-			s_instance->m_spheres.insert(collider);
+			if (s_instance)
+				s_instance->m_spheres.push_back(collider);
 		}
-		
-		static void addCollider(
-			PointCollider* collider
+
+		static void AddCollider(
+			Ref<PointCollider> collider
 		)
 		{
-			s_instance->m_points.insert(collider);
+			if (s_instance)
+				s_instance->m_points.push_back(collider);
 		}
 	private:
-		CollisionSystem() {}
+		static Ref<CollisionSystem> s_instance;
 
-		~CollisionSystem() {}
-
-		static CollisionSystem* s_instance;
-
-		std::set<BoxCollider*>    m_boxes;
-		std::set<SphereCollider*> m_spheres;
-		std::set<PointCollider*>  m_points;
+		std::vector<Ref<BoxCollider>>    m_boxes;
+		std::vector<Ref<SphereCollider>> m_spheres;
+		std::vector<Ref<PointCollider>>  m_points;
 
 		bool collide(
 			const BoxCollider& b1,

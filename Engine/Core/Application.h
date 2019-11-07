@@ -48,7 +48,7 @@ namespace Engine
 
 	private:
 		Scope<Window>		   m_window;
-		CollisionSystem*	   m_collisionSystem;
+		Ref<CollisionSystem>   m_collisionSystem;
 		bool				   m_running = true;
 		LayerStack			   m_layerStack;
 		double				   m_time = 0.0, m_deltaTime = 0.0;

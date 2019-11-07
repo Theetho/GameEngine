@@ -10,10 +10,26 @@ namespace Engine
 	class GameObject
 	{
 	public:
-		GameObject(
+		explicit GameObject(
 			const Transform& transform = Transform()
 		);
 		
+		GameObject(
+			const GameObject& other
+		);
+
+		GameObject(
+			const GameObject&& other
+		) noexcept;
+		
+		GameObject& operator=(
+			const GameObject& other
+		);
+
+		GameObject& operator=(
+			const GameObject&& other
+		) noexcept;
+
 		virtual ~GameObject();
 
 		virtual void onUpdate(
@@ -60,42 +76,48 @@ namespace Engine
 			return m_transform;
 		}
 
-		template<typename T>
-		T* getComponent(
+		template<Component::Type type, typename T>
+		std::variant<Ref<T>, void*> getComponent(
 		)
 		{
 			static_assert(std::is_base_of<Component, T>::value, "T is not a component");
-			T tmp(nullptr);
-			std::string name = tmp.getName();
+		
+			std::variant<Ref<T>, void*> result;
+			
 			for (auto component : m_components)
 			{
-				if (component->getName() == name)
-					return static_cast<T*>(component);
+				if (component->getType() == type)
+					result = std::dynamic_pointer_cast<T>(component);
 			}
 
-			return nullptr;
+			result = static_cast<void*>(nullptr);
+
+			return result;
 		}
 
-		template<typename T>
-		const T* getComponent(
+		template<Component::Type type, typename T>
+		const std::variant<Ref<T>, void*> getComponent(
 		) const
 		{
 			static_assert(std::is_base_of<Component, T>::value, "T is not a component");
-			T tmp(nullptr);
-			std::string name = tmp.getName();
+			
+			std::variant<Ref<T>, void*> result;
+
 			for (auto component : m_components)
 			{
-				if (component->getName() == name)
-					return static_cast<T*>(component);
+				if (component->getType() == type)
+					result = std::dynamic_pointer_cast<T>(component);
 			}
 
-			return nullptr;
+			result = static_cast<void*>(nullptr);
+
+			return result;
 		}
 
 	protected:
 		Transform m_transform;
 		bool      m_isColliding;
-		std::vector<Component*> m_components;
+		std::vector<Ref<Component>> m_components;
 	};
 
 	class DynamicObject : public GameObject

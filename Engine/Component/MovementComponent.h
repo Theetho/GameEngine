@@ -9,7 +9,7 @@ namespace Engine
 	{
 	public:
 		MovementComponent(
-			GameObject* owner
+			GameObject& owner
 		);
 		~MovementComponent();
 
@@ -17,9 +17,9 @@ namespace Engine
 			const double& delta
 		) override;
 		
-		std::string getName() override
+		inline Type getType() override
 		{
-			return "Movement";
+			return Type::Movement;
 		}
 		
 		inline const Vec3& getDirection() const
@@ -33,7 +33,7 @@ namespace Engine
 		}
 
 	private:
-		Transform* m_transform;
+		Transform& m_transform;
 
 		struct Speed
 		{

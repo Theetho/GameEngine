@@ -17,6 +17,42 @@ namespace Engine
 		updateModel();
 	}
 
+	Transform::Transform(const Transform& other)
+		: m_position(other.m_position)
+		, m_rotation(other.m_rotation)
+		, m_scale(other.m_scale)
+		, m_model(other.m_model)
+	{
+	}
+
+	Transform::Transform(const Transform&& other) noexcept
+		: m_position(other.m_position)
+		, m_rotation(other.m_rotation)
+		, m_scale(other.m_scale)
+		, m_model(other.m_model)
+	{
+	}
+
+	Transform& Transform::operator=(const Transform& other)
+	{
+		m_position = other.m_position;
+		m_rotation = other.m_rotation;
+		m_scale    = other.m_scale;
+		m_model    = other.m_model;
+
+		return *this;
+	}
+
+	Transform& Transform::operator=(const Transform&& other) noexcept
+	{
+		m_position = other.m_position;
+		m_rotation = other.m_rotation;
+		m_scale    = other.m_scale;
+		m_model    = other.m_model;
+
+		return *this;
+	}
+
 	Transform::~Transform()
 	{
 	}

@@ -7,11 +7,28 @@ namespace Engine
 	class Transform
 	{
 	public:
-		Transform(
+		explicit Transform(
 			const Vec3& position = Vec3(0.0f),
 			const Vec3& rotation = Vec3(0.0f),
 			const Vec3& scale = Vec3(1.0f)
 		);
+
+		Transform(
+			const Transform& other
+		);
+
+		Transform(
+			const Transform&& other
+		) noexcept;
+
+		Transform& operator=(
+			const Transform& other
+		);
+
+		Transform& operator=(
+			const Transform&& other
+		) noexcept;
+
 		~Transform();
 
 		inline const Mat4& getModel() const
