@@ -33,6 +33,11 @@ namespace Engine
 			const double& delta
 		) override;
 
+		inline Type getType() override
+		{
+			return Type::PointCollider;
+		}
+
 	private:
 	};
 }

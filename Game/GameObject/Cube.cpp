@@ -3,7 +3,8 @@
 
 Cube::Cube(
 	const float& size,
-	const Engine::Transform& transform
+	const Engine::Transform& transform,
+	const bool& collide
 )
 	: GameObject(transform)
 	, m_size((size) / 2.0f)
@@ -83,12 +84,13 @@ Cube::Cube(
 
 	m_vao->addIndexBuffer(ibo);
 	
-	m_components.push_back(std::make_shared<Engine::BoxCollider>(
-		*this,
-		m_transform.getPosition(),
-		size, size, size
-		)
-	);
+	if (collide)
+		m_components.push_back(std::make_shared<Engine::BoxCollider>(
+			*this,
+			m_transform.getPosition(),
+			size, size, size
+			)
+		);
 }
 
 Cube::~Cube()

@@ -112,6 +112,12 @@ namespace Engine
 		// Check for collision between every object (even the static ones)
 		void checkForAllCollision();
 
+		void test();
+		bool shouldBeOnTop(
+			const BoxCollider* b1,
+			const BoxCollider* b2
+		);
+
 		bool collide(
 			const BoxCollider* b1,
 			const BoxCollider* b2

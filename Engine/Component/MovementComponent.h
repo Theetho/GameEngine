@@ -27,6 +27,11 @@ namespace Engine
 			return m_movement.direction;
 		}
 
+		inline const float& getVelocity()
+		{
+			return m_speed.forward;
+		}
+
 		inline bool isMoving() const
 		{
 			return m_movement.forward || m_movement.strafe;

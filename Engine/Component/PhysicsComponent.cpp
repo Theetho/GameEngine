@@ -6,13 +6,13 @@
 namespace Engine
 {
 	const PhysicsComponent::Force PhysicsComponent::s_force(5.0f, 0.3f);
-	const float PhysicsComponent::s_groundLevel = 0.5f;
 
 	PhysicsComponent::PhysicsComponent(
 		GameObject& owner
 	)
 		: Component(owner)
 		, m_transform(owner.getTransform())
+		, m_groundLevel(0.25f)
 		, m_jump()
 		, m_percentage(1.0f, 1.0f)
 	{
@@ -29,10 +29,10 @@ namespace Engine
 		Vec3& position = m_transform.getPosition();
 		
 		// Gravity
-		if (!m_jump.isJumping && position.y > s_groundLevel)
+		if (!m_jump.isJumping && position.y > m_groundLevel)
 		{
 			float height = position.y - (m_percentage.gravity * s_force.gravity * delta);
-			position.y = height < s_groundLevel ? s_groundLevel : height;
+			position.y = height < m_groundLevel ? m_groundLevel : height;
 		}
 		else if (m_jump.isJumping)
 		{
@@ -44,5 +44,7 @@ namespace Engine
 				m_jump.delta = 0;
 			}
 		}
+
+		m_groundLevel = -100000;
 	}
 }

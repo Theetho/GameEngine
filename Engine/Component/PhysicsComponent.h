@@ -32,6 +32,13 @@ namespace Engine
 			return m_percentage.friction * s_force.friction;
 		}
 
+		inline void setGroundLevel(
+			const float& value
+		)
+		{
+			m_groundLevel = value;
+		}
+
 		inline void setFrictionPecentage(
 			const float& percentage
 		)
@@ -46,11 +53,12 @@ namespace Engine
 
 		inline bool isJumping() const
 		{
-			return m_transform.getPosition().y > s_groundLevel;
+			return m_transform.getPosition().y > m_groundLevel;
+			//return m_jump.isJumping;
 		}
 	private:
 		Transform& m_transform;
-		static const float s_groundLevel;
+		float m_groundLevel;
 		
 		struct Force
 		{
@@ -69,13 +77,13 @@ namespace Engine
 		// Value for each force
 		static const Force s_force;
 		// Percentage of the original force that 
-		// the GameObject is subjected to
+		// are applied to the GameObject
 		Force m_percentage;
 		
 		struct Jump
 		{
 			bool		 isJumping;
-			const float	 jumpStrengh  = 5.0f;
+			const float	 jumpStrengh  = 10.0f;
 			const double jumpDuration = 0.2;
 			double		 delta;
 		};

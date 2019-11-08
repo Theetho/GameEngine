@@ -1,10 +1,7 @@
 #include "EnginePch.h"
 #include "CollisionSystem.h"
 #include "GameObject/GameObject.h"
-#include "Component/MovementComponent.h"
-#include "Util/Benchmark.h"
-
-static bool display = true;
+#include "Component/PhysicsComponent.h"
 
 namespace Engine
 {
@@ -21,7 +18,8 @@ namespace Engine
 
 	void CollisionSystem::onUpdate(const double& delta)
 	{
-		checkForOneCollision();
+		//checkForOneCollision();
+		test();
 	}
 
 	void CollisionSystem::checkForOneCollision()
@@ -177,55 +175,55 @@ namespace Engine
 			check_collision(collision)
 
 			for (auto& it : movingPoints)
+			{
+				it->getOwner().isColliding(false);
+				if (collide(movingSpheres[i], it))
 				{
-					it->getOwner().isColliding(false);
-					if (collide(movingSpheres[i], it))
-					{
-						movingSpheres[i]->getOwner().isColliding(true);
-						it->getOwner().isColliding(true);
-						collision = true;
-						break;
-					}
+					movingSpheres[i]->getOwner().isColliding(true);
+					it->getOwner().isColliding(true);
+					collision = true;
+					break;
 				}
+			}
 			check_collision(collision)
 
 			for (auto& it : staticBoxes)
+			{
+				it->getOwner().isColliding(false);
+				if (collide(movingSpheres[i], it))
 				{
-					it->getOwner().isColliding(false);
-					if (collide(movingSpheres[i], it))
-					{
-						movingSpheres[i]->getOwner().isColliding(true);
-						it->getOwner().isColliding(true);
-						collision = true;
-						break;
-					}
+					movingSpheres[i]->getOwner().isColliding(true);
+					it->getOwner().isColliding(true);
+					collision = true;
+					break;
 				}
+			}
 			check_collision(collision)
 
 			for (auto& it : staticSpheres)
+			{
+				it->getOwner().isColliding(false);
+				if (collide(movingSpheres[i], it))
 				{
-					it->getOwner().isColliding(false);
-					if (collide(movingSpheres[i], it))
-					{
-						movingSpheres[i]->getOwner().isColliding(true);
-						it->getOwner().isColliding(true);
-						collision = true;
-						break;
-					}
+					movingSpheres[i]->getOwner().isColliding(true);
+					it->getOwner().isColliding(true);
+					collision = true;
+					break;
 				}
+			}
 			check_collision(collision)
 
 			for (auto& it : staticPoints)
+			{
+				it->getOwner().isColliding(false);
+				if (collide(movingSpheres[i], it))
 				{
-					it->getOwner().isColliding(false);
-					if (collide(movingSpheres[i], it))
-					{
-						movingSpheres[i]->getOwner().isColliding(true);
-						it->getOwner().isColliding(true);
-						collision = true;
-						break;
-					}
+					movingSpheres[i]->getOwner().isColliding(true);
+					it->getOwner().isColliding(true);
+					collision = true;
+					break;
 				}
+			}
 		}
 
 		// Moving points
@@ -248,42 +246,42 @@ namespace Engine
 			check_collision(collision)
 
 			for (auto& it : staticBoxes)
+			{
+				it->getOwner().isColliding(false);
+				if (collide(movingPoints[i], it))
 				{
-					it->getOwner().isColliding(false);
-					if (collide(movingPoints[i], it))
-					{
-						movingPoints[i]->getOwner().isColliding(true);
-						it->getOwner().isColliding(true);
-						collision = true;
-						break;
-					}
+					movingPoints[i]->getOwner().isColliding(true);
+					it->getOwner().isColliding(true);
+					collision = true;
+					break;
 				}
+			}
 			check_collision(collision)
 
 			for (auto& it : staticSpheres)
+			{
+				it->getOwner().isColliding(false);
+				if (collide(movingPoints[i], it))
 				{
-					it->getOwner().isColliding(false);
-					if (collide(movingPoints[i], it))
-					{
-						movingPoints[i]->getOwner().isColliding(true);
-						it->getOwner().isColliding(true);
-						collision = true;
-						break;
-					}
+					movingPoints[i]->getOwner().isColliding(true);
+					it->getOwner().isColliding(true);
+					collision = true;
+					break;
 				}
+			}
 			check_collision(collision)
 
 			for (auto& it : staticPoints)
+			{
+				it->getOwner().isColliding(false);
+				if (collide(movingPoints[i], it))
 				{
-					it->getOwner().isColliding(false);
-					if (collide(movingPoints[i], it))
-					{
-						movingPoints[i]->getOwner().isColliding(true);
-						it->getOwner().isColliding(true);
-						collision = true;
-						break;
-					}
+					movingPoints[i]->getOwner().isColliding(true);
+					it->getOwner().isColliding(true);
+					collision = true;
+					break;
 				}
+			}
 		}
 	}
 
@@ -498,11 +496,297 @@ namespace Engine
 		}
 	}
 
+	void CollisionSystem::test()
+	{
+#define check_collision(x) if (x) continue; 
+
+		bool collision = false;
+
+		std::vector<BoxCollider*>    movingBoxes;
+		std::vector<SphereCollider*> movingSpheres;
+		std::vector<PointCollider*>  movingPoints;
+
+		std::vector<BoxCollider*>    staticBoxes;
+		std::vector<SphereCollider*> staticSpheres;
+		std::vector<PointCollider*>  staticPoints;
+
+		// Separate moving objects from static objects;
+		for (auto it : m_boxes)
+		{
+			if (it->getOwner().isMoving() || it->getOwner().isJumping())
+			{
+				movingBoxes.push_back(it);
+			}
+			else
+			{
+				staticBoxes.push_back(it);
+			}
+		}
+		for (auto it : m_spheres)
+		{
+			if (it->getOwner().isMoving() || it->getOwner().isJumping())
+			{
+				movingSpheres.push_back(it);
+			}
+			else
+			{
+				staticSpheres.push_back(it);
+			}
+		}
+		for (auto it : m_points)
+		{
+			if (it->getOwner().isMoving() || it->getOwner().isJumping())
+			{
+				movingPoints.push_back(it);
+			}
+			else
+			{
+				staticPoints.push_back(it);
+			}
+		}
+
+		// Moving box
+		for (int i = 0; i < movingBoxes.size(); ++i)
+		{
+			collision = false;
+
+			movingBoxes[i]->getOwner().isColliding(false);
+			for (int j = i + 1; j < movingBoxes.size(); ++i)
+			{
+				movingBoxes[j]->getOwner().isColliding(false);
+				if (collide(movingBoxes[i], movingBoxes[j]))
+				{
+					movingBoxes[i]->getOwner().isColliding(true);
+					movingBoxes[j]->getOwner().isColliding(true);
+					collision = true;
+					break;
+				}
+			}
+			check_collision(collision)
+
+				for (auto& it : movingSpheres)
+				{
+					it->getOwner().isColliding(false);
+					if (collide(movingBoxes[i], it))
+					{
+						movingBoxes[i]->getOwner().isColliding(true);
+						it->getOwner().isColliding(true);
+						collision = true;
+						break;
+					}
+				}
+			check_collision(collision)
+
+				for (auto& it : movingPoints)
+				{
+					it->getOwner().isColliding(false);
+					if (collide(movingBoxes[i], it))
+					{
+						movingBoxes[i]->getOwner().isColliding(true);
+						it->getOwner().isColliding(true);
+						collision = true;
+						break;
+					}
+				}
+			check_collision(collision)
+
+				for (auto& it : staticBoxes)
+				{
+					it->getOwner().isColliding(false);
+					if (collide(movingBoxes[i], it))
+					{
+						movingBoxes[i]->getOwner().isColliding(true);
+						it->getOwner().isColliding(true);
+						
+						//if (movingBoxes[i]->getOwner().getTransform().getPosition().y > it->getOwner().getTransform().getPosition().y)
+						if (shouldBeOnTop(movingBoxes[i], it))
+						{
+							auto variant = movingBoxes[i]->getOwner().getComponent<Component::Type::Physics, PhysicsComponent>();
+
+							if (auto physics = std::get_if<Ref<PhysicsComponent>>(&variant))
+								(*physics)->setGroundLevel(it->getMax().y + 1);
+
+							movingBoxes[i]->getOwner().isColliding(false);
+						}
+						else
+						{
+							collision = true;
+							break;
+						}
+					}
+				}
+			check_collision(collision)
+
+				for (auto& it : staticSpheres)
+				{
+					it->getOwner().isColliding(false);
+					if (collide(movingBoxes[i], it))
+					{
+						movingBoxes[i]->getOwner().isColliding(true);
+						it->getOwner().isColliding(true);
+						collision = true;
+						break;
+					}
+				}
+			check_collision(collision)
+
+				for (auto& it : staticPoints)
+				{
+					it->getOwner().isColliding(false);
+					if (collide(movingBoxes[i], it))
+					{
+						movingBoxes[i]->getOwner().isColliding(true);
+						it->getOwner().isColliding(true);
+						collision = true;
+						break;
+					}
+				}
+		}
+
+		// Moving spheres
+		for (int i = 0; i < movingSpheres.size(); ++i)
+		{
+			collision = false;
+
+			movingSpheres[i]->getOwner().isColliding(false);
+			for (int j = i + 1; j < movingSpheres.size(); ++i)
+			{
+				movingSpheres[j]->getOwner().isColliding(false);
+				if (collide(movingSpheres[i], movingSpheres[j]))
+				{
+					movingSpheres[i]->getOwner().isColliding(true);
+					movingSpheres[j]->getOwner().isColliding(true);
+					collision = true;
+					break;
+				}
+			}
+			check_collision(collision)
+
+				for (auto& it : movingPoints)
+				{
+					it->getOwner().isColliding(false);
+					if (collide(movingSpheres[i], it))
+					{
+						movingSpheres[i]->getOwner().isColliding(true);
+						it->getOwner().isColliding(true);
+						collision = true;
+						break;
+					}
+				}
+			check_collision(collision)
+
+				for (auto& it : staticBoxes)
+				{
+					it->getOwner().isColliding(false);
+					if (collide(movingSpheres[i], it))
+					{
+						movingSpheres[i]->getOwner().isColliding(true);
+						it->getOwner().isColliding(true);
+						collision = true;
+						break;
+					}
+				}
+			check_collision(collision)
+
+				for (auto& it : staticSpheres)
+				{
+					it->getOwner().isColliding(false);
+					if (collide(movingSpheres[i], it))
+					{
+						movingSpheres[i]->getOwner().isColliding(true);
+						it->getOwner().isColliding(true);
+						collision = true;
+						break;
+					}
+				}
+			check_collision(collision)
+
+				for (auto& it : staticPoints)
+				{
+					it->getOwner().isColliding(false);
+					if (collide(movingSpheres[i], it))
+					{
+						movingSpheres[i]->getOwner().isColliding(true);
+						it->getOwner().isColliding(true);
+						collision = true;
+						break;
+					}
+				}
+		}
+
+		// Moving points
+		for (int i = 0; i < movingPoints.size(); ++i)
+		{
+			collision = false;
+
+			movingPoints[i]->getOwner().isColliding(false);
+			for (int j = i + 1; j < movingPoints.size(); ++i)
+			{
+				movingPoints[j]->getOwner().isColliding(false);
+				if (collide(movingPoints[i], movingPoints[j]))
+				{
+					movingPoints[i]->getOwner().isColliding(true);
+					movingPoints[j]->getOwner().isColliding(true);
+					collision = true;
+					break;
+				}
+			}
+			check_collision(collision)
+
+				for (auto& it : staticBoxes)
+				{
+					it->getOwner().isColliding(false);
+					if (collide(movingPoints[i], it))
+					{
+						movingPoints[i]->getOwner().isColliding(true);
+						it->getOwner().isColliding(true);
+						collision = true;
+						break;
+					}
+				}
+			check_collision(collision)
+
+				for (auto& it : staticSpheres)
+				{
+					it->getOwner().isColliding(false);
+					if (collide(movingPoints[i], it))
+					{
+						movingPoints[i]->getOwner().isColliding(true);
+						it->getOwner().isColliding(true);
+						collision = true;
+						break;
+					}
+				}
+			check_collision(collision)
+
+				for (auto& it : staticPoints)
+				{
+					it->getOwner().isColliding(false);
+					if (collide(movingPoints[i], it))
+					{
+						movingPoints[i]->getOwner().isColliding(true);
+						it->getOwner().isColliding(true);
+						collision = true;
+						break;
+					}
+				}
+		}
+	}
+
+	bool CollisionSystem::shouldBeOnTop(
+		const BoxCollider* b1,
+		const BoxCollider* b2)
+	{
+		return (b1->getMin().x < b2->getMax().x && b1->getMax().x > b2->getMin().x) &&
+			   b1->getOwner().getTransform().getPosition().y > b2->getOwner().getTransform().getPosition().y &&
+			   (b1->getMin().z < b2->getMax().z && b1->getMax().z > b2->getMin().z);
+	}
+
 	bool CollisionSystem::collide(
 		const BoxCollider* b1,
 		const BoxCollider* b2
 	)
-	{
+	{	
 		return (b1->getMin().x < b2->getMax().x && b1->getMax().x > b2->getMin().x) &&
 			   (b1->getMin().y < b2->getMax().y && b1->getMax().y > b2->getMin().y) &&
 			   (b1->getMin().z < b2->getMax().z && b1->getMax().z > b2->getMin().z);

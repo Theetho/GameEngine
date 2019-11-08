@@ -34,6 +34,18 @@ namespace Engine
 			const double& delta
 		) override;
 
+		inline Type getType() override
+		{
+			return Type::SphereCollider;
+		}
+
+		inline void setScale(
+			const float& scale
+		)
+		{
+			m_radius *= scale;
+		}
+
 		inline const float& getRadius() const
 		{
 			return m_radius;

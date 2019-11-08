@@ -5,7 +5,8 @@ class Cube : public Engine::GameObject
 public:
 	Cube(
 		const float& size = 1.0f,
-		const Engine::Transform& transform = Engine::Transform()
+		const Engine::Transform& transform = Engine::Transform(),
+		const bool& collide = true
 	);
 
 	~Cube();

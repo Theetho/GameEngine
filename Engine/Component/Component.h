@@ -11,7 +11,9 @@ namespace Engine
 		{
 			Movement,
 			Physics,
-			Collider
+			BoxCollider,
+			SphereCollider,
+			PointCollider
 		};
 
 		Component(
@@ -35,6 +37,11 @@ namespace Engine
 		inline virtual Type getType() = 0;
 
 		inline GameObject& getOwner()
+		{
+			return m_owner;
+		}
+
+		inline const GameObject& getOwner() const
 		{
 			return m_owner;
 		}

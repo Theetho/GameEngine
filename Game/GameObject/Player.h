@@ -1,14 +1,12 @@
 #pragma once
 
-class Player : public Engine::DynamicObject
+class Player : public Engine::GameObject
 {
 public:
-	Player();
+	Player(
+		const Engine::Transform& transform = Engine::Transform()
+	);
 	~Player();
-
-	void onUpdate(
-		const double& delta
-	) override;
 
 	void onEvent(
 		Engine::Event& event
@@ -20,13 +18,6 @@ public:
 	)
 	{
 		m_vao = vao;
-	}
-
-	inline void setPosition(
-		const Engine::Vec3& position
-	)
-	{
-		m_transform.setPosition(position);
 	}
 
 	// TEMPORARY

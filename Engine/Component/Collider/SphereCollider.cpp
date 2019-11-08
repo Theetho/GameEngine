@@ -60,4 +60,4 @@ namespace Engine
 	{
 		m_center = m_owner.getTransform().getPosition() + m_offset;
 	}
-}
+}	

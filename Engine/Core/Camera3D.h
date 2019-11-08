@@ -5,7 +5,7 @@
 
 namespace Engine
 {
-	class DynamicObject;
+	class GameObject;
 
 	class Camera3D
 	{
@@ -94,7 +94,7 @@ namespace Engine
 	{
 	public:
 		Camera3DLocked(
-			const DynamicObject& target,
+			const GameObject& target,
 			const Vec3& offset
 		);
 		~Camera3DLocked();
@@ -120,8 +120,9 @@ namespace Engine
 		}
 
 	private:
-		const DynamicObject& m_target;
-		
+		const GameObject& m_target;
+
+		Vec3 m_direction;
 		Vec3 m_offset;
 	};
 }

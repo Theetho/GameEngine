@@ -34,11 +34,6 @@ namespace Engine
 		virtual ~Collider()
 		{}
 
-		inline Type getType() override
-		{
-			return Type::Collider;
-		}
-
 		inline const Vec3& getCenter() const
 		{
 			return m_center;

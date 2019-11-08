@@ -43,10 +43,13 @@ namespace Engine
 		// Update the GameObject's position
 		if (Input::isKeyPressed(ENGINE_KEY_W))
 		{
-			m_speed.forward = m_speed.velocity;
-			m_movement.forward = true;
+			if (!Input::isKeyPressed(ENGINE_KEY_S))
+			{
+				m_speed.forward = m_speed.velocity;
+				m_movement.forward = true;
+			}
 		}
-		if (Input::isKeyPressed(ENGINE_KEY_S))
+		else if (Input::isKeyPressed(ENGINE_KEY_S))
 		{
 			m_speed.forward = -m_speed.velocity;
 			m_movement.forward = true;
@@ -54,10 +57,13 @@ namespace Engine
 
 		if (Input::isKeyPressed(ENGINE_KEY_A))
 		{
-			m_speed.strafe = -m_speed.velocity;
-			m_movement.strafe = true;
+			if (!Input::isKeyPressed(ENGINE_KEY_D))
+			{
+				m_speed.strafe = -m_speed.velocity;
+				m_movement.strafe = true;
+			}
 		}
-		if (Input::isKeyPressed(ENGINE_KEY_D))
+		else if (Input::isKeyPressed(ENGINE_KEY_D))
 		{
 			m_speed.strafe = m_speed.velocity;
 			m_movement.strafe = true;

@@ -1,8 +1,6 @@
 #pragma once
 
 #include "Transform.h"
-#include "Renderer/Material.h"
-#include "Renderer/Texture.h"
 #include "Component/Component.h"
 
 namespace Engine
@@ -56,16 +54,6 @@ namespace Engine
 			m_isColliding = is;
 		}
 
-		// Return 'this' so it is possible to 
-		// concatenate setters
-		inline GameObject& setTransform(
-			const Transform& transform
-		)
-		{
-			m_transform = transform;
-			return *this;
-		}
-
 		inline Transform& getTransform()
 		{
 			return m_transform;
@@ -75,6 +63,31 @@ namespace Engine
 		{
 			return m_transform;
 		}
+
+		inline void setPosition(
+			const Vec3& position
+		)
+		{
+			m_transform.setPosition(position);
+		}
+		
+		inline void setRotation(
+			const Vec3& rotation
+		)
+		{
+			m_transform.setRotation(rotation);
+		}
+		
+		inline void setScale(
+			const float& scale
+		)
+		{
+			setScale(Vec3(scale));
+		}
+
+		void setScale(
+			const Vec3& scale
+		);
 
 		template<Component::Type type, typename T>
 		std::variant<Ref<T>, void*> getComponent(
@@ -124,32 +137,6 @@ namespace Engine
 		Transform m_transform;
 		bool      m_isColliding;
 		std::vector<Ref<Component>> m_components;
-	};
-
-	class DynamicObject : public GameObject
-	{
-	public:
-		DynamicObject(
-			const Transform& transform = Transform()
-		);
-		virtual ~DynamicObject()
-		{
-		}
-
-		inline void setDirection(
-			const Vec3& direction
-		)
-		{
-			m_direction = direction;
-		}
-
-		inline const Vec3& getDirection() const
-		{
-			return m_direction;
-		}
-
-	protected:
-		Vec3 m_direction;
 	};
 }
 

@@ -22,7 +22,7 @@ void MazeLayer::onAttach()
 
 	m_player.setVao(cube.getVao());
 	m_player.setPosition(m_maze->getEntry());
-//	m_player.getTransform().setScale(0.5f);
+	m_player.setScale(0.5f);
 
 	Engine::AssetManager::getTexture2DLibrary().load("snow.jpg");
 	Engine::AssetManager::getTexture2DLibrary().load("hedge.jpg");
@@ -56,7 +56,6 @@ void MazeLayer::onUpdate(const double& delta)
 	
 	Engine::Color* drawColor;
 
-
 	//wall->bind();
 	openglShader->bind();
 
@@ -64,6 +63,15 @@ void MazeLayer::onUpdate(const double& delta)
 	openglShader->uploadUniform("u_color",*drawColor);
 	for (auto& cube : m_maze->getWalls())
 	{
+		if (cube->isColliding())
+		{
+			drawColor = &Engine::Color::Green;
+		}
+		else
+		{
+			drawColor = &Engine::Color::Navy;
+		}
+		openglShader->uploadUniform("u_color", *drawColor);
 		Engine::Renderer::Submit(
 			openglShader,
 			cube->getVao(),
@@ -76,6 +84,15 @@ void MazeLayer::onUpdate(const double& delta)
 	openglShader->uploadUniform("u_color", *drawColor);
 	for (auto& cube : m_maze->getGround())
 	{
+		if (cube->isColliding())
+		{
+			drawColor = &Engine::Color::Green;
+		}
+		else
+		{
+			drawColor = &Engine::Color::Teal;
+		}
+		openglShader->uploadUniform("u_color", *drawColor);
 		Engine::Renderer::Submit(
 			openglShader,
 			cube->getVao(),

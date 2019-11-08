@@ -51,7 +51,7 @@ namespace Engine
 /// Camera3DLocked 
 
 	Camera3DLocked::Camera3DLocked(
-		const DynamicObject& target,
+		const GameObject& target,
 		const Vec3& offset
 	)
 		: Camera3D(
@@ -71,19 +71,8 @@ namespace Engine
 	{
 		Camera3D::onUpdate(delta);
 
-		const Vec3& position = m_target.getTransform().getPosition() + m_offset;
-
-		if (m_target.isJumping())
-		{
-			m_axis.position.x = position.x;
-			m_axis.position.z = position.z;
-			m_axis.target += m_target.getDirection();
-		}
-		else
-		{
-			m_axis.position = position;
-			m_axis.target = m_target.getTransform().getPosition();
-		}
+		m_axis.position = m_target.getTransform().getPosition() + m_offset;;
+		m_axis.target = m_target.getTransform().getPosition();
 	}
 
 	void Camera3DLocked::onEvent(Event& event)

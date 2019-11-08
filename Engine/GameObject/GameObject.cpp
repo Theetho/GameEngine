@@ -94,11 +94,21 @@ namespace Engine
 		return false;
 	}
 
-	DynamicObject::DynamicObject(
-		const Transform& transform
-	)
-		: GameObject(transform)
-		, m_direction(0.0f, 0.0f, 0.0f)
+	void GameObject::setScale(const Vec3& scale)
 	{
+		m_transform.setScale(scale);
+
+		// Update the collider scale if the object has one
+		auto box = getComponent<Component::Type::BoxCollider, BoxCollider>();
+		auto sphere = getComponent<Component::Type::SphereCollider, SphereCollider>();
+
+		if (auto collider = std::get_if<Ref<BoxCollider>>(&box))
+		{
+			(*collider)->setScale(scale);
+		}
+		else if (auto collider = std::get_if<Ref<SphereCollider>>(&sphere))
+		{
+			(*collider)->setScale(scale.x);
+		}
 	}
 }

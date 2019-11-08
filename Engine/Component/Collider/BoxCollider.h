@@ -36,6 +36,11 @@ namespace Engine
 			const double& delta
 		) override;
 
+		inline Type getType() override
+		{
+			return Type::BoxCollider;
+		}
+
 		inline const Vec3& getMax() const
 		{
 			return m_max;
@@ -46,8 +51,24 @@ namespace Engine
 			return m_min;
 		}
 
+		inline void setScale(
+			const Vec3& scale
+		)
+		{
+			m_width  *= scale.x;
+			m_height *= scale.y;
+			m_depth  *= scale.z;
+		}
+
+		inline void setScale(
+			const float& scale
+		)
+		{
+			setScale(Vec3(scale));
+		}
+
 	private:
-		const float m_width, m_height, m_depth;
+		float m_width, m_height, m_depth;
 		// Top Right Front point (x, y, z) / 2
 		Vec3  m_max;
 		// Bottom Left Back point (-x, -y, -z) / 2

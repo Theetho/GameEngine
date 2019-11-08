@@ -53,6 +53,8 @@ Engine::Scope<Maze> FileLoader::loadMaze(
 				break;
 
 			case '1':
+				maze->addGround(new Cube(size, Engine::Transform(position)));
+				
 				position.y = -position.y;
 				
 				maze->addWalls(new Cube(size, Engine::Transform(position)));
