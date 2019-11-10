@@ -12,7 +12,7 @@ namespace Engine
 		: Collider(owner, center)
 		, m_radius(radius)
 	{
-		CollisionSystem::AddCollider(this);
+		CollisionSystem::AddCollider<SphereCollider>(this);
 	}
 
 	SphereCollider::SphereCollider(
@@ -21,7 +21,7 @@ namespace Engine
 		: Collider(other.m_owner, other.m_center)
 		, m_radius(other.m_radius)
 	{
-		CollisionSystem::AddCollider(this);
+		CollisionSystem::AddCollider<SphereCollider>(this);
 	}
 
 	SphereCollider::SphereCollider(
@@ -30,14 +30,14 @@ namespace Engine
 		: Collider(other.m_owner, other.m_center)
 		, m_radius(other.m_radius)
 	{
-		CollisionSystem::AddCollider(this);
+		CollisionSystem::AddCollider<SphereCollider>(this);
 	}
 
 	SphereCollider& SphereCollider::operator=(const SphereCollider& other)
 	{
 		*this = SphereCollider(other);
 
-		CollisionSystem::AddCollider(this);
+		CollisionSystem::AddCollider<SphereCollider>(this);
 		
 		return *this;
 	}
@@ -46,7 +46,7 @@ namespace Engine
 	{
 		*this = SphereCollider(other);
 
-		CollisionSystem::AddCollider(this);
+		CollisionSystem::AddCollider<SphereCollider>(this);
 		
 		return *this;
 	}

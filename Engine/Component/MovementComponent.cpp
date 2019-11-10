@@ -33,14 +33,13 @@ namespace Engine
 
 		m_movement.reset();
 
-		auto variant = m_owner.getComponent<Component::Type::Physics, PhysicsComponent>();
-
 		float friction = 0.0f;
+		
+		auto physics = m_owner.GetComponent<PhysicsComponent>();
 
-		if (auto physics = std::get_if<Ref<PhysicsComponent>>(&variant))
-			friction = (*physics)->getFriction();
+		if (physics)
+			friction = physics->getFriction();
 
-		// Update the GameObject's position
 		if (Input::isKeyPressed(ENGINE_KEY_W))
 		{
 			if (!Input::isKeyPressed(ENGINE_KEY_S))

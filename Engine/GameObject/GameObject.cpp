@@ -57,9 +57,9 @@ namespace Engine
 		const double& delta
 	)
 	{
-		for (auto component : m_components)
+		for (auto kv : m_components)
 		{
-			component->onUpdate(delta);
+			kv.second->onUpdate(delta);
 		}
 	}
 
@@ -72,25 +72,28 @@ namespace Engine
 	
 	bool GameObject::isJumping() const
 	{
-		auto variant = getComponent<Component::Type::Physics, PhysicsComponent>();
+		auto physics = GetComponent<PhysicsComponent>();
 		
-		if (auto component = std::get_if<Ref<PhysicsComponent>>(&variant))
-		{
-			return (*component)->isJumping();
-		}
-		
+		if (physics)
+			return physics->isJumping();
 		return false;
 	}
 
 	bool GameObject::isMoving() const
 	{
-		auto variant = getComponent<Component::Type::Movement, MovementComponent>();
-		
-		if (auto component = std::get_if<Ref<MovementComponent>>(&variant))
-		{
-			return (*component)->isMoving();
-		}
-		
+		auto movement = GetComponent<MovementComponent>();
+
+		if (movement)
+			return movement->isMoving();
+		return false;
+	}
+
+	bool GameObject::isMoveable() const
+	{
+		auto movement = GetComponent<MovementComponent>();
+
+		if (movement)
+			return true;
 		return false;
 	}
 
@@ -98,17 +101,12 @@ namespace Engine
 	{
 		m_transform.setScale(scale);
 
-		// Update the collider scale if the object has one
-		auto box = getComponent<Component::Type::BoxCollider, BoxCollider>();
-		auto sphere = getComponent<Component::Type::SphereCollider, SphereCollider>();
-
-		if (auto collider = std::get_if<Ref<BoxCollider>>(&box))
-		{
-			(*collider)->setScale(scale);
-		}
-		else if (auto collider = std::get_if<Ref<SphereCollider>>(&sphere))
-		{
-			(*collider)->setScale(scale.x);
-		}
+		auto box    = GetComponent<BoxCollider>();
+		auto sphere = GetComponent<SphereCollider>();
+		
+		if (box)
+			box->setScale(scale);
+		else if (sphere)
+			sphere->setScale(scale.x);
 	}
 }

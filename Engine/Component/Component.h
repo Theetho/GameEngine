@@ -7,15 +7,6 @@ namespace Engine
 	class Component
 	{
 	public:
-		enum class Type
-		{
-			Movement,
-			Physics,
-			BoxCollider,
-			SphereCollider,
-			PointCollider
-		};
-
 		Component(
 			GameObject& owner
 		);
@@ -33,8 +24,6 @@ namespace Engine
 		virtual void onUpdate(
 			const double& delta
 		) = 0;
-
-		inline virtual Type getType() = 0;
 
 		inline GameObject& getOwner()
 		{

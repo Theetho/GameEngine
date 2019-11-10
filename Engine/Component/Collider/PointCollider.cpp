@@ -10,7 +10,7 @@ namespace Engine
 	)
 		: Collider(owner, center)
 	{
-		CollisionSystem::AddCollider(this);
+		CollisionSystem::AddCollider<PointCollider>(this);
 	}
 
 	PointCollider::PointCollider(
@@ -18,7 +18,7 @@ namespace Engine
 	)
 		: Collider(other.m_owner, other.m_center)
 	{
-		CollisionSystem::AddCollider(this);
+		CollisionSystem::AddCollider<PointCollider>(this);
 	}
 
 	PointCollider::PointCollider(
@@ -26,14 +26,14 @@ namespace Engine
 	) noexcept
 		: Collider(other.m_owner, other.m_center)
 	{
-		CollisionSystem::AddCollider(this);
+		CollisionSystem::AddCollider<PointCollider>(this);
 	}
 
 	PointCollider& PointCollider::operator=(const PointCollider& other)
 	{
 		*this = PointCollider(other);
 
-		CollisionSystem::AddCollider(this);
+		CollisionSystem::AddCollider<PointCollider>(this);
 
 		return *this;
 	}
@@ -42,7 +42,7 @@ namespace Engine
 	{
 		*this = PointCollider(other);
 
-		CollisionSystem::AddCollider(this);
+		CollisionSystem::AddCollider<PointCollider>(this);
 
 		return *this;
 	}

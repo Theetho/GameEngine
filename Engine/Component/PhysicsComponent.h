@@ -17,14 +17,14 @@ namespace Engine
 			const double& delta
 		);
 		
-		inline Type getType() override
-		{
-			return Type::Physics;
-		}
-
-		inline float getGravity() const
+		inline const float& getGravity() const
 		{
 			return m_percentage.gravity * s_force.gravity;
+		}
+
+		inline const float& getGroundLevel () const
+		{
+			return m_groundLevel;
 		}
 
 		inline float getFriction() const
@@ -51,10 +51,19 @@ namespace Engine
 			m_jump.isJumping = true;
 		}
 
-		inline bool isJumping() const
+		inline bool isInAir() const
 		{
-			return m_transform.getPosition().y > m_groundLevel;
-			//return m_jump.isJumping;
+			return m_jump.isJumping || m_jump.isFalling;
+		}
+
+		inline const bool& isJumping() const
+		{
+			return m_jump.isJumping;
+		}
+
+		inline const bool& isFalling() const
+		{
+			return m_jump.isFalling;
 		}
 	private:
 		Transform& m_transform;
@@ -83,6 +92,7 @@ namespace Engine
 		struct Jump
 		{
 			bool		 isJumping;
+			bool		 isFalling;
 			const float	 jumpStrengh  = 10.0f;
 			const double jumpDuration = 0.2;
 			double		 delta;

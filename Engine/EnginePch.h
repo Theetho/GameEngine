@@ -8,9 +8,8 @@
 #include <functional>
 #include <initializer_list>
 #include <algorithm>
-#include <unordered_set>
-#include <variant>
-#include <set>
+#include <typeindex>
+#include <typeinfo>
 #include <stb_image.h>
 
 #ifdef ENGINE_WINDOWS

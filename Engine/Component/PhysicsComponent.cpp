@@ -12,7 +12,7 @@ namespace Engine
 	)
 		: Component(owner)
 		, m_transform(owner.getTransform())
-		, m_groundLevel(0.25f)
+		, m_groundLevel(2.0f)
 		, m_jump()
 		, m_percentage(1.0f, 1.0f)
 	{
@@ -29,11 +29,11 @@ namespace Engine
 		Vec3& position = m_transform.getPosition();
 		
 		// Gravity
-		if (!m_jump.isJumping && position.y > m_groundLevel)
+		if (!m_jump.isJumping && (position.y > m_groundLevel))
 		{
-			float height = position.y - (m_percentage.gravity * s_force.gravity * delta);
-			position.y = height < m_groundLevel ? m_groundLevel : height;
+			position.y -= m_percentage.gravity * s_force.gravity * (float)delta;
 		}
+		// Jump
 		else if (m_jump.isJumping)
 		{
 			position.y   += m_jump.jumpStrengh * delta;
@@ -41,10 +41,14 @@ namespace Engine
 			if (m_jump.delta >= m_jump.jumpDuration)
 			{
 				m_jump.isJumping = false;
+				m_jump.isFalling = true;
 				m_jump.delta = 0;
 			}
 		}
-
-		m_groundLevel = -100000;
+		// Only goes here when the object hits the ground
+		else if (m_jump.isFalling)
+		{
+			m_jump.isFalling = false;
+		}
 	}
 }

@@ -18,7 +18,7 @@ namespace Engine
 		, m_max(center + Vec3(m_width, m_height, m_depth))
 		, m_min(center - Vec3(m_width, m_height, m_depth))
 	{
-		CollisionSystem::AddCollider(this);
+		CollisionSystem::AddCollider<BoxCollider>(this);
 	}
 
 	BoxCollider::BoxCollider(
@@ -31,7 +31,7 @@ namespace Engine
 		, m_height(other.m_height)
 		, m_depth(other.m_depth)
 	{
-		CollisionSystem::AddCollider(this);
+		CollisionSystem::AddCollider<BoxCollider>(this);
 	}
 
 	BoxCollider::BoxCollider(
@@ -44,14 +44,14 @@ namespace Engine
 		, m_height(other.m_height)
 		, m_depth(other.m_depth)
 	{
-		CollisionSystem::AddCollider(this);
+		CollisionSystem::AddCollider<BoxCollider>(this);
 	}
 
 	BoxCollider& BoxCollider::operator=(const BoxCollider& other)
 	{
 		*this = BoxCollider(other);
 
-		CollisionSystem::AddCollider(this);
+		CollisionSystem::AddCollider<BoxCollider>(this);
 
 		return *this;
 	}
@@ -60,7 +60,7 @@ namespace Engine
 	{
 		*this = BoxCollider(other);
 
-		CollisionSystem::AddCollider(this);
+		CollisionSystem::AddCollider<BoxCollider>(this);
 
 		return *this;
 	}
@@ -72,7 +72,7 @@ namespace Engine
 	
 	void BoxCollider::onUpdate(const double& delta)
 	{
-		if (m_owner.isMoving() || m_owner.isJumping())
+		if (m_owner.isMoveable())
 		{
 			m_center = m_owner.getTransform().getPosition() + m_offset;
 			m_max    = m_center + Vec3(m_width, m_height, m_depth);

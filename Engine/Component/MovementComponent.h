@@ -17,11 +17,6 @@ namespace Engine
 			const double& delta
 		) override;
 		
-		inline Type getType() override
-		{
-			return Type::Movement;
-		}
-		
 		inline const Vec3& getDirection() const
 		{
 			return m_movement.direction;

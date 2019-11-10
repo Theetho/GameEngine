@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "Component/Component.h"
 
+
 namespace Engine
 {
 	class GameObject
@@ -41,6 +42,8 @@ namespace Engine
 		virtual bool isJumping() const;
 
 		virtual bool isMoving() const;
+
+		virtual bool isMoveable() const;
 
 		virtual bool isColliding() const
 		{
@@ -89,54 +92,53 @@ namespace Engine
 			const Vec3& scale
 		);
 
-		template<Component::Type type, typename T>
-		std::variant<Ref<T>, void*> getComponent(
-		)
-		{
-			static_assert(std::is_base_of<Component, T>::value, "T is not a component");
-		
-			std::variant<Ref<T>, void*> result;
-			
-			result = static_cast<void*>(nullptr);
-			
-			for (auto component : m_components)
-			{
-				if (component->getType() == type)
-				{
-					result = std::dynamic_pointer_cast<T>(component);
-					break;
-				}
-			}
+	template<typename T>
+	void AddComponent(
+		Ref<Component> component
+	)
+	{
+		static_assert(std::is_base_of<Component, T>::value, "T is not a component");
 
-			return result;
+		if (m_components.find(typeid(T)) == m_components.end())
+			m_components[typeid(T)] = component;
+	}
+
+	template<typename T>
+	Ref<T> GetComponent()
+	{
+		static_assert(std::is_base_of<Component, T>::value, "T is not a component");
+
+		for (auto kv : m_components)
+		{
+			if (kv.first == typeid(T))
+			{
+				return std::dynamic_pointer_cast<T>(kv.second);
+			}
 		}
 
-		template<Component::Type type, typename T>
-		const std::variant<Ref<T>, void*> getComponent(
-		) const
+		return std::shared_ptr<T>();
+	}
+	
+	template<typename T>
+	const Ref<T> GetComponent() const
+	{
+		static_assert(std::is_base_of<Component, T>::value, "T is not a component");
+
+		for (auto kv : m_components)
 		{
-			static_assert(std::is_base_of<Component, T>::value, "T is not a component");
-			
-			std::variant<Ref<T>, void*> result;
-
-			result = static_cast<void*>(nullptr);
-			
-			for (auto component : m_components)
+			if (kv.first == typeid(T))
 			{
-				if (component->getType() == type)
-				{
-					result = std::dynamic_pointer_cast<T>(component);
-					break;
-				}
+				return std::dynamic_pointer_cast<T>(kv.second);
 			}
-
-			return result;
 		}
+	
+		return std::shared_ptr<T>();
+	}
 
 	protected:
 		Transform m_transform;
 		bool      m_isColliding;
-		std::vector<Ref<Component>> m_components;
+		std::unordered_map<std::type_index, Ref<Component>> m_components;;
 	};
 }
 

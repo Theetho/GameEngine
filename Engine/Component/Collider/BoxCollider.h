@@ -36,17 +36,12 @@ namespace Engine
 			const double& delta
 		) override;
 
-		inline Type getType() override
-		{
-			return Type::BoxCollider;
-		}
-
-		inline const Vec3& getMax() const
+		inline const Vec3& getMax() const override
 		{
 			return m_max;
 		}
 
-		inline const Vec3& getMin() const
+		inline const Vec3& getMin() const override
 		{
 			return m_min;
 		}

@@ -38,6 +38,11 @@ namespace Engine
 		{
 			return m_center;
 		}
+
+		inline virtual const Vec3& getMax() const = 0;
+
+		inline virtual const Vec3& getMin() const = 0;
+
 	protected:
 		Vec3 m_center;
 		Vec3 m_offset;

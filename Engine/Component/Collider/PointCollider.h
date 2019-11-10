@@ -33,11 +33,14 @@ namespace Engine
 			const double& delta
 		) override;
 
-		inline Type getType() override
+		inline const Vec3& getMax() const override
 		{
-			return Type::PointCollider;
+			return m_center;
 		}
 
-	private:
+		inline const Vec3& getMin() const override
+		{
+			return m_center;
+		}
 	};
 }

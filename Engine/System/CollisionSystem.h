@@ -24,98 +24,61 @@ namespace Engine
 			return s_instance;
 		}
 
-		static void AddCollider(
-			BoxCollider* collider
+		template<typename T>
+		inline static void AddCollider(
+			Collider* collider
 		)
 		{
-			if (s_instance)
-				s_instance->m_boxes.push_back(collider);
-		}
-		
-		static void AddCollider(
-			SphereCollider* collider
-		)
-		{
-			if (s_instance)
-				s_instance->m_spheres.push_back(collider);
-		}
-
-		static void AddCollider(
-			PointCollider* collider
-		)
-		{
-			if (s_instance)
-				s_instance->m_points.push_back(collider);
-		}
-
-		static void RemoveCollider(
-			BoxCollider* collider
-		)
-		{
+			static_assert(std::is_base_of<Collider, T>::value, "T is not a collider");
+			
 			if (s_instance)
 			{
-				auto& boxes = s_instance->m_boxes;
-				for (unsigned int i = 0; i < boxes.size(); ++i)
+				if (collider->getOwner().isMoveable() && !s_instance->m_moveableColliders.count(collider))
 				{
-					if (boxes[i] == collider)
-					{
-						boxes.erase(boxes.begin() + i, boxes.begin() + i + 1);
-					}
+					s_instance->m_moveableColliders.insert(std::pair<Collider*, std::type_index>(collider,typeid(T)));
+				}
+				else if (!s_instance->m_staticColliders.count(collider))
+				{
+					s_instance->m_staticColliders.insert(std::pair<Collider*, std::type_index>(collider, typeid(T)));
 				}
 			}
 		}
 
 		static void RemoveCollider(
-			SphereCollider* collider
+			Collider* collider
 		)
 		{
 			if (s_instance)
 			{
-				auto& spheres = s_instance->m_spheres;
-				for (unsigned int i = 0; i < spheres.size(); ++i)
+				if (s_instance->m_moveableColliders.count(collider))
 				{
-					if (spheres[i] == collider)
-					{
-						spheres.erase(spheres.begin() + i, spheres.begin() + i + 1);
-					}
+					s_instance->m_moveableColliders.erase(collider);
+				}
+				else
+				{
+					s_instance->m_staticColliders.erase(collider);
 				}
 			}
 		}
 
-		static void RemoveCollider(
-			PointCollider* collider
-		)
-		{
-			if (s_instance)
-			{
-				auto& points = s_instance->m_points;
-				for (unsigned int i = 0; i < points.size(); ++i)
-				{
-					if (points[i] == collider)
-					{
-						points.erase(points.begin() + i, points.begin() + i + 1);
-					}
-				}
-			}
-		}
 	private:
 		static Ref<CollisionSystem> s_instance;
 
-		std::vector<BoxCollider*>    m_boxes;
-		std::vector<SphereCollider*> m_spheres;
-		std::vector<PointCollider*>  m_points;
+		std::unordered_map<Collider*, std::type_index> m_moveableColliders;
+		std::unordered_map<Collider*, std::type_index> m_staticColliders;
 
-		// Check only if moving objects collide with at least one other object
-		// (stop when the first collision is found for each moving object) 
-		void checkForOneCollision();
+		void checkForMovingObjectsCollisions();
 
-		// Check for collision between every object (even the static ones)
-		void checkForAllCollision();
+		// Return true if c1 is supposed to be on top of c2,
+		// false otherwise
+		bool isOnTop(
+			Collider* c1,
+			const Collider* c2
+		);
 
-		void test();
-		bool shouldBeOnTop(
-			const BoxCollider* b1,
-			const BoxCollider* b2
+		bool collide(
+			const std::pair<Collider*, std::type_index>& kv1,
+			const std::pair<Collider*, std::type_index>& kv2
 		);
 
 		bool collide(
@@ -126,6 +89,7 @@ namespace Engine
 		bool collide(
 			const SphereCollider* s1,
 			const SphereCollider* s2
+
 		);
 
 		bool collide(
