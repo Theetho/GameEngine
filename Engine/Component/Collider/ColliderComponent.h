@@ -7,8 +7,35 @@
 
 namespace Engine
 {
+	// struct that store data
+	// of a collision
+	class Collision
+	{
+	public:
+		Collision(
+			const bool& collide,
+			const float& distance
+		)
+			: m_collide(collide)
+			, m_distance(distance)
+		{ }
+
+		inline const bool& doesCollide() const
+		{
+			return m_collide;
+		}
+		inline const float& distance() const
+		{
+			return m_distance;
+		}
+	private:
+		bool  m_collide;
+		float m_distance;
+	};
+
 	class Collider : public Component
 	{
+
 	public:
 		Collider(
 			GameObject& owner,

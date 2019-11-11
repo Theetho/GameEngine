@@ -28,6 +28,8 @@ namespace Engine
 		for (auto iterator : m_moveableColliders)
 		{
 			float groundLevel(-10000.0f);
+			// Boolean to indicate whether the collider
+			// is over on other or not
 			bool isOver = false;
 
 			Collider* collider = iterator.first;
@@ -56,7 +58,8 @@ namespace Engine
 					if (groundLevel < moveableCollider->getMax().y + collider->getCenter().y - collider->getMin().y)
 						groundLevel = moveableCollider->getMax().y + collider->getCenter().y - collider->getMin().y;
 				}
-				if (collide(iterator, *moveableIterator))
+				Collision collision = collide(iterator, *moveableIterator);
+				if (collision.doesCollide())
 				{
 					// If it is over it, it doesn't count as a collision
 					if (!isOver)
@@ -81,7 +84,8 @@ namespace Engine
 					if (groundLevel < staticCollider->getMax().y + collider->getCenter().y - collider->getMin().y)
 						groundLevel = staticCollider->getMax().y + collider->getCenter().y - collider->getMin().y;
 				}
-				if (collide(iterator, staticIterator))
+				Collision collision = collide(iterator, staticIterator);
+				if (collision.doesCollide())
 				{
 					if (!isOver)
 						collider->getOwner().isColliding(true);
@@ -90,7 +94,7 @@ namespace Engine
 				isOver = false;
 			}
 
-			// Then update the collider's owner ground level so it
+			// Then update the collider's owner's ground level so it
 			// "collides" properly with the ground
 			auto physics = collider->getOwner().GetComponent<PhysicsComponent>();
 
@@ -108,7 +112,7 @@ namespace Engine
 			   (c1->getMin().z <= c2->getMax().z && c1->getMax().z >= c2->getMin().z);
 	}
 
-	bool CollisionSystem::collide(
+	Collision CollisionSystem::collide(
 		const std::pair<Collider*, std::type_index>& kv1,
 		const std::pair<Collider*, std::type_index>& kv2
 	)
@@ -161,38 +165,47 @@ namespace Engine
 		else
 		{
 			std::cout << "This collider is not handled by the system" << std::endl;
-			return false;
+			return Collision(false, 0.0f);
 		}
 	}
 
-	bool CollisionSystem::collide(
+	Collision CollisionSystem::collide(
 		const BoxCollider* b1,
 		const BoxCollider* b2
 	)
 	{	
-		return (b1->getMin().x <= b2->getMax().x && b1->getMax().x >= b2->getMin().x) &&
-			   (b1->getMin().y <= b2->getMax().y && b1->getMax().y >= b2->getMin().y) &&
-			   (b1->getMin().z <= b2->getMax().z && b1->getMax().z >= b2->getMin().z);
+		return Collision(
+			   (b1->getMin().x <= b2->getMax().x && b1->getMax().x >= b2->getMin().x)
+			&& (b1->getMin().y <= b2->getMax().y && b1->getMax().y >= b2->getMin().y)
+			&& (b1->getMin().z <= b2->getMax().z && b1->getMax().z >= b2->getMin().z)
+			,   0.0f
+		);
 	}
 
-	bool CollisionSystem::collide(
+	Collision CollisionSystem::collide(
 		const SphereCollider* s1,
 		const SphereCollider* s2
 	)
 	{
 		float distance = glm::distance(s1->getCenter(), s2->getCenter());
-		return distance <= (s1->getRadius() + s2->getRadius());
+		return Collision(
+				distance <= (s1->getRadius() + s2->getRadius())
+			  , 0.0f
+		);
 	}
 
-	bool CollisionSystem::collide(
+	Collision CollisionSystem::collide(
 		const PointCollider* p1,
 		const PointCollider* p2
 	)
 	{
-		return p1->getCenter() == p2->getCenter();
+		return Collision(
+				p1->getCenter() == p2->getCenter()
+			  , 0.0f
+		);
 	}
 
-	bool CollisionSystem::collide(
+	Collision CollisionSystem::collide(
 		const BoxCollider* b,
 		const SphereCollider* s
 	)
@@ -203,10 +216,13 @@ namespace Engine
 
 			float distance = glm::distance(Vec3(x, y, z), s->getCenter());
 
-			return distance <= s->getRadius();
+			return Collision(
+				distance <= s->getRadius()
+			  , 0.0f
+			);
 	}
 
-	bool CollisionSystem::collide(
+	Collision CollisionSystem::collide(
 		const SphereCollider* s,
 		const BoxCollider* b
 	)
@@ -214,17 +230,20 @@ namespace Engine
 		return collide(b, s);
 	}
 
-	bool CollisionSystem::collide(
+	Collision CollisionSystem::collide(
 		const BoxCollider* b,
 		const PointCollider* p
 	)
 	{
-			return (p->getCenter().x >= b->getMin().x && p->getCenter().x <= b->getMax().x) &&
-				   (p->getCenter().y >= b->getMin().y && p->getCenter().y <= b->getMax().y) &&
-				   (p->getCenter().z >= b->getMin().z && p->getCenter().z <= b->getMax().z);
+			return Collision(
+				   (p->getCenter().x >= b->getMin().x && p->getCenter().x <= b->getMax().x)
+				&& (p->getCenter().y >= b->getMin().y && p->getCenter().y <= b->getMax().y)
+				&& (p->getCenter().z >= b->getMin().z && p->getCenter().z <= b->getMax().z)
+				 , 0.0f
+			);
 	}
 
-	bool CollisionSystem::collide(
+	Collision CollisionSystem::collide(
 		const PointCollider* p,
 		const BoxCollider* b
 	)
@@ -232,16 +251,19 @@ namespace Engine
 		return collide(b, p);
 	}
 
-	bool CollisionSystem::collide(
+	Collision CollisionSystem::collide(
 		const SphereCollider* s,
 		const PointCollider* p
 	)
 	{
 			float distance = glm::distance(s->getCenter(), p->getCenter());
-			return distance <= s->getRadius();
+			return Collision(
+				distance <= s->getRadius()
+			  , 0.0f
+			);
 	}
 
-	bool CollisionSystem::collide(
+	Collision CollisionSystem::collide(
 		const PointCollider* p,
 		const SphereCollider* s
 	)

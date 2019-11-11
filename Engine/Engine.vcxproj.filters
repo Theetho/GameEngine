@@ -4,14 +4,23 @@
     <Filter Include="Component">
       <UniqueIdentifier>{F8BD1DB3-6428-D229-AD66-83CF1910B07E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Component\Collider">
+      <UniqueIdentifier>{B5877DD7-A16B-3E2D-0ACC-3880F6CE28AF}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Core">
       <UniqueIdentifier>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</UniqueIdentifier>
     </Filter>
     <Filter Include="GameObject">
       <UniqueIdentifier>{D652F52D-C20A-377B-2B12-10D717E9D16B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Lighting">
+      <UniqueIdentifier>{5B1EC029-47EB-1A35-7004-09DD5C3050C3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Renderer">
       <UniqueIdentifier>{7CCE658F-689B-C09A-91B4-AE427DE0F528}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{6AD049D2-5672-74A8-3F2D-88FC2B6EFBF8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Util">
       <UniqueIdentifier>{23A78D7C-0FDE-8E0D-B8CA-7410A4E00A0F}</UniqueIdentifier>
@@ -43,6 +52,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h" />
+    <ClInclude Include="Component\Collider.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\Collider\BoxCollider.h">
+      <Filter>Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\Collider\ColliderComponent.h">
+      <Filter>Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\Collider\PointCollider.h">
+      <Filter>Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\Collider\SphereCollider.h">
+      <Filter>Component\Collider</Filter>
+    </ClInclude>
     <ClInclude Include="Component\Component.h">
       <Filter>Component</Filter>
     </ClInclude>
@@ -95,6 +119,9 @@
     <ClInclude Include="GameObject\Transform.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="Lighting\Light.h">
+      <Filter>Lighting</Filter>
+    </ClInclude>
     <ClInclude Include="Maths.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Renderer\Buffer.h">
@@ -127,7 +154,14 @@
     <ClInclude Include="Renderer\VertexArray.h">
       <Filter>Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="System.h" />
+    <ClInclude Include="System\CollisionSystem.h">
+      <Filter>System</Filter>
+    </ClInclude>
     <ClInclude Include="Util.h" />
+    <ClInclude Include="Util\Benchmark.h">
+      <Filter>Util</Filter>
+    </ClInclude>
     <ClInclude Include="Util\Color.h">
       <Filter>Util</Filter>
     </ClInclude>
@@ -1244,18 +1278,20 @@
     <ClInclude Include="Vendor\stb\stb_image.h">
       <Filter>Vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="System\CollisionSystem.h" />
-    <ClInclude Include="System.h" />
-    <ClInclude Include="Component\Collider\ColliderComponent.h">
-      <Filter>Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Component\Collider\BoxCollider.h" />
-    <ClInclude Include="Component\Collider\SphereCollider.h" />
-    <ClInclude Include="Component\Collider\PointCollider.h" />
-    <ClInclude Include="Component\Collider.h" />
-    <ClInclude Include="Util\Benchmark.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Component\Collider\BoxCollider.cpp">
+      <Filter>Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\Collider\ColliderComponent.cpp">
+      <Filter>Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\Collider\PointCollider.cpp">
+      <Filter>Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\Collider\SphereCollider.cpp">
+      <Filter>Component\Collider</Filter>
+    </ClCompile>
     <ClCompile Include="Component\Component.cpp">
       <Filter>Component</Filter>
     </ClCompile>
@@ -1299,6 +1335,9 @@
     <ClCompile Include="GameObject\Transform.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="Lighting\Light.cpp">
+      <Filter>Lighting</Filter>
+    </ClCompile>
     <ClCompile Include="Renderer\Buffer.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
@@ -1329,6 +1368,12 @@
     <ClCompile Include="Renderer\VertexArray.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="System\CollisionSystem.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\Benchmark.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
     <ClCompile Include="Util\Color.cpp">
       <Filter>Util</Filter>
     </ClCompile>
@@ -1341,13 +1386,5 @@
     <ClCompile Include="Vendor\stb\stb_image.cpp">
       <Filter>Vendor\stb</Filter>
     </ClCompile>
-    <ClCompile Include="System\CollisionSystem.cpp" />
-    <ClCompile Include="Component\Collider\ColliderComponent.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Component\Collider\BoxCollider.cpp" />
-    <ClCompile Include="Component\Collider\SphereCollider.cpp" />
-    <ClCompile Include="Component\Collider\PointCollider.cpp" />
-    <ClCompile Include="Util\Benchmark.cpp" />
   </ItemGroup>
 </Project>

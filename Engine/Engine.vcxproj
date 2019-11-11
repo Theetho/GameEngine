@@ -143,15 +143,12 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Util\Benchmark.h" />
+    <ClInclude Include="Component.h" />
     <ClInclude Include="Component\Collider.h" />
     <ClInclude Include="Component\Collider\BoxCollider.h" />
+    <ClInclude Include="Component\Collider\ColliderComponent.h" />
     <ClInclude Include="Component\Collider\PointCollider.h" />
     <ClInclude Include="Component\Collider\SphereCollider.h" />
-    <ClInclude Include="System.h" />
-    <ClInclude Include="System\CollisionSystem.h" />
-    <ClInclude Include="Component.h" />
-    <ClInclude Include="Component\Collider\ColliderComponent.h" />
     <ClInclude Include="Component\Component.h" />
     <ClInclude Include="Component\MovementComponent.h" />
     <ClInclude Include="Component\PhysicsComponent.h" />
@@ -172,6 +169,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObject\GameObject.h" />
     <ClInclude Include="GameObject\Transform.h" />
+    <ClInclude Include="Lighting\Light.h" />
     <ClInclude Include="Maths.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Renderer\Buffer.h" />
@@ -184,7 +182,10 @@
     <ClInclude Include="Renderer\Shader.h" />
     <ClInclude Include="Renderer\Texture.h" />
     <ClInclude Include="Renderer\VertexArray.h" />
+    <ClInclude Include="System.h" />
+    <ClInclude Include="System\CollisionSystem.h" />
     <ClInclude Include="Util.h" />
+    <ClInclude Include="Util\Benchmark.h" />
     <ClInclude Include="Util\Color.h" />
     <ClInclude Include="Util\ConfigFile.h" />
     <ClInclude Include="Util\Matrix.h" />
@@ -559,7 +560,6 @@
     <ClInclude Include="Vendor\stb\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Util\Benchmark.cpp" />
     <ClCompile Include="Component\Collider\BoxCollider.cpp" />
     <ClCompile Include="Component\Collider\ColliderComponent.cpp" />
     <ClCompile Include="Component\Collider\PointCollider.cpp" />
@@ -581,6 +581,7 @@
     </ClCompile>
     <ClCompile Include="GameObject\GameObject.cpp" />
     <ClCompile Include="GameObject\Transform.cpp" />
+    <ClCompile Include="Lighting\Light.cpp" />
     <ClCompile Include="Renderer\Buffer.cpp" />
     <ClCompile Include="Renderer\GraphicsContext.cpp" />
     <ClCompile Include="Renderer\Library.cpp" />
@@ -592,6 +593,7 @@
     <ClCompile Include="Renderer\Texture.cpp" />
     <ClCompile Include="Renderer\VertexArray.cpp" />
     <ClCompile Include="System\CollisionSystem.cpp" />
+    <ClCompile Include="Util\Benchmark.cpp" />
     <ClCompile Include="Util\Color.cpp" />
     <ClCompile Include="Util\ConfigFile.cpp" />
     <ClCompile Include="Util\Matrix.cpp" />

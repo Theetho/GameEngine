@@ -76,53 +76,53 @@ namespace Engine
 			const Collider* c2
 		);
 
-		bool collide(
+		Collision collide(
 			const std::pair<Collider*, std::type_index>& kv1,
 			const std::pair<Collider*, std::type_index>& kv2
 		);
 
-		bool collide(
+		Collision collide(
 			const BoxCollider* b1,
 			const BoxCollider* b2
 		);
 
-		bool collide(
+		Collision collide(
 			const SphereCollider* s1,
 			const SphereCollider* s2
 
 		);
 
-		bool collide(
+		Collision collide(
 			const PointCollider* p1,
 			const PointCollider* p2
 		);
 
-		bool collide(
+		Collision collide(
 			const BoxCollider* b,
 			const SphereCollider* s
 		);
 
-		bool collide(
+		Collision collide(
 			const SphereCollider* s,
 			const BoxCollider* b
 		);
 
-		bool collide(
+		Collision collide(
 			const BoxCollider* b,
 			const PointCollider* p
 		);
 
-		bool collide(
+		Collision collide(
 			const PointCollider* p,
 			const BoxCollider* b
 		);
 
-		bool collide(
+		Collision collide(
 			const SphereCollider* s,
 			const PointCollider* p
 		);
 
-		bool collide(
+		Collision collide(
 			const PointCollider* p,
 			const SphereCollider* s
 		);
