@@ -48,12 +48,12 @@ namespace Engine
 
 		inline const Vec3& getMax() const override
 		{
-			return Vec3(m_radius, m_radius, m_radius);
+			return m_center + Vec3(m_radius, m_radius, m_radius);
 		}
 
 		inline const Vec3& getMin() const override
 		{
-			return - Vec3(m_radius, m_radius, m_radius);
+			return m_center - Vec3(m_radius, m_radius, m_radius);
 		}
 
 	private:

@@ -7,32 +7,6 @@
 
 namespace Engine
 {
-	// struct that store data
-	// of a collision
-	class Collision
-	{
-	public:
-		Collision(
-			const bool& collide,
-			const float& distance
-		)
-			: m_collide(collide)
-			, m_distance(distance)
-		{ }
-
-		inline const bool& doesCollide() const
-		{
-			return m_collide;
-		}
-		inline const float& distance() const
-		{
-			return m_distance;
-		}
-	private:
-		bool  m_collide;
-		float m_distance;
-	};
-
 	class Collider : public Component
 	{
 
@@ -73,5 +47,43 @@ namespace Engine
 	protected:
 		Vec3 m_center;
 		Vec3 m_offset;
+	};
+
+	// struct that store data
+	// of a collision
+	class Collision
+	{
+	public:
+		Collision(
+			const bool& collide,
+			const float& distanceUpAxis,
+			const Collider* c1,
+			const Collider* c2
+		)
+			: m_collide(collide)
+			, m_distanceUpAxis(distanceUpAxis)
+			, m_colliders({ c1, c2 })
+		{}
+
+		inline const bool& doesCollide() const
+		{
+			return m_collide;
+		}
+		inline const float& distanceUpAxis() const
+		{
+			return m_distanceUpAxis;
+		}
+		inline const std::pair<const Collider*, const Collider*>& getColliders() const
+		{
+			return m_colliders;
+		}
+
+	private:
+		// The two colliders that are supposedly colliding
+		const std::pair<const Collider*, const Collider*> m_colliders;
+		// Boolean to tell whether the two colliders are colliding
+		const bool  m_collide;
+		// The distance beetween the two colliders on the up axis
+		const float m_distanceUpAxis;
 	};
 }

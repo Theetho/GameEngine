@@ -12,10 +12,11 @@ namespace Engine
 	)
 		: Component(owner)
 		, m_transform(owner.getTransform())
-		, m_groundLevel(2.0f)
+		, m_groundLevel(0.0f)
 		, m_jump()
 		, m_percentage(1.0f, 1.0f)
 	{
+		m_jump.isJumping = true;
 	}
 
 	PhysicsComponent::~PhysicsComponent()
@@ -50,5 +51,7 @@ namespace Engine
 		{
 			m_jump.isFalling = false;
 		}
+
+		m_groundLevel = -1000.0f;
 	}
 }

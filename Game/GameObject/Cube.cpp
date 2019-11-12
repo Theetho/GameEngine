@@ -12,35 +12,35 @@ Cube::Cube(
 	m_vao = Engine::VertexArray::Create();
 
 	float vertices[] = {
-		-m_size, -m_size, -m_size, 1,0,
-		 m_size, -m_size, -m_size, 0,0,
-		 m_size,  m_size, -m_size, 0,1,
-		-m_size,  m_size, -m_size, 1,1,
-
-		-m_size, -m_size,  m_size, 0,0,
-		 m_size, -m_size,  m_size, 0,1,
-		 m_size,  m_size,  m_size, 1,1,
-		-m_size,  m_size,  m_size, 1,0,
-
-		-m_size,  m_size,  m_size, 0,0,
-		-m_size,  m_size, -m_size, 0,1,
-		-m_size, -m_size, -m_size, 1,1,
-		-m_size, -m_size,  m_size, 1,0,
-
-		 m_size,  m_size,  m_size, 0,0,
-		 m_size,  m_size, -m_size, 0,1,
-		 m_size, -m_size, -m_size, 1,1,
-		 m_size, -m_size,  m_size, 1,0,
-
-		-m_size, -m_size, -m_size, 0,0,
-		 m_size, -m_size, -m_size, 0,1,
-		 m_size, -m_size,  m_size, 1,1,
-		-m_size, -m_size,  m_size, 1,0,
-
-		-m_size,  m_size, -m_size, 0,0,
-		 m_size,  m_size, -m_size, 0,1,
-		 m_size,  m_size,  m_size, 1,1,
-		-m_size,  m_size,  m_size, 1,0
+		-m_size, -m_size, -m_size, 1, 0, 0.0f,  0.0f, -1.0f,
+		 m_size, -m_size, -m_size, 0, 0, 0.0f,  0.0f, -1.0f,
+		 m_size,  m_size, -m_size, 0, 1, 0.0f,  0.0f, -1.0f,
+		-m_size,  m_size, -m_size, 1, 1, 0.0f,  0.0f, -1.0f,
+									  	 
+		-m_size, -m_size,  m_size, 0, 0, 0.0f,  0.0f,  1.0f,
+		 m_size, -m_size,  m_size, 0, 1, 0.0f,  0.0f,  1.0f,
+		 m_size,  m_size,  m_size, 1, 1, 0.0f,  0.0f,  1.0f,
+		-m_size,  m_size,  m_size, 1, 0, 0.0f,  0.0f,  1.0f,
+									  	 			   
+		-m_size,  m_size,  m_size, 0, 0, 1.0f,  0.0f,  0.0f,
+		-m_size,  m_size, -m_size, 0, 1, 1.0f,  0.0f,  0.0f,
+		-m_size, -m_size, -m_size, 1, 1, 1.0f,  0.0f,  0.0f,
+		-m_size, -m_size,  m_size, 1, 0, 1.0f,  0.0f,  0.0f,
+									  	 
+		 m_size,  m_size,  m_size, 0, 0, 1.0f,  0.0f,  0.0f,
+		 m_size,  m_size, -m_size, 0, 1, 1.0f,  0.0f,  0.0f,
+		 m_size, -m_size, -m_size, 1, 1, 1.0f,  0.0f,  0.0f,
+		 m_size, -m_size,  m_size, 1, 0, 1.0f,  0.0f,  0.0f,
+									  	 
+		-m_size, -m_size, -m_size, 0, 0, 0.0f, -1.0f,  0.0f,
+		 m_size, -m_size, -m_size, 0, 1, 0.0f, -1.0f,  0.0f,
+		 m_size, -m_size,  m_size, 1, 1, 0.0f, -1.0f,  0.0f,
+		-m_size, -m_size,  m_size, 1, 0, 0.0f, -1.0f,  0.0f,
+									  	 
+		-m_size,  m_size, -m_size, 0, 0, 0.0f,  1.0f,  0.0f,
+		 m_size,  m_size, -m_size, 0, 1, 0.0f,  1.0f,  0.0f,
+		 m_size,  m_size,  m_size, 1, 1, 0.0f,  1.0f,  0.0f,
+		-m_size,  m_size,  m_size, 1, 0, 0.0f,  1.0f,  0.0f
 	};
 
 	Engine::Ref<Engine::VertexBuffer> vbo = 
@@ -51,7 +51,8 @@ Cube::Cube(
 
 	vbo->setLayout({
 		{Engine::ShaderDataType::Float3, "in_position"},
-		{Engine::ShaderDataType::Float2, "in_textureCoords"}
+		{Engine::ShaderDataType::Float2, "in_textureCoords"},
+		{Engine::ShaderDataType::Float3, "in_normal"}
 	});
 
 	m_vao->addVertexBuffer(vbo);

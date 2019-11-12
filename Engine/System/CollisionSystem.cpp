@@ -25,91 +25,36 @@ namespace Engine
 		
 	void CollisionSystem::checkForMovingObjectsCollisions()
 	{
+		// Only check the collisions for moveable objects
 		for (auto iterator : m_moveableColliders)
 		{
-			float groundLevel(-10000.0f);
-			// Boolean to indicate whether the collider
-			// is over on other or not
-			bool isOver = false;
-
 			Collider* collider = iterator.first;
 
 			collider->getOwner().isColliding(false);
-
 			// Check for collisions with the other moveable colliders
 			auto moveableIterator = m_moveableColliders.end();
 			while ((--moveableIterator)->first != collider)
 			{
 				Collider* moveableCollider = moveableIterator->first;
 
-				moveableCollider->getOwner().isColliding(false);
-				
-				// Check if this collider is on top of the other
-				// We use an epsilon because float comparisons
-				// are not accurate otherwise
-				if (
-					(fabs(collider->getMin().y - moveableCollider->getMax().y) < Epsilon)
-					&& isOnTop(collider, moveableCollider)
-				)
-				{
-					isOver = true;
-					// If the ground level is lower than the max y of
-					// the other collider, we update it
-					if (groundLevel < moveableCollider->getMax().y + collider->getCenter().y - collider->getMin().y)
-						groundLevel = moveableCollider->getMax().y + collider->getCenter().y - collider->getMin().y;
-				}
 				Collision collision = collide(iterator, *moveableIterator);
 				if (collision.doesCollide())
 				{
-					// If it is over it, it doesn't count as a collision
-					if (!isOver)
-						collider->getOwner().isColliding(true);
-					moveableCollider->getOwner().isColliding(true);
+					collider->getOwner().onCollision(collision);
 				}
-				isOver = false;
 			}
-			// Same for static colliders
+			// Same with static colliders
 			for (auto staticIterator : m_staticColliders)
 			{
 				Collider* staticCollider = staticIterator.first;
-
-				staticCollider->getOwner().isColliding(false);
 				
-				if (
-					(fabs(collider->getMin().y - staticCollider->getMax().y) < Epsilon)
-					&& isOnTop(collider, staticCollider)
-				)
-				{
-					isOver = true;
-					if (groundLevel < staticCollider->getMax().y + collider->getCenter().y - collider->getMin().y)
-						groundLevel = staticCollider->getMax().y + collider->getCenter().y - collider->getMin().y;
-				}
 				Collision collision = collide(iterator, staticIterator);
 				if (collision.doesCollide())
 				{
-					if (!isOver)
-						collider->getOwner().isColliding(true);
-					staticCollider->getOwner().isColliding(true);
+					collider->getOwner().onCollision(collision);
 				}
-				isOver = false;
 			}
-
-			// Then update the collider's owner's ground level so it
-			// "collides" properly with the ground
-			auto physics = collider->getOwner().GetComponent<PhysicsComponent>();
-
-			if (physics)
-				physics->setGroundLevel(groundLevel);
 		}
-	}
-
-	bool CollisionSystem::isOnTop(
-		Collider* c1,
-		const Collider* c2
-	)
-	{
-		return (c1->getMin().x <= c2->getMax().x && c1->getMax().x >= c2->getMin().x) &&
-			   (c1->getMin().z <= c2->getMax().z && c1->getMax().z >= c2->getMin().z);
 	}
 
 	Collision CollisionSystem::collide(
@@ -165,7 +110,7 @@ namespace Engine
 		else
 		{
 			std::cout << "This collider is not handled by the system" << std::endl;
-			return Collision(false, 0.0f);
+			return Collision(false, 0.0f, kv1.first, kv2.first);
 		}
 	}
 
@@ -173,12 +118,13 @@ namespace Engine
 		const BoxCollider* b1,
 		const BoxCollider* b2
 	)
-	{	
+	{
 		return Collision(
 			   (b1->getMin().x <= b2->getMax().x && b1->getMax().x >= b2->getMin().x)
 			&& (b1->getMin().y <= b2->getMax().y && b1->getMax().y >= b2->getMin().y)
 			&& (b1->getMin().z <= b2->getMax().z && b1->getMax().z >= b2->getMin().z)
-			,   0.0f
+			, std::min(std::abs(b1->getMin().y - b2->getMax().y), std::abs(b1->getMax().y - b2->getMin().y))
+			, b1 , b2
 		);
 	}
 
@@ -190,7 +136,8 @@ namespace Engine
 		float distance = glm::distance(s1->getCenter(), s2->getCenter());
 		return Collision(
 				distance <= (s1->getRadius() + s2->getRadius())
-			  , 0.0f
+			  , distance
+			  , s1, s2
 		);
 	}
 
@@ -201,7 +148,8 @@ namespace Engine
 	{
 		return Collision(
 				p1->getCenter() == p2->getCenter()
-			  , 0.0f
+			  , glm::distance(p1->getCenter(), p2->getCenter())
+			  , p1, p2
 		);
 	}
 
@@ -218,7 +166,8 @@ namespace Engine
 
 			return Collision(
 				distance <= s->getRadius()
-			  , 0.0f
+			  , std::min(std::abs(s->getCenter().y - b->getMax().y), std::abs(s->getCenter().y - b->getMin().y))
+			  , b, s
 			);
 	}
 
@@ -239,7 +188,8 @@ namespace Engine
 				   (p->getCenter().x >= b->getMin().x && p->getCenter().x <= b->getMax().x)
 				&& (p->getCenter().y >= b->getMin().y && p->getCenter().y <= b->getMax().y)
 				&& (p->getCenter().z >= b->getMin().z && p->getCenter().z <= b->getMax().z)
-				 , 0.0f
+				  , glm::distance(b->getCenter(), p->getCenter())
+				  , b, p
 			);
 	}
 
@@ -259,7 +209,8 @@ namespace Engine
 			float distance = glm::distance(s->getCenter(), p->getCenter());
 			return Collision(
 				distance <= s->getRadius()
-			  , 0.0f
+			  , distance
+			  , s, p
 			);
 	}
 

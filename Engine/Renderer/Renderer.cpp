@@ -25,6 +25,10 @@ namespace Engine
 			"u_MVP",
 			s_sceneData.VP * transform.getModel()
 		);
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->uploadUniform(
+			"u_model",
+			s_sceneData.VP * transform.getModel()
+		);
 		vao->bind();
 		s_renderCommand->drawIndexed(vao);
 	}

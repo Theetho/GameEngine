@@ -3,9 +3,10 @@
 #include "Transform.h"
 #include "Component/Component.h"
 
-
 namespace Engine
 {
+	class Collision;
+
 	class GameObject
 	{
 	public:
@@ -37,6 +38,10 @@ namespace Engine
 
 		virtual void onEvent(
 			Event& event
+		);
+
+		virtual void onCollision(
+			const Collision& collision
 		);
 
 		virtual bool isJumping() const;

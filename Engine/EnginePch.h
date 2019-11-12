@@ -5,6 +5,7 @@
 #include <sstream>
 #include <fstream>
 #include <map>
+#include <array>
 #include <functional>
 #include <initializer_list>
 #include <algorithm>

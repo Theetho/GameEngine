@@ -14,7 +14,7 @@ MazeLayer::~MazeLayer()
 void MazeLayer::onAttach()
 {
 	// Shader
-	auto& shader = Engine::AssetManager::getShaderLibrary().load("color.glsl");
+	auto& shader = Engine::AssetManager::getShaderLibrary().load("diffuse.glsl");
 
 	m_maze = FileLoader::loadMaze("Assets/MazeFiles/maze.mz");
 
@@ -31,6 +31,12 @@ void MazeLayer::onAttach()
 	/// For clear color : https://www.toutes-les-couleurs.com/code-couleur-rvb.php
 	Engine::RenderCommand::setClearColor(Engine::Color::Black);
 	Engine::Input::toggleCursor();
+
+	auto& openglShader = std::dynamic_pointer_cast<Engine::OpenGLShader>(shader);
+	openglShader->bind();
+	openglShader->uploadUniform("u_ambient", 0.5f);
+	openglShader->uploadUniform("u_light.color", Engine::Vec3(Engine::Color::White));
+	openglShader->uploadUniform("u_light.position", Engine::Vec3(0.0f, 50.0f, 0.0f));
 }
 
 void MazeLayer::onDetach()
@@ -48,30 +54,24 @@ void MazeLayer::onUpdate(const double& delta)
 
 	Engine::Renderer::BeginScene(m_camera);
 
-	auto& snow = Engine::AssetManager::getTexture2DLibrary().get("snow");
-	auto& ground = Engine::AssetManager::getTexture2DLibrary().get("ground");
-	auto& wall = Engine::AssetManager::getTexture2DLibrary().get("hedge");
-	auto& shader  = Engine::AssetManager::getShaderLibrary().get("color");
+	//auto& snow = Engine::AssetManager::getTexture2DLibrary().get("snow");
+	//auto& ground = Engine::AssetManager::getTexture2DLibrary().get("ground");
+	//auto& wall = Engine::AssetManager::getTexture2DLibrary().get("hedge");
+	auto& shader  = Engine::AssetManager::getShaderLibrary().get("diffuse");
 	auto& openglShader = std::dynamic_pointer_cast<Engine::OpenGLShader>(shader);
-	
+
 	Engine::Color* drawColor;
 
 	//wall->bind();
+	
 	openglShader->bind();
 
+	/* Draw Walls */
 	drawColor = &Engine::Color::Navy;
-	openglShader->uploadUniform("u_color",*drawColor);
+	openglShader->uploadUniform("u_color", *drawColor);
+	
 	for (auto& cube : m_maze->getWalls())
 	{
-		if (cube->isColliding())
-		{
-			drawColor = &Engine::Color::Green;
-		}
-		else
-		{
-			drawColor = &Engine::Color::Navy;
-		}
-		openglShader->uploadUniform("u_color", *drawColor);
 		Engine::Renderer::Submit(
 			openglShader,
 			cube->getVao(),
@@ -80,19 +80,13 @@ void MazeLayer::onUpdate(const double& delta)
 	}
 
 	//snow->bind();
+
+	/* Draw Floor */
 	drawColor = &Engine::Color::Teal;
 	openglShader->uploadUniform("u_color", *drawColor);
+	
 	for (auto& cube : m_maze->getGround())
 	{
-		if (cube->isColliding())
-		{
-			drawColor = &Engine::Color::Green;
-		}
-		else
-		{
-			drawColor = &Engine::Color::Teal;
-		}
-		openglShader->uploadUniform("u_color", *drawColor);
 		Engine::Renderer::Submit(
 			openglShader,
 			cube->getVao(),
@@ -101,14 +95,9 @@ void MazeLayer::onUpdate(const double& delta)
 	}
 
 	//ground->bind()
-	if (m_player.isColliding())
-	{
-		drawColor = &Engine::Color::Red;
-	}
-	else
-	{
-		drawColor = &Engine::Color::Yellow;
-	}
+
+	/* Draw Player */
+	drawColor = m_player.isColliding() ? &Engine::Color::Red : &Engine::Color::Yellow;
 	openglShader->uploadUniform("u_color", *drawColor);
 
 	Engine::Renderer::Submit(

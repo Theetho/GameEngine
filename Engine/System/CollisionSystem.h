@@ -69,13 +69,6 @@ namespace Engine
 
 		void checkForMovingObjectsCollisions();
 
-		// Return true if c1 is supposed to be on top of c2,
-		// false otherwise
-		bool isOnTop(
-			Collider* c1,
-			const Collider* c2
-		);
-
 		Collision collide(
 			const std::pair<Collider*, std::type_index>& kv1,
 			const std::pair<Collider*, std::type_index>& kv2
