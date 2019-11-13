@@ -76,6 +76,20 @@ namespace Engine
 	{
 	}
 
+	Color& Color::operator=(const Color& color)
+	{
+		*this = Color(color);
+
+		return *this;
+	}
+
+	Color& Color::operator=(const Color&& color) noexcept
+	{
+		*this = Color(color);
+
+		return *this;
+	}
+
 	void Color::clip(
 		float& field
 	)

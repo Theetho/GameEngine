@@ -35,6 +35,14 @@ namespace Engine
 		{
 		}
 
+		Color& operator=(
+			const Color& color
+		);
+
+		Color& operator=(
+			const Color&& color
+		) noexcept;
+
 		static Color White;
 		static Color Silver;
 		static Color Gray;

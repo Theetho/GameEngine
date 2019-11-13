@@ -122,7 +122,6 @@ namespace Engine
 	private:
 		const GameObject& m_target;
 
-		Vec3 m_direction;
 		Vec3 m_offset;
 	};
 }

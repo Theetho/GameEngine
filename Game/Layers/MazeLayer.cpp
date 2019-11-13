@@ -13,8 +13,16 @@ MazeLayer::~MazeLayer()
 
 void MazeLayer::onAttach()
 {
+	/*   AXIS   y
+				|   z
+				|  /
+				| /
+		x_______|/
+
+	*/
+
 	// Shader
-	auto& shader = Engine::AssetManager::getShaderLibrary().load("diffuse.glsl");
+	auto& shader = Engine::AssetManager::getShaderLibrary().load("specular.glsl");
 
 	m_maze = FileLoader::loadMaze("Assets/MazeFiles/maze.mz");
 
@@ -35,8 +43,9 @@ void MazeLayer::onAttach()
 	auto& openglShader = std::dynamic_pointer_cast<Engine::OpenGLShader>(shader);
 	openglShader->bind();
 	openglShader->uploadUniform("u_ambient", 0.5f);
+	openglShader->uploadUniform("u_specular", 64.0f);
 	openglShader->uploadUniform("u_light.color", Engine::Vec3(Engine::Color::White));
-	openglShader->uploadUniform("u_light.position", Engine::Vec3(0.0f, 50.0f, 0.0f));
+	openglShader->uploadUniform("u_light.direction", Engine::Vec3(0.0f, 1.0f, 1.0f));
 }
 
 void MazeLayer::onDetach()
@@ -57,7 +66,7 @@ void MazeLayer::onUpdate(const double& delta)
 	//auto& snow = Engine::AssetManager::getTexture2DLibrary().get("snow");
 	//auto& ground = Engine::AssetManager::getTexture2DLibrary().get("ground");
 	//auto& wall = Engine::AssetManager::getTexture2DLibrary().get("hedge");
-	auto& shader  = Engine::AssetManager::getShaderLibrary().get("diffuse");
+	auto& shader  = Engine::AssetManager::getShaderLibrary().get("specular");
 	auto& openglShader = std::dynamic_pointer_cast<Engine::OpenGLShader>(shader);
 
 	Engine::Color* drawColor;
@@ -65,7 +74,8 @@ void MazeLayer::onUpdate(const double& delta)
 	//wall->bind();
 	
 	openglShader->bind();
-
+	openglShader->uploadUniform("u_cameraPosition", m_camera.getPosition());
+	
 	/* Draw Walls */
 	drawColor = &Engine::Color::Navy;
 	openglShader->uploadUniform("u_color", *drawColor);

@@ -15,7 +15,8 @@ uniform mat4 u_model;
 void main()
 {
 	v_textureCoords = in_textureCoords;
-	v_normal = in_normal;
+	v_normal = (transpose(inverse(u_model)) * vec4(in_normal, 0.0)).xyz;
+	//v_normal = in_normal;
 	v_fragmentPosition = vec3(u_model * vec4(in_position, 1.0));
 	gl_Position = u_MVP * vec4(in_position, 1.0);
 }
@@ -25,7 +26,7 @@ void main()
 struct Light
 {
 	vec3 color;
-	vec3 position;
+	vec3 direction;
 };
 
 layout(location = 0) out vec4 out_color;
@@ -41,8 +42,8 @@ in vec3 v_fragmentPosition;
 void main()
 {
 	vec3 normal = normalize(v_normal);
-	vec3 lightDirection = normalize(u_light.position - v_fragmentPosition);
-	float diffuse = max(dot(normal, lightDirection), u_ambient);
+	vec3 lightDirection = normalize(- u_light.direction);
+	float diffuse = max(dot(lightDirection, normal), u_ambient);
 
 	vec3 diffuseColor = u_light.color * diffuse;
 
