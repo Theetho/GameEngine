@@ -2,6 +2,7 @@
 
 #include "Maths.h"
 #include "Event.h"
+#include "Input.h"
 
 namespace Engine
 {
@@ -11,9 +12,7 @@ namespace Engine
 	{
 	public:
 		Camera3D(
-			const Vec3& position = Vec3(0.0f, 1.0f, 0.0f),
-			const Vec3& target = Vec3(0.0f, 0.0f, 0.0f),
-			const Vec3& up = Vec3(0.0f, 1.0f, 0.0f)
+			const Vec3& position = Vec3(0.0f, 1.0f, 0.0f)
 		);
 
 		virtual ~Camera3D();
@@ -30,22 +29,27 @@ namespace Engine
 			const Vec3& position
 		)
 		{
-			m_axis.position = position;
+			m_position = position;
 		}
 
 		inline const Vec3& getPosition() const
 		{
-			return m_axis.position;
+			return m_position;
 		}
 
-		inline const Vec3& getTarget() const
+		inline const float& getPitch() const
 		{
-			return m_axis.target;
+			return m_angle.pitch;
 		}
-		
-		inline const Vec3& getUp() const
+
+		inline const float& getYaw() const
 		{
-			return m_axis.up;
+			return m_angle.yaw;
+		}
+
+		inline const float& getRoll() const
+		{
+			return m_angle.roll;
 		}
 
 		inline const Mat4& getView() const
@@ -68,26 +72,30 @@ namespace Engine
 		Mat4 m_projection;
 		Mat4 m_VP;
 
-		struct Axis
-		{
-			Vec3 position;
-			Vec3 target;
-			Vec3 up;
+		Vec3 m_position;
 
-			Axis(
-				const Vec3& position,
-				const Vec3& target,
-				const Vec3& up
-			)
-				: position(position)
-				, target(target)
-				, up(up)
-			{
-			}
+		struct EulerAngle
+		{
+			float pitch;
+			float yaw;
+			float roll;
 		};
-		Axis m_axis;
+		EulerAngle m_angle;
 
 		void updateVP();
+
+		inline void calculatePitch()
+		{
+			if (Input::isMouseButtonPressed(ENGINE_MOUSE_BUTTON_RIGHT))
+			{
+				m_angle.pitch -= Input::getMouseOffset().y * 0.05f;
+
+				if (m_angle.pitch > 89.f)
+					m_angle.pitch = 89.f;
+				else if (m_angle.pitch < 0.f)
+					m_angle.pitch = 0.f;
+			}
+		}
 	};
 
 	class Camera3DLocked : public Camera3D
@@ -95,7 +103,7 @@ namespace Engine
 	public:
 		Camera3DLocked(
 			const GameObject& target,
-			const Vec3& offset
+			const float& distance = 6.0f
 		);
 		~Camera3DLocked();
 
@@ -107,22 +115,17 @@ namespace Engine
 			Event& event
 		) override;
 
-		inline void setOffset(
-			const Vec3& offset
-		)
-		{
-			m_offset = offset;
-		}
-
-		inline const Vec3& getOffset() const
-		{
-			return m_offset;
-		}
-
 	private:
 		const GameObject& m_target;
 
-		Vec3 m_offset;
+		float m_distance;
+		float m_angleAroundTarget;
+
+		float calculateHorizontalDistance();
+		float calculateVerticalDistance();
+		void  calculateCameraPosition();
+		void  calculateZoom();
+		void  calculateAngleAroundPlayer();
 	};
 }
 

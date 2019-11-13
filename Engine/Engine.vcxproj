@@ -164,6 +164,8 @@
     <ClInclude Include="Core\LayerStack.h" />
     <ClInclude Include="Core\Log.h" />
     <ClInclude Include="Core\Window.h" />
+    <ClInclude Include="Lighting.h" />
+    <ClInclude Include="Lighting\DirectionalLight.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="EnginePch.h" />
     <ClInclude Include="GameObject.h" />
@@ -576,6 +578,7 @@
     <ClCompile Include="Core\LayerStack.cpp" />
     <ClCompile Include="Core\Log.cpp" />
     <ClCompile Include="Core\Window.cpp" />
+    <ClCompile Include="Lighting\DirectionalLight.cpp" />
     <ClCompile Include="EnginePch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

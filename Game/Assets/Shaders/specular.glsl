@@ -15,7 +15,7 @@ uniform mat4 u_model;
 void main()
 {
 	v_textureCoords = in_textureCoords;
-	v_normal = (inverse(transpose(u_model)) * vec4(in_normal, 0.0)).xyz;
+	v_normal = mat3(transpose(inverse(u_model))) * in_normal;
 //	v_normal = in_normal;
 	v_fragmentPosition = vec3(u_model * vec4(in_position, 1.0));
 	gl_Position = u_MVP * vec4(in_position, 1.0);
@@ -27,14 +27,16 @@ struct Light
 {
 	vec3 color;
 	vec3 direction;
+
+	float ambient;
+	float diffuse;
+	float specular;
 };
 
 layout(location = 0) out vec4 out_color;
 
 uniform vec4 u_color;
 uniform Light u_light;
-uniform float u_ambient;
-uniform float u_specular;
 uniform vec3 u_cameraPosition;
 
 in vec2 v_textureCoords;
@@ -43,16 +45,18 @@ in vec3 v_fragmentPosition;
 
 void main()
 {
+	vec3 ambientColor = u_light.color * u_light.ambient;
+
 	vec3 normal = normalize(v_normal);
 	vec3 lightDirection = normalize(- u_light.direction);
-	float diffuseFactor = max(dot(normal, lightDirection), u_ambient);
-	vec3 diffuseColor = u_light.color * diffuseFactor;
+	float diffuseFactor = max(dot(normal, lightDirection), 0.0);
+	vec3 diffuseColor = u_light.color * diffuseFactor * u_light.diffuse;
 
 	vec3 toCameraVector = normalize(u_cameraPosition - v_fragmentPosition);
-	vec3 reflection = reflect(lightDirection, normal);
+	vec3 reflection = reflect(-lightDirection, normal);
 
-	float specularFactor = pow(dot(toCameraVector, reflection), u_specular);
-	vec3 specularColor = u_light.color * specularFactor;
+	float specularFactor = pow(max(dot(toCameraVector, reflection), 0.0), 64);
+	vec3 specularColor = u_light.color * specularFactor * u_light.specular;
 
-	out_color = u_color * vec4(specularColor + diffuseColor, 1.0);
+	out_color = u_color * vec4(specularColor + diffuseColor + ambientColor, 1.0);
 }

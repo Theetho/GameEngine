@@ -3,6 +3,8 @@
 
 namespace Engine
 {
+	Event::MousePosition Event::mouse;
+
 	std::string EventToString(
 		Event* event
 	)
@@ -38,7 +40,9 @@ namespace Engine
 				break;
 			case Event::Type::MouseScrolled:
 				ss	<< "Mouse scrolled event : "
-					<< event->mouseScrolledEvent.delta
+					<< event->mouseScrolledEvent.x
+					<< " "
+					<< event->mouseScrolledEvent.y
 					<< '\n';
 				break;
 			case Event::Type::MouseMoved:
@@ -66,7 +70,7 @@ namespace Engine
 		return ss.str();
 	}
 
-	std::string Engine::Event::toString()
+	std::string Event::toString()
 	{
 		return EventToString(this);
 	}

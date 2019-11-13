@@ -1,6 +1,5 @@
 #include "EnginePch.h"
 #include "Camera3D.h"
-#include "Input.h"
 #include "Util/Matrix.h"
 #include "GameObject/GameObject.h"
 
@@ -10,15 +9,15 @@ namespace Engine
 /// Camera3D
 
 	Camera3D::Camera3D(
-		const Vec3& position,
-		const Vec3& target,
-		const Vec3& up
+		const Vec3& position
 	)
-		: m_axis(position, target, up)
-		, m_view()
+		: m_view()
 		, m_projection(Matrix::projection())
 		, m_VP()
 	{
+		m_angle.pitch = 52.0f;
+		m_angle.yaw   = 0.0f;
+		m_angle.roll  = 0.0f;
 		updateVP();
 	}
 
@@ -52,14 +51,12 @@ namespace Engine
 
 	Camera3DLocked::Camera3DLocked(
 		const GameObject& target,
-		const Vec3& offset
+		const float& distance
 	)
-		: Camera3D(
-			target.getTransform().getPosition() + offset,
-			target.getTransform().getPosition()
-		)
+		: Camera3D()
 		, m_target(target)
-		, m_offset(offset)
+		, m_distance(distance)
+		, m_angleAroundTarget(0.0f)
 	{
 	}
 
@@ -71,12 +68,61 @@ namespace Engine
 	{
 		Camera3D::onUpdate(delta);
 
-		m_axis.position = m_target.getTransform().getPosition() + m_offset;;
-		m_axis.target = m_target.getTransform().getPosition();
+		calculateZoom();
+		calculatePitch();
+		calculateAngleAroundPlayer();
+		calculateCameraPosition();
+		m_angle.yaw = 180 - (m_target.getTransform().getRotation().y + m_angleAroundTarget);
 	}
 
 	void Camera3DLocked::onEvent(Event& event)
 	{
 		Camera3D::onEvent(event);
+
+		if (event.type == Event::Type::MouseScrolled)
+		{
+			m_distance -= event.mouseScrolledEvent.y;
+		}
 	}
+
+	float Camera3DLocked::calculateHorizontalDistance()
+	{
+		return m_distance * cos(glm::radians(m_angle.pitch));
+	}
+	inline float Camera3DLocked::calculateVerticalDistance()
+	{
+		return m_distance * sin(glm::radians(m_angle.pitch));
+	}
+	inline void Camera3DLocked::calculateCameraPosition()
+	{
+		auto& playerPosition = m_target.getTransform().getPosition();
+		float horizontal = calculateHorizontalDistance();
+		
+		float theta = m_target.getTransform().getRotation().y + m_angleAroundTarget;
+		
+		m_position.x = playerPosition.x - horizontal * sin(glm::radians(theta));
+		m_position.z = playerPosition.z - horizontal * cos(glm::radians(theta));
+		
+		float vertical = calculateVerticalDistance();
+		m_position.y = playerPosition.y + vertical;
+	}
+
+	inline void Camera3DLocked::calculateZoom()
+	{
+		if (m_distance < 0.5)
+			m_distance = 0.5;
+	}
+
+	void Camera3DLocked::calculateAngleAroundPlayer()
+	{
+		if (Input::isMouseButtonPressed(ENGINE_MOUSE_BUTTON_LEFT))
+		{
+			m_angleAroundTarget += Input::getMouseOffset().x * 0.05f;
+		}
+		if (m_angleAroundTarget != 0 && Input::isKeyPressed(ENGINE_KEY_E) || Input::isKeyPressed(ENGINE_KEY_Q))
+		{
+			m_angleAroundTarget = 0;
+		}
+	}
+
 }

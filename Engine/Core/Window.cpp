@@ -210,7 +210,7 @@ namespace Engine
 				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
 				create_event(Event::MouseScrolled);
-				event.mouseScrolledEvent(yoffset);
+				event.mouseScrolledEvent(xoffset, yoffset);
 
 				data.eventCallback(event);
 			}

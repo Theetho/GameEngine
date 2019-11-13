@@ -1278,6 +1278,10 @@
     <ClInclude Include="Vendor\stb\stb_image.h">
       <Filter>Vendor\stb</Filter>
     </ClInclude>
+    <ClInclude Include="Lighting\DirectionalLight.h">
+      <Filter>Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="Lighting.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\Collider\BoxCollider.cpp">
@@ -1385,6 +1389,9 @@
     </ClCompile>
     <ClCompile Include="Vendor\stb\stb_image.cpp">
       <Filter>Vendor\stb</Filter>
+    </ClCompile>
+    <ClCompile Include="Lighting\DirectionalLight.cpp">
+      <Filter>Lighting</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

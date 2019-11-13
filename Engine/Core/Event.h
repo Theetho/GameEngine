@@ -12,6 +12,14 @@ namespace Engine
 	class Event
 	{
 	public:
+		struct MousePosition
+		{
+			double x;
+			double y;
+		};
+
+		static MousePosition mouse;
+
 		struct SizeEvent
 		{
 			unsigned int width;
@@ -53,18 +61,6 @@ namespace Engine
 		
 		struct MouseScrolledEvent
 		{
-			double delta;
-
-			void operator()(
-				const double& delta
-			)
-			{
-				this->delta = delta;
-			}
-		};
-
-		struct MouseMovedEvent
-		{
 			double x;
 			double y;
 
@@ -75,6 +71,28 @@ namespace Engine
 			{
 				this->x = x;
 				this->y = y;
+			}
+		};
+
+		struct MouseMovedEvent
+		{
+			double x;
+			double y;
+			double xRel;
+			double yRel;
+
+			void operator()(
+				const double& x,
+				const double& y
+			)
+			{
+				this->x = x;
+				this->y = y;
+				this->xRel = mouse.x - x;
+				this->yRel = mouse.y - y;
+
+				mouse.x = x;
+				mouse.y = y;
 			}
 		};
 
