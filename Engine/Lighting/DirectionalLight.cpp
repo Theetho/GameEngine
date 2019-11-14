@@ -14,4 +14,11 @@ namespace Engine
 		, m_direction(direction)
 	{
 	}
+
+	void DirectionalLight::loadGLUniforms(Ref<OpenGLShader> shader)
+	{
+		Light::loadGLUniforms(shader);
+
+		shader->uploadUniform("u_light.direction", m_direction);
+	}
 }

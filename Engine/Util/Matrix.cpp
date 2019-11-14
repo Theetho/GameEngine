@@ -26,8 +26,8 @@ namespace Engine
 		Mat4 matrix(1.f);
 		matrix = glm::rotate(matrix, glm::radians(camera.getPitch()), { 1, 0, 0 });
 		matrix = glm::rotate(matrix, glm::radians(camera.getYaw()), { 0, 1, 0 });
-	//	matrix = glm::rotate(matrix, glm::radians(camera.getRoll()), { 0, 0, 1 });
-		matrix = glm::translate(matrix, -camera.getPosition());
+		matrix = glm::rotate(matrix, glm::radians(camera.getRoll()), { 0, 0, 1 });
+		matrix = glm::translate(matrix, - camera.getPosition());
 		
 		return matrix;
 	//	return glm::lookAt(camera.getPosition(), camera.getTarget(), camera.getUp());

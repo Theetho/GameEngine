@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Light.h"
-#include "Maths.h"
 
 namespace Engine
 {
@@ -34,5 +33,9 @@ namespace Engine
 
 	private:
 		Vec3 m_direction;
+
+		void loadGLUniforms(
+			Ref<OpenGLShader> shader
+		);
 	};
 }

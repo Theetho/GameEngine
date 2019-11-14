@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Util/Color.h"
+#include "Renderer/Shader.h"
+#include "Maths.h"
 
 namespace Engine
 {
@@ -17,6 +19,10 @@ namespace Engine
 		virtual ~Light()
 		{
 		}
+
+		void load(
+			Ref<Shader> shader
+		);
 
 		inline void setColor(
 			const Color& color
@@ -71,5 +77,10 @@ namespace Engine
 		float m_ambient;
 		float m_diffuse;
 		float m_specular;
+
+	protected:
+		virtual void loadGLUniforms(
+			Ref<OpenGLShader> shader
+		);
 	};
 }

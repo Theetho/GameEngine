@@ -20,6 +20,8 @@ private:
 	Engine::Camera3DLocked	 m_camera;
 	Engine::Scope<Maze>		 m_maze;
 	Player					 m_player;
-	Engine::DirectionalLight m_light;
+	//Engine::DirectionalLight m_light;
+	//Engine::PointLight       m_light;
+	Engine::SpotLight		 m_light;
 };
 

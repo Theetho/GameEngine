@@ -1282,6 +1282,10 @@
       <Filter>Lighting</Filter>
     </ClInclude>
     <ClInclude Include="Lighting.h" />
+    <ClInclude Include="Lighting\PointLight.h">
+      <Filter>Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="Lighting\SpotLight.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\Collider\BoxCollider.cpp">
@@ -1393,5 +1397,9 @@
     <ClCompile Include="Lighting\DirectionalLight.cpp">
       <Filter>Lighting</Filter>
     </ClCompile>
+    <ClCompile Include="Lighting\PointLight.cpp">
+      <Filter>Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="Lighting\SpotLight.cpp" />
   </ItemGroup>
 </Project>

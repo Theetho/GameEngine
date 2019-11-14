@@ -3,8 +3,6 @@
 #include "GameObject/GameObject.h"
 #include "Component/PhysicsComponent.h"
 
-#define Epsilon 0.05f
-
 namespace Engine
 {
 	Ref<CollisionSystem> CollisionSystem::s_instance = CollisionSystem::Create();

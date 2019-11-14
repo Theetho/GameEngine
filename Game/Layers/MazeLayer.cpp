@@ -4,7 +4,8 @@
 
 MazeLayer::MazeLayer()
 	: m_camera(m_player)
-	, m_light(Engine::Vec3(0.0f, 0.0f, 1.0f))
+	//, m_light(Engine::Vec3(0.0f, 10.0f, 0.0f), Engine::Vec3(0.0f, -1.0f, 0.0f))
+	, m_light(Engine::Vec3(0.0f, 10.0f, 0.0f), Engine::Vec3(0.0f, -1.0f, 0.0f))
 {
 }
 
@@ -23,7 +24,7 @@ void MazeLayer::onAttach()
 	*/
 
 	// Shader
-	auto& shader = Engine::AssetManager::getShaderLibrary().load("light.glsl");
+	auto& shader = Engine::AssetManager::getShaderLibrary().load("specular.glsl");
 
 	m_maze = FileLoader::loadMaze("Assets/MazeFiles/maze.mz");
 
@@ -32,23 +33,17 @@ void MazeLayer::onAttach()
 	m_player.setPosition(m_maze->getEntry());
 	m_player.setScale(0.5f);
 
-
+	//m_light.setPosition(m_player.getTransform().getPosition() + Engine::Vec3(0.0f, 10.0f, 0.0f));
 
 	//Engine::AssetManager::getTexture2DLibrary().load("snow.jpg");
 	//Engine::AssetManager::getTexture2DLibrary().load("hedge.jpg");
 	//Engine::AssetManager::getTexture2DLibrary().load("ground.jpg");
 
+	m_light.load(shader);
+
 	/// For clear color : https://www.toutes-les-couleurs.com/code-couleur-rvb.php
 	Engine::RenderCommand::setClearColor(Engine::Color::Black);
 	Engine::Input::toggleCursor();
-
-	auto& openglShader = std::dynamic_pointer_cast<Engine::OpenGLShader>(shader);
-	openglShader->bind();
-	openglShader->uploadUniform("u_light.ambient", m_light.getAmbient());
-	openglShader->uploadUniform("u_light.diffuse", m_light.getDiffuse());
-	openglShader->uploadUniform("u_light.specular", m_light.getSpecular());
-	openglShader->uploadUniform("u_light.color", Engine::Vec3(m_light.getColor()));
-	openglShader->uploadUniform("u_light.direction", m_light.getDirection());
 }
 
 void MazeLayer::onDetach()
@@ -69,14 +64,14 @@ void MazeLayer::onUpdate(const double& delta)
 	//auto& snow = Engine::AssetManager::getTexture2DLibrary().get("snow");
 	//auto& ground = Engine::AssetManager::getTexture2DLibrary().get("ground");
 	//auto& wall = Engine::AssetManager::getTexture2DLibrary().get("hedge");
-	auto& shader  = Engine::AssetManager::getShaderLibrary().get("light");
+	auto& shader  = Engine::AssetManager::getShaderLibrary().get("specular");
 	auto& openglShader = std::dynamic_pointer_cast<Engine::OpenGLShader>(shader);
 
 	Engine::Color* drawColor;
 
 	openglShader->bind();
 	openglShader->uploadUniform("u_cameraPosition", m_camera.getPosition());
-	
+
 	/* Draw Walls */
 	drawColor = &Engine::Color::Navy;
 	openglShader->uploadUniform("u_color", *drawColor);
