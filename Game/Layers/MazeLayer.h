@@ -21,7 +21,7 @@ private:
 	Engine::Scope<Maze>		 m_maze;
 	Player					 m_player;
 	//Engine::DirectionalLight m_light;
-	//Engine::PointLight       m_light;
+	//Engine::PointLight     m_light;
 	Engine::SpotLight		 m_light;
 };
 

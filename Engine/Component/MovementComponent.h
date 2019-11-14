@@ -16,11 +16,6 @@ namespace Engine
 		void onUpdate(
 			const double& delta
 		) override;
-		
-		inline const Vec3& getDirection() const
-		{
-			return m_movement.direction;
-		}
 
 		inline const float& getVelocity()
 		{
@@ -37,7 +32,6 @@ namespace Engine
 
 		struct Speed
 		{
-			//const float velocity  = 0.1f;
 			const float velocity  = 10.0f;
 			const float rotation  = 200.0f;
 			const float max		  = 5.0f;

@@ -41,6 +41,7 @@ namespace Engine
 		}
 
 		static Input* Create();
+
 	protected:
 		virtual bool isKeyPressedImplementation(
 			const int& keycode

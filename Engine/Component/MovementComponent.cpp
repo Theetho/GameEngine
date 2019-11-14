@@ -1,5 +1,6 @@
 #include "EnginePch.h"
 #include "MovementComponent.h"
+#include "Core/Log.h"
 #include "GameObject/GameObject.h"
 #include "Core/Input.h"
 #include "Component/PhysicsComponent.h"

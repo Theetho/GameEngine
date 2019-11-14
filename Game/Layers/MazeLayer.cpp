@@ -4,8 +4,16 @@
 
 MazeLayer::MazeLayer()
 	: m_camera(m_player)
-	//, m_light(Engine::Vec3(0.0f, 10.0f, 0.0f), Engine::Vec3(0.0f, -1.0f, 0.0f))
-	, m_light(Engine::Vec3(0.0f, 10.0f, 0.0f), Engine::Vec3(0.0f, -1.0f, 0.0f))
+	//, m_light(Engine::Vec3(-1.0f, -1.0f, 0.0f))
+	//, m_light(Engine::Vec3(-1.0f, 1.0f, 0.0f))//, Engine::PointLight::Attenuation(1.8f, 0.7f))
+	, m_light(
+		Engine::Vec3(-1.0f, 2.0f, 0.0f),
+		Engine::Vec3(0.0f, -1.0f, 0.0f),
+		50.0f,
+		Engine::PointLight::Attenuation(),
+		Engine::Color::White,
+		0.2f
+	)
 {
 }
 
@@ -24,20 +32,16 @@ void MazeLayer::onAttach()
 	*/
 
 	// Shader
-	auto& shader = Engine::AssetManager::getShaderLibrary().load("specular.glsl");
+	auto& shader = Engine::AssetManager::getShaderLibrary().load("Light/spot.glsl", "spotLight");
 
 	m_maze = FileLoader::loadMaze("Assets/MazeFiles/maze.mz");
-
-	Cube cube(1.0f);
 
 	m_player.setPosition(m_maze->getEntry());
 	m_player.setScale(0.5f);
 
-	//m_light.setPosition(m_player.getTransform().getPosition() + Engine::Vec3(0.0f, 10.0f, 0.0f));
-
-	//Engine::AssetManager::getTexture2DLibrary().load("snow.jpg");
-	//Engine::AssetManager::getTexture2DLibrary().load("hedge.jpg");
-	//Engine::AssetManager::getTexture2DLibrary().load("ground.jpg");
+	Engine::AssetManager::getTexture2DLibrary().load("snow.jpg");
+	Engine::AssetManager::getTexture2DLibrary().load("hedge.jpg");
+	Engine::AssetManager::getTexture2DLibrary().load("ground.jpg");
 
 	m_light.load(shader);
 
@@ -61,10 +65,11 @@ void MazeLayer::onUpdate(const double& delta)
 
 	Engine::Renderer::BeginScene(m_camera);
 
-	//auto& snow = Engine::AssetManager::getTexture2DLibrary().get("snow");
-	//auto& ground = Engine::AssetManager::getTexture2DLibrary().get("ground");
-	//auto& wall = Engine::AssetManager::getTexture2DLibrary().get("hedge");
-	auto& shader  = Engine::AssetManager::getShaderLibrary().get("specular");
+	auto& snow = Engine::AssetManager::getTexture2DLibrary().get("snow");
+	auto& ground = Engine::AssetManager::getTexture2DLibrary().get("ground");
+	auto& wall = Engine::AssetManager::getTexture2DLibrary().get("hedge");
+
+	auto& shader  = Engine::AssetManager::getShaderLibrary().get("spotLight");
 	auto& openglShader = std::dynamic_pointer_cast<Engine::OpenGLShader>(shader);
 
 	Engine::Color* drawColor;
@@ -73,8 +78,10 @@ void MazeLayer::onUpdate(const double& delta)
 	openglShader->uploadUniform("u_cameraPosition", m_camera.getPosition());
 
 	/* Draw Walls */
-	drawColor = &Engine::Color::Navy;
-	openglShader->uploadUniform("u_color", *drawColor);
+	
+	wall->bind();
+//	drawColor = &Engine::Color::DarkGreen;
+//	openglShader->uploadUniform("u_color", *drawColor);
 	
 	for (auto& cube : m_maze->getWalls())
 	{
@@ -86,8 +93,10 @@ void MazeLayer::onUpdate(const double& delta)
 	}
 
 	/* Draw Floor */
-	drawColor = &Engine::Color::Teal;
-	openglShader->uploadUniform("u_color", *drawColor);
+	
+	ground->bind();
+//	drawColor = &Engine::Color::Brown;
+//	openglShader->uploadUniform("u_color", *drawColor);
 	
 	for (auto& cube : m_maze->getGround())
 	{
@@ -99,8 +108,10 @@ void MazeLayer::onUpdate(const double& delta)
 	}
 
 	/* Draw Player */
-	drawColor = m_player.isColliding() ? &Engine::Color::Red : &Engine::Color::Yellow;
-	openglShader->uploadUniform("u_color", *drawColor);
+	
+	snow->bind();
+//	drawColor = m_player.isColliding() ? &Engine::Color::Red : &Engine::Color::Yellow;
+//	openglShader->uploadUniform("u_color", *drawColor);
 
 	Engine::Renderer::Submit(
 		openglShader,

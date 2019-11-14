@@ -8,7 +8,6 @@ namespace Engine
 
 	Input::Input()
 		: m_cursor(true)
-		, m_previousMousePosition()
 	{
 		ENGINE_ASSERT(!s_instance, "Input instance already created");
 		s_instance = this;

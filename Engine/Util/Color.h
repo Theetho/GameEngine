@@ -49,6 +49,7 @@ namespace Engine
 		static Color Black;
 		static Color Red;
 		static Color Maroon;
+		static Color Brown;
 		static Color Yellow;
 		static Color Olive;
 		static Color Green;

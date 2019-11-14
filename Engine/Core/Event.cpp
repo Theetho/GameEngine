@@ -3,8 +3,6 @@
 
 namespace Engine
 {
-	Event::MousePosition Event::mouse;
-
 	std::string EventToString(
 		Event* event
 	)

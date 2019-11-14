@@ -72,6 +72,15 @@ namespace Engine
 			return m_transform;
 		}
 
+		inline const Vec3& getFront() const
+		{
+			return Vec3(
+				sin(glm::radians(m_transform.getRotation().y)),
+				0.0f,
+				cos(glm::radians(m_transform.getRotation().y))
+			);
+		}
+
 		inline void setPosition(
 			const Vec3& position
 		)

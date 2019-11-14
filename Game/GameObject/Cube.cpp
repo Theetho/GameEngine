@@ -12,35 +12,44 @@ Cube::Cube(
 	m_vao = Engine::VertexArray::Create();
 
 	float vertices[] = {
-		-m_size, -m_size, -m_size, 1, 0,  0.0f,  0.0f, -1.0f,
-		 m_size, -m_size, -m_size, 0, 0,  0.0f,  0.0f, -1.0f,
-		 m_size,  m_size, -m_size, 0, 1,  0.0f,  0.0f, -1.0f,
-		-m_size,  m_size, -m_size, 1, 1,  0.0f,  0.0f, -1.0f,
-								  	 	  
-		-m_size, -m_size,  m_size, 0, 0,  0.0f,  0.0f,  1.0f,
-		 m_size, -m_size,  m_size, 0, 1,  0.0f,  0.0f,  1.0f,
-		 m_size,  m_size,  m_size, 1, 1,  0.0f,  0.0f,  1.0f,
-		-m_size,  m_size,  m_size, 1, 0,  0.0f,  0.0f,  1.0f,
-									  	 			   
-		-m_size,  m_size,  m_size, 0, 0, -1.0f,  0.0f,  0.0f,
-		-m_size,  m_size, -m_size, 0, 1, -1.0f,  0.0f,  0.0f,
-		-m_size, -m_size, -m_size, 1, 1, -1.0f,  0.0f,  0.0f,
-		-m_size, -m_size,  m_size, 1, 0, -1.0f,  0.0f,  0.0f,
-									  	 
-		 m_size,  m_size,  m_size, 0, 0,  1.0f,  0.0f,  0.0f,
-		 m_size,  m_size, -m_size, 0, 1,  1.0f,  0.0f,  0.0f,
-		 m_size, -m_size, -m_size, 1, 1,  1.0f,  0.0f,  0.0f,
-		 m_size, -m_size,  m_size, 1, 0,  1.0f,  0.0f,  0.0f,
-									  	  
-		-m_size, -m_size, -m_size, 0, 0,  0.0f, -1.0f,  0.0f,
-		 m_size, -m_size, -m_size, 0, 1,  0.0f, -1.0f,  0.0f,
-		 m_size, -m_size,  m_size, 1, 1,  0.0f, -1.0f,  0.0f,
-		-m_size, -m_size,  m_size, 1, 0,  0.0f, -1.0f,  0.0f,
-									  	  
-		-m_size,  m_size, -m_size, 0, 0,  0.0f,  1.0f,  0.0f,
-		 m_size,  m_size, -m_size, 0, 1,  0.0f,  1.0f,  0.0f,
-		 m_size,  m_size,  m_size, 1, 1,  0.0f,  1.0f,  0.0f,
-		-m_size,  m_size,  m_size, 1, 0,  0.0f,  1.0f,  0.0f
+
+		// Vertices					Textures		Normals
+
+		// Front
+		-m_size, -m_size, -m_size,  1.0f,  0.0f,  0.0f,  0.0f, -1.0f,
+		 m_size, -m_size, -m_size,  0.0f,  0.0f,  0.0f,  0.0f, -1.0f,
+		 m_size,  m_size, -m_size,  0.0f,  1.0f,  0.0f,  0.0f, -1.0f,
+		-m_size,  m_size, -m_size,  1.0f,  1.0f,  0.0f,  0.0f, -1.0f,
+									 	  
+		// Back						 	  
+		-m_size, -m_size,  m_size,  0.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+		 m_size, -m_size,  m_size,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f,
+		 m_size,  m_size,  m_size,  1.0f,  1.0f,  0.0f,  0.0f,  1.0f,
+		-m_size,  m_size,  m_size,  1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+									 	  
+		// Right					 	  
+		-m_size,  m_size,  m_size,  0.0f,  0.0f, -1.0f,  0.0f,  0.0f,
+		-m_size,  m_size, -m_size,  0.0f,  1.0f, -1.0f,  0.0f,  0.0f,
+		-m_size, -m_size, -m_size,  1.0f,  1.0f, -1.0f,  0.0f,  0.0f,
+		-m_size, -m_size,  m_size,  1.0f,  0.0f, -1.0f,  0.0f,  0.0f,
+									 	  
+		// Left						 	  
+		 m_size,  m_size,  m_size,  0.0f,  0.0f,  1.0f,  0.0f,  0.0f,
+		 m_size,  m_size, -m_size,  0.0f,  1.0f,  1.0f,  0.0f,  0.0f,
+		 m_size, -m_size, -m_size,  1.0f,  1.0f,  1.0f,  0.0f,  0.0f,
+		 m_size, -m_size,  m_size,  1.0f,  0.0f,  1.0f,  0.0f,  0.0f,
+									 	  
+		 // Bottom					 	  
+		-m_size, -m_size, -m_size,  0.0f,  0.0f,  0.0f, -1.0f,  0.0f,
+		 m_size, -m_size, -m_size,  0.0f,  1.0f,  0.0f, -1.0f,  0.0f,
+		 m_size, -m_size,  m_size,  1.0f,  1.0f,  0.0f, -1.0f,  0.0f,
+		-m_size, -m_size,  m_size,  1.0f,  0.0f,  0.0f, -1.0f,  0.0f,
+									 	  
+		// Top						 	  
+		-m_size,  m_size, -m_size,  0.0f,  0.0f,  0.0f,  1.0f,  0.0f,
+		 m_size,  m_size, -m_size,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
+		 m_size,  m_size,  m_size,  1.0f,  1.0f,  0.0f,  1.0f,  0.0f,
+		-m_size,  m_size,  m_size,  1.0f,  0.0f,  0.0f,  1.0f,  0.0f
 	};
 
 	Engine::Ref<Engine::VertexBuffer> vbo = 
