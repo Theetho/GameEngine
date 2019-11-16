@@ -15,10 +15,13 @@ namespace Engine
 	{
 	}
 
-	void DirectionalLight::loadGLUniforms(Ref<OpenGLShader> shader)
+	void DirectionalLight::loadGLUniforms(
+		Ref<OpenGLShader> shader,
+		const unsigned int& index
+	)
 	{
-		Light::loadGLUniforms(shader);
+		Light::loadGLUniforms(shader, index);
 
-		shader->uploadUniform("u_light.direction", m_direction);
+		shader->uploadUniform("u_lights[" + std::to_string(index) + "].direction", m_direction);
 	}
 }

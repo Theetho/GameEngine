@@ -4,16 +4,6 @@
 
 MazeLayer::MazeLayer()
 	: m_camera(m_player)
-	//, m_light(Engine::Vec3(-1.0f, -1.0f, 0.0f))
-	//, m_light(Engine::Vec3(-1.0f, 1.0f, 0.0f))//, Engine::PointLight::Attenuation(1.8f, 0.7f))
-	, m_light(
-		Engine::Vec3(-1.0f, 2.0f, 0.0f),
-		Engine::Vec3(0.0f, -1.0f, 0.0f),
-		50.0f,
-		Engine::PointLight::Attenuation(),
-		Engine::Color::White,
-		0.2f
-	)
 {
 }
 
@@ -31,19 +21,27 @@ void MazeLayer::onAttach()
 
 	*/
 
-	// Shader
-	auto& shader = Engine::AssetManager::getShaderLibrary().load("Light/spot.glsl", "spotLight");
-
 	m_maze = FileLoader::loadMaze("Assets/MazeFiles/maze.mz");
 
 	m_player.setPosition(m_maze->getEntry());
-	m_player.setScale(0.5f);
+	m_player.setScale(0.05f);
+	
+	// Shader
+	auto& shader = Engine::AssetManager::getShaderLibrary().load("Light/light.glsl");
 
 	Engine::AssetManager::getTexture2DLibrary().load("snow.jpg");
 	Engine::AssetManager::getTexture2DLibrary().load("hedge.jpg");
-	Engine::AssetManager::getTexture2DLibrary().load("ground.jpg");
+	Engine::AssetManager::getTexture2DLibrary().load("floor.jpg");
 
-	m_light.load(shader);
+	// Lights
+	m_lights.push_back(std::make_shared<Engine::DirectionalLight>(Engine::Vec3(-1.0f, -1.0f, 0.0f), Engine::Color(0.1f)));
+	m_lights.push_back(std::make_shared<Engine::PointLight>(Engine::Vec3(5.0f, 1.0f, 5.0f), Engine::PointLight::Attenuation(1.8f, 0.7)));
+	m_lights.push_back(std::make_shared<Engine::SpotLight>(Engine::Vec3(-1.0f, 2.0f, 0.0f), Engine::Vec3(0.0f, -1.0f, 0.0f), 50.0f));
+	
+	for (unsigned int i = 0; i < m_lights.size(); ++i)
+	{
+		m_lights[i]->load(shader, i);
+	}
 
 	/// For clear color : https://www.toutes-les-couleurs.com/code-couleur-rvb.php
 	Engine::RenderCommand::setClearColor(Engine::Color::Black);
@@ -65,13 +63,21 @@ void MazeLayer::onUpdate(const double& delta)
 
 	Engine::Renderer::BeginScene(m_camera);
 
+	// Textures
 	auto& snow = Engine::AssetManager::getTexture2DLibrary().get("snow");
-	auto& ground = Engine::AssetManager::getTexture2DLibrary().get("ground");
+	auto& floor = Engine::AssetManager::getTexture2DLibrary().get("floor");
 	auto& wall = Engine::AssetManager::getTexture2DLibrary().get("hedge");
 
-	auto& shader  = Engine::AssetManager::getShaderLibrary().get("spotLight");
+	// Shader
+	auto& shader  = Engine::AssetManager::getShaderLibrary().get("light");
 	auto& openglShader = std::dynamic_pointer_cast<Engine::OpenGLShader>(shader);
 
+	// Model
+		// Loaded in player.cpp
+	auto player = Engine::AssetManager::getModelLibrary().get("nanosuit");
+		// Loaded in Maze.cpp
+	auto cube = Engine::AssetManager::getModelLibrary().get("cube");
+	
 	Engine::Color* drawColor;
 
 	openglShader->bind();
@@ -79,43 +85,43 @@ void MazeLayer::onUpdate(const double& delta)
 
 	/* Draw Walls */
 	
-	wall->bind();
-//	drawColor = &Engine::Color::DarkGreen;
-//	openglShader->uploadUniform("u_color", *drawColor);
+//	wall->bind();
+	drawColor = &Engine::Color::DarkGreen;
+	openglShader->uploadUniform("u_color", *drawColor);
 	
-	for (auto& cube : m_maze->getWalls())
+	for (auto& wall : m_maze->getWalls())
 	{
 		Engine::Renderer::Submit(
 			openglShader,
-			cube->getVao(),
-			cube->getTransform()
+			cube,
+			wall->getTransform()
 		);
 	}
 
 	/* Draw Floor */
 	
-	ground->bind();
-//	drawColor = &Engine::Color::Brown;
-//	openglShader->uploadUniform("u_color", *drawColor);
+//	floor->bind();
+	drawColor = &Engine::Color::Brown;
+	openglShader->uploadUniform("u_color", *drawColor);
 	
-	for (auto& cube : m_maze->getGround())
+	for (auto& floor : m_maze->getFloor())
 	{
 		Engine::Renderer::Submit(
 			openglShader,
-			cube->getVao(),
-			cube->getTransform()
+			cube,
+			floor->getTransform()
 		);
 	}
 
 	/* Draw Player */
 	
-	snow->bind();
-//	drawColor = m_player.isColliding() ? &Engine::Color::Red : &Engine::Color::Yellow;
-//	openglShader->uploadUniform("u_color", *drawColor);
+	//snow->bind();
+	drawColor = m_player.isColliding() ? &Engine::Color::Red : &Engine::Color::Yellow;
+	openglShader->uploadUniform("u_color", *drawColor);
 
 	Engine::Renderer::Submit(
 		openglShader,
-		m_maze->getGround()[0]->getVao(),
+		player,
 		m_player.getTransform()
 	);
 

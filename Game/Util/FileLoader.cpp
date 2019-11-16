@@ -27,7 +27,7 @@ Engine::Scope<Maze> FileLoader::loadMaze(
 	// space position = '|' -> height |width
 	width = std::atoi((line.substr(space, line.size() - space)).c_str());
 
-	Engine::Scope<Maze> maze(new Maze(width, height));
+	Engine::Scope<Maze> maze = std::make_unique<Maze>(width, height, Engine::Vec3(size));
 
 	float originX = - (float)width  / 2.0f;
 	float originY =          size   / 2.0f;
@@ -48,36 +48,37 @@ Engine::Scope<Maze> FileLoader::loadMaze(
 			switch (digit)
 			{
 			case '0':
-				maze->addGround(new Cube(size, Engine::Transform(position)));
+				maze->addFloor(std::make_shared<Engine::GameObject>(Engine::Transform(position)));
 
 				break;
 
 			case '1':
-				maze->addGround(new Cube(size, Engine::Transform(position)));
+				maze->addFloor(std::make_shared<Engine::GameObject>(Engine::Transform(position)));
 				
 				position.y = -position.y;
 				
-				maze->addWalls(new Cube(size, Engine::Transform(position)));
+				maze->addWalls(std::make_shared<Engine::GameObject>(Engine::Transform(position)));
 
 				break;
 
 			case 'i':
-				maze->addGround(new Cube(size, Engine::Transform(position)));
+				maze->addFloor(std::make_shared<Engine::GameObject>(Engine::Transform(position)));
 
-				maze->setEntry(maze->getGround().back()->getTransform().getPosition() + Engine::Vec3(0.0f, size, 0.0f));
+				maze->setEntry(maze->getFloor().back()->getTransform().getPosition() + Engine::Vec3(0.0f, size, 0.0f));
 
 				break;
 
 			case 'o':
-				maze->addGround(new Cube(size, Engine::Transform(position)));
+				maze->addFloor(std::make_shared<Engine::GameObject>(Engine::Transform(position)));
 
-				maze->setExit(maze->getGround().back()->getTransform().getPosition() + Engine::Vec3(0.0f, size, 0.0f));
+				maze->setExit(maze->getFloor().back()->getTransform().getPosition() + Engine::Vec3(0.0f, size, 0.0f));
 
 				break;
 
 			default:
 				break;
 			}
+
 			++columnIndex;
 		}
 		++lineIndex;

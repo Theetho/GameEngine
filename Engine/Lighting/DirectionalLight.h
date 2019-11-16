@@ -31,11 +31,18 @@ namespace Engine
 			return m_direction;
 		}
 
+		virtual inline const int getID() const
+		{
+			return static_cast<int>(LightID::Directional);
+		}
+
+
 	private:
 		Vec3 m_direction;
 
 		void loadGLUniforms(
-			Ref<OpenGLShader> shader
-		);
+			Ref<OpenGLShader> shader,
+			const unsigned int& index
+		) override;
 	};
 }

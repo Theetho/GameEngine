@@ -10,7 +10,8 @@ namespace Engine
 	public:
 		Texture(
 			const std::string& filePath,
-			const std::string& name
+			const std::string& name,
+			const bool& useFolderPath
 		);
 
 		virtual ~Texture()
@@ -67,7 +68,8 @@ namespace Engine
 	public:
 		Texture2D(
 			const std::string& filePath,
-			const std::string& name
+			const std::string& name,
+			const bool& useFolderPath
 		);
 
 		virtual ~Texture2D()
@@ -77,7 +79,8 @@ namespace Engine
 		
 		static Ref<Texture2D> Create(
 			const std::string& filePath,
-			const std::string& name = ""
+			const std::string& name,
+			const bool& useFolderPath
 		);
 	};
 
@@ -88,7 +91,8 @@ namespace Engine
 	public:
 		OpenGLTexture(
 			const std::string& filePath,
-			const std::string& name
+			const std::string& name,
+			const bool& useFolderPath
 		);
 		
 		~OpenGLTexture();

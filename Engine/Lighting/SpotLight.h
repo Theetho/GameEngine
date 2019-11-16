@@ -36,13 +36,19 @@ namespace Engine
 			return m_cutOff;
 		}
 
+		virtual inline const int getID() const
+		{
+			return static_cast<int>(LightID::Spot);
+		}
+
 	private:
 		float m_cutOff;
 		Vec3  m_direction;
 
 		void loadGLUniforms(
-			Ref<OpenGLShader> shader
-		);
+			Ref<OpenGLShader> shader,
+			const unsigned int& index
+		) override;
 	};
 }
 

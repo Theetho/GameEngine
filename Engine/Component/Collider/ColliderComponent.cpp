@@ -46,4 +46,8 @@ namespace Engine
 
 		return *this;
 	}
+	void Collider::onUpdate(const double& delta)
+	{
+		m_center = m_owner.getTransform().getPosition() + m_offset;
+	}
 }

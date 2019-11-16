@@ -30,10 +30,6 @@ namespace Engine
 
 		~SphereCollider();
 
-		void onUpdate(
-			const double& delta
-		) override;
-
 		inline void setScale(
 			const float& scale
 		)

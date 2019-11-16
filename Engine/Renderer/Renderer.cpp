@@ -21,16 +21,50 @@ namespace Engine
 	)
 	{
 		shader->bind();
-		std::dynamic_pointer_cast<OpenGLShader>(shader)->uploadUniform(
-			"u_MVP",
-			s_sceneData.VP * transform.getModel()
-		);
-		std::dynamic_pointer_cast<OpenGLShader>(shader)->uploadUniform(
-			"u_model",
-			transform.getModel()
-		);
+
+		if (s_renderCommand->getAPI() == API::OpenGL)
+		{
+			std::dynamic_pointer_cast<OpenGLShader>(shader)->uploadUniform(
+				"u_MVP",
+				s_sceneData.VP * transform.getModel()
+			);
+			std::dynamic_pointer_cast<OpenGLShader>(shader)->uploadUniform(
+				"u_model",
+				transform.getModel()
+			);
+		}
+
 		vao->bind();
 		s_renderCommand->drawIndexed(vao);
+	}
+
+	void Renderer::Submit(
+		const Ref<Shader>& shader,
+		const Ref<Model>& model,
+		const Transform& transform
+	)
+	{
+		shader->bind();
+
+		if (s_renderCommand->getAPI() == API::OpenGL)
+		{
+			std::dynamic_pointer_cast<OpenGLShader>(shader)->uploadUniform(
+				"u_MVP",
+				s_sceneData.VP * transform.getModel()
+			);
+			std::dynamic_pointer_cast<OpenGLShader>(shader)->uploadUniform(
+				"u_model",
+				transform.getModel()
+			);
+		}
+
+		for (const Mesh& mesh : *model)
+		{
+			auto vao = mesh.getVao();
+			mesh.bindTextures();
+			vao->bind();
+			s_renderCommand->drawIndexed(vao);
+		}
 	}
 
 	void Renderer::EndScene()

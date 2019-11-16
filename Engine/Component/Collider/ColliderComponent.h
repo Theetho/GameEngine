@@ -35,6 +35,10 @@ namespace Engine
 		virtual ~Collider()
 		{}
 
+		virtual void onUpdate(
+			const double& delta
+		) override;
+
 		inline const Vec3& getCenter() const
 		{
 			return m_center;

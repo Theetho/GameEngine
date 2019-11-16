@@ -12,25 +12,17 @@ namespace Engine
 
 	Shader::Shader(
 		const std::string& filePath,
-		const std::string& name
+		const std::string& name,
+		const bool& useFolderPath
 	)
 		: m_name(name)
 	{
-		// Setting the name of the shader
-		if (m_name == "")
-		{
-			auto lastSlash = filePath.find_last_of("/\\");
-			lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
-			auto lastDot = filePath.rfind('.');
-			int count = lastDot == std::string::npos ? filePath.size() - lastSlash : lastDot - lastSlash;
-
-			m_name = filePath.substr(lastSlash, count);
-		}
 	}
 
 	Ref<Shader> Shader::Create(
 		const std::string& filePath,
-		const std::string& name
+		const std::string& name,
+		const bool& useFolderPath
 	)
 	{
 		ENGINE_ASSERT(s_folderSrc != "", "No folder for the shader files");
@@ -39,7 +31,7 @@ namespace Engine
 		case Engine::API::None:
 			ENGINE_ASSERT(false, "Api not supported");
 		case Engine::API::OpenGL:
-			return std::make_shared<OpenGLShader>(filePath, name);
+			return std::make_shared<OpenGLShader>(filePath, name, useFolderPath);
 		}
 
 		return nullptr;
@@ -49,13 +41,14 @@ namespace Engine
 
 	OpenGLShader::OpenGLShader(
 		const std::string& filePath,
-		const std::string& name
+		const std::string& name,
+		const bool& useFolderPath
 	)
-		: Shader(filePath, name)
+		: Shader(filePath, name, useFolderPath)
 		, m_id(0)
 	{
 		// Retrieve the source code of every shaders
-		readFile(s_folderPath + filePath);
+		useFolderPath ? readFile(s_folderPath + filePath) : readFile(filePath);
 		
 		std::vector<unsigned int> ids;
 
@@ -88,6 +81,7 @@ namespace Engine
 	{
 		glDeleteProgram(m_id);
 	}
+
 	unsigned int OpenGLShader::compile(
 		const std::string& src,
 		const GLenum& shaderType

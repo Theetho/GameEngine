@@ -2,6 +2,7 @@
 
 #include "Shader.h"
 #include "Texture.h"
+#include "Model/Model.h"
 
 namespace Engine
 {
@@ -18,12 +19,9 @@ namespace Engine
 		) = 0;
 
 		virtual const Ref<T>& load(
-			const std::string& filePath
-		) = 0;
-
-		virtual const Ref<T>& load(
 			const std::string& filePath,
-			const std::string& name
+			std::string name = "",
+			const bool& useFolderPath = true
 		) = 0;
 
 		virtual const Ref<T>& get(
@@ -32,7 +30,25 @@ namespace Engine
 
 		virtual bool exists(
 			const std::string& name
-		) = 0;
+		)
+		{
+			return m_references.find(name) != m_references.end();
+		}
+	protected:
+		std::unordered_map<std::string, Ref<T>> m_references;
+
+		inline std::string extractName(
+			const std::string& filePath
+		)
+		{
+			// Getting the name from the file path
+			auto lastSlash = filePath.find_last_of("/\\");
+			lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
+			auto lastDot = filePath.rfind('.');
+			int count = lastDot == std::string::npos ? filePath.size() - lastSlash : lastDot - lastSlash;
+
+			return filePath.substr(lastSlash, count);
+		}
 	};
 
 	class ShaderLibrary : Library<Shader>
@@ -44,27 +60,14 @@ namespace Engine
 		);
 
 		const Ref<Shader>& load(
-			const std::string& filePath
-		);
-
-		const Ref<Shader>& load(
 			const std::string& filePath,
-			const std::string& name
+			std::string name = "",
+			const bool& useFolderPath = true
 		);
 
 		const Ref<Shader>& get(
 			const std::string& name
 		);
-
-		inline bool exists(
-			const std::string& name
-		)
-		{
-			return m_shaders.find(name) != m_shaders.end();
-		}
-
-	private:
-		std::unordered_map<std::string, Ref<Shader>> m_shaders;
 	};
 
 	class Texture2DLibrary : Library<Texture2D>
@@ -75,27 +78,32 @@ namespace Engine
 		);
 
 		const Ref<Texture2D>& load(
-			const std::string& filePath
-		);
-
-		const Ref<Texture2D>& load(
-			const std::string& name,
-			const std::string& filePath
+			const std::string& filePath,
+			std::string name = "",
+			const bool& useFolderPath = true
 		);
 
 		const Ref<Texture2D>& get(
 			const std::string& name
 		);
+	};
 
-		inline bool exists(
+	class ModelLibrary : public Library<Model>
+	{
+	public:
+		void add(
+			const Ref<Model>& model
+		) override;
+
+		const Ref<Model>& load(
+			const std::string& filePath,
+			std::string name = "",
+			const bool& useFolderPath = true
+		) override;
+
+		const Ref<Model>& get(
 			const std::string& name
-		)
-		{
-			return m_textures.find(name) != m_textures.end();
-		}
-
-	private:
-		std::unordered_map<std::string, Ref<Texture2D>> m_textures;
+		) override;
 	};
 }
 

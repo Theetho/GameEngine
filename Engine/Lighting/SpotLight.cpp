@@ -19,11 +19,14 @@ namespace Engine
 	{
 	}
 
-	void SpotLight::loadGLUniforms(Ref<OpenGLShader> shader)
+	void SpotLight::loadGLUniforms(
+		Ref<OpenGLShader> shader,
+		const unsigned int& index
+	)
 	{
-		PointLight::loadGLUniforms(shader);
+		PointLight::loadGLUniforms(shader, index);
 
-		shader->uploadUniform("u_light.cutOff", glm::cos(glm::radians(m_cutOff)));
-		shader->uploadUniform("u_light.direction", m_direction);
+		shader->uploadUniform("u_lights[" + std::to_string(index) + "].cutOff"   , glm::cos(glm::radians(m_cutOff)));
+		shader->uploadUniform("u_lights[" + std::to_string(index) + "].direction", m_direction);
 	}
 }

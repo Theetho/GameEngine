@@ -17,13 +17,16 @@ namespace Engine
 	{
 	}
 
-	void PointLight::loadGLUniforms(Ref<OpenGLShader> shader)
+	void PointLight::loadGLUniforms(
+		Ref<OpenGLShader> shader,
+		const unsigned int& index
+	)
 	{
-		Light::loadGLUniforms(shader);
+		Light::loadGLUniforms(shader, index);
 
-		shader->uploadUniform("u_light.position",  m_position);
-		shader->uploadUniform("u_light.constant",  m_attenuation.constant);
-		shader->uploadUniform("u_light.linear",	   m_attenuation.linear);
-		shader->uploadUniform("u_light.quadratic", m_attenuation.quadratic);
+		shader->uploadUniform("u_lights[" + std::to_string(index) + "].position",  m_position);
+		shader->uploadUniform("u_lights[" + std::to_string(index) + "].constant",  m_attenuation.constant);
+		shader->uploadUniform("u_lights[" + std::to_string(index) + "].linear",	  m_attenuation.linear);
+		shader->uploadUniform("u_lights[" + std::to_string(index) + "].quadratic", m_attenuation.quadratic);
 	}
 }

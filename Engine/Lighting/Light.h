@@ -21,7 +21,8 @@ namespace Engine
 		}
 
 		void load(
-			Ref<Shader> shader
+			Ref<Shader> shader,
+			const unsigned int& index
 		);
 
 		inline void setColor(
@@ -72,6 +73,8 @@ namespace Engine
 			return m_specular;
 		}
 
+		virtual inline const int getID() const = 0;
+
 	private:
 		Color m_color;
 		float m_ambient;
@@ -79,8 +82,16 @@ namespace Engine
 		float m_specular;
 
 	protected:
+		enum class LightID
+		{
+			Directional,
+			Point,
+			Spot
+		};
+
 		virtual void loadGLUniforms(
-			Ref<OpenGLShader> shader
+			Ref<OpenGLShader> shader,
+			const unsigned int& index
 		);
 	};
 }

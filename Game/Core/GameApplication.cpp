@@ -7,6 +7,7 @@ GameApplication::GameApplication()
 {
 	Engine::Shader::setFolder("./Assets/Shaders/");
 	Engine::Texture::setFolder("./Assets/Textures/");
+	Engine::Model::setFolder("./Assets/Models/");
 	this->pushLayer(new MazeLayer());
 }
 

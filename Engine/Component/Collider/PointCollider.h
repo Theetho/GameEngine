@@ -29,10 +29,6 @@ namespace Engine
 
 		~PointCollider();
 
-		void onUpdate(
-			const double& delta
-		) override;
-
 		inline const Vec3& getMax() const override
 		{
 			return m_center;

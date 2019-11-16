@@ -34,8 +34,8 @@ struct DirectionalLight
 
 layout(location = 0) out vec4 out_color;
 
-//uniform vec4 u_color;
-uniform sampler2D u_texture;
+uniform vec4 u_color;
+//uniform sampler2D u_texture;
 uniform vec3 u_cameraPosition;
 uniform DirectionalLight u_light;
 
@@ -69,6 +69,6 @@ void main()
 {
 	vec4 finalLightColor = getFinalLightColor();
 
-	//out_color = u_color * finalLightColor;
-	out_color = texture(u_texture, v_textureCoords) * finalLightColor;
+	out_color = u_color * finalLightColor;
+	//out_color = texture(u_texture, v_textureCoords) * finalLightColor;
 }

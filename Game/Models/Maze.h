@@ -1,37 +1,39 @@
 #pragma once
 
-#include "GameObject/Cube.h"
-
 class Maze
 {
 public:
 	Maze(
 		const unsigned int& width,
-		const unsigned int& height
+		const unsigned int& height,
+		const Engine::Vec3& blockSize
 	);
+
 	~Maze();
 
 	inline void addWalls(
-		Cube* cube
+		Engine::Ref<Engine::GameObject> wall
 	)
 	{
-		m_walls.push_back(cube);
+		m_walls.push_back(wall);
+		addCollider(wall);
 	}
 
-	inline void addGround(
-		Cube* cube
+	inline void addFloor(
+		Engine::Ref<Engine::GameObject> floor
 	)
 	{
-		m_ground.push_back(cube);
+		m_floor.push_back(floor);
+		addCollider(floor);
 	}
 
-	inline Cube* operator[](const unsigned int& index)
+	inline Engine::Ref<Engine::GameObject> operator[](const unsigned int& index)
 	{
 		if (index < m_walls.size())
 			return m_walls[index];
 	}
 
-	inline const Cube* operator[](const unsigned int& index) const
+	inline const Engine::Ref<Engine::GameObject> operator[](const unsigned int& index) const
 	{
 		if (index < m_walls.size())
 			return m_walls[index];
@@ -61,20 +63,24 @@ public:
 		m_exit = exit;
 	}
 
-	inline std::vector<Cube*>& getWalls()
+	inline std::vector<Engine::Ref<Engine::GameObject>>& getWalls()
 	{
 		return m_walls;
 	}
 
-	inline std::vector<Cube*>& getGround()
+	inline std::vector<Engine::Ref<Engine::GameObject>>& getFloor()
 	{
-		return m_ground;
+		return m_floor;
 	}
 
 private:
-	std::vector<Cube*> m_walls;
-	std::vector<Cube*> m_ground;
+	std::vector<Engine::Ref<Engine::GameObject>> m_walls;
+	std::vector<Engine::Ref<Engine::GameObject>> m_floor;
 	unsigned int m_width, m_height;
-	Engine::Vec3 m_entry, m_exit;
+	Engine::Vec3 m_entry, m_exit, m_blockSize;
+
+	void addCollider(
+		Engine::Ref<Engine::GameObject> object
+	);
 };
 

@@ -2,6 +2,7 @@
 
 #include "RenderCommand.h"
 #include "Library.h"
+#include "Model/Model.h"
 #include "GameObject/Transform.h"
 #include "Core/Camera3D.h"
 
@@ -22,6 +23,12 @@ namespace Engine
 		static void Submit(
 			const Ref<Shader>& shader,
 			const Ref<VertexArray>& vao,
+			const Transform& transform
+		);
+
+		static void Submit(
+			const Ref<Shader>& shader,
+			const Ref<Model>& model,
 			const Transform& transform
 		);
 

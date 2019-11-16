@@ -51,9 +51,4 @@ namespace Engine
 	{
 		CollisionSystem::RemoveCollider(this);
 	}
-
-	void PointCollider::onUpdate(const double& delta)
-	{
-		m_center = m_owner.getTransform().getPosition() + m_offset;
-	}
 }

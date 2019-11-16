@@ -50,7 +50,7 @@ namespace Engine
 
 	Ref<IndexBuffer> IndexBuffer::Create(
 		unsigned int* indices,
-		const unsigned int& size
+		const unsigned int& count
 	)
 	{
 		switch (Renderer::getAPI())
@@ -58,7 +58,7 @@ namespace Engine
 		case Engine::API::None:
 			ENGINE_ASSERT(false, "Api not supported");
 		case Engine::API::OpenGL:
-			return std::make_shared<OpenGLIndexBuffer>(indices, size);
+			return std::make_shared<OpenGLIndexBuffer>(indices, count);
 		}	
 	}
 
@@ -68,7 +68,7 @@ namespace Engine
 
 	OpenGLVertexBuffer::OpenGLVertexBuffer(
 		float* vertices,
-		const unsigned int& size
+		const unsigned int& count
 	)
 		: m_id(0)
 		, m_layout({})
@@ -76,7 +76,7 @@ namespace Engine
 		glCreateBuffers(1, &m_id);
 
 		glBindBuffer(GL_ARRAY_BUFFER, m_id);
-		glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, count * sizeof(float), vertices, GL_STATIC_DRAW);
 	}
 	
 	OpenGLVertexBuffer::~OpenGLVertexBuffer()

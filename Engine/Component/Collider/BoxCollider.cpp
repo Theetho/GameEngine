@@ -70,13 +70,13 @@ namespace Engine
 		CollisionSystem::RemoveCollider(this);
 	}
 	
-	void BoxCollider::onUpdate(const double& delta)
+	void BoxCollider::onUpdate(
+		const double& delta
+	)
 	{
-		if (m_owner.isMoveable())
-		{
-			m_center = m_owner.getTransform().getPosition() + m_offset;
-			m_max    = m_center + Vec3(m_width, m_height, m_depth);
-			m_min	 = m_center - Vec3(m_width, m_height, m_depth);
-		}
+		Collider::onUpdate(delta);
+
+		m_max    = m_center + Vec3(m_width, m_height, m_depth);
+		m_min	 = m_center - Vec3(m_width, m_height, m_depth);
 	}
 }

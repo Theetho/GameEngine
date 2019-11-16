@@ -21,9 +21,6 @@
     <ClInclude Include="Core\GameApplication.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject\Cube.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject\Player.h">
       <Filter>GameObject</Filter>
     </ClInclude>
@@ -41,9 +38,6 @@
   <ItemGroup>
     <ClCompile Include="Core\GameApplication.cpp">
       <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject\Cube.cpp">
-      <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="GameObject\Player.cpp">
       <Filter>GameObject</Filter>

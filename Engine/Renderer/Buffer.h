@@ -176,7 +176,7 @@ namespace Engine
 
 		static Ref<VertexBuffer> Create(
 			float* vertices, 
-			const unsigned int& size
+			const unsigned int& count
 		);
 	};
 
@@ -195,7 +195,7 @@ namespace Engine
 
 		static Ref<IndexBuffer> Create(
 			unsigned int* indices,
-			const unsigned int& size
+			const unsigned int& count
 		);
 	};
 
@@ -208,7 +208,7 @@ namespace Engine
 	public:
 		OpenGLVertexBuffer(
 			float* vertices, 
-			const unsigned int& size
+			const unsigned int& count
 		);
 		
 		~OpenGLVertexBuffer();
@@ -246,7 +246,7 @@ namespace Engine
 	public:
 		OpenGLIndexBuffer(
 			unsigned int* indices,
-			const unsigned int& size);
+			const unsigned int& count);
 		
 		~OpenGLIndexBuffer();
 

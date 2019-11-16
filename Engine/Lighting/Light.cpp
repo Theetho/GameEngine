@@ -18,23 +18,28 @@ namespace Engine
 	}
 
 	void Light::load(
-		Ref<Shader> shader
+		Ref<Shader> shader,
+		const unsigned int& index
 	)
 	{
 		switch (Renderer::getAPI())
 		{
 		case API::OpenGL:
-			loadGLUniforms(std::dynamic_pointer_cast<OpenGLShader>(shader));
+			loadGLUniforms(std::dynamic_pointer_cast<OpenGLShader>(shader), index);
 		default:
 			break;
 		}
 	}
-	void Light::loadGLUniforms(Ref<OpenGLShader> shader)
+	void Light::loadGLUniforms(
+		Ref<OpenGLShader> shader,
+		const unsigned int& index
+	)
 	{
 		shader->bind();
-		shader->uploadUniform("u_light.ambient",  m_ambient);
-		shader->uploadUniform("u_light.diffuse",  m_diffuse);
-		shader->uploadUniform("u_light.specular", m_specular);
-		shader->uploadUniform("u_light.color",    Vec3(m_color));
+		shader->uploadUniform("u_lights[" + std::to_string(index) + "].id",		  this->getID());
+		shader->uploadUniform("u_lights[" + std::to_string(index) + "].ambient",  m_ambient);
+		shader->uploadUniform("u_lights[" + std::to_string(index) + "].diffuse",  m_diffuse);
+		shader->uploadUniform("u_lights[" + std::to_string(index) + "].specular", m_specular);
+		shader->uploadUniform("u_lights[" + std::to_string(index) + "].color",    Vec3(m_color));
 	}
 }

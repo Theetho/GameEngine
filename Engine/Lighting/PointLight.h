@@ -73,13 +73,19 @@ namespace Engine
 			return m_attenuation;
 		}
 
+		virtual inline const int getID() const
+		{
+			return static_cast<int>(LightID::Point);
+		}
+
 	private:
 		Vec3		m_position;
 		Attenuation m_attenuation;
 
 	protected:
 		void loadGLUniforms(
-			Ref<OpenGLShader> shader
-		);
+			Ref<OpenGLShader> shader,
+			const unsigned int& index
+		) override;
 	};
 }
