@@ -76,7 +76,7 @@ namespace Engine
 	{
 		Collider::onUpdate(delta);
 
-		m_max    = m_center + Vec3(m_width, m_height, m_depth);
-		m_min	 = m_center - Vec3(m_width, m_height, m_depth);
+		m_max = m_center + Vec3(m_width, m_height, m_depth);
+		m_min = m_center - Vec3(m_width, m_height, m_depth);
 	}
 }

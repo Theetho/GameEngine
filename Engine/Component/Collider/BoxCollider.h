@@ -1,4 +1,5 @@
 #pragma once
+
 #include "ColliderComponent.h"
 
 namespace Engine
@@ -64,9 +65,9 @@ namespace Engine
 
 	private:
 		float m_width, m_height, m_depth;
-		// Top Right Front point (x, y, z) / 2
+		// Top Right Front point (width, height, depth) / 2
 		Vec3  m_max;
-		// Bottom Left Back point (-x, -y, -z) / 2
+		// Bottom Left Back point (-width, -height, - depth) / 2
 		Vec3  m_min;
 	};
 }

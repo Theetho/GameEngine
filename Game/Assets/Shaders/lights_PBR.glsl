@@ -44,22 +44,12 @@ struct Light
 
 struct Material
 {
-	int id;
-
-	vec3 ambient;
-	vec3 diffuse;
-	vec3 specular;
-
-	float shininess;
-
 	sampler2D texture_am;
 	sampler2D texture_df;
 	sampler2D texture_sp;
 	sampler2D texture_nl;
 };
 
-//uniform vec4 u_color;
-//uniform sampler2D u_texture;
 uniform vec3 u_cameraPosition;
 uniform Light u_lights[MAX_NUMBER_OF_LIGHT];
 uniform Material u_material;
@@ -68,37 +58,21 @@ in vec2 v_textureCoords;
 in vec3 v_normal;
 in vec3 v_fragmentPosition;
 
-// -----------------------------------------------------------------------------
-
-vec3 CalculateMaterialInfluence(vec3 materialColor, sampler2D materialTexture)
-{
-	if (u_material.id == 1)
-	{
-		return materialColor;
-	}
-	else if (u_material.id == 2)
-	{
-		return texture(materialTexture, v_textureCoords).rgb;
-	}
-}
-
-// -----------------------------------------------------------------------------
-
 vec4 CalculateDirectionalLight(Light light)
 {	
 	
-	vec3 ambientColor = AMBIENT_OCCLUSION * light.color * CalculateMaterialInfluence(u_material.ambient, u_material.texture_am);
+	vec3 ambientColor = AMBIENT_OCCLUSION * light.color * texture(u_material.texture_am, v_textureCoords).rgb;
 
 	vec3 normal = normalize(v_normal);
 	vec3 lightDirection = normalize(- light.direction);
 	float diffuseFactor = max(dot(normal, lightDirection), 0.0);
-	vec3 diffuseColor = light.color * diffuseFactor * CalculateMaterialInfluence(u_material.diffuse, u_material.texture_df);
+	vec3 diffuseColor = light.color * diffuseFactor * texture(u_material.texture_df, v_textureCoords).rgb;
 
 	vec3 toCameraVector = normalize(u_cameraPosition - v_fragmentPosition);
 	vec3 reflection = reflect(- lightDirection, normal);
 
-	float specularFactor = pow(max(dot(toCameraVector, reflection), 0.0), 2);
-	vec3 specularColor = light.color * specularFactor * CalculateMaterialInfluence(u_material.specular, u_material.texture_sp);
+	float specularFactor = pow(max(dot(toCameraVector, reflection), 0.0), 64);
+	vec3 specularColor = light.color * specularFactor * texture(u_material.texture_sp, v_textureCoords).rgb;
 	
 	return vec4(specularColor + diffuseColor + ambientColor, 1.0);
 }
@@ -110,19 +84,19 @@ vec4 CalculatePointLight(Light light)
 	vec3 normal = normalize(v_normal);
 	vec3 lightDirection = normalize(light.position - v_fragmentPosition);
 	
-	vec3 ambientColor = AMBIENT_OCCLUSION * light.color * CalculateMaterialInfluence(u_material.ambient, u_material.texture_am);
+	vec3 ambientColor = AMBIENT_OCCLUSION * light.color * texture(u_material.texture_am, v_textureCoords).rgb;
 
 	float d = length(lightDirection);
 	float attenuation = 1.0 / (light.constant + light.linear * d + light.quadratic * pow(d, 2));
 
 	float diffuseFactor = max(dot(normal, lightDirection), 0.0);
-	vec3 diffuseColor = light.color * diffuseFactor * attenuation * CalculateMaterialInfluence(u_material.diffuse, u_material.texture_df);
+	vec3 diffuseColor = light.color * diffuseFactor * attenuation * texture(u_material.texture_df, v_textureCoords).rgb;
 
 	vec3 toCameraVector = normalize(u_cameraPosition - v_fragmentPosition);
 	vec3 reflection = reflect(-lightDirection, normal);
 
-	float specularFactor = pow(max(dot(toCameraVector, reflection), 0.0), 2);
-	vec3 specularColor = light.color * specularFactor * attenuation * CalculateMaterialInfluence(u_material.specular, u_material.texture_sp);
+	float specularFactor = pow(max(dot(toCameraVector, reflection), 0.0), 64);
+	vec3 specularColor = light.color * specularFactor * attenuation * texture(u_material.texture_sp, v_textureCoords).rgb;
 
 	return vec4(specularColor + diffuseColor + ambientColor, 1.0);
 }
@@ -136,7 +110,7 @@ vec4 CalculateSpotLight(Light light)
 	
 	float theta = dot(lightDirection, normalize(- light.direction));
 
-	vec3 ambientColor = AMBIENT_OCCLUSION * light.color * CalculateMaterialInfluence(u_material.ambient, u_material.texture_am);
+	vec3 ambientColor = AMBIENT_OCCLUSION * light.color * texture(u_material.texture_am, v_textureCoords).rgb;
 	
 	if (theta > light.cutOff)
 	{
@@ -144,13 +118,13 @@ vec4 CalculateSpotLight(Light light)
 		float attenuation = 1.0 / (light.constant + light.linear * d + light.quadratic * pow(d, 2));		
 
 		float diffuseFactor = max(dot(normal, lightDirection), 0.0);
-		vec3 diffuseColor = light.color * diffuseFactor * attenuation * CalculateMaterialInfluence(u_material.diffuse, u_material.texture_df);
+		vec3 diffuseColor = light.color * diffuseFactor * attenuation * texture(u_material.texture_df, v_textureCoords).rgb;
 		
 		vec3 toCameraVector = normalize(u_cameraPosition - v_fragmentPosition);
 		vec3 reflection = reflect(- lightDirection, normal);
 		
-		float specularFactor = pow(max(dot(toCameraVector, reflection), 0.0), 2);
-		vec3 specularColor = light.color * specularFactor * attenuation * CalculateMaterialInfluence(u_material.specular, u_material.texture_sp);
+		float specularFactor = pow(max(dot(toCameraVector, reflection), 0.0), 64);
+		vec3 specularColor = light.color * specularFactor * attenuation * texture(u_material.texture_sp, v_textureCoords).rgb;
 	
 		return vec4(specularColor + diffuseColor + ambientColor, 1.0);
 	}

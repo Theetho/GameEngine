@@ -6,7 +6,7 @@ Player::Player(
 )
 	: GameObject(transform)
 {
-	auto model = Engine::AssetManager::getModelLibrary().load("varyasuit/DolBarriersuit.obj", "player");
+	auto model = Engine::AssetManager::getModelLibrary().load("flyff/model.max", "player");
 
 	AddComponent<Engine::PhysicsComponent>(std::make_shared<Engine::PhysicsComponent>(
 		*this

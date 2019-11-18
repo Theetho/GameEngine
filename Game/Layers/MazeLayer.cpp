@@ -21,14 +21,14 @@ void MazeLayer::onAttach()
 
 	*/
 
-	m_maze = FileLoader::loadMaze("Assets/MazeFiles/maze.mz");
+	m_maze = FileLoader::loadMaze("Assets/MazeFiles/platform.mz");
 
 	m_player.setPosition(m_maze->getEntry());
 	m_player.setScale(0.05f);
 	
 	// Shader
 	auto& shader		 = Engine::AssetManager::getShaderLibrary().load("lights_materials.glsl", "scene");
-	auto& shaderPBR		 = Engine::AssetManager::getShaderLibrary().load("lights_materialsPBR.glsl", "player");
+	auto& shaderPBR		 = Engine::AssetManager::getShaderLibrary().load("lights_PBR.glsl", "player");
 	auto& shaderCollider = Engine::AssetManager::getShaderLibrary().load("colliders.glsl", "collider");
 
 	Engine::AssetManager::getTexture2DLibrary().load("snow.jpg");
@@ -36,12 +36,10 @@ void MazeLayer::onAttach()
 	Engine::AssetManager::getTexture2DLibrary().load("floor.jpg");
 
 	// Lights
-	m_lights.push_back(std::make_shared<Engine::DirectionalLight>(Engine::Vec3(-1.0f, -1.0f, 0.0f), Engine::Color(0.1f)));
-	m_lights.push_back(std::make_shared<Engine::PointLight>(Engine::Vec3(-5.0f, 1.0f,  5.0f), Engine::PointLight::Attenuation(1.8f, 0.7)));//, Engine::Color::Red));
-	//m_lights.push_back(std::make_shared<Engine::PointLight>(Engine::Vec3(-5.0f, 1.0f, -5.0f), Engine::PointLight::Attenuation(1.8f, 0.7)));//, Engine::Color::Green));
-	//m_lights.push_back(std::make_shared<Engine::PointLight>(Engine::Vec3( 5.0f, 1.0f,  5.0f), Engine::PointLight::Attenuation(1.8f, 0.7)));//, Engine::Color::Blue));
-	//m_lights.push_back(std::make_shared<Engine::PointLight>(Engine::Vec3( 5.0f, 1.0f, -5.0f), Engine::PointLight::Attenuation(1.8f, 0.7)));//, Engine::Color::Yellow));
-	m_lights.push_back(std::make_shared<Engine::SpotLight>(Engine::Vec3(-1.0f, 2.0f, 0.0f), Engine::Vec3(0.0f, -1.0f, 0.0f), 50.0f));
+	m_lights.push_back(std::make_shared<Engine::PointLight>(Engine::Vec3(-5.0f, 3.0f, -5.0f), Engine::PointLight::Attenuation(/*1.8f, 0.7*/), Engine::Color(1.0f)));
+	m_lights.push_back(std::make_shared<Engine::PointLight>(Engine::Vec3(-5.0f, 3.0f,  5.0f), Engine::PointLight::Attenuation(/*1.8f, 0.7*/), Engine::Color(0.2f)));
+	m_lights.push_back(std::make_shared<Engine::PointLight>(Engine::Vec3( 5.0f, 3.0f, -5.0f), Engine::PointLight::Attenuation(/*1.8f, 0.7*/), Engine::Color(0.2f)));
+	m_lights.push_back(std::make_shared<Engine::PointLight>(Engine::Vec3( 5.0f, 3.0f,  5.0f), Engine::PointLight::Attenuation(/*1.8f, 0.7*/), Engine::Color(0.2f)));
 	
 	for (unsigned int i = 0; i < m_lights.size(); ++i)
 	{
@@ -50,7 +48,7 @@ void MazeLayer::onAttach()
 	}
 
 	/// For clear color : https://www.toutes-les-couleurs.com/code-couleur-rvb.php
-	Engine::RenderCommand::setClearColor(Engine::Color::Black);
+	Engine::RenderCommand::setClearColor(Engine::Color::Aqua);
 	Engine::Input::toggleCursor();
 }
 
@@ -75,10 +73,8 @@ void MazeLayer::onUpdate(const double& delta)
 	// Shader
 	auto& shader	      = Engine::AssetManager::getShaderLibrary().get("scene");
 	auto& shaderPBR	      = Engine::AssetManager::getShaderLibrary().get("player");
-	auto& colliderShader  = Engine::AssetManager::getShaderLibrary().get("collider");
 	auto& openglShader    = std::dynamic_pointer_cast<Engine::OpenGLShader>(shader);
 	auto& openglShaderPBR = std::dynamic_pointer_cast<Engine::OpenGLShader>(shaderPBR);
-	auto& openglCollider  = std::dynamic_pointer_cast<Engine::OpenGLShader>(colliderShader);
 
 	// Model
 		// Loaded in player.cpp
@@ -87,14 +83,13 @@ void MazeLayer::onUpdate(const double& delta)
 	auto cube   = Engine::AssetManager::getModelLibrary().get("cube");
 	
 	// Materials
-	Engine::RawMaterial material;
+	Engine::Ref<Engine::Material> material;
 	
 	Engine::Renderer::BeginScene(m_camera, shader);
 
 	/* Draw Walls */
-	
-	material = Engine::RawMaterial::Emerald;
-	material.load(openglShader);
+	material = std::make_shared<Engine::RawMaterial>(Engine::RawMaterial::Emerald);
+	cube->setMaterial(material);
 
 	for (auto& wall : m_maze->getWalls())
 	{
@@ -102,9 +97,8 @@ void MazeLayer::onUpdate(const double& delta)
 	}
 
 	/* Draw Floor */
-
-	material = Engine::RawMaterial::Obsidian;
-	material.load(openglShader);
+	material = std::make_shared<Engine::RawMaterial>(Engine::RawMaterial::Obsidian);
+	cube->setMaterial(material);
 
 	for (auto& floor : m_maze->getFloor())
 	{
@@ -118,25 +112,10 @@ void MazeLayer::onUpdate(const double& delta)
 	Engine::Renderer::BeginScene(m_camera, shaderPBR);
 	
 	/* Draw Player */
-	
-	//material = &Engine::RawMaterial::Gold;
-	//material->load(openglShader);
-
 	Engine::Renderer::Submit(player, m_player.getTransform());
 
 	Engine::Renderer::EndScene();
 
-	// -----------------
-
-	Engine::Renderer::BeginScene(m_camera, colliderShader);
-	
-	auto& collider = m_player.GetComponent<Engine::BoxCollider>();
-	
-	/* Draw the player collider */
-	Engine::Renderer::Submit(cube, collider);
-
-	Engine::Renderer::EndScene();
-	
 	// -----------------
 }
 

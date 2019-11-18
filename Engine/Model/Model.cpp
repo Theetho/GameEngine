@@ -126,7 +126,7 @@ namespace Engine
 			}
 		}
 		// process material
-		if (mesh->mMaterialIndex >= 0)
+		if (mesh->mMaterialIndex > 0)
 		{
 			aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 			
@@ -143,6 +143,10 @@ namespace Engine
 				aiTextureType_HEIGHT, "_normal");
 
 			materials = std::make_shared<PBRMaterial>(ambientMaps, diffuseMaps, specularMaps, normalMaps);
+		}
+		else
+		{
+			materials = std::make_shared<RawMaterial>();
 		}
 
 		return Mesh(vertices, indices, materials);

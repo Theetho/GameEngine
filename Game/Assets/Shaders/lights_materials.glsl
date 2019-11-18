@@ -24,8 +24,7 @@ void main()
 
 layout(location = 0) out vec4 out_color;
 
-#define MAX_NUMBER_OF_LIGHT				8
-#define MAX_NUMBER_OF_MATERIAL_TEXTURE  4
+#define MAX_NUMBER_OF_LIGHT	8
 
 struct Light
 {
@@ -44,20 +43,13 @@ struct Light
 
 struct Material
 {
-	int id;
-
 	vec3 ambient;
 	vec3 diffuse;
 	vec3 specular;
 
 	float shininess;
-
-	sampler2D texture_df[MAX_NUMBER_OF_MATERIAL_TEXTURE];
-	sampler2D texture_sp[MAX_NUMBER_OF_MATERIAL_TEXTURE];
 };
 
-//uniform vec4 u_color;
-//uniform sampler2D u_texture;
 uniform vec3 u_cameraPosition;
 uniform Light u_lights[MAX_NUMBER_OF_LIGHT];
 uniform Material u_material;
