@@ -129,7 +129,7 @@ namespace Engine
 	{
 		// Link our program
 		glLinkProgram(m_id);
-
+		
 		// Note the different functions here: glGetProgram* instead of glGetShader*.
 		int isLinked = 0;
 		glGetProgramiv(m_id, GL_LINK_STATUS, (int*)&isLinked);

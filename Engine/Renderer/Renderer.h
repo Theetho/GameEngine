@@ -3,7 +3,7 @@
 #include "RenderCommand.h"
 #include "Library.h"
 #include "Model/Model.h"
-#include "GameObject/Transform.h"
+#include "Component/Collider/ColliderComponent.h"
 #include "Core/Camera3D.h"
 
 namespace Engine
@@ -17,25 +17,30 @@ namespace Engine
 		}
 	
 		static void BeginScene(
-			Camera3D& camera
+			Camera3D& camera,
+			Ref<Shader> shader
 		);
 
 		static void Submit(
-			const Ref<Shader>& shader,
-			const Ref<VertexArray>& vao,
+			const Ref<VertexArray> vao,
 			const Transform& transform
 		);
 
 		static void Submit(
-			const Ref<Shader>& shader,
-			const Ref<Model>& model,
+			const Ref<Model> model,
 			const Transform& transform
+		);
+
+		static void Submit(
+			const Ref<Model> model,
+			const Ref<Collider> collider
 		);
 
 		static void EndScene();
 
 	private:
-		static RenderCommand* s_renderCommand;
+		static Scope<RenderCommand> s_renderCommand;
+		static Ref<Shader> s_shader;
 
 		struct SceneData
 		{

@@ -34,6 +34,7 @@ namespace Engine
 	#define ENGINE_LOG_WARN(...) ::Engine::Log::getEngineLogger()->warn(__VA_ARGS__)
 	#define ENGINE_LOG_ERROR(...) ::Engine::Log::getEngineLogger()->error(__VA_ARGS__)
 	#define ENGINE_LOG_CRITICAL(...) ::Engine::Log::getEngineLogger()->critical(__VA_ARGS__)
+	#define ENGINE_LOG_VEC3(vec) ENGINE_LOG_INFO("{0} {1} {2}", vec.x, vec.y, vec.z) 	
 #endif
 
 #define APP_LOG_INFO(...) ::Engine::Log::getAppLogger()->info(__VA_ARGS__)
@@ -42,3 +43,4 @@ namespace Engine
 #define APP_LOG_WARN(...) ::Engine::Log::getAppLogger()->warn(__VA_ARGS__)
 #define APP_LOG_ERROR(...) ::Engine::Log::getAppLogger()->error(__VA_ARGS__)
 #define APP_LOG_CRITICAL(...) ::Engine::Log::getAppLogger()->critical(__VA_ARGS__)
+#define APP_LOG_VEC3(vec) APP_LOG_INFO("{0} {1} {2}", vec.x, vec.y, vec.z) 

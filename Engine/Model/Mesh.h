@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer/Texture.h"
+#include "Material.h"
 #include "Renderer/VertexArray.h"
 
 namespace Engine
@@ -11,7 +11,7 @@ namespace Engine
 		Mesh(
 			std::vector<float>& vertices,
 			std::vector<unsigned int>& indices,
-			std::vector<Ref<Texture2D>>& textures
+			Ref<Material> material
 		);
 
 		~Mesh()
@@ -23,19 +23,25 @@ namespace Engine
 			return m_vao;
 		}
 
-		inline void bindTextures() const
+		inline void loadMaterial(
+			const Ref<Shader> shader
+		) const
 		{
-			for (unsigned int i = 0; i < m_textures.size(); ++i)
-			{
-				m_textures[i]->bind(i);
-			}
+			m_material->load(shader);
+		}
+
+		inline void setMaterial(
+			Ref<Material> material
+		)
+		{
+			m_material = material;
 		}
 
 	private:
-		std::vector<float>			m_vertices;
-		std::vector<unsigned int>	m_indices;
-		std::vector<Ref<Texture2D>> m_textures;
-		Ref<VertexArray>			m_vao;
+		std::vector<float>		  m_vertices;
+		std::vector<unsigned int> m_indices;
+		Ref<Material>			  m_material;
+		Ref<VertexArray>		  m_vao;
 	};
 }
 

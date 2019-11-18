@@ -5,15 +5,9 @@
 namespace Engine
 {
 	Light::Light(
-		const Color& color,
-		const float& ambient,
-		const float& diffuse,
-		const float& specular
+		const Color& color
 	)
 		: m_color(color)
-		, m_ambient	(ambient)
-		, m_diffuse(diffuse)
-		, m_specular(specular)
 	{
 	}
 
@@ -36,10 +30,7 @@ namespace Engine
 	)
 	{
 		shader->bind();
-		shader->uploadUniform("u_lights[" + std::to_string(index) + "].id",		  this->getID());
-		shader->uploadUniform("u_lights[" + std::to_string(index) + "].ambient",  m_ambient);
-		shader->uploadUniform("u_lights[" + std::to_string(index) + "].diffuse",  m_diffuse);
-		shader->uploadUniform("u_lights[" + std::to_string(index) + "].specular", m_specular);
-		shader->uploadUniform("u_lights[" + std::to_string(index) + "].color",    Vec3(m_color));
+		shader->uploadUniform("u_lights[" + std::to_string(index) + "].id",	   this->getID());
+		shader->uploadUniform("u_lights[" + std::to_string(index) + "].color", Vec3(m_color));
 	}
 }

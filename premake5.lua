@@ -26,6 +26,7 @@ project "Engine"
 		"%{prj.name}/*.h",
 		"%{prj.name}/*/*.cpp",
 		"%{prj.name}/*.cpp",
+		"%{prj.name}/Component/Collider/*",
 		"%{prj.name}/Vendor/stb/*",
 		"%{prj.name}/Vendor/glm/glm/**.hpp",
 		"%{prj.name}/Vendor/glm/glm/**.inl",
@@ -36,6 +37,7 @@ project "Engine"
 		"%{prj.name}/Vendor/*/include",
 		"%{prj.name}/Vendor/glm",
 		"%{prj.name}/Vendor/stb",
+		"%{prj.name}/Vendor/assimp-5.0.0/include",
 		"%{prj.name}"
 	}
 
@@ -51,7 +53,8 @@ project "Engine"
 		{
 			"GLFW",
 			"GLAD",
-			"opengl32.lib"
+			"opengl32.lib",
+			"assimp-vc142-mt.lib"
 		}
 
 		defines
@@ -104,8 +107,9 @@ project "Game"
 	links
 	{
 		"Engine",
-		"opengl32.lib"
-	}
+		"opengl32.lib",
+		"assimp-vc142-mt.lib",
+	}	
 	
 	libdirs
 	{

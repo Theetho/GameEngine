@@ -79,14 +79,20 @@ namespace Engine
 
 	Color& Color::operator=(const Color& color)
 	{
-		*this = Color(color);
+		r = color.r;
+		g = color.g;
+		b = color.b;
+		a = color.a;
 
 		return *this;
 	}
 
 	Color& Color::operator=(const Color&& color) noexcept
 	{
-		*this = Color(color);
+		r = color.r;
+		g = color.g;
+		b = color.b;
+		a = color.a;
 
 		return *this;
 	}

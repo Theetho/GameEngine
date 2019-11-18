@@ -5,12 +5,9 @@ namespace Engine
 {
 	DirectionalLight::DirectionalLight(
 		const Vec3&  direction, 
-		const Color& color, 
-		const float& ambient, 
-		const float& diffuse, 
-		const float& specular
+		const Color& color
 	)
-		: Light(color, ambient, diffuse, specular)
+		: Light(color)
 		, m_direction(direction)
 	{
 	}

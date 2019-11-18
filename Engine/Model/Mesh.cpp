@@ -6,12 +6,12 @@ namespace Engine
 {
 	Mesh::Mesh(
 		std::vector<float>& vertices, 
-		std::vector<unsigned int>& indices, 
-		std::vector<Ref<Texture2D>>& textures
+		std::vector<unsigned int>& indices,
+		Ref<Material> material
 	)
 		: m_vertices(vertices)
 		, m_indices(indices)
-		, m_textures(textures)
+		, m_material(material)
 	{
 		m_vao = VertexArray::Create();
 

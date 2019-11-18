@@ -77,6 +77,16 @@ namespace Engine
 			return m_size;
 		}
 
+		inline void setMaterial(
+			Ref<Material> material
+		)
+		{
+			for (auto& mesh : m_meshes)
+			{
+				mesh.setMaterial(material);
+			}
+		}
+
 	private:
 		static std::string s_folderPath;
 		
@@ -105,8 +115,13 @@ namespace Engine
 			const std::string& name
 		);
 
+		void getDimensions(
+			const std::string& filePath,
+			const bool& useFolderPath
+		);
+
 		void updateDimensions(
-			const aiVector3D& vector
+			const Vec3& vector
 		);
 	};
 }

@@ -8,12 +8,9 @@ namespace Engine
 		const Vec3& direction,
 		const float& cutOff,
 		const Attenuation& attenuation,
-		const Color& color,
-		const float& ambient,
-		const float& diffuse,
-		const float& specular
+		const Color& color
 	)
-		: PointLight(position, attenuation, color, ambient, diffuse, specular)
+		: PointLight(position, attenuation, color)
 		, m_direction(direction)
 		, m_cutOff(cutOff)
 	{

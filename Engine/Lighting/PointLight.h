@@ -43,10 +43,7 @@ namespace Engine
 		PointLight(
 			const Vec3&		   position,
 			const Attenuation& attenuation = Attenuation(),
-			const Color&	   color = Color::White,
-			const float&	   ambient = 0.5f,
-			const float&	   diffuse = 0.8f,
-			const float&	   specular = 1.0f
+			const Color&	   color = Color::White
 		);
 
 		virtual ~PointLight(){}

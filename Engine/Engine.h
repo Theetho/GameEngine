@@ -4,6 +4,7 @@
 #include "Core.h"
 #include "GameObject.h"
 #include "Lighting.h"
+#include "Material.h"
 #include "Model.h"
 #include "Renderer.h"
 #include "System.h"

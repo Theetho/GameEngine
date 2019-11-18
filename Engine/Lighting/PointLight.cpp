@@ -6,12 +6,9 @@ namespace Engine
 	PointLight::PointLight(
 		const Vec3& position,
 		const Attenuation& attenuation,
-		const Color& color,
-		const float& ambient,
-		const float& diffuse,
-		const float& specular
+		const Color& color
 	)
-		: Light(color, ambient, diffuse, specular)
+		: Light(color)
 		, m_position(position)
 		, m_attenuation(attenuation)
 	{

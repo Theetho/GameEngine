@@ -13,11 +13,6 @@ namespace Engine
 	{
 		if (!exists(shader->getName()))
 			m_references[shader->getName()] = shader;
-		else
-			ENGINE_LOG_WARN(
-				"Shader \"{0}\" already exists",
-				shader->getName()
-			);
 	}
 	const Ref<Shader>& ShaderLibrary::load(
 		const std::string& filePath, 
@@ -31,13 +26,6 @@ namespace Engine
 		if (!exists(name))
 		{
 			m_references[name] = Shader::Create(filePath, name, useFolderPath);
-		}
-		else
-		{
-			ENGINE_LOG_WARN(
-				"Shader \"{0}\" already exists",
-				name
-			);
 		}
 
 		return m_references[name];
@@ -88,13 +76,6 @@ namespace Engine
 		{
 			m_references[name] = Texture2D::Create(filePath, name, useFolderPath);
 		}
-		else
-		{
-			ENGINE_LOG_WARN(
-				"Texture2D \"{0}\" already exists",
-				name
-			);
-		}
 
 		return m_references[name];
 	}
@@ -107,13 +88,6 @@ namespace Engine
 		{
 			return m_references[name];
 		}
-		else
-		{
-			ENGINE_LOG_WARN(
-				"Texture2D \"{0}\" doesn't exist",
-				name
-			);
-		}
 	}
 
 /// Model library
@@ -125,11 +99,6 @@ namespace Engine
 	{
 		if (!exists(model->getName()))
 			m_references[model->getName()] = model;
-		else
-			ENGINE_LOG_WARN(
-				"Shader \"{0}\" already exists",
-				model->getName()
-			);
 	}
 
 	const Ref<Model>& ModelLibrary::load(
@@ -143,15 +112,7 @@ namespace Engine
 
 		if (!exists(name))
 		{
-			auto model = Model::Create(filePath, name, useFolderPath);
-			m_references[name] = model;
-		}
-		else
-		{
-			ENGINE_LOG_WARN(
-				"Texture2D \"{0}\" already exists",
-				name
-			);
+			m_references[name] = Model::Create(filePath, name, useFolderPath);
 		}
 
 		return m_references[name];
@@ -164,13 +125,6 @@ namespace Engine
 		if (exists(name))
 		{
 			return m_references[name];
-		}
-		else
-		{
-			ENGINE_LOG_WARN(
-				"Model \"{0}\" doesn't exist",
-				name
-			);
 		}
 	}
 }

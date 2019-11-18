@@ -17,8 +17,9 @@ namespace Engine
 		: m_name(name)
 		, m_dimensions()
 	{
+		// Reads the file two times so it's not good at all
+		getDimensions(filePath, useFolderPath);
 		loadModel(filePath, useFolderPath);
-		m_size = m_dimensions.max - m_dimensions.min;
 	}
 
 	Ref<Model> Model::Create(
@@ -82,17 +83,21 @@ namespace Engine
 	{
 		std::vector<float> vertices;
 		std::vector<unsigned int> indices;
-		std::vector<Ref<Texture2D>> textures;
+		Ref<Material> materials;
+
+		Vec3 offset = m_size / 2.0f;
 
 		// Process vertices
 		for (unsigned int i = 0; i < mesh->mNumVertices; ++i)
 		{
 			// Position
-			vertices.push_back(mesh->mVertices[i].x);
-			vertices.push_back(mesh->mVertices[i].y);
-			vertices.push_back(mesh->mVertices[i].z);
-
-			updateDimensions(mesh->mVertices[i]);
+			/* 
+			 * Dirty but works fine for now. We translate
+			 * the model so (0,0) is at its center.
+			 */
+			vertices.push_back(mesh->mVertices[i].x);// + offset.x);
+			vertices.push_back(mesh->mVertices[i].y - offset.y);
+			vertices.push_back(mesh->mVertices[i].z);// + offset.z);
 
 			// Texture coordinates
 			if (mesh->mTextureCoords[0])
@@ -125,16 +130,22 @@ namespace Engine
 		{
 			aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 			
+			std::vector<Ref<Texture2D>> ambientMaps = loadMaterial(material,
+				aiTextureType_AMBIENT, "_height");
+			
 			std::vector<Ref<Texture2D>> diffuseMaps = loadMaterial(material,
-				aiTextureType_DIFFUSE, m_name + "_diffuse");
-			textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+				aiTextureType_DIFFUSE, "_diffuse");
 
 			std::vector<Ref<Texture2D>> specularMaps = loadMaterial(material,
-				aiTextureType_SPECULAR, m_name + "_specular");
-			textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+				aiTextureType_SPECULAR, "_specular");
+
+			std::vector< Ref<Texture2D>> normalMaps = loadMaterial(material, 
+				aiTextureType_HEIGHT, "_normal");
+
+			materials = std::make_shared<PBRMaterial>(ambientMaps, diffuseMaps, specularMaps, normalMaps);
 		}
 
-		return Mesh(vertices, indices, textures);
+		return Mesh(vertices, indices, materials);
 	}
 	std::vector<Ref<Texture2D>> Model::loadMaterial(
 		aiMaterial* mat, 
@@ -148,14 +159,51 @@ namespace Engine
 		{
 			aiString str;
 			mat->GetTexture(type, i, &str);
-			Ref<Texture2D> texture = AssetManager::getTexture2DLibrary().load(s_folderPath + m_path + str.C_Str(), name, false);
+			Ref<Texture2D> texture = AssetManager::getTexture2DLibrary().load(s_folderPath + m_path + str.C_Str(), str.C_Str() + name, false);
 			textures.push_back(texture);
 		}
+
 		return textures;
 	}
 
+	void Model::getDimensions(
+		const std::string& filePath,
+		const bool& useFolderPath
+	)
+	{
+		std::ifstream obj;
+		useFolderPath ? obj.open(s_folderPath + filePath) : obj.open(filePath);
+
+		if (obj.is_open())
+		{
+			std::string line;
+			bool foundFirstVertex = false;
+			while (std::getline(obj, line))
+			{
+				if (line[0] != 'v' || (line[1] != ' ' && foundFirstVertex))
+				{
+					continue;
+				}
+				else
+				{
+					if (!foundFirstVertex)
+						foundFirstVertex = true;
+					
+					float vx, vy, vz;
+					sscanf(line.c_str(), "%*c %g %g %g", &vx, &vy, &vz);
+					
+					updateDimensions({vx, vy, vz});
+				}
+			}
+
+			obj.close();
+			
+			m_size = m_dimensions.max - m_dimensions.min;
+		}
+	}
+
 	void Model::updateDimensions(
-		const aiVector3D& vector
+		const Vec3& vector
 	)
 	{
 		if (vector.x > m_dimensions.max.x)

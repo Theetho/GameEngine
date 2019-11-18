@@ -9,10 +9,7 @@ namespace Engine
 	public:
 		DirectionalLight(
 			const Vec3& direction,
-			const Color& color    = Color::White,
-			const float& ambient  = 0.5f,
-			const float& diffuse  = 0.8f,
-			const float& specular = 1.0f
+			const Color& color = Color::White
 		);
 
 		~DirectionalLight()

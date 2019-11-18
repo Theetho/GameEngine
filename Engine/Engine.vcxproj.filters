@@ -16,6 +16,9 @@
     <Filter Include="Lighting">
       <UniqueIdentifier>{5B1EC029-47EB-1A35-7004-09DD5C3050C3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Material">
+      <UniqueIdentifier>{74B94BCC-6086-A6D7-899F-947F75CBDB65}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Model">
       <UniqueIdentifier>{D6F3AE0D-4208-D7BE-0B8A-7A1E775DD3EF}</UniqueIdentifier>
     </Filter>
@@ -79,6 +82,9 @@
     <ClInclude Include="Component\PhysicsComponent.h">
       <Filter>Component</Filter>
     </ClInclude>
+    <ClInclude Include="Component\RigidBody.h">
+      <Filter>Component</Filter>
+    </ClInclude>
     <ClInclude Include="Core.h" />
     <ClInclude Include="Core\Application.h">
       <Filter>Core</Filter>
@@ -116,6 +122,12 @@
     <ClInclude Include="Engine.h" />
     <ClInclude Include="EnginePch.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameObject\GameObject.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\Transform.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
     <ClInclude Include="Lighting.h" />
     <ClInclude Include="Lighting\DirectionalLight.h">
       <Filter>Lighting</Filter>
@@ -129,10 +141,15 @@
     <ClInclude Include="Lighting\SpotLight.h">
       <Filter>Lighting</Filter>
     </ClInclude>
-    <ClInclude Include="Maths.h" />
-    <ClInclude Include="Model\Material.h">
-      <Filter>Model</Filter>
+    <ClInclude Include="Material.h" />
+    <ClInclude Include="Material\Material.h">
+      <Filter>Material</Filter>
     </ClInclude>
+    <ClInclude Include="Material\RawMaterial.h">
+      <Filter>Material</Filter>
+    </ClInclude>
+    <ClInclude Include="Maths.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="Model\Mesh.h">
       <Filter>Model</Filter>
     </ClInclude>
@@ -1291,16 +1308,7 @@
     <ClInclude Include="Vendor\stb\stb_image.h">
       <Filter>Vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="Model.h" />
-    <ClInclude Include="GameObject\GameObject.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\Transform.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Component\RigidBody.h">
-      <Filter>Component</Filter>
-    </ClInclude>
+    <ClInclude Include="Material\PBRMaterial.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\Collider\BoxCollider.cpp">
@@ -1322,6 +1330,9 @@
       <Filter>Component</Filter>
     </ClCompile>
     <ClCompile Include="Component\PhysicsComponent.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\RigidBody.cpp">
       <Filter>Component</Filter>
     </ClCompile>
     <ClCompile Include="Core\Application.cpp">
@@ -1352,6 +1363,12 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="EnginePch.cpp" />
+    <ClCompile Include="GameObject\GameObject.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\Transform.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
     <ClCompile Include="Lighting\DirectionalLight.cpp">
       <Filter>Lighting</Filter>
     </ClCompile>
@@ -1364,8 +1381,11 @@
     <ClCompile Include="Lighting\SpotLight.cpp">
       <Filter>Lighting</Filter>
     </ClCompile>
-    <ClCompile Include="Model\Material.cpp">
-      <Filter>Model</Filter>
+    <ClCompile Include="Material\Material.cpp">
+      <Filter>Material</Filter>
+    </ClCompile>
+    <ClCompile Include="Material\RawMaterial.cpp">
+      <Filter>Material</Filter>
     </ClCompile>
     <ClCompile Include="Model\Mesh.cpp">
       <Filter>Model</Filter>
@@ -1418,14 +1438,6 @@
     <ClCompile Include="Vendor\stb\stb_image.cpp">
       <Filter>Vendor\stb</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject\GameObject.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject\Transform.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Component\RigidBody.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
+    <ClCompile Include="Material\PBRMaterial.cpp" />
   </ItemGroup>
 </Project>
