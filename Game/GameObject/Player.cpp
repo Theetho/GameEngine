@@ -6,7 +6,7 @@ Player::Player(
 )
 	: GameObject(transform)
 {
-	auto model = Engine::AssetManager::getModelLibrary().load("nanosuit/nanosuit.obj", "nanosuit");
+	auto model = Engine::AssetManager::getModelLibrary().load("varyasuit/DolBarriersuit.obj", "player");
 
 	AddComponent<Engine::PhysicsComponent>(std::make_shared<Engine::PhysicsComponent>(
 		*this
@@ -19,10 +19,11 @@ Player::Player(
 	);
 
 	Engine::Vec3 size = model->getSize();
+
 	AddComponent<Engine::BoxCollider>(
 		std::make_shared<Engine::BoxCollider>(
 			*this,
-			//Engine::Vec3(size.x, size.y, size.z) / 2.0f,
+		//	Engine::Vec3(size.x, size.y, size.z) / 2.0f,
 			m_transform.getPosition(),
 			size.x, size.y, size.z
 		)
