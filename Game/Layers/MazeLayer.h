@@ -17,11 +17,10 @@ public:
 
 	virtual void onEvent(Engine::Event& event) override;
 private:
-	Engine::Camera3DLocked	   m_camera;
-	Engine::Scope<Maze>		   m_maze;
-	Player					   m_player;
+	Engine::Camera3DLocked					m_camera;
+	Engine::Scope<Maze>						m_maze;
+	Player									m_player;
 	std::vector<Engine::Ref<Engine::Light>> m_lights;
-	//Engine::PointLight     m_light;
-	//Engine::SpotLight		 m_light;
+	Engine::Ref<Engine::Skybox>			    m_skybox;
 };
 

@@ -5,6 +5,7 @@
 #include "Model/Model.h"
 #include "Component/Collider/ColliderComponent.h"
 #include "Core/Camera3D.h"
+#include "Lighting/Skybox.h"
 
 namespace Engine
 {
@@ -36,6 +37,10 @@ namespace Engine
 			const Ref<Collider> collider
 		);
 
+		static void Submit(
+			const Ref<Skybox> skybox
+		);
+
 		static void EndScene();
 
 	private:
@@ -45,6 +50,8 @@ namespace Engine
 		struct SceneData
 		{
 			Mat4 VP;
+			Mat4 V;
+			Mat4 P;
 		};
 		static SceneData s_sceneData;
 	};

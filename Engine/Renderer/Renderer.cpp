@@ -15,6 +15,8 @@ namespace Engine
 	)
 	{
 		s_sceneData.VP = camera.getVP();
+		s_sceneData.V  = camera.getView();
+		s_sceneData.P  = camera.getProjection();
 
 		s_shader = shader;
 
@@ -94,6 +96,34 @@ namespace Engine
 		if (s_renderCommand->getAPI() == API::OpenGL)
 		{
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		}
+	}
+
+	void Renderer::Submit(
+		const Ref<Skybox> skybox
+	)
+	{
+		if (s_renderCommand->getAPI() == API::OpenGL)
+		{
+			glDisable(GL_CULL_FACE);
+			glDepthFunc(GL_LEQUAL);
+
+			auto& openglShader = std::dynamic_pointer_cast<Engine::OpenGLShader>(s_shader);
+
+			openglShader->uploadUniform("u_VP", s_sceneData.VP);
+		}
+
+		for (auto& mesh : skybox->getModel()->getMeshes())
+		{
+			auto vao = mesh.getVao();
+			vao->bind();
+			s_renderCommand->drawIndexed(vao);
+		}
+
+		if (s_renderCommand->getAPI() == API::OpenGL)
+		{
+			glEnable(GL_CULL_FACE);
+			glDepthFunc(GL_LESS);
 		}
 	}
 

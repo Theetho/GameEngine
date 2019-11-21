@@ -1309,6 +1309,7 @@
       <Filter>Vendor\stb</Filter>
     </ClInclude>
     <ClInclude Include="Material\PBRMaterial.h" />
+    <ClInclude Include="Lighting\Skybox.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\Collider\BoxCollider.cpp">
@@ -1439,5 +1440,6 @@
       <Filter>Vendor\stb</Filter>
     </ClCompile>
     <ClCompile Include="Material\PBRMaterial.cpp" />
+    <ClCompile Include="Lighting\Skybox.cpp" />
   </ItemGroup>
 </Project>

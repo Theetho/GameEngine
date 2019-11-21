@@ -21,6 +21,7 @@ namespace Engine
 		static void drawIndexed(
 			const Ref<VertexArray>& vao
 		);
+
 	private:
 		static RendererAPI* s_renderer;
 	};

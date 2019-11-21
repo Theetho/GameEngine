@@ -174,6 +174,7 @@
     <ClInclude Include="Lighting\DirectionalLight.h" />
     <ClInclude Include="Lighting\Light.h" />
     <ClInclude Include="Lighting\PointLight.h" />
+    <ClInclude Include="Lighting\Skybox.h" />
     <ClInclude Include="Lighting\SpotLight.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Material\Material.h" />
@@ -596,6 +597,7 @@
     <ClCompile Include="Lighting\DirectionalLight.cpp" />
     <ClCompile Include="Lighting\Light.cpp" />
     <ClCompile Include="Lighting\PointLight.cpp" />
+    <ClCompile Include="Lighting\Skybox.cpp" />
     <ClCompile Include="Lighting\SpotLight.cpp" />
     <ClCompile Include="Material\Material.cpp" />
     <ClCompile Include="Material\PBRMaterial.cpp" />

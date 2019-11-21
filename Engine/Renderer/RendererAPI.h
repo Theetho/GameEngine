@@ -28,6 +28,7 @@ namespace Engine
 		virtual void drawIndexed(
 			const Ref<VertexArray>& vao
 		) = 0;
+
 	public:
 		static API s_api;
 	};
