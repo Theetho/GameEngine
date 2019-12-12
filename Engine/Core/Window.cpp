@@ -61,6 +61,20 @@ namespace Engine
 		ENGINE_LOG_TRACE("Resized the window {0} to {1} x {2}",
 						 m_data.title, width, height);
 	}
+
+	void WindowWindows::setFullscreen(const bool& set)
+	{
+		if (set)
+		{
+			auto monitor = glfwGetPrimaryMonitor();
+			auto videoMode = glfwGetVideoMode(monitor);
+			glfwSetWindowMonitor(m_window, monitor, 0, 0, videoMode->width, videoMode->height, GLFW_DONT_CARE);
+		}
+		else
+		{
+			glfwSetWindowMonitor(m_window, nullptr, 200, 200, m_data.getDefaultWidth(), m_data.getDefaultHeight(), GLFW_DONT_CARE);
+		}
+	}
 	
 	void WindowWindows::initialize(
 		const WindowData& windowData

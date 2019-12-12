@@ -142,16 +142,18 @@
   <ItemGroup>
     <ClInclude Include="Core\GameApplication.h" />
     <ClInclude Include="GameObject\Player.h" />
-    <ClInclude Include="Layers\MazeLayer.h" />
-    <ClInclude Include="Models\Maze.h" />
+    <ClInclude Include="Layers\BombermanLayer.h" />
+    <ClInclude Include="Layers\MapLayer.h" />
+    <ClInclude Include="Models\Map.h" />
     <ClInclude Include="Util\FileLoader.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\GameApplication.cpp" />
     <ClCompile Include="GameObject\Player.cpp" />
-    <ClCompile Include="Layers\MazeLayer.cpp" />
-    <ClCompile Include="Models\Maze.cpp" />
+    <ClCompile Include="Layers\BombermanLayer.cpp" />
+    <ClCompile Include="Layers\MapLayer.cpp" />
+    <ClCompile Include="Models\Map.cpp" />
     <ClCompile Include="Util\FileLoader.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

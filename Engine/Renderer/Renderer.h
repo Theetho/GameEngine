@@ -16,6 +16,14 @@ namespace Engine
 		{
 			return s_renderCommand->getAPI();
 		}
+
+		inline static void setViewport(
+			const unsigned int& width,
+			const unsigned int& height
+		)
+		{
+			s_renderCommand->setViewport(width, height);
+		}
 	
 		static void BeginScene(
 			Camera3D& camera,

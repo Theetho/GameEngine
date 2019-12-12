@@ -1,33 +1,16 @@
 #include "pch.h"
 #include "Player.h"
 
+using namespace Engine;
+
 Player::Player(
-	const Engine::Transform& transform
+	const Transform& transform
 )
 	: GameObject(transform)
 {
-	auto model = Engine::AssetManager::getModelLibrary().load("nanosuit/nanosuit.obj", "player");
+	AddComponent<PhysicsComponent>(std::make_shared<PhysicsComponent>(*this));
 
-	AddComponent<Engine::PhysicsComponent>(std::make_shared<Engine::PhysicsComponent>(
-		*this
-		)
-	);
-
-	AddComponent<Engine::MovementComponent>(std::make_shared<Engine::MovementComponent>(
-		*this
-		)
-	);
-
-	Engine::Vec3 size = model->getSize();
-
-	AddComponent<Engine::BoxCollider>(
-		std::make_shared<Engine::BoxCollider>(
-			*this,
-		//	Engine::Vec3(size.x, size.y, size.z) / 2.0f,
-			m_transform.getPosition(),
-			size.x, size.y, size.z
-		)
-	);
+	AddComponent<MovementComponent>(std::make_shared<MovementComponent>(*this));
 }
 
 Player::~Player()
@@ -45,4 +28,20 @@ void Player::onEvent(Engine::Event& event)
 			physics->jump();
 		}
 	}
+}
+
+void Player::setModel(
+	Engine::Ref<Engine::Model> model)
+{
+	m_model = model;
+
+	Vec3 size = model->getSize();
+
+	AddComponent<BoxCollider>(
+		std::make_shared<BoxCollider>(
+			*this,
+			m_transform.getPosition(),
+			size.x, size.y, size.z
+		)
+	);
 }

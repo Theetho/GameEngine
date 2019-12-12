@@ -35,6 +35,7 @@ namespace Engine
 		if (event.type == Event::Type::Resized)
 		{
 			m_projection = Matrix::projection(
+				70.0f,
 				static_cast<double>(event.sizeEvent.width)
 			  / static_cast<double>(event.sizeEvent.height)
 			);

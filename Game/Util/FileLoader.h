@@ -1,12 +1,13 @@
 #pragma once
 
-#include "Models/Maze.h"
+#include "Models/Map.h"
 
 class FileLoader
 {
 public:
-	static Engine::Scope<Maze> loadMaze(
+	static Engine::Scope<Map> loadMap(
 		const std::string& filePath
 	);
+
 };
 

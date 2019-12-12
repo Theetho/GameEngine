@@ -96,7 +96,7 @@ namespace Engine
 			 * the model so (0,0) is at its center.
 			 */
 			vertices.push_back(mesh->mVertices[i].x);// + offset.x);
-			vertices.push_back(mesh->mVertices[i].y - offset.y);
+			vertices.push_back(mesh->mVertices[i].y);// -offset.y);
 			vertices.push_back(mesh->mVertices[i].z);// + offset.z);
 
 			// Texture coordinates
@@ -175,8 +175,9 @@ namespace Engine
 		const bool& useFolderPath
 	)
 	{
-		std::ifstream obj;
-		useFolderPath ? obj.open(s_folderPath + filePath) : obj.open(filePath);
+		std::string path = useFolderPath ? s_folderPath + filePath : filePath;
+		
+		std::ifstream obj(path, std::ios::in, std::ios::binary);
 
 		if (obj.is_open())
 		{
@@ -194,15 +195,19 @@ namespace Engine
 						foundFirstVertex = true;
 					
 					float vx, vy, vz;
-					sscanf(line.c_str(), "%*c %g %g %g", &vx, &vy, &vz);
+					int check = sscanf(line.c_str(), "%*c %g %g %g", &vx, &vy, &vz);
 					
 					updateDimensions({vx, vy, vz});
 				}
 			}
 
 			obj.close();
-			
+
 			m_size = m_dimensions.max - m_dimensions.min;
+		}
+		else
+		{
+			ENGINE_LOG_ERROR("Can't open the file \"{0}\"", filePath);
 		}
 	}
 
