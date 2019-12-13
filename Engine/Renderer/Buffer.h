@@ -199,6 +199,18 @@ namespace Engine
 		);
 	};
 
+	class UniformBuffer
+	{
+	public:
+		virtual ~UniformBuffer() {}
+
+		virtual void bind() const = 0;
+
+		virtual void unbind() const = 0;
+
+		static Ref<UniformBuffer> Create();
+	};
+
 /// OpenGL buffers
 
 	// Vertex buffer
@@ -267,5 +279,28 @@ namespace Engine
 	private:
 		unsigned int m_id;
 		unsigned int m_count;
+	};
+
+	// Uniform Buffer
+
+	class OpenGLUniformBuffer : public UniformBuffer
+	{
+	public:
+		OpenGLUniformBuffer();
+		
+		~OpenGLUniformBuffer();
+
+		inline void bind() const override
+		{
+			glBindBuffer(GL_UNIFORM_BUFFER, m_id);
+		}
+
+		inline void unbind() const override
+		{
+			glBindBuffer(GL_UNIFORM_BUFFER, 0);
+		}
+
+	private:
+		unsigned int m_id;
 	};
 }

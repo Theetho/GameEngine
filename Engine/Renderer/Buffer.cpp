@@ -62,6 +62,20 @@ namespace Engine
 		}	
 	}
 
+	// Uniform Buffer
+
+	Ref<UniformBuffer> UniformBuffer::Create()
+	{
+		switch (Renderer::getAPI())
+		{
+		case Engine::API::None:
+			ENGINE_ASSERT(false, "Api not supported");
+		case Engine::API::OpenGL:
+			return std::make_shared<OpenGLUniformBuffer>();
+		}
+	}
+
+
 /// OpenGL buffers
 
 	// Vertex buffer
@@ -102,5 +116,15 @@ namespace Engine
 	OpenGLIndexBuffer::~OpenGLIndexBuffer()
 	{
 		glDeleteBuffers(1, &m_id);
+	}
+	
+	// Uniform Buffer (Unused for now)
+
+	OpenGLUniformBuffer::OpenGLUniformBuffer()
+	{
+	}
+
+	OpenGLUniformBuffer::~OpenGLUniformBuffer()
+	{
 	}
 }
