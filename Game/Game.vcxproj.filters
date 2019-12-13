@@ -28,9 +28,15 @@
       <Filter>Util</Filter>
     </ClInclude>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Layers\BombermanLayer.h" />
-    <ClInclude Include="Models\Map.h" />
-    <ClInclude Include="Layers\MapLayer.h" />
+    <ClInclude Include="Layers\MapLayer.h">
+      <Filter>Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="Layers\BombermanLayer.h">
+      <Filter>Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Map.h">
+      <Filter>Models</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\GameApplication.cpp">
@@ -43,8 +49,14 @@
       <Filter>Util</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Layers\BombermanLayer.cpp" />
-    <ClCompile Include="Models\Map.cpp" />
-    <ClCompile Include="Layers\MapLayer.cpp" />
+    <ClCompile Include="Layers\MapLayer.cpp">
+      <Filter>Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="Layers\BombermanLayer.cpp">
+      <Filter>Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Map.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

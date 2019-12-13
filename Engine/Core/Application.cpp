@@ -1,7 +1,7 @@
 #include "EnginePch.h"
 #include "Application.h"
 #include "Log.h"
-#include "Renderer/Renderer.h"
+#include "Renderer/Rendering/Renderer.h"
 #include "Util/Matrix.h"
 
 #define bind_function(x) std::bind(&x, this, std::placeholders::_1)

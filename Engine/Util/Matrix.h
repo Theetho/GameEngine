@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Maths.h"
+#include "Include/Maths.h"
 #include "Core/Camera3D.h"
 
 namespace Engine

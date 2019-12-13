@@ -4,9 +4,7 @@
 #include "LayerStack.h"
 #include "Input.h"
 #include "Camera3D.h"
-#include "Renderer/Shader.h"
-#include "Renderer/Buffer.h"
-#include "Renderer/VertexArray.h"
+#include "Include/Renderer.h"
 #include "System/CollisionSystem.h"
 
 namespace Engine

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Shader.h"
-#include "Texture.h"
+#include "Texture/Texture2D.h"
 #include "Model/Model.h"
 
 namespace Engine
@@ -16,17 +16,38 @@ namespace Engine
 
 		virtual void add(
 			const Ref<T>& t
-		) = 0;
+		)
+		{
+			if (!exists(t->getName()))
+				m_references[t->getName()] = t;
+		}
 
 		virtual const Ref<T>& load(
 			const std::string& filePath,
 			std::string name = "",
 			const bool& useFolderPath = true
-		) = 0;
+		)
+		{
+			if (name == "")
+				name = extractName(filePath);
+
+			if (!exists(name))
+			{
+				m_references[name] = T::Create(filePath, name, useFolderPath);
+			}
+
+			return m_references[name];
+		}
 
 		virtual const Ref<T>& get(
 			const std::string& name
-		) = 0;
+		)
+		{
+			if (exists(name))
+			{
+				return m_references[name];
+			}
+		}
 
 		virtual bool exists(
 			const std::string& name
@@ -42,68 +63,17 @@ namespace Engine
 		)
 		{
 			// Getting the name from the file path
-			auto lastSlash = filePath.find_last_of("/\\");
+			size_t lastSlash = filePath.find_last_of("/\\");
 			lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
-			auto lastDot = filePath.rfind('.');
+			size_t lastDot = filePath.rfind('.');
 			int count = lastDot == std::string::npos ? filePath.size() - lastSlash : lastDot - lastSlash;
 
 			return filePath.substr(lastSlash, count);
 		}
 	};
 
-	class ShaderLibrary : Library<Shader>
-	{
-	public:
-
-		void add(
-			const Ref<Shader>& shader
-		);
-
-		const Ref<Shader>& load(
-			const std::string& filePath,
-			std::string name = "",
-			const bool& useFolderPath = true
-		);
-
-		const Ref<Shader>& get(
-			const std::string& name
-		);
-	};
-
-	class Texture2DLibrary : Library<Texture2D>
-	{
-	public:
-		void add(
-			const Ref<Texture2D>& shader
-		);
-
-		const Ref<Texture2D>& load(
-			const std::string& filePath,
-			std::string name = "",
-			const bool& useFolderPath = true
-		);
-
-		const Ref<Texture2D>& get(
-			const std::string& name
-		);
-	};
-
-	class ModelLibrary : public Library<Model>
-	{
-	public:
-		void add(
-			const Ref<Model>& model
-		) override;
-
-		const Ref<Model>& load(
-			const std::string& filePath,
-			std::string name = "",
-			const bool& useFolderPath = true
-		) override;
-
-		const Ref<Model>& get(
-			const std::string& name
-		) override;
-	};
+	typedef Library<Shader> ShaderLibrary;
+	typedef Library<Texture2D> Texture2DLibrary;
+	typedef Library<Model> ModelLibrary;
 }
 

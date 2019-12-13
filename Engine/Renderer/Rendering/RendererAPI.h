@@ -1,8 +1,8 @@
 #pragma once
 
-#include "VertexArray.h"
+#include "../Buffer/VertexArray.h"
 #include "Util/Color.h"
-#include "Shader.h"
+#include "../Shader.h"
 #include "GameObject/Transform.h"
 
 namespace Engine

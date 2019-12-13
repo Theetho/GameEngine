@@ -26,7 +26,7 @@ void BombermanLayer::onAttach()
 	m_player.setScale(0.2);
 
 	m_lights.push_back(
-		std::make_shared<SpotLight>(Vec3(0.0f, 7.0f, 0.0f), Vec3(0.0f, -1.0f, 0.0f), 50.0f, PointLight::Attenuation(), Color::Blue)
+		std::make_shared<SpotLight>(Vec3(0.0f, 7.0f, 0.0f), Vec3(0.0f, -1.0f, 0.0f), 50.0f)
 	);
 
 	for (int i = 0; i < m_lights.size(); ++i)
@@ -68,12 +68,6 @@ void BombermanLayer::onUpdate(const double& delta)
 	material = std::make_shared<RawMaterial>(RawMaterial::Brass);
 	cube->setMaterial(material);
 	Renderer::Submit(m_player.getModel(), m_player.getTransform());
-
-	Renderer::EndScene();
-
-	Renderer::BeginScene(m_camera, shader_collider);
-
-	Renderer::Submit(cube, m_player.GetComponent<BoxCollider>());
 
 	Renderer::EndScene();
 }

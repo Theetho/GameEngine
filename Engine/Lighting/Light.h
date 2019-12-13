@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Util/Color.h"
-#include "Renderer/Shader.h"
-#include "Maths.h"
+#include "API/OpenGL/OpenGLShader.h"
+#include "Include/Maths.h"
 
 namespace Engine
 {

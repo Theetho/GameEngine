@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer/Shader.h"
+#include "API/OpenGL/OpenGLShader.h"
 
 namespace Engine
 {
@@ -25,6 +25,5 @@ namespace Engine
 		virtual void loadGLUniforms(
 			Ref<OpenGLShader> shader
 		);
-
 	};
 }

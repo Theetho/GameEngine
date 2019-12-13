@@ -2,8 +2,8 @@
 
 #include "Component/Component.h"
 #include "GameObject/GameObject.h"
-#include "Renderer/VertexArray.h"
-#include "Maths.h"
+#include "Renderer/Buffer/VertexArray.h"
+#include "Include/Maths.h"
 
 namespace Engine
 {

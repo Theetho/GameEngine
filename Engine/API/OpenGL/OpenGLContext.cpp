@@ -1,11 +1,10 @@
 #include "EnginePch.h"
-#include "GraphicsContext.h"
+#include "OpenGLContext.h"
 #include "Core/Log.h"
 
 namespace Engine
 {
-/// OpenGL context
-
+	#ifdef ENGINE_WINDOWS
 	OpenGLContext::OpenGLContext(
 		GLFWwindow* window
 	)
@@ -13,15 +12,20 @@ namespace Engine
 	{
 		ENGINE_ASSERT(m_window, "Window is nullptr");
 	}
+	#endif
 
 	OpenGLContext::~OpenGLContext()
 	{}
 
 	void OpenGLContext::initialize()
 	{
+		#ifdef ENGINE_WINDOWS
+		
 		glfwMakeContextCurrent(m_window);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		ENGINE_ASSERT(status, "Failed to initialize GLAD");
+		
+		#endif
 
 		ENGINE_LOG_INFO("OpenGL info :");
 		ENGINE_LOG_INFO("  -> Vendor   : {0}", glGetString(GL_VENDOR));
@@ -39,6 +43,8 @@ namespace Engine
 
 	void OpenGLContext::swapBuffers()
 	{
+		#ifdef ENGINE_WINDOWS
 		glfwSwapBuffers(m_window);
+		#endif
 	}
 }

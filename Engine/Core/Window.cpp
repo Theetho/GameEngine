@@ -1,5 +1,6 @@
 #include "EnginePch.h"
 #include "Window.h"
+#include "API/OpenGL/OpenGLContext.h"
 #include "Log.h"
 
 namespace Engine
@@ -21,9 +22,9 @@ namespace Engine
 		const Window::WindowData& windowData
 	)
 	{
-#ifdef ENGINE_WINDOWS
+		#ifdef ENGINE_WINDOWS
 		return new WindowWindows(windowData);
-#endif // ENGINE_WINDOWS
+		#endif // ENGINE_WINDOWS
 	}
 
 /// Windows window

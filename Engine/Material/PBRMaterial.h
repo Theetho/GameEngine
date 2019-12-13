@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Material.h"
-#include "Renderer/Texture.h"
+#include "Renderer/Texture/Texture2D.h"
 
 namespace Engine
 {

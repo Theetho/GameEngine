@@ -1,6 +1,6 @@
 #include "EnginePch.h"
 #include "Skybox.h"
-#include "Renderer/Renderer.h"
+#include "Renderer/Rendering/Renderer.h"
 #include "Core/AssetManager.h"
 
 namespace Engine

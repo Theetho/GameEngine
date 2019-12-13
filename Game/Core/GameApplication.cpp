@@ -11,7 +11,7 @@ GameApplication::GameApplication()
 	Engine::Model::setFolder("./Assets/Models/");
 	this->pushLayer(new BombermanLayer());
 
-	this->getWindow().setFullscreen(true);
+	//this->getWindow().setFullscreen(true);
 }
 
 GameApplication::~GameApplication()
