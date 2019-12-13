@@ -20,6 +20,11 @@ namespace Engine
 		{
 		}
 
+		virtual void setViewport(
+			const unsigned int& width,
+			const unsigned int& height
+		) = 0;
+
 		virtual void setClearColor(
 			const Color& color
 		) = 0;
@@ -39,6 +44,14 @@ namespace Engine
 		OpenGLRenderer();
 		
 		~OpenGLRenderer();
+
+		virtual inline void setViewport(
+			const unsigned int& width,
+			const unsigned int& height
+		) override
+		{
+			glViewport(0, 0, width, height);
+		}
 
 		inline void setClearColor(
 			const Color& color

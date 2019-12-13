@@ -69,7 +69,7 @@ namespace Engine
 		else if (event.type == Event::Type::Resized)
 		{
 			m_window->resize(event.sizeEvent.width, event.sizeEvent.height);
-			glViewport(0, 0, event.sizeEvent.width, event.sizeEvent.height);
+			Renderer::setViewport(event.sizeEvent.width, event.sizeEvent.height);
 		}
 		
 		if (!m_layerStack.isEmpty())

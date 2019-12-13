@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Models/Maze.h"
+#include "Models/Map.h"
 #include "GameObject/Player.h"
 
-class MazeLayer : public Engine::Layer
+class MapLayer : public Engine::Layer
 {
 public:
-	MazeLayer();
-	~MazeLayer();
+	MapLayer();
+	~MapLayer();
 
 	virtual void onAttach() override;
 
@@ -18,7 +18,7 @@ public:
 	virtual void onEvent(Engine::Event& event) override;
 private:
 	Engine::Camera3DLocked					m_camera;
-	Engine::Scope<Maze>						m_maze;
+	Engine::Scope<Map>						m_maze;
 	Player									m_player;
 	std::vector<Engine::Ref<Engine::Light>> m_lights;
 	Engine::Ref<Engine::Skybox>			    m_skybox;

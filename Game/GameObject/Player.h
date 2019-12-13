@@ -11,6 +11,18 @@ public:
 	void onEvent(
 		Engine::Event& event
 	) override;
+
+	inline const Engine::Ref<Engine::Model> getModel() const
+	{
+		return m_model;
+	}
+
+	void setModel(
+		Engine::Ref<Engine::Model> model
+	);
+
+private:
+	Engine::Ref<Engine::Model> m_model;
 };
 
 

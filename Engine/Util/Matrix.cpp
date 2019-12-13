@@ -30,6 +30,5 @@ namespace Engine
 		matrix = glm::translate(matrix, - camera.getPosition());
 		
 		return matrix;
-	//	return glm::lookAt(camera.getPosition(), camera.getTarget(), camera.getUp());
 	}
 }

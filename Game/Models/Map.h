@@ -1,15 +1,15 @@
 #pragma once
 
-class Maze
+class Map
 {
 public:
-	Maze(
+	Map(
 		const unsigned int& width,
 		const unsigned int& height,
 		const Engine::Vec3& blockSize
 	);
 
-	~Maze();
+	~Map();
 
 	inline void addWalls(
 		Engine::Ref<Engine::GameObject> wall
@@ -27,17 +27,17 @@ public:
 		addCollider(floor);
 	}
 
-	inline Engine::Ref<Engine::GameObject> operator[](const unsigned int& index)
-	{
-		if (index < m_walls.size())
-			return m_walls[index];
-	}
+	//inline Engine::Ref<Engine::GameObject> operator[](const unsigned int& index)
+	//{
+	//	if (index < m_walls.size())
+	//		return m_walls[index];
+	//}
 
-	inline const Engine::Ref<Engine::GameObject> operator[](const unsigned int& index) const
-	{
-		if (index < m_walls.size())
-			return m_walls[index];
-	}
+	//inline const Engine::Ref<Engine::GameObject> operator[](const unsigned int& index) const
+	//{
+	//	if (index < m_walls.size())
+	//		return m_walls[index];
+	//}
 
 	inline const Engine::Vec3& getEntry() const
 	{

@@ -19,13 +19,22 @@ namespace Engine
 
 			WindowData(
 				const std::string& title = "Engine Window",
-				const unsigned int& width = 1280,
-				const unsigned int& height = 720
+				const unsigned int& width = WindowData::getDefaultWidth(),
+				const unsigned int& height = WindowData::getDefaultHeight()
 			)
 				: title(title)
 				, width(width)
 				, height(height)
 			{}
+
+			static const unsigned int getDefaultWidth()
+			{
+				return 1280;
+			}
+			static const unsigned int getDefaultHeight()
+			{
+				return 720;
+			}
 		};
 
 		Window();
@@ -42,6 +51,10 @@ namespace Engine
 		) = 0;
 		
 		virtual void* getOSWindow() = 0;
+
+		virtual void setFullscreen(
+			const bool& set
+		) = 0;
 
 		inline void			setEventCallback(
 			const EventCallbackFunction& eventCallback
@@ -90,6 +103,10 @@ namespace Engine
 		void  resize(
 			const unsigned int& width,
 			const unsigned int& height
+		);
+
+		void setFullscreen(
+			const bool& set
 		);
 
 		inline void* getOSWindow() 

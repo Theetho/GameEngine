@@ -11,6 +11,14 @@ namespace Engine
 		{
 			return RendererAPI::s_api;
 		}
+
+		static inline void setViewport(
+			const unsigned int& width,
+			const unsigned int& height
+		)
+		{
+			s_renderer->setViewport(width, height);
+		}
 		
 		static void setClearColor(
 			const Color& color

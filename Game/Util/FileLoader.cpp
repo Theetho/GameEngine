@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "FileLoader.h"
 
-Engine::Scope<Maze> FileLoader::loadMaze(
+Engine::Scope<Map> FileLoader::loadMap(
 	const std::string& filePath
 )
 {
@@ -14,7 +14,7 @@ Engine::Scope<Maze> FileLoader::loadMaze(
 	if (!file)
 	{
 		APP_LOG_WARN("Can't open '{0}'; Default map loaded.", filePath);
-		file.open("Assets/MazeFiles/default.mz");
+		file.open("Assets/MapFiles/default.map");
 	}
 
 	// Get the first line (format : "height width")
@@ -27,7 +27,7 @@ Engine::Scope<Maze> FileLoader::loadMaze(
 	// space position = '|' -> height |width
 	width = std::atoi((line.substr(space, line.size() - space)).c_str());
 
-	Engine::Scope<Maze> maze = std::make_unique<Maze>(width, height, Engine::Vec3(size));
+	Engine::Scope<Map> maze = std::make_unique<Map>(width, height, Engine::Vec3(size));
 
 	float originX = - (float)width  / 2.0f;
 	float originY =          size   / 2.0f;

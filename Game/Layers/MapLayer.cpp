@@ -1,18 +1,18 @@
 #include "pch.h"
-#include "MazeLayer.h"
+#include "MapLayer.h"
 #include "Util/FileLoader.h"
 
-MazeLayer::MazeLayer()
+MapLayer::MapLayer()
 	: m_camera(m_player)
 	, m_skybox(std::make_shared<Engine::Skybox>("Skyboxes/Day", "skybox"))
 {
 }
 
-MazeLayer::~MazeLayer()
+MapLayer::~MapLayer()
 {
 }
 
-void MazeLayer::onAttach()
+void MapLayer::onAttach()
 {
 	/*   AXIS   y
 				|   z
@@ -22,16 +22,20 @@ void MazeLayer::onAttach()
 
 	*/
 
-	m_maze = FileLoader::loadMaze("Assets/MazeFiles/platform.mz");
+	m_maze = FileLoader::loadMap("Assets/MapFiles/maze.map");
 
+	auto model = Engine::AssetManager::getModelLibrary().load("nanosuit/nanosuit.obj", "player");
+	
 	m_player.setPosition(m_maze->getEntry());
+	m_player.setModel(model);
 	m_player.setScale(0.05f);
 	
 	// Shader
 	auto& shader		 = Engine::AssetManager::getShaderLibrary().load("lights_materials.glsl", "scene");
 	auto& shaderPBR		 = Engine::AssetManager::getShaderLibrary().load("lights_PBR.glsl", "player");
 	auto& shaderSkybox	 = Engine::AssetManager::getShaderLibrary().load("skybox.glsl");
-	auto& shaderCollider = Engine::AssetManager::getShaderLibrary().load("colliders.glsl", "collider");
+	Engine::AssetManager::getShaderLibrary().load("colliders.glsl", "collider");
+
 
 	Engine::AssetManager::getTexture2DLibrary().load("snow.jpg");
 	Engine::AssetManager::getTexture2DLibrary().load("hedge.jpg");
@@ -54,11 +58,11 @@ void MazeLayer::onAttach()
 	Engine::Input::toggleCursor();
 }
 
-void MazeLayer::onDetach()
+void MapLayer::onDetach()
 {
 }
 
-void MazeLayer::onUpdate(const double& delta)
+void MapLayer::onUpdate(const double& delta)
 {
 	m_player.onUpdate(delta);
 
@@ -70,16 +74,17 @@ void MazeLayer::onUpdate(const double& delta)
 	auto& wall  = Engine::AssetManager::getTexture2DLibrary().get("hedge");
 
 	// Shader
-	auto& shader	      = Engine::AssetManager::getShaderLibrary().get("scene");
-	auto& shaderPBR	      = Engine::AssetManager::getShaderLibrary().get("player");
-	auto& shaderSkybox	  = Engine::AssetManager::getShaderLibrary().load("skybox");
-	auto& openglShader    = std::dynamic_pointer_cast<Engine::OpenGLShader>(shader);
-	auto& openglShaderPBR = std::dynamic_pointer_cast<Engine::OpenGLShader>(shaderPBR);
+	auto shader			  = Engine::AssetManager::getShaderLibrary().get("scene");
+	auto shaderPBR	      = Engine::AssetManager::getShaderLibrary().get("player");
+	auto shader_collider  = Engine::AssetManager::getShaderLibrary().get("collider");
+	auto shaderSkybox	  = Engine::AssetManager::getShaderLibrary().load("skybox");
+	auto openglShader     = std::dynamic_pointer_cast<Engine::OpenGLShader>(shader);
+	auto openglShaderPBR  = std::dynamic_pointer_cast<Engine::OpenGLShader>(shaderPBR);
 
 	// Model
 		// Loaded in player.cpp
 	auto player = Engine::AssetManager::getModelLibrary().get("player");
-		// Loaded in Maze.cpp
+		// Loaded in Map.cpp
 	auto cube   = Engine::AssetManager::getModelLibrary().get("cube");
 	
 	// Materials
@@ -119,7 +124,15 @@ void MazeLayer::onUpdate(const double& delta)
 	Engine::Renderer::Submit(player, m_player.getTransform());
 
 	Engine::Renderer::EndScene();
+	
+	// -----------------
 
+	Engine::Renderer::BeginScene(m_camera, shader_collider);
+	
+	Engine::Renderer::Submit(cube, m_player.GetComponent<Engine::BoxCollider>());
+
+	Engine::Renderer::EndScene();
+	
 	// -----------------
 
 	// Skybox
@@ -132,7 +145,7 @@ void MazeLayer::onUpdate(const double& delta)
 	// -----------------
 }
 
-void MazeLayer::onEvent(Engine::Event& event)
+void MapLayer::onEvent(Engine::Event& event)
 {
 	m_camera.onEvent(event);
 	m_player.onEvent(event);
