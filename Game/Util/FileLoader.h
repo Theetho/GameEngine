@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Models/Map.h"
+#include "Map/Map.h"
 
 class FileLoader
 {

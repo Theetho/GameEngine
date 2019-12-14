@@ -141,19 +141,25 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Core\GameApplication.h" />
+    <ClInclude Include="GameObject\Bomb.h" />
     <ClInclude Include="GameObject\Player.h" />
     <ClInclude Include="Layers\BombermanLayer.h" />
     <ClInclude Include="Layers\MapLayer.h" />
-    <ClInclude Include="Models\Map.h" />
+    <ClInclude Include="Map\Floor.h" />
+    <ClInclude Include="Map\Map.h" />
+    <ClInclude Include="Map\Wall.h" />
     <ClInclude Include="Util\FileLoader.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\GameApplication.cpp" />
+    <ClCompile Include="GameObject\Bomb.cpp" />
     <ClCompile Include="GameObject\Player.cpp" />
     <ClCompile Include="Layers\BombermanLayer.cpp" />
     <ClCompile Include="Layers\MapLayer.cpp" />
-    <ClCompile Include="Models\Map.cpp" />
+    <ClCompile Include="Map\Floor.cpp" />
+    <ClCompile Include="Map\Map.cpp" />
+    <ClCompile Include="Map\Wall.cpp" />
     <ClCompile Include="Util\FileLoader.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

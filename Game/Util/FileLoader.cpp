@@ -27,7 +27,7 @@ Engine::Scope<Map> FileLoader::loadMap(
 	// space position = '|' -> height |width
 	width = std::atoi((line.substr(space, line.size() - space)).c_str());
 
-	Engine::Scope<Map> maze = std::make_unique<Map>(width, height, Engine::Vec3(size));
+	Engine::Scope<Map> map = std::make_unique<Map>(width, height, Engine::Vec3(size));
 
 	float originX = - (float)width  / 2.0f;
 	float originY =          size   / 2.0f;
@@ -39,39 +39,41 @@ Engine::Scope<Map> FileLoader::loadMap(
 	{
 		for (char digit : line)
 		{
+			Engine::Vec3 scale(size, 0.5f ,size);
+
 			Engine::Vec3 position(
 				originX + (columnIndex * step),
-				- originY,
+				- originY * scale.y,
 				originZ + (lineIndex * step)
 			);
 
 			switch (digit)
 			{
 			case '0':
-				maze->addFloor(std::make_shared<Engine::GameObject>(Engine::Transform(position)));
+				map->addFloor(Floor(Engine::Transform(position, {}, scale)));
 
 				break;
 
 			case '1':
-				maze->addFloor(std::make_shared<Engine::GameObject>(Engine::Transform(position)));
+				//map->addFloor(Floor(Engine::Transform(position, {}, scale)));
 				
 				position.y = -position.y;
 				
-				maze->addWalls(std::make_shared<Engine::GameObject>(Engine::Transform(position)));
+				map->addWalls(Wall(Engine::Transform(position, {}, scale)));
 
 				break;
 
 			case 'i':
-				maze->addFloor(std::make_shared<Engine::GameObject>(Engine::Transform(position)));
+				map->addFloor(Floor(Engine::Transform(position, {}, scale)));
 
-				maze->setEntry(maze->getFloor().back()->getTransform().getPosition() + Engine::Vec3(0.0f, size, 0.0f));
+				map->setEntry(map->getFloor().back().getTransform().getPosition() + Engine::Vec3(0.0f, size, 0.0f));
 
 				break;
 
 			case 'o':
-				maze->addFloor(std::make_shared<Engine::GameObject>(Engine::Transform(position)));
+				map->addFloor(Floor(Engine::Transform(position, {}, scale)));
 
-				maze->setExit(maze->getFloor().back()->getTransform().getPosition() + Engine::Vec3(0.0f, size, 0.0f));
+				map->setExit(map->getFloor().back().getTransform().getPosition() + Engine::Vec3(0.0f, size, 0.0f));
 
 				break;
 
@@ -87,5 +89,5 @@ Engine::Scope<Map> FileLoader::loadMap(
 
 	file.close();
 
-	return maze;
+	return map;
 }

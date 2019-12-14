@@ -3,7 +3,8 @@
 #include "Util/FileLoader.h"
 
 MapLayer::MapLayer()
-	: m_camera(m_player)
+	: m_player(Engine::AssetManager::getModelLibrary().load("nanosuit/nanosuit.obj", "player"))
+	, m_camera(m_player)
 	, m_skybox(std::make_shared<Engine::Skybox>("Skyboxes/Day", "skybox"))
 {
 }
@@ -23,11 +24,8 @@ void MapLayer::onAttach()
 	*/
 
 	m_maze = FileLoader::loadMap("Assets/MapFiles/maze.map");
-
-	auto model = Engine::AssetManager::getModelLibrary().load("nanosuit/nanosuit.obj", "player");
 	
 	m_player.setPosition(m_maze->getEntry());
-	m_player.setModel(model);
 	m_player.setScale(0.05f);
 	
 	// Shader
@@ -102,16 +100,13 @@ void MapLayer::onUpdate(const double& delta)
 
 	for (auto& wall : m_maze->getWalls())
 	{
-		Engine::Renderer::Submit(cube, wall->getTransform());
+		Engine::Renderer::Submit(*wall.getModel(), wall.getTransform());
 	}
 
 	// Draw Floor
-	material = std::make_shared<Engine::RawMaterial>(Engine::RawMaterial::Obsidian);
-	cube->setMaterial(material);
-
 	for (auto& floor : m_maze->getFloor())
 	{
-		Engine::Renderer::Submit(cube, floor->getTransform());
+		Engine::Renderer::Submit(*floor.getModel() , floor.getTransform());
 	}
 	
 	Engine::Renderer::EndScene();
@@ -121,7 +116,7 @@ void MapLayer::onUpdate(const double& delta)
 	Engine::Renderer::BeginScene(m_camera, shaderPBR);
 	
 	// Draw Player
-	Engine::Renderer::Submit(player, m_player.getTransform());
+	Engine::Renderer::Submit(*player, m_player.getTransform());
 
 	Engine::Renderer::EndScene();
 	
@@ -129,10 +124,10 @@ void MapLayer::onUpdate(const double& delta)
 
 	Engine::Renderer::BeginScene(m_camera, shader_collider);
 	
-	Engine::Renderer::Submit(cube, m_player.GetComponent<Engine::BoxCollider>());
+	Engine::Renderer::Submit(*cube, m_player.GetComponent<Engine::BoxCollider>());
 
 	Engine::Renderer::EndScene();
-	
+
 	// -----------------
 
 	// Skybox

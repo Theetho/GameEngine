@@ -47,7 +47,7 @@ namespace Engine
 	}
 
 	void Renderer::Submit(
-		const Ref<Model> model,
+		const Model& model,
 		const Transform& transform
 	)
 	{
@@ -59,7 +59,7 @@ namespace Engine
 			openglShader->uploadUniform("u_model", transform.getModel());
 		}
 
-		for (const Mesh& mesh : *model)
+		for (const Mesh& mesh : model)
 		{
 			auto vao = mesh.getVao();
 			mesh.loadMaterial(s_shader);
@@ -69,7 +69,7 @@ namespace Engine
 	}
 
 	void Renderer::Submit(
-		const Ref<Model> model,
+		const Model& model,
 		const Ref<Collider> collider
 	)
 	{
@@ -86,7 +86,7 @@ namespace Engine
 			openglShader->uploadUniform("u_MVP", s_sceneData.VP * transform.getModel());
 		}
 
-		for (const Mesh& mesh : *model)
+		for (const Mesh& mesh : model)
 		{
 			auto vao = mesh.getVao();
 			vao->bind();

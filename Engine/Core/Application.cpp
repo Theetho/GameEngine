@@ -3,6 +3,8 @@
 #include "Log.h"
 #include "Renderer/Rendering/Renderer.h"
 #include "Util/Matrix.h"
+#include <thread>
+#include <chrono>
 
 #define bind_function(x) std::bind(&x, this, std::placeholders::_1)
 
@@ -16,6 +18,7 @@ namespace Engine
 
 	Application::Application()
 		: m_layerStack()
+		, m_time(get_engine_time)
 	{
 		ENGINE_ASSERT(!s_instance, "Application already created");
 		s_instance = this;
@@ -36,12 +39,7 @@ namespace Engine
 	{
 		while (m_running)
 		{
-			// --- FPS synchronisation ---
-			m_deltaTime = get_engine_time - m_time;
 			m_time = get_engine_time;
-			if (m_deltaTime < m_FPS_CAP)
-				Sleep(m_FPS_CAP - m_deltaTime);
-			// ---------------------------
 
 			// --- Updates ---
 			for (Layer* layer : m_layerStack)
@@ -53,6 +51,10 @@ namespace Engine
 			m_collisionSystem->onUpdate(m_deltaTime);
 
 			m_window->onUpdate(m_deltaTime);
+
+			m_deltaTime = get_engine_time - m_time;
+			
+			// ---------------------------
 		}
 	}
 	

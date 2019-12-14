@@ -19,12 +19,3 @@ Map::Map(
 Map::~Map()
 {
 }
-
-void Map::addCollider(
-	Ref<GameObject> object
-)
-{
-	object->AddComponent<BoxCollider>(std::make_shared<BoxCollider>(
-		*object, object->getTransform().getPosition(),
-		m_blockSize.x, m_blockSize.y, m_blockSize.z));
-}

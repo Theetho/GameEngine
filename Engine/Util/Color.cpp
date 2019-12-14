@@ -21,6 +21,7 @@ namespace Engine
 	Color Color::Purple(0.5f, 0.0f, 0.5f);
 	Color Color::Brown(91, 60, 17);
 	Color Color::Sand(253, 241, 184);
+	Color Color::Wood(167, 103, 38);
 
 	Color::Color(
 		const float& r,

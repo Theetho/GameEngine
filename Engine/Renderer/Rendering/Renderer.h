@@ -36,12 +36,12 @@ namespace Engine
 		);
 
 		static void Submit(
-			const Ref<Model> model,
+			const Model& model,
 			const Transform& transform
 		);
 
 		static void Submit(
-			const Ref<Model> model,
+			const Model& model,
 			const Ref<Collider> collider
 		);
 

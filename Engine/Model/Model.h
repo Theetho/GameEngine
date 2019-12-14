@@ -115,11 +115,6 @@ namespace Engine
 			const std::string& name
 		);
 
-		void getDimensions(
-			const std::string& filePath,
-			const bool& useFolderPath
-		);
-
 		void updateDimensions(
 			const Vec3& vector
 		);

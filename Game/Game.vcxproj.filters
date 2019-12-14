@@ -34,9 +34,10 @@
     <ClInclude Include="Layers\BombermanLayer.h">
       <Filter>Layers</Filter>
     </ClInclude>
-    <ClInclude Include="Models\Map.h">
-      <Filter>Models</Filter>
-    </ClInclude>
+    <ClInclude Include="GameObject\Bomb.h" />
+    <ClInclude Include="Map\Wall.h" />
+    <ClInclude Include="Map\Map.h" />
+    <ClInclude Include="Map\Floor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\GameApplication.cpp">
@@ -55,8 +56,9 @@
     <ClCompile Include="Layers\BombermanLayer.cpp">
       <Filter>Layers</Filter>
     </ClCompile>
-    <ClCompile Include="Models\Map.cpp">
-      <Filter>Models</Filter>
-    </ClCompile>
+    <ClCompile Include="GameObject\Bomb.cpp" />
+    <ClCompile Include="Map\Wall.cpp" />
+    <ClCompile Include="Map\Map.cpp" />
+    <ClCompile Include="Map\Floor.cpp" />
   </ItemGroup>
 </Project>
