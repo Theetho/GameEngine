@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Floor.h"
-#include "Wall.h"
+#include "DestructibleWall.h"
+#include "ExitCell.h"
 
 class Map
 {
@@ -14,11 +15,22 @@ public:
 
 	~Map();
 
+	void onUpdate(
+		const double& delta
+	);
+
 	inline void addWalls(
 		const Wall& wall
 	)
 	{
 		m_walls.push_back(std::move(wall));
+	}
+
+	inline void addWalls(
+		const DestructibleWall& wall
+	)
+	{
+		m_destructibleWalls.push_back(std::move(wall));
 	}
 
 	inline void addFloor(
@@ -28,16 +40,23 @@ public:
 		m_floor.push_back(std::move(floor));
 	}
 
+	inline void addFloor(
+		const ExitCell& floor
+	)
+	{
+		m_exit = floor;
+	}
+
+	inline const ExitCell& getExit() const
+	{
+		return m_exit;
+	}
+
 	inline const Engine::Vec3& getEntry() const
 	{
 		return m_entry;
 	}
 	
-	inline const Engine::Vec3& getExit() const
-	{
-		return m_exit;
-	}
-
 	inline void setEntry(
 		const Engine::Vec3& entry
 	)
@@ -45,27 +64,32 @@ public:
 		m_entry = entry;
 	}
 
-	inline void setExit(
-		const Engine::Vec3& exit
-	)
-	{
-		m_exit = exit;
-	}
-
-	inline std::vector<Wall>& getWalls()
+	inline const std::vector<Wall>& getWalls() const
 	{
 		return m_walls;
 	}
 
-	inline std::vector<Floor>& getFloor()
+	inline const std::vector<DestructibleWall>& getDestructibleWalls() const
+	{
+		return m_destructibleWalls;
+	}
+	
+	inline std::vector<DestructibleWall>& getDestructibleWalls()
+	{
+		return m_destructibleWalls;
+	}
+
+	inline const std::vector<Floor>& getFloor() const
 	{
 		return m_floor;
 	}
 
 private:
 	std::vector<Wall> m_walls;
+	std::vector<DestructibleWall> m_destructibleWalls;
 	std::vector<Floor> m_floor;
+	ExitCell m_exit;
 	unsigned int m_width, m_height;
-	Engine::Vec3 m_entry, m_exit, m_blockSize;
+	Engine::Vec3 m_entry, m_blockSize;
 };
 

@@ -6,11 +6,11 @@ public:
 	Wall(
 		const Engine::Transform& transform
 	);
-	~Wall();
+	virtual ~Wall();
 
-	static const Engine::Ref<Engine::Model> getModel()
+	virtual inline const Engine::Ref<Engine::Model> getModel() const
 	{
-		return s_model;
+		return Wall::s_model;
 	}
 private:
 	static Engine::Ref<Engine::Model> s_model;

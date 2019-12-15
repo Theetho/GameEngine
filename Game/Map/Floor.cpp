@@ -17,14 +17,14 @@ Floor::Floor(
 
 		s_model = AssetManager::getModelLibrary().load("cube/cube.obj", "floor");
 
+		auto texture = std::vector<Ref<Texture2D>>({ AssetManager::getTexture2DLibrary().load("floor.jpg")});
+
 		s_model->setMaterial(
-			std::make_shared<RawMaterial>(
-				RawMaterial(
-					Color(167, 103, 38), // Wood
-					Color(147, 88, 28),
-					Color(127, 73, 18),
-					32.f
-				)
+			std::make_shared<PBRMaterial>(
+				texture,
+				texture,
+				texture,
+				texture
 			)
 		);
 	}

@@ -105,17 +105,17 @@ namespace Engine
 			const GameObject& target,
 			const float& distance = 6.0f
 		);
-		~Camera3DLocked();
+		virtual ~Camera3DLocked();
 
-		void onUpdate(
+		virtual void onUpdate(
 			const double& delta
 		) override;
 
-		void onEvent(
+		virtual void onEvent(
 			Event& event
 		) override;
 
-	private:
+	protected:
 		const GameObject& m_target;
 
 		float m_distance;

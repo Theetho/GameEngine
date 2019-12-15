@@ -12,10 +12,26 @@ Map::Map(
 	, m_height(height)
 	, m_blockSize(blockSize)
 	, m_entry()
-	, m_exit()
 {
 }
 
 Map::~Map()
 {
+}
+
+void Map::onUpdate(
+	const double& delta
+)
+{
+	m_destructibleWalls.erase(
+		std::remove_if(
+			m_destructibleWalls.begin(),
+			m_destructibleWalls.end(),
+			[](const DestructibleWall& wall)
+			{
+				return wall.hasExploded;
+			}
+		),
+		m_destructibleWalls.end()
+	);
 }

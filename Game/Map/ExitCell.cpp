@@ -1,21 +1,21 @@
 #include "pch.h"
-#include "Wall.h"
+#include "ExitCell.h"
 
 using namespace Engine;
 
-Ref<Model> Wall::s_model;
-bool Wall::s_isInitialized = false;
+Ref<Model> ExitCell::s_model;
+bool ExitCell::s_isInitialized = false;
 
-Wall::Wall(
+ExitCell::ExitCell(
 	const Transform& transform
 )
-	: GameObject(transform)
+	: Floor(transform)
 {
 	if (!s_isInitialized)
 	{
 		s_isInitialized = true;
 
-		s_model = AssetManager::getModelLibrary().load("cube/cube.obj", "wall");
+		s_model = AssetManager::getModelLibrary().load("stairs/stairs.obj", "stairs");
 
 		auto texture = std::vector<Ref<Texture2D>>({ AssetManager::getTexture2DLibrary().load("wall.jpg", "wall") });
 
@@ -25,19 +25,20 @@ Wall::Wall(
 				texture,
 				texture,
 				texture
-			)
+				)
 		);
 	}
-
+	m_transform.setScale(m_transform.getScale() * 0.5f);
+	m_transform.setRotation({ 0.0f, 90.0f, 0.0f });
 	Vec3 size = s_model->getSize() * m_transform.getScale();
 
 	this->AddComponent<BoxCollider>(
 		std::make_shared<BoxCollider>(
 			*this, m_transform.getPosition(), size.x, size.y, size.z
-		)
-	);
+			)
+		);
 }
 
-Wall::~Wall()
+ExitCell::~ExitCell()
 {
 }

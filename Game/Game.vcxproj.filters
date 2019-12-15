@@ -38,6 +38,10 @@
     <ClInclude Include="Map\Wall.h" />
     <ClInclude Include="Map\Map.h" />
     <ClInclude Include="Map\Floor.h" />
+    <ClInclude Include="Core\Camera.h" />
+    <ClInclude Include="Component\Movement.h" />
+    <ClInclude Include="Map\DestructibleWall.h" />
+    <ClInclude Include="Map\ExitCell.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\GameApplication.cpp">
@@ -60,5 +64,9 @@
     <ClCompile Include="Map\Wall.cpp" />
     <ClCompile Include="Map\Map.cpp" />
     <ClCompile Include="Map\Floor.cpp" />
+    <ClCompile Include="Core\Camera.cpp" />
+    <ClCompile Include="Component\Movement.cpp" />
+    <ClCompile Include="Map\DestructibleWall.cpp" />
+    <ClCompile Include="Map\ExitCell.cpp" />
   </ItemGroup>
 </Project>

@@ -90,11 +90,11 @@ namespace Engine
 	{
 		return m_distance * cos(glm::radians(m_angle.pitch));
 	}
-	inline float Camera3DLocked::calculateVerticalDistance()
+	float Camera3DLocked::calculateVerticalDistance()
 	{
 		return m_distance * sin(glm::radians(m_angle.pitch));
 	}
-	inline void Camera3DLocked::calculateCameraPosition()
+	void Camera3DLocked::calculateCameraPosition()
 	{
 		auto& playerPosition = m_target.getTransform().getPosition();
 		float horizontal = calculateHorizontalDistance();
@@ -108,7 +108,7 @@ namespace Engine
 		m_position.y = playerPosition.y + vertical;
 	}
 
-	inline void Camera3DLocked::calculateZoom()
+	void Camera3DLocked::calculateZoom()
 	{
 		if (m_distance < 0.5)
 			m_distance = 0.5;

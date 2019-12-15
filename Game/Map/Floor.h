@@ -6,9 +6,9 @@ public:
 	Floor(
 		const Engine::Transform& transform
 	);
-	~Floor();
+	virtual ~Floor();
 
-	static const Engine::Ref<Engine::Model> getModel()
+	virtual const Engine::Ref<Engine::Model> getModel() const
 	{
 		return s_model;
 	}

@@ -55,11 +55,18 @@ Engine::Scope<Map> FileLoader::loadMap(
 				break;
 
 			case '1':
-				//map->addFloor(Floor(Engine::Transform(position, {}, scale)));
-				
-				position.y = -position.y;
+				position.y = - position.y;
 				
 				map->addWalls(Wall(Engine::Transform(position, {}, scale)));
+
+				break;
+
+			case '2':
+				map->addFloor(Floor(Engine::Transform(position, {}, scale)));
+				
+				position.y = - position.y;
+
+				map->addWalls(DestructibleWall(Engine::Transform(position, {}, scale)));
 
 				break;
 
@@ -71,9 +78,11 @@ Engine::Scope<Map> FileLoader::loadMap(
 				break;
 
 			case 'o':
-				map->addFloor(Floor(Engine::Transform(position, {}, scale)));
+				map->addFloor(ExitCell(Engine::Transform(position, {}, scale)));
 
-				map->setExit(map->getFloor().back().getTransform().getPosition() + Engine::Vec3(0.0f, size, 0.0f));
+				position.y = -position.y;
+
+				map->addWalls(DestructibleWall(Engine::Transform(position, {}, scale)));
 
 				break;
 

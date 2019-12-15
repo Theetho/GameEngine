@@ -45,6 +45,7 @@ namespace Engine
 		{
 			if (!Input::isKeyPressed(ENGINE_KEY_S))
 			{
+				m_transform.getRotation().y = 180.f;
 				m_speed.forward = m_speed.velocity;
 				m_movement.forward = true;
 			}
@@ -52,6 +53,7 @@ namespace Engine
 		else if (Input::isKeyPressed(ENGINE_KEY_S))
 		{
 			m_speed.forward = -m_speed.velocity;
+			m_transform.getRotation().y = 0.f;
 			m_movement.forward = true;
 		}
 
@@ -60,23 +62,25 @@ namespace Engine
 			if (!Input::isKeyPressed(ENGINE_KEY_D))
 			{
 				m_speed.strafe = -m_speed.velocity;
+				m_transform.getRotation().y = -90.f;
 				m_movement.strafe = true;
 			}
 		}
 		else if (Input::isKeyPressed(ENGINE_KEY_D))
 		{
 			m_speed.strafe = m_speed.velocity;
+			m_transform.getRotation().y = 90.f;
 			m_movement.strafe = true;
 		}
 
-		if (Input::isKeyPressed(ENGINE_KEY_Q))
+		/*if (Input::isKeyPressed(ENGINE_KEY_Q))
 		{
 			m_transform.getRotation().y += m_speed.rotation * delta;
 		}
 		if (Input::isKeyPressed(ENGINE_KEY_E))
 		{
 			m_transform.getRotation().y -= m_speed.rotation * delta;
-		}
+		}*/
 
 		clapSpeed(m_speed.forward, friction, m_movement.forward);
 		clapSpeed(m_speed.strafe, friction, m_movement.strafe);

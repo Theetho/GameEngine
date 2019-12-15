@@ -29,9 +29,15 @@ public:
 		return m_bombs;
 	}
 
+	inline bool isMoveable() const override
+	{
+		return true;
+	}
+
 private:
 	Engine::Ref<Engine::Model>	   m_model;
 	std::vector<Engine::Ref<Bomb>> m_bombs;
+	float m_bombPower = 1.5f;
 };
 
 
