@@ -75,9 +75,6 @@
     <ClInclude Include="Component\Component.h">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="Component\MovementComponent.h">
-      <Filter>Component</Filter>
-    </ClInclude>
     <ClInclude Include="Component\PhysicsComponent.h">
       <Filter>Component</Filter>
     </ClInclude>
@@ -1325,9 +1322,6 @@
       <Filter>Component\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Component\Component.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Component\MovementComponent.cpp">
       <Filter>Component</Filter>
     </ClCompile>
     <ClCompile Include="Component\PhysicsComponent.cpp">

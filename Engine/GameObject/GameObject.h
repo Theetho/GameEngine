@@ -118,6 +118,15 @@ namespace Engine
 	}
 
 	template<typename T>
+	void RemoveComponent()
+	{
+		static_assert(std::is_base_of<Component, T>::value, "T is not a component");
+
+		if (m_components.find(typeid(T)) != m_components.end())
+			m_components.erase(typeid(T));
+	}
+
+	template<typename T>
 	Ref<T> GetComponent()
 	{
 		static_assert(std::is_base_of<Component, T>::value, "T is not a component");

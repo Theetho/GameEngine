@@ -33,7 +33,9 @@ namespace Engine
 		) noexcept;
 
 		virtual ~Collider()
-		{}
+		{
+			
+		}
 
 		virtual void onUpdate(
 			const double& delta

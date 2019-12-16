@@ -102,28 +102,16 @@ namespace Engine
 	
 	bool GameObject::isJumping() const
 	{
-		auto physics = GetComponent<PhysicsComponent>();
-		
-		if (physics)
-			return physics->isJumping();
 		return false;
 	}
 
 	bool GameObject::isMoving() const
 	{
-		auto movement = GetComponent<MovementComponent>();
-
-		if (movement)
-			return movement->isMoving();
 		return false;
 	}
 
 	bool GameObject::isMoveable() const
 	{
-		auto movement = GetComponent<MovementComponent>();
-
-		if (movement)
-			return true;
 		return false;
 	}
 

@@ -157,7 +157,6 @@
     <ClInclude Include="Component\Collider\PointCollider.h" />
     <ClInclude Include="Component\Collider\SphereCollider.h" />
     <ClInclude Include="Component\Component.h" />
-    <ClInclude Include="Component\MovementComponent.h" />
     <ClInclude Include="Component\PhysicsComponent.h" />
     <ClInclude Include="Component\RigidBody.h" />
     <ClInclude Include="Core\Application.h" />
@@ -599,7 +598,6 @@
     <ClCompile Include="Component\Collider\PointCollider.cpp" />
     <ClCompile Include="Component\Collider\SphereCollider.cpp" />
     <ClCompile Include="Component\Component.cpp" />
-    <ClCompile Include="Component\MovementComponent.cpp" />
     <ClCompile Include="Component\PhysicsComponent.cpp" />
     <ClCompile Include="Component\RigidBody.cpp" />
     <ClCompile Include="Core\Application.cpp" />

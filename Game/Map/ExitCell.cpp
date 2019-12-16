@@ -30,13 +30,10 @@ ExitCell::ExitCell(
 	}
 	m_transform.setScale(m_transform.getScale() * 0.5f);
 	m_transform.setRotation({ 0.0f, 90.0f, 0.0f });
+
 	Vec3 size = s_model->getSize() * m_transform.getScale();
 
-	this->AddComponent<BoxCollider>(
-		std::make_shared<BoxCollider>(
-			*this, m_transform.getPosition(), size.x, size.y, size.z
-			)
-		);
+	RemoveComponent<BoxCollider>();
 }
 
 ExitCell::~ExitCell()

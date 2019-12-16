@@ -28,14 +28,6 @@ DestructibleWall::DestructibleWall(
 				)
 		);
 	}
-
-	Vec3 size = s_model->getSize() * m_transform.getScale();
-
-	this->AddComponent<BoxCollider>(
-		std::make_shared<BoxCollider>(
-			*this, m_transform.getPosition(), size.x, size.y, size.z
-			)
-		);
 }
 
 DestructibleWall::~DestructibleWall()
