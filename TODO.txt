@@ -1,0 +1,7 @@
+Engine: 
+
+- Improve/ Totally change the physic engine (collision, forces)
+- Learn blender and create awesome models
+- Implement PBR rendering (at first all models should have textures, then improve
+rendering).
+- Refacto/Improve the Renderer part

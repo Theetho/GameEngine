@@ -121,11 +121,11 @@ namespace Engine
 		float m_distance;
 		float m_angleAroundTarget;
 
-		float calculateHorizontalDistance();
-		float calculateVerticalDistance();
-		void  calculateCameraPosition();
-		void  calculateZoom();
-		void  calculateAngleAroundPlayer();
+		virtual float calculateHorizontalDistance();
+		virtual float calculateVerticalDistance();
+		virtual void  calculateCameraPosition();
+		virtual void  calculateZoom();
+		virtual void  calculateAngleAroundPlayer();
 	};
 }
 

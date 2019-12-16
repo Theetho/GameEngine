@@ -37,4 +37,13 @@ DestructibleWall::~DestructibleWall()
 void DestructibleWall::explode()
 {
 	this->hasExploded = true;
+	// We hide the wall and destroy its collider
+	// before removing it from the world
+	this->disable();
+}
+
+void DestructibleWall::disable()
+{
+	RemoveComponent<Engine::BoxCollider>();
+	m_enable = false;
 }

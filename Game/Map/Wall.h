@@ -12,6 +12,7 @@ public:
 	{
 		return Wall::s_model;
 	}
+
 private:
 	static Engine::Ref<Engine::Model> s_model;
 	static bool s_isInitialized;

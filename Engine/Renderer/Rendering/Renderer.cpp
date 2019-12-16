@@ -100,7 +100,7 @@ namespace Engine
 	}
 
 	void Renderer::Submit(
-		const Ref<Skybox> skybox
+		const Skybox& skybox
 	)
 	{
 		if (s_renderCommand->getAPI() == API::OpenGL)
@@ -113,7 +113,7 @@ namespace Engine
 			openglShader->uploadUniform("u_VP", s_sceneData.VP);
 		}
 
-		for (auto& mesh : skybox->getModel()->getMeshes())
+		for (auto& mesh : skybox.getModel()->getMeshes())
 		{
 			auto vao = mesh.getVao();
 			vao->bind();

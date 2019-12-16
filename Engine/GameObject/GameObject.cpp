@@ -71,33 +71,11 @@ namespace Engine
 	{
 	}
 
+	// Meant to be overrided
 	void GameObject::onCollision(
 		const Collision& collision
 	)
 	{
-		const float epsilon = 0.05f;
-
-		const auto& colliders = collision.getColliders();
-		
-		const Collider* myCollider = &collision.getColliders().first->getOwner() == this
-									 ? colliders.first : colliders.second;
-		const Collider* otherCollider = &collision.getColliders().first->getOwner() == this
-									 ? colliders.second : colliders.first;
-		
-		// If they are close enough on the up axis, then
-		// myCollider is on top of the other (collision
-		// with the floor)
-		if (collision.distanceUpAxis() < epsilon)
-		{
-
-			auto physics = GetComponent<PhysicsComponent>();
-
-			if (physics)
-				physics->setGroundLevel(otherCollider->getMax().y + myCollider->getCenter().y - myCollider->getMin().y);
-		}
-		// Else, it is a true collision
-		else
-			m_isColliding = true;
 	}
 	
 	bool GameObject::isJumping() const

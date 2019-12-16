@@ -16,7 +16,8 @@ public:
 	~Map();
 
 	void onUpdate(
-		const double& delta
+		const double& delta,
+		bool remove
 	);
 
 	inline void addWalls(

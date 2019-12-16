@@ -86,14 +86,17 @@ void Bomb::getSurroundingWalls(
 )
 {
 	Vec4 majorPoints{
-		m_transform.getPosition().x - (m_model.getSize().x * m_transform.getScale().x / 2.0f),
-		m_transform.getPosition().x + (m_model.getSize().x * m_transform.getScale().x / 2.0f),
-		m_transform.getPosition().z - (m_model.getSize().z * m_transform.getScale().z / 2.0f),
-		m_transform.getPosition().z + (m_model.getSize().z * m_transform.getScale().z / 2.0f)
+		m_transform.getPosition().x - (m_model.getSize().x / 2.0f * m_transform.getScale().x),
+		m_transform.getPosition().x + (m_model.getSize().x / 2.0f * m_transform.getScale().x),
+		m_transform.getPosition().z - (m_model.getSize().z / 2.0f * m_transform.getScale().z),
+		m_transform.getPosition().z + (m_model.getSize().z / 2.0f * m_transform.getScale().z)
 	};
 
 	for (auto& wall : worldMap.getDestructibleWalls())
 	{
+		if (!wall.isEnabled())
+			continue;
+
 		auto boundingBox = wall.GetComponent<BoxCollider>();
 		
 		Vec3 vectorBetweenCenters = m_transform.getPosition() - wall.getTransform().getPosition();
@@ -112,6 +115,7 @@ void Bomb::getSurroundingWalls(
 		&&	(areCloseEnough(radiusX, wallSizeX, distanceX)
 		||   areCloseEnough(radiusZ, wallSizeZ, distanceZ)))
 		{
+
 			m_surroundingWalls.push_back(&wall);
 		}
 	}

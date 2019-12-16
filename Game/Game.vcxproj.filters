@@ -28,9 +28,6 @@
       <Filter>Util</Filter>
     </ClInclude>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Layers\MapLayer.h">
-      <Filter>Layers</Filter>
-    </ClInclude>
     <ClInclude Include="Layers\BombermanLayer.h">
       <Filter>Layers</Filter>
     </ClInclude>
@@ -54,9 +51,6 @@
       <Filter>Util</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Layers\MapLayer.cpp">
-      <Filter>Layers</Filter>
-    </ClCompile>
     <ClCompile Include="Layers\BombermanLayer.cpp">
       <Filter>Layers</Filter>
     </ClCompile>

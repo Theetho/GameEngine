@@ -20,9 +20,18 @@ Map::~Map()
 }
 
 void Map::onUpdate(
-	const double& delta
+	const double& delta,
+	bool remove
 )
 {
+	// We only remove the walls that exploded
+	// when their is no more bombs in the world
+	// otherwise their are some problems with
+	// pointers in the destructible walls vector
+	// (bombs explode the wrong walls)
+	if (!remove)
+		return;
+
 	m_destructibleWalls.erase(
 		std::remove_if(
 			m_destructibleWalls.begin(),

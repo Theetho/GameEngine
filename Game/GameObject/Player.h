@@ -15,6 +15,10 @@ public:
 		Engine::Event& event
 	) override;
 
+	void onCollision(
+		const Engine::Collision& collision
+	) override;
+
 	inline const Engine::Ref<Engine::Model> getModel() const
 	{
 		return m_model;

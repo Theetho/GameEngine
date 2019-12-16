@@ -12,5 +12,10 @@ public:
 	void onUpdate(
 		const double& delta
 	) override;
+
+	void calculateAngleAroundPlayer() override;
+
+private:
+	void updateTargetAxis();
 };
 

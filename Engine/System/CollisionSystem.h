@@ -86,11 +86,6 @@ namespace Engine
 		);
 
 		Collision collide(
-			const PointCollider* p1,
-			const PointCollider* p2
-		);
-
-		Collision collide(
 			const BoxCollider* b,
 			const SphereCollider* s
 		);
@@ -98,26 +93,6 @@ namespace Engine
 		Collision collide(
 			const SphereCollider* s,
 			const BoxCollider* b
-		);
-
-		Collision collide(
-			const BoxCollider* b,
-			const PointCollider* p
-		);
-
-		Collision collide(
-			const PointCollider* p,
-			const BoxCollider* b
-		);
-
-		Collision collide(
-			const SphereCollider* s,
-			const PointCollider* p
-		);
-
-		Collision collide(
-			const PointCollider* p,
-			const SphereCollider* s
 		);
 	};
 }

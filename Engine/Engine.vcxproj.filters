@@ -66,9 +66,6 @@
     <ClInclude Include="Component\Collider\ColliderComponent.h">
       <Filter>Component\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="Component\Collider\PointCollider.h">
-      <Filter>Component\Collider</Filter>
-    </ClInclude>
     <ClInclude Include="Component\Collider\SphereCollider.h">
       <Filter>Component\Collider</Filter>
     </ClInclude>
@@ -1307,15 +1304,13 @@
     <ClInclude Include="Renderer\Texture\Texture.h" />
     <ClInclude Include="Renderer\Texture\Texture2D.h" />
     <ClInclude Include="Renderer\Library.h" />
+    <ClInclude Include="System\PhysicsEngine.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\Collider\BoxCollider.cpp">
       <Filter>Component\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Component\Collider\ColliderComponent.cpp">
-      <Filter>Component\Collider</Filter>
-    </ClCompile>
-    <ClCompile Include="Component\Collider\PointCollider.cpp">
       <Filter>Component\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Component\Collider\SphereCollider.cpp">
@@ -1430,5 +1425,6 @@
     <ClCompile Include="Renderer\Texture\CubeMap.cpp" />
     <ClCompile Include="Renderer\Texture\Texture.cpp" />
     <ClCompile Include="Renderer\Texture\Texture2D.cpp" />
+    <ClCompile Include="System\PhysicsEngine.cpp" />
   </ItemGroup>
 </Project>

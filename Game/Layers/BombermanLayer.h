@@ -23,5 +23,6 @@ private:
 	Engine::Scope<Map>						m_map;
 	std::vector<Engine::Ref<Engine::Light>> m_lights;
 	std::vector<Engine::Ref<Bomb>>			m_bombs;
+	Engine::Skybox							m_skybox;
 };
 

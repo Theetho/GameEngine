@@ -70,10 +70,6 @@ namespace Engine
 			{
 				return collide((BoxCollider*)kv1.first, (SphereCollider*)kv2.first);
 			}
-			else if (kv2.second == typeid(PointCollider))
-			{
-				return collide((BoxCollider*)kv1.first, (PointCollider*)kv2.first);
-			}
 		}
 		else if (kv1.second == typeid(SphereCollider))
 		{
@@ -84,25 +80,6 @@ namespace Engine
 			else if (kv2.second == typeid(SphereCollider))
 			{
 				return collide((SphereCollider*)kv1.first, (SphereCollider*)kv2.first);
-			}
-			else if (kv2.second == typeid(PointCollider))
-			{
-				return collide((SphereCollider*)kv1.first, (PointCollider*)kv2.first);
-			}
-		}
-		else if (kv1.second == typeid(PointCollider))
-		{
-			if (kv2.second == typeid(BoxCollider))
-			{
-				return collide((PointCollider*)kv1.first, (BoxCollider*)kv2.first);
-			}
-			else if (kv2.second == typeid(SphereCollider))
-			{
-				return collide((PointCollider*)kv1.first, (SphereCollider*)kv2.first);
-			}
-			else if (kv2.second == typeid(PointCollider))
-			{
-				return collide((PointCollider*)kv1.first, (PointCollider*)kv2.first);
 			}
 		}
 		else
@@ -140,18 +117,6 @@ namespace Engine
 	}
 
 	Collision CollisionSystem::collide(
-		const PointCollider* p1,
-		const PointCollider* p2
-	)
-	{
-		return Collision(
-				p1->getCenter() == p2->getCenter()
-			  , glm::distance(p1->getCenter(), p2->getCenter())
-			  , p1, p2
-		);
-	}
-
-	Collision CollisionSystem::collide(
 		const BoxCollider* b,
 		const SphereCollider* s
 	)
@@ -175,48 +140,5 @@ namespace Engine
 	)
 	{
 		return collide(b, s);
-	}
-
-	Collision CollisionSystem::collide(
-		const BoxCollider* b,
-		const PointCollider* p
-	)
-	{
-			return Collision(
-				   (p->getCenter().x >= b->getMin().x && p->getCenter().x <= b->getMax().x)
-				&& (p->getCenter().y >= b->getMin().y && p->getCenter().y <= b->getMax().y)
-				&& (p->getCenter().z >= b->getMin().z && p->getCenter().z <= b->getMax().z)
-				  , glm::distance(b->getCenter(), p->getCenter())
-				  , b, p
-			);
-	}
-
-	Collision CollisionSystem::collide(
-		const PointCollider* p,
-		const BoxCollider* b
-	)
-	{
-		return collide(b, p);
-	}
-
-	Collision CollisionSystem::collide(
-		const SphereCollider* s,
-		const PointCollider* p
-	)
-	{
-			float distance = glm::distance(s->getCenter(), p->getCenter());
-			return Collision(
-				distance <= s->getRadius()
-			  , distance
-			  , s, p
-			);
-	}
-
-	Collision CollisionSystem::collide(
-		const PointCollider* p,
-		const SphereCollider* s
-	)
-	{
-		return collide(s, p);
 	}
 };

@@ -46,7 +46,7 @@ namespace Engine
 		);
 
 		static void Submit(
-			const Ref<Skybox> skybox
+			const Skybox& skybox
 		);
 
 		static void EndScene();
