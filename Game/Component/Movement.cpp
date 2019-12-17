@@ -25,13 +25,13 @@ void Movement::onUpdate(const double& delta)
 		if (!Input::isKeyPressed(ENGINE_KEY_S))
 		{
 			m_transform.getRotation().y = m_rotation + 0.0f;
-			m_velocity.z = m_speed * delta;
+			m_velocity.z += m_speed * delta;
 		}
 	}
 	else if (Input::isKeyPressed(ENGINE_KEY_S))
 	{
 		m_transform.getRotation().y = m_rotation + 180.0f;
-		m_velocity.z = - m_speed * delta;
+		m_velocity.z -= m_speed * delta;
 	}
 
 	if (Input::isKeyPressed(ENGINE_KEY_A))
@@ -39,13 +39,13 @@ void Movement::onUpdate(const double& delta)
 		if (!Input::isKeyPressed(ENGINE_KEY_D))
 		{
 			m_transform.getRotation().y = m_rotation + 90.0f;
-			m_velocity.x = - m_speed * delta;
+			m_velocity.x -= m_speed * delta;
 		}
 	}
 	else if (Input::isKeyPressed(ENGINE_KEY_D))
 	{
 		m_transform.getRotation().y = m_rotation + 270.0f;
-		m_velocity.x = m_speed * delta;
+		m_velocity.x += m_speed * delta;
 	}
 
 	m_transform.getPosition() += (m_axis["Forward"] * m_velocity.z) + (m_axis["Side"] * m_velocity.x);

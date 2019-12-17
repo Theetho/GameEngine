@@ -15,9 +15,8 @@ namespace Engine
 		);
 
 	private:
-		std::vector<RigidBody*>		 m_rigidBodies;
-		std::vector<BoxCollider*>    m_boxColliders;
-		std::vector<SphereCollider*> m_sphereColliders;
+		std::vector<RigidBody*>	m_rigidBodies;
+		std::vector<Collider*>  m_colliders;
 
 		// CONSTANTS
 		float GRAVITATIONAL_ACCELERATION = 9.81f;
@@ -27,7 +26,12 @@ namespace Engine
 			std::vector<RigidBody*>& rigidBodies
 		) const;
 
-		void handleCollision() const;
+		void resolveCollisions();
+
+		Collision detectCollision(
+			Collider* mainCollider,
+			Collider* otherCollider
+		) const;
 	};
 }
 

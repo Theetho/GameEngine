@@ -16,7 +16,7 @@ namespace Engine
 	)
 	{
 		applyGravity(m_rigidBodies);
-		handleCollision();
+		resolveCollisions();
 	}
 
 	void PhysicsEngine::applyGravity(
@@ -32,15 +32,42 @@ namespace Engine
 		}
 	}
 
-	void PhysicsEngine::handleCollision() const
+	void PhysicsEngine::resolveCollisions()
 	{
-		for (size_t i = 0; i < m_rigidBodies.size(); ++i)
-		{
-			auto rigidBody = m_rigidBodies[i];
-			for (size_t j = i + 1; j < m_rigidBodies.size(); ++j)
+		std::sort(m_colliders.begin(), m_colliders.end(),
+			[](const Collider* c1, const Collider* c2)
 			{
-
+				return c1->getRigidBody();
 			}
+		);
+
+		size_t i = 0;
+		while (i < m_colliders.size() && m_colliders[i]->getRigidBody())
+		{
+			auto collider = m_colliders[i];
+
+			for (size_t j = i + 1; j < m_colliders.size(); ++j)
+			{
+				Collision collision = detectCollision(collider, m_colliders[j]);
+			}
+			++i;
 		}
+	}
+
+	Collision PhysicsEngine::detectCollision(
+		Collider* mainCollider,
+		Collider* otherCollider
+	) const
+	{
+		const Vec3& center       = mainCollider->getCenter();
+		const Vec3& size         = (mainCollider->getMax() - mainCollider->getMin()) / 2.0f;
+		const Vec3& size_squared = size * size;
+
+		/*for (size_t i = 0; i < otherCollider->getVertices().size(); ++i)
+		{
+
+		}*/
+
+		return Collision(false, 0, mainCollider, otherCollider);
 	}
 }

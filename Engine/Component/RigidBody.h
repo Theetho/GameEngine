@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Collider.h"
+#include "Component.h"
+#include "Include/Maths.h"
 
 namespace Engine
 {

@@ -1,5 +1,5 @@
 #pragma once
-#include "ColliderComponent.h"
+#include "Collider.h"
 
 namespace Engine
 {

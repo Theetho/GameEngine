@@ -1,5 +1,5 @@
 #include "EnginePch.h"
-#include "ColliderComponent.h"
+#include "Collider.h"
 #include "Core/Log.h"
 
 namespace Engine

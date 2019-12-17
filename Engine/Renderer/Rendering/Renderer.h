@@ -3,7 +3,7 @@
 #include "RenderCommand.h"
 #include "../Library.h"
 #include "Model/Model.h"
-#include "Component/Collider/ColliderComponent.h"
+#include "Component/Collider/Collider.h"
 #include "Core/Camera3D.h"
 #include "Lighting/Skybox.h"
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Component/Component.h"
+#include "Component//RigidBody.h"
 #include "GameObject/GameObject.h"
 #include "Renderer/Buffer/VertexArray.h"
 #include "Include/Maths.h"
@@ -33,8 +34,7 @@ namespace Engine
 		) noexcept;
 
 		virtual ~Collider()
-		{
-			
+		{	
 		}
 
 		virtual void onUpdate(
@@ -50,9 +50,22 @@ namespace Engine
 
 		inline virtual const Vec3& getMin() const = 0;
 
+		inline virtual void attachRigidBody(
+			RigidBody* rigidBody
+		)
+		{
+			m_rigidBody = rigidBody;
+		}
+
+		inline virtual const RigidBody* getRigidBody() const
+		{
+			return m_rigidBody;
+		}
+
 	protected:
 		Vec3 m_center;
 		Vec3 m_offset;
+		RigidBody* m_rigidBody = nullptr;
 	};
 
 	// struct that store data
