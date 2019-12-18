@@ -1,8 +1,11 @@
+#include "..\..\2DDevelop\PhysicsEngine.h"
 #include "EnginePch.h"
 #include "PhysicsEngine.h"
 
 namespace Engine
 {
+	PhysicsEngine* PhysicsEngine::s_instance = new PhysicsEngine();
+
 	PhysicsEngine::PhysicsEngine()
 	{
 	}
@@ -34,40 +37,56 @@ namespace Engine
 
 	void PhysicsEngine::resolveCollisions()
 	{
-		std::sort(m_colliders.begin(), m_colliders.end(),
-			[](const Collider* c1, const Collider* c2)
-			{
-				return c1->getRigidBody();
-			}
-		);
+		//std::sort(m_colliders.begin(), m_colliders.end(),
+		//	[](const Collider* c1, const Collider* c2)
+		//	{
+		//		return c1->getRigidBody();
+		//	}
+		//);
 
-		size_t i = 0;
-		while (i < m_colliders.size() && m_colliders[i]->getRigidBody())
+		for (size_t i = 0; i < m_colliders.size(); ++i)
 		{
 			auto collider = m_colliders[i];
 
 			for (size_t j = i + 1; j < m_colliders.size(); ++j)
 			{
+				if (&collider->getOwner() == &m_colliders[j]->getOwner())
+					continue;
+
 				Collision collision = detectCollision(collider, m_colliders[j]);
+
+				if (collision.doesCollide())
+				{
+					collider->getOwner().onCollision(collision);
+				}
 			}
-			++i;
 		}
 	}
 
 	Collision PhysicsEngine::detectCollision(
-		Collider* mainCollider,
-		Collider* otherCollider
+		const Collider* mainCollider,
+		const Collider* otherCollider
 	) const
 	{
-		const Vec3& center       = mainCollider->getCenter();
-		const Vec3& size         = (mainCollider->getMax() - mainCollider->getMin()) / 2.0f;
-		const Vec3& size_squared = size * size;
+		Vec3 mainDimension  = (mainCollider->getMax() - mainCollider->getMin());
+		Vec3 otherDimension = (otherCollider->getMax() - otherCollider->getMin());
 
-		/*for (size_t i = 0; i < otherCollider->getVertices().size(); ++i)
-		{
+		Vec3 distanceVector = mainCollider->getCenter() - otherCollider->getCenter();
+		float distance = glm::length(distanceVector);
 
-		}*/
+		Vec3 collisionDirection = glm::normalize(distanceVector);
 
-		return Collision(false, 0, mainCollider, otherCollider);
+		Vec3 mainSize =  collisionDirection * mainDimension;
+		Vec3 otherSize = collisionDirection * otherDimension;
+
+		float mainDistance = glm::length(mainSize);
+		float otherDistance = glm::length(otherSize);
+		float minimumDistance = mainDistance + otherDistance;
+
+		return Collision(
+			distance < minimumDistance, 
+			std::abs(distanceVector.y - (mainSize.y + otherSize.y)),
+			mainCollider, otherCollider
+		);
 	}
 }

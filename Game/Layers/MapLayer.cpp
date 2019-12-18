@@ -133,7 +133,7 @@ void MapLayer::onUpdate(const double& delta)
 	// Skybox
 	Engine::Renderer::BeginScene(m_camera, shaderSkybox);
 
-	Engine::Renderer::Submit(m_skybox);
+	Engine::Renderer::Submit(*m_skybox);
 
 	Engine::Renderer::EndScene();
 

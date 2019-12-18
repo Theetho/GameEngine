@@ -76,6 +76,7 @@ namespace Engine
 		const Collision& collision
 	)
 	{
+		return;
 	}
 	
 	bool GameObject::isJumping() const

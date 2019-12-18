@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="API">
+      <UniqueIdentifier>{FFD1870B-6BDB-877C-F456-9E7C605F937C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API\OpenGL">
+      <UniqueIdentifier>{536662E4-3F1E-A431-A825-7D8D94FC3E22}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Component">
       <UniqueIdentifier>{F8BD1DB3-6428-D229-AD66-83CF1910B07E}</UniqueIdentifier>
     </Filter>
@@ -13,6 +19,9 @@
     <Filter Include="GameObject">
       <UniqueIdentifier>{D652F52D-C20A-377B-2B12-10D717E9D16B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Include">
+      <UniqueIdentifier>{6917EFFE-D5F6-6D9A-DE0E-F9704A6DD4FB}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Lighting">
       <UniqueIdentifier>{5B1EC029-47EB-1A35-7004-09DD5C3050C3}</UniqueIdentifier>
     </Filter>
@@ -24,6 +33,15 @@
     </Filter>
     <Filter Include="Renderer">
       <UniqueIdentifier>{7CCE658F-689B-C09A-91B4-AE427DE0F528}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Buffer">
+      <UniqueIdentifier>{E5AC59D9-5138-C79D-5A49-4A92C653239E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Rendering">
+      <UniqueIdentifier>{C9E25A4C-B5C6-1BA2-1E27-16F50A2A0624}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Texture">
+      <UniqueIdentifier>{DCAF224A-C8A8-419C-F1DA-2621DD3221A8}</UniqueIdentifier>
     </Filter>
     <Filter Include="System">
       <UniqueIdentifier>{6AD049D2-5672-74A8-3F2D-88FC2B6EFBF8}</UniqueIdentifier>
@@ -57,10 +75,37 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="API\OpenGL\OpenGLContext.h">
+      <Filter>API\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="API\OpenGL\OpenGLCubeMap.h">
+      <Filter>API\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="API\OpenGL\OpenGLIndexBuffer.h">
+      <Filter>API\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="API\OpenGL\OpenGLShader.h">
+      <Filter>API\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="API\OpenGL\OpenGLTexture2D.h">
+      <Filter>API\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="API\OpenGL\OpenGLUniformBuffer.h">
+      <Filter>API\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="API\OpenGL\OpenGLVertexArray.h">
+      <Filter>API\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="API\OpenGL\OpenGLVertexBuffer.h">
+      <Filter>API\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="Component\Collider.h">
       <Filter>Component</Filter>
     </ClInclude>
     <ClInclude Include="Component\Collider\BoxCollider.h">
+      <Filter>Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\Collider\Collider.h">
       <Filter>Component\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Component\Collider\SphereCollider.h">
@@ -108,12 +153,46 @@
     <ClInclude Include="Core\Window.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="Engine.h" />
     <ClInclude Include="EnginePch.h" />
     <ClInclude Include="GameObject\GameObject.h">
       <Filter>GameObject</Filter>
     </ClInclude>
     <ClInclude Include="GameObject\Transform.h">
       <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Component.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Core.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\GameObject.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Lighting.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Material.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Maths.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Model.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\OpenGLAPI.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Renderer.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\System.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Util.h">
+      <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="Lighting\DirectionalLight.h">
       <Filter>Lighting</Filter>
@@ -124,10 +203,16 @@
     <ClInclude Include="Lighting\PointLight.h">
       <Filter>Lighting</Filter>
     </ClInclude>
+    <ClInclude Include="Lighting\Skybox.h">
+      <Filter>Lighting</Filter>
+    </ClInclude>
     <ClInclude Include="Lighting\SpotLight.h">
       <Filter>Lighting</Filter>
     </ClInclude>
     <ClInclude Include="Material\Material.h">
+      <Filter>Material</Filter>
+    </ClInclude>
+    <ClInclude Include="Material\PBRMaterial.h">
       <Filter>Material</Filter>
     </ClInclude>
     <ClInclude Include="Material\RawMaterial.h">
@@ -139,13 +224,52 @@
     <ClInclude Include="Model\Model.h">
       <Filter>Model</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\Buffer\BufferLayout.h">
+      <Filter>Renderer\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Buffer\IndexBuffer.h">
+      <Filter>Renderer\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Buffer\UniformBuffer.h">
+      <Filter>Renderer\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Buffer\VertexArray.h">
+      <Filter>Renderer\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Buffer\VertexBuffer.h">
+      <Filter>Renderer\Buffer</Filter>
+    </ClInclude>
     <ClInclude Include="Renderer\GraphicsContext.h">
       <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Library.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Rendering\RenderCommand.h">
+      <Filter>Renderer\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Rendering\Renderer.h">
+      <Filter>Renderer\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Rendering\RendererAPI.h">
+      <Filter>Renderer\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Shader.h">
       <Filter>Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\Texture\CubeMap.h">
+      <Filter>Renderer\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Texture\Texture.h">
+      <Filter>Renderer\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Texture\Texture2D.h">
+      <Filter>Renderer\Texture</Filter>
+    </ClInclude>
     <ClInclude Include="System\CollisionSystem.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\PhysicsEngine.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="Util\Benchmark.h">
@@ -1267,45 +1391,36 @@
     <ClInclude Include="Vendor\stb\stb_image.h">
       <Filter>Vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="Material\PBRMaterial.h" />
-    <ClInclude Include="Lighting\Skybox.h" />
-    <ClInclude Include="API\OpenGL\OpenGLContext.h" />
-    <ClInclude Include="API\OpenGL\OpenGLVertexBuffer.h" />
-    <ClInclude Include="API\OpenGL\OpenGLVertexArray.h" />
-    <ClInclude Include="API\OpenGL\OpenGLUniformBuffer.h" />
-    <ClInclude Include="API\OpenGL\OpenGLShader.h" />
-    <ClInclude Include="API\OpenGL\OpenGLIndexBuffer.h" />
-    <ClInclude Include="API\OpenGL\OpenGLTexture2D.h" />
-    <ClInclude Include="API\OpenGL\OpenGLCubeMap.h" />
-    <ClInclude Include="Include\Component.h" />
-    <ClInclude Include="Include\Core.h" />
-    <ClInclude Include="Include\GameObject.h" />
-    <ClInclude Include="Include\Material.h" />
-    <ClInclude Include="Include\Lighting.h" />
-    <ClInclude Include="Include\Maths.h" />
-    <ClInclude Include="Include\Model.h" />
-    <ClInclude Include="Include\Renderer.h" />
-    <ClInclude Include="Include\System.h" />
-    <ClInclude Include="Include\Util.h" />
-    <ClInclude Include="Include\OpenGLAPI.h" />
-    <ClInclude Include="Engine.h" />
-    <ClInclude Include="Renderer\Buffer\BufferLayout.h" />
-    <ClInclude Include="Renderer\Buffer\IndexBuffer.h" />
-    <ClInclude Include="Renderer\Buffer\UniformBuffer.h" />
-    <ClInclude Include="Renderer\Buffer\VertexArray.h" />
-    <ClInclude Include="Renderer\Buffer\VertexBuffer.h" />
-    <ClInclude Include="Renderer\Rendering\RenderCommand.h" />
-    <ClInclude Include="Renderer\Rendering\Renderer.h" />
-    <ClInclude Include="Renderer\Rendering\RendererAPI.h" />
-    <ClInclude Include="Renderer\Texture\CubeMap.h" />
-    <ClInclude Include="Renderer\Texture\Texture.h" />
-    <ClInclude Include="Renderer\Texture\Texture2D.h" />
-    <ClInclude Include="Renderer\Library.h" />
-    <ClInclude Include="System\PhysicsEngine.h" />
-    <ClInclude Include="Component\Collider\Collider.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="API\OpenGL\OpenGLContext.cpp">
+      <Filter>API\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="API\OpenGL\OpenGLCubeMap.cpp">
+      <Filter>API\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="API\OpenGL\OpenGLIndexBuffer.cpp">
+      <Filter>API\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="API\OpenGL\OpenGLShader.cpp">
+      <Filter>API\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="API\OpenGL\OpenGLTexture2D.cpp">
+      <Filter>API\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="API\OpenGL\OpenGLUniformBuffer.cpp">
+      <Filter>API\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="API\OpenGL\OpenGLVertexArray.cpp">
+      <Filter>API\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="API\OpenGL\OpenGLVertexBuffer.cpp">
+      <Filter>API\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="Component\Collider\BoxCollider.cpp">
+      <Filter>Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\Collider\Collider.cpp">
       <Filter>Component\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Component\Collider\SphereCollider.cpp">
@@ -1363,10 +1478,16 @@
     <ClCompile Include="Lighting\PointLight.cpp">
       <Filter>Lighting</Filter>
     </ClCompile>
+    <ClCompile Include="Lighting\Skybox.cpp">
+      <Filter>Lighting</Filter>
+    </ClCompile>
     <ClCompile Include="Lighting\SpotLight.cpp">
       <Filter>Lighting</Filter>
     </ClCompile>
     <ClCompile Include="Material\Material.cpp">
+      <Filter>Material</Filter>
+    </ClCompile>
+    <ClCompile Include="Material\PBRMaterial.cpp">
       <Filter>Material</Filter>
     </ClCompile>
     <ClCompile Include="Material\RawMaterial.cpp">
@@ -1378,10 +1499,46 @@
     <ClCompile Include="Model\Model.cpp">
       <Filter>Model</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\Buffer\BufferLayout.cpp">
+      <Filter>Renderer\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Buffer\IndexBuffer.cpp">
+      <Filter>Renderer\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Buffer\UniformBuffer.cpp">
+      <Filter>Renderer\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Buffer\VertexArray.cpp">
+      <Filter>Renderer\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Buffer\VertexBuffer.cpp">
+      <Filter>Renderer\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Rendering\RenderCommand.cpp">
+      <Filter>Renderer\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Rendering\Renderer.cpp">
+      <Filter>Renderer\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Rendering\RendererAPI.cpp">
+      <Filter>Renderer\Rendering</Filter>
+    </ClCompile>
     <ClCompile Include="Renderer\Shader.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\Texture\CubeMap.cpp">
+      <Filter>Renderer\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Texture\Texture.cpp">
+      <Filter>Renderer\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Texture\Texture2D.cpp">
+      <Filter>Renderer\Texture</Filter>
+    </ClCompile>
     <ClCompile Include="System\CollisionSystem.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="System\PhysicsEngine.cpp">
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="Util\Benchmark.cpp">
@@ -1399,28 +1556,5 @@
     <ClCompile Include="Vendor\stb\stb_image.cpp">
       <Filter>Vendor\stb</Filter>
     </ClCompile>
-    <ClCompile Include="Material\PBRMaterial.cpp" />
-    <ClCompile Include="Lighting\Skybox.cpp" />
-    <ClCompile Include="API\OpenGL\OpenGLContext.cpp" />
-    <ClCompile Include="API\OpenGL\OpenGLIndexBuffer.cpp" />
-    <ClCompile Include="API\OpenGL\OpenGLVertexBuffer.cpp" />
-    <ClCompile Include="API\OpenGL\OpenGLVertexArray.cpp" />
-    <ClCompile Include="API\OpenGL\OpenGLUniformBuffer.cpp" />
-    <ClCompile Include="API\OpenGL\OpenGLShader.cpp" />
-    <ClCompile Include="API\OpenGL\OpenGLTexture2D.cpp" />
-    <ClCompile Include="API\OpenGL\OpenGLCubeMap.cpp" />
-    <ClCompile Include="Renderer\Buffer\BufferLayout.cpp" />
-    <ClCompile Include="Renderer\Buffer\IndexBuffer.cpp" />
-    <ClCompile Include="Renderer\Buffer\UniformBuffer.cpp" />
-    <ClCompile Include="Renderer\Buffer\VertexArray.cpp" />
-    <ClCompile Include="Renderer\Buffer\VertexBuffer.cpp" />
-    <ClCompile Include="Renderer\Rendering\RenderCommand.cpp" />
-    <ClCompile Include="Renderer\Rendering\Renderer.cpp" />
-    <ClCompile Include="Renderer\Rendering\RendererAPI.cpp" />
-    <ClCompile Include="Renderer\Texture\CubeMap.cpp" />
-    <ClCompile Include="Renderer\Texture\Texture.cpp" />
-    <ClCompile Include="Renderer\Texture\Texture2D.cpp" />
-    <ClCompile Include="System\PhysicsEngine.cpp" />
-    <ClCompile Include="Component\Collider\Collider.cpp" />
   </ItemGroup>
 </Project>

@@ -29,6 +29,7 @@ namespace Engine
 		);
 
 		m_collisionSystem = CollisionSystem::Get();
+//		m_physicsEngine = PhysicsEngine::GetInstance();
 	}
 
 	Application::~Application()
@@ -48,6 +49,8 @@ namespace Engine
 			}
 			// ---------------
 			
+		//	m_physicsEngine->onUpdate(m_deltaTime);
+
 			m_collisionSystem->onUpdate(m_deltaTime);
 
 			m_window->onUpdate(m_deltaTime);

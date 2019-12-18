@@ -1,3 +1,4 @@
+#include "..\..\..\2DDevelop\Collider.h"
 #pragma once
 
 #include "Component/Component.h"
@@ -8,6 +9,8 @@
 
 namespace Engine
 {
+	class Collision;
+
 	class Collider : public Component
 	{
 

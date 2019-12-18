@@ -1,6 +1,7 @@
 #include "EnginePch.h"
 #include "BoxCollider.h"
 #include "System/CollisionSystem.h"
+#include "System/PhysicsEngine.h"
 
 namespace Engine
 {
@@ -19,6 +20,7 @@ namespace Engine
 		, m_min(center - Vec3(m_width, m_height, m_depth))
 	{
 		CollisionSystem::AddCollider<BoxCollider>(this);
+		//PhysicsEngine::AddCollider(this);
 	}
 
 	BoxCollider::BoxCollider(
@@ -32,6 +34,7 @@ namespace Engine
 		, m_depth(other.m_depth)
 	{
 		CollisionSystem::AddCollider<BoxCollider>(this);
+		//PhysicsEngine::AddCollider(this);
 	}
 
 	BoxCollider::BoxCollider(
@@ -45,6 +48,7 @@ namespace Engine
 		, m_depth(other.m_depth)
 	{
 		CollisionSystem::AddCollider<BoxCollider>(this);
+		//PhysicsEngine::AddCollider(this);
 	}
 
 	BoxCollider& BoxCollider::operator=(const BoxCollider& other)
@@ -52,6 +56,7 @@ namespace Engine
 		*this = BoxCollider(other);
 
 		CollisionSystem::AddCollider<BoxCollider>(this);
+		//PhysicsEngine::AddCollider(this);
 
 		return *this;
 	}
@@ -61,6 +66,7 @@ namespace Engine
 		*this = BoxCollider(other);
 
 		CollisionSystem::AddCollider<BoxCollider>(this);
+		//PhysicsEngine::AddCollider(this);
 
 		return *this;
 	}
@@ -68,6 +74,7 @@ namespace Engine
 	BoxCollider::~BoxCollider()
 	{
 		CollisionSystem::RemoveCollider(this);
+		//PhysicsEngine::RemoveCollider(this);
 	}
 	
 	void BoxCollider::onUpdate(

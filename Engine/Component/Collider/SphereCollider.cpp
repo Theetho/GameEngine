@@ -1,6 +1,7 @@
 #include "EnginePch.h"
 #include "SphereCollider.h"
 #include "System/CollisionSystem.h"
+#include "System/PhysicsEngine.h"
 
 namespace Engine
 {
@@ -13,6 +14,7 @@ namespace Engine
 		, m_radius(radius)
 	{
 		CollisionSystem::AddCollider<SphereCollider>(this);
+		//PhysicsEngine::AddCollider(*this);
 	}
 
 	SphereCollider::SphereCollider(
@@ -22,6 +24,7 @@ namespace Engine
 		, m_radius(other.m_radius)
 	{
 		CollisionSystem::AddCollider<SphereCollider>(this);
+		//PhysicsEngine::AddCollider(*this);
 	}
 
 	SphereCollider::SphereCollider(
@@ -31,6 +34,7 @@ namespace Engine
 		, m_radius(other.m_radius)
 	{
 		CollisionSystem::AddCollider<SphereCollider>(this);
+		//PhysicsEngine::AddCollider(*this);
 	}
 
 	SphereCollider& SphereCollider::operator=(const SphereCollider& other)
@@ -38,6 +42,7 @@ namespace Engine
 		*this = SphereCollider(other);
 
 		CollisionSystem::AddCollider<SphereCollider>(this);
+		//PhysicsEngine::AddCollider(*this);
 		
 		return *this;
 	}
@@ -47,6 +52,7 @@ namespace Engine
 		*this = SphereCollider(other);
 
 		CollisionSystem::AddCollider<SphereCollider>(this);
+		//PhysicsEngine::AddCollider(*this);
 		
 		return *this;
 	}
@@ -54,5 +60,6 @@ namespace Engine
 	SphereCollider::~SphereCollider()
 	{
 		CollisionSystem::RemoveCollider(this);
+		//PhysicsEngine::RemoveCollider(*this);
 	}
 }	

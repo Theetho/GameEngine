@@ -55,7 +55,9 @@ void Player::onEvent(Engine::Event& event)
 	}
 }
 
-void Player::onCollision(const Engine::Collision& collision)
+void Player::onCollision(
+	const Engine::Collision& collision
+)
 {
 	const float epsilon = 0.05f;
 
@@ -76,7 +78,6 @@ void Player::onCollision(const Engine::Collision& collision)
 		if (physics)
 			physics->setGroundLevel(otherCollider->getMax().y + myCollider->getCenter().y - myCollider->getMin().y);
 	}
-
 
 	// Else, it is a true collision
 	else

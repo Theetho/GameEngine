@@ -16,7 +16,10 @@ Movement::Movement(
 void Movement::onUpdate(const double& delta)
 {
 	if (m_owner.isColliding())
+	{
 		m_transform.getPosition() -= (m_axis["Forward"] * m_velocity.z) + (m_axis["Side"] * m_velocity.x);
+		m_owner.isColliding(false);
+	}
 
 	m_velocity = Vec3(0.0f);
 

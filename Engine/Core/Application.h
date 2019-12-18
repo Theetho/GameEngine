@@ -6,6 +6,7 @@
 #include "Camera3D.h"
 #include "Include/Renderer.h"
 #include "System/CollisionSystem.h"
+#include "System/PhysicsEngine.h"
 
 namespace Engine
 {
@@ -47,6 +48,7 @@ namespace Engine
 	private:
 		Scope<Window>		   m_window;
 		Ref<CollisionSystem>   m_collisionSystem;
+	//	PhysicsEngine*		   m_physicsEngine;
 		bool				   m_running = true;
 		LayerStack			   m_layerStack;
 		double				   m_time = 0.0, m_deltaTime = 0.0;

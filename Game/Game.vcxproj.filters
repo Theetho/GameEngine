@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Component">
+      <UniqueIdentifier>{F8BD1DB3-6428-D229-AD66-83CF1910B07E}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Core">
       <UniqueIdentifier>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</UniqueIdentifier>
     </Filter>
@@ -10,57 +13,95 @@
     <Filter Include="Layers">
       <UniqueIdentifier>{157446C0-0116-7196-EAD0-84EAD611F8E6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Models">
-      <UniqueIdentifier>{096F8DC3-F510-B899-DECB-CBEDCA0C3FEA}</UniqueIdentifier>
+    <Filter Include="Map">
+      <UniqueIdentifier>{6307880B-CF10-887C-588C-9E7CC494937C}</UniqueIdentifier>
     </Filter>
     <Filter Include="Util">
       <UniqueIdentifier>{23A78D7C-0FDE-8E0D-B8CA-7410A4E00A0F}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Component\Movement.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Camera.h">
+      <Filter>Core</Filter>
+    </ClInclude>
     <ClInclude Include="Core\GameApplication.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="GameObject\Bomb.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
     <ClInclude Include="GameObject\Player.h">
       <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Layers\BombermanLayer.h">
+      <Filter>Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="Layers\MapLayer.h">
+      <Filter>Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\DestructibleWall.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\ExitCell.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\Floor.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\Map.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\Wall.h">
+      <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="Util\FileLoader.h">
       <Filter>Util</Filter>
     </ClInclude>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Layers\BombermanLayer.h">
-      <Filter>Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\Bomb.h" />
-    <ClInclude Include="Map\Wall.h" />
-    <ClInclude Include="Map\Map.h" />
-    <ClInclude Include="Map\Floor.h" />
-    <ClInclude Include="Core\Camera.h" />
-    <ClInclude Include="Component\Movement.h" />
-    <ClInclude Include="Map\DestructibleWall.h" />
-    <ClInclude Include="Map\ExitCell.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Component\Movement.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Camera.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
     <ClCompile Include="Core\GameApplication.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject\Bomb.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
     <ClCompile Include="GameObject\Player.cpp">
       <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Layers\BombermanLayer.cpp">
+      <Filter>Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="Layers\MapLayer.cpp">
+      <Filter>Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\DestructibleWall.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\ExitCell.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\Floor.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\Map.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\Wall.cpp">
+      <Filter>Map</Filter>
     </ClCompile>
     <ClCompile Include="Util\FileLoader.cpp">
       <Filter>Util</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Layers\BombermanLayer.cpp">
-      <Filter>Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject\Bomb.cpp" />
-    <ClCompile Include="Map\Wall.cpp" />
-    <ClCompile Include="Map\Map.cpp" />
-    <ClCompile Include="Map\Floor.cpp" />
-    <ClCompile Include="Core\Camera.cpp" />
-    <ClCompile Include="Component\Movement.cpp" />
-    <ClCompile Include="Map\DestructibleWall.cpp" />
-    <ClCompile Include="Map\ExitCell.cpp" />
   </ItemGroup>
 </Project>
