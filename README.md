@@ -3,7 +3,7 @@ A C++ game engine with OpenGL.
 
 # Running the project
 To run the project (on Windows only), you can either:
-- Launch the .exe located in "bin/Realease-windows-64/Game/"
+- Launch the .exe located in "./Game/"
 - Open the .sln in Visual Studio and run it in realease mode. Make sure to select Game
 as the starting project.
 
