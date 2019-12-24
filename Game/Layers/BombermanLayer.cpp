@@ -106,11 +106,11 @@ void BombermanLayer::onUpdate(
 	
 	Renderer::EndScene();
 	
-	/*Renderer::BeginScene(m_camera, shader_skybox);
+	Renderer::BeginScene(m_camera, shader_skybox);
 	
 	Renderer::Submit(m_skybox);
 
-	Renderer::EndScene();*/
+	Renderer::EndScene();
 }
 
 void BombermanLayer::onEvent(

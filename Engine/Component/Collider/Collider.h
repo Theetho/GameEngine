@@ -1,4 +1,3 @@
-#include "..\..\..\2DDevelop\Collider.h"
 #pragma once
 
 #include "Component/Component.h"

@@ -27,6 +27,10 @@ project "Engine"
 		"%{prj.name}/*/*.cpp",
 		"%{prj.name}/*.cpp",
 		"%{prj.name}/Component/Collider/*",
+		"%{prj.name}/API/OpenGL/*",
+		"%{prj.name}/Renderer/Buffer/*",
+		"%{prj.name}/Renderer/Rendering/*",
+		"%{prj.name}/Renderer/Texture/*",
 		"%{prj.name}/Vendor/stb/*",
 		"%{prj.name}/Vendor/glm/glm/**.hpp",
 		"%{prj.name}/Vendor/glm/glm/**.inl",
@@ -114,6 +118,64 @@ project "Game"
 	libdirs
 	{
 		"lib/windows/x64"
+	}
+	
+	filter "system:windows"
+		systemversion "latest"
+	
+		defines
+		{
+			"ENGINE_WINDOWS"
+		}
+	
+	filter "configurations:Debug"
+		defines "ENGINE_DEBUG"
+		runtime "Debug"
+		symbols "On"
+	filter "configurations:Release"
+		defines "ENGINE_RELEASE"
+		runtime "Release"
+		optimize "On"
+	filter "configurations:Distribution"
+		defines "ENGINE_DISTRIBUTION"
+		runtime "Release"
+		optimize "On"
+
+project "2DDevelop"
+	location "2DDevelop"
+	kind "ConsoleApp"
+	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
+	
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+	
+	files
+	{
+		"%{prj.name}/**.h",
+		"%{prj.name}/**.cpp"
+	}
+
+	includedirs
+	{
+		"%{prj.name}",
+		"%{prj.name}/SFML/include"
+	}
+	
+	links
+	{
+		"sfml-main.lib",
+		"sfml-audio.lib",
+		"sfml-window.lib",
+		"sfml-graphics.lib",
+		"sfml-network.lib",
+		"sfml-system.lib"
+	}	
+	
+	libdirs
+	{
+		"%{prj.name}/SFML/lib/x64"
 	}
 	
 	filter "system:windows"
