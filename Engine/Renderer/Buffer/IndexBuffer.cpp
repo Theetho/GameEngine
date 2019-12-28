@@ -5,12 +5,12 @@
 
 namespace Engine
 {
-	Ref<IndexBuffer> IndexBuffer::Create(
-		unsigned int* indices,
-		const unsigned int& count
-	)
+	IndexBuffer::~IndexBuffer()
+	{}
+
+	Ref<IndexBuffer> IndexBuffer::Create(unsigned int* indices, unsigned int count)
 	{
-		switch (Renderer::getAPI())
+		switch (Renderer::GetAPI())
 		{
 			case Engine::API::None:
 				ENGINE_ASSERT(false, "Api not supported");

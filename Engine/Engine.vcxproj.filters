@@ -114,9 +114,6 @@
     <ClInclude Include="Component\Component.h">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="Component\PhysicsComponent.h">
-      <Filter>Component</Filter>
-    </ClInclude>
     <ClInclude Include="Component\RigidBody.h">
       <Filter>Component</Filter>
     </ClInclude>
@@ -267,9 +264,6 @@
       <Filter>Renderer\Texture</Filter>
     </ClInclude>
     <ClInclude Include="System\CollisionSystem.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="System\PhysicsEngine.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="Util\Benchmark.h">
@@ -1391,6 +1385,8 @@
     <ClInclude Include="Vendor\stb\stb_image.h">
       <Filter>Vendor\stb</Filter>
     </ClInclude>
+    <ClInclude Include="API\OpenGL\OpenGLRenderer.h" />
+    <ClInclude Include="Component\PhysicsComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API\OpenGL\OpenGLContext.cpp">
@@ -1429,9 +1425,6 @@
     <ClCompile Include="Component\Component.cpp">
       <Filter>Component</Filter>
     </ClCompile>
-    <ClCompile Include="Component\PhysicsComponent.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
     <ClCompile Include="Component\RigidBody.cpp">
       <Filter>Component</Filter>
     </ClCompile>
@@ -1448,9 +1441,6 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\Input.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Layer.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\LayerStack.cpp">
@@ -1538,9 +1528,6 @@
     <ClCompile Include="System\CollisionSystem.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="System\PhysicsEngine.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="Util\Benchmark.cpp">
       <Filter>Util</Filter>
     </ClCompile>
@@ -1556,5 +1543,7 @@
     <ClCompile Include="Vendor\stb\stb_image.cpp">
       <Filter>Vendor\stb</Filter>
     </ClCompile>
+    <ClCompile Include="API\OpenGL\OpenGLRenderer.cpp" />
+    <ClCompile Include="Component\PhysicsComponent.cpp" />
   </ItemGroup>
 </Project>

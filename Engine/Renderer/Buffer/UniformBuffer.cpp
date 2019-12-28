@@ -5,9 +5,12 @@
 
 namespace Engine
 {
+	UniformBuffer::~UniformBuffer()
+	{}
+
 	Ref<UniformBuffer> UniformBuffer::Create()
 	{
-		switch (Renderer::getAPI())
+		switch (Renderer::GetAPI())
 		{
 			case Engine::API::None:
 				ENGINE_ASSERT(false, "Api not supported");

@@ -7,12 +7,12 @@ layout(location = 2) in vec3 in_normal;
 
 out vec3 v_textureCoords;
 
-uniform mat4 u_VP;
+uniform mat4 u_ViewProjection;
 
 void main()
 {
 	v_textureCoords = in_position;
-	gl_Position = (u_VP * vec4(in_position, 0.0)).xyww;
+	gl_Position = (u_ViewProjection * vec4(in_position, 0.0)).xyww;
 }
 #type fragment
 #version 450 core

@@ -9,18 +9,15 @@ public:
 	MapLayer();
 	~MapLayer();
 
-	virtual void onAttach() override;
-
-	virtual void onDetach() override;
-
-	virtual void onUpdate(const double& delta) override;
-
-	virtual void onEvent(Engine::Event& event) override;
+	virtual void OnAttach() override;
+	virtual void OnDetach() override;
+	virtual void OnUpdate(const double& delta) override;
+	virtual void OnEvent(Engine::Event& event) override;
 private:
-	Engine::Camera3DLocked					m_camera;
-	Engine::Scope<Map>						m_maze;
-	Player									m_player;
-	std::vector<Engine::Ref<Engine::Light>> m_lights;
-	Engine::Ref<Engine::Skybox>			    m_skybox;
+	Engine::Camera3DLocked					mCamera;
+	Engine::Scope<Map>						mMap;
+	Player									mPlayer;
+	std::vector<Engine::Ref<Engine::Light>> mLights;
+	Engine::Ref<Engine::Skybox>			    mSkybox;
 };
 

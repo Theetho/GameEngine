@@ -7,47 +7,83 @@ namespace Engine
 
 /// Abstrat base class
 
-	Collider::Collider(
-		GameObject& owner,
-		const Vec3& center
-	)
-		: Component(owner)
-		, m_center(center)
-		, m_offset(center - owner.getTransform().getPosition())
-	{
-	}
+	Collider::Collider(GameObject& game_object, const Vec3& center)
+		: Component(game_object)
+		, mCenter(center)
+		, mOffset(center - game_object.GetTransform().GetPosition())
+	{}
 
-	Collider::Collider(const Collider & other)
-		: Component(other.m_owner)
-		, m_center(other.m_center)
-		, m_offset(other.m_offset)
-	{
-	}
+	Collider::Collider(const Collider & collider)
+		: Component(collider.mGameObject)
+		, mCenter(collider.mCenter)
+		, mOffset(collider.mOffset)
+	{}
 
-	Collider::Collider(const Collider&& other) noexcept
-		: Component(other.m_owner)
-		, m_center(other.m_center)
-		, m_offset(other.m_offset)
-	{
-	}
+	Collider::Collider(const Collider&& collider) noexcept
+		: Component(collider.mGameObject)
+		, mCenter(collider.mCenter)
+		, mOffset(collider.mOffset)
+	{}
 
-	Collider& Collider::operator=(const Collider& other)
+	Collider& Collider::operator=(const Collider& collider)
 	{
-		m_owner = other.m_owner;
-		m_center = other.m_center;
+		mGameObject = collider.mGameObject;
+		mCenter = collider.mCenter;
 
 		return *this;
 	}
 
-	Collider& Collider::operator=(const Collider&& other) noexcept
+	Collider& Collider::operator=(const Collider&& collider) noexcept
 	{
-		m_owner = other.m_owner;
-		m_center = other.m_center;
+		mGameObject = collider.mGameObject;
+		mCenter = collider.mCenter;
 
 		return *this;
 	}
-	void Collider::onUpdate(const double& delta)
+	
+	Collider::~Collider()
+	{}
+
+	void Collider::OnUpdate(const double& delta)
 	{
-		m_center = m_owner.getTransform().getPosition() + m_offset;
+		mCenter = mGameObject.GetTransform().GetPosition() + mOffset;
+	}
+
+	void Collider::AttachRigidBody(RigidBody* rigid_body)
+	{
+		mRigidBody = rigid_body;
+	}
+	
+	const Vec3& Collider::GetCenter() const
+	{
+		return mCenter;
+	}
+	
+	const RigidBody* Collider::GetRigidBody() const
+	{
+		return mRigidBody;
+	}
+	
+	// Collision class
+	
+	Collision::Collision(bool collide, float distance_up_axis, const Collider* first, const Collider* second)
+		: mIsColliding(collide)
+		, mDistanceUpAxis(distance_up_axis)
+		, mColliders({ first, second })
+	{}
+
+	bool Collision::IsColliding() const
+	{
+		return mIsColliding;
+	}
+
+	float Collision::GetDistanceUpAxis() const
+	{
+		return mDistanceUpAxis;
+	}
+
+	const std::pair<const Collider*, const Collider*>& Collision::GetColliders() const
+	{
+		return mColliders;
 	}
 }

@@ -4,14 +4,10 @@
 
 namespace Engine
 {
-	struct Material
+	class Material
 	{
 	public:
-
-		void load(
-			Ref<Shader> shader
-		);
-
+		void Load(Ref<Shader> shader);
 	protected:
 		enum class MaterialID
 		{
@@ -20,10 +16,8 @@ namespace Engine
 			PBR
 		};
 
-		virtual const int getID() const = 0;
+		virtual int  GetID() const = 0;
 		
-		virtual void loadGLUniforms(
-			Ref<OpenGLShader> shader
-		);
+		virtual void LoadGLUniforms(Ref<OpenGLShader> shader);
 	};
 }

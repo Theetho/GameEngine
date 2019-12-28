@@ -3,27 +3,47 @@
 
 namespace Engine
 {
-	PointLight::PointLight(
-		const Vec3& position,
-		const Attenuation& attenuation,
-		const Color& color
-	)
+	PointLight::PointLight(const Vec3& position, const Attenuation& attenuation, const Color& color)
 		: Light(color)
-		, m_position(position)
-		, m_attenuation(attenuation)
+		, mPosition(position)
+		, mAttenuation(attenuation)
+	{}
+
+	PointLight::~PointLight()
+	{}
+
+	int PointLight::GetID() const
 	{
+		return static_cast<int>(LightID::Point);
 	}
 
-	void PointLight::loadGLUniforms(
-		Ref<OpenGLShader> shader,
-		const unsigned int& index
-	)
+	PointLight::Attenuation& PointLight::GetAttenuation()
 	{
-		Light::loadGLUniforms(shader, index);
+		return mAttenuation;
+	}
 
-		shader->uploadUniform("u_lights[" + std::to_string(index) + "].position",  m_position);
-		shader->uploadUniform("u_lights[" + std::to_string(index) + "].constant",  m_attenuation.constant);
-		shader->uploadUniform("u_lights[" + std::to_string(index) + "].linear",	  m_attenuation.linear);
-		shader->uploadUniform("u_lights[" + std::to_string(index) + "].quadratic", m_attenuation.quadratic);
+	const Vec3& PointLight::GetPosition() const
+	{
+		return mPosition;
+	}
+
+	const PointLight::Attenuation& PointLight::GetAttenuation() const
+	{
+		return mAttenuation;
+	}
+
+	void PointLight::SetPosition(const Vec3& position)
+	{
+		mPosition = position;
+	}
+
+	void PointLight::LoadGLUniforms(Ref<OpenGLShader> shader, unsigned int index)
+	{
+		Light::LoadGLUniforms(shader, index);
+
+		shader->UploadUniform("u_lights[" + std::to_string(index) + "].position",  mPosition);
+		shader->UploadUniform("u_lights[" + std::to_string(index) + "].constant",  mAttenuation.constant);
+		shader->UploadUniform("u_lights[" + std::to_string(index) + "].linear",	   mAttenuation.linear);
+		shader->UploadUniform("u_lights[" + std::to_string(index) + "].quadratic", mAttenuation.quadratic);
 	}
 }

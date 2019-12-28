@@ -5,140 +5,149 @@
 
 namespace Engine
 {
-	Ref<CollisionSystem> CollisionSystem::s_instance = CollisionSystem::Create();
+	Ref<CollisionSystem> CollisionSystem::sInstance = CollisionSystem::Create();
 
 	CollisionSystem::CollisionSystem()
 	{
-		ENGINE_ASSERT(!s_instance, "A collision system instance already exists");
+		ENGINE_ASSERT(!sInstance, "A collision system instance already exists");
 	}
 
 	CollisionSystem::~CollisionSystem()
+	{}
+
+	void CollisionSystem::OnUpdate(const double& delta)
 	{
+		CheckForMovingObjectsCollisions();
 	}
 
-	void CollisionSystem::onUpdate(const double& delta)
+	Ref<CollisionSystem> CollisionSystem::Create()
 	{
-		checkForMovingObjectsCollisions();
+		return std::make_shared<CollisionSystem>();
+	}
+
+	Ref<CollisionSystem> CollisionSystem::Get()
+	{
+		return sInstance;
 	}
 		
-	void CollisionSystem::checkForMovingObjectsCollisions()
+	void CollisionSystem::CheckForMovingObjectsCollisions()
 	{
-		// Only check the collisions for moveable objects
-		for (auto iterator : m_moveableColliders)
+		// Only Check the collisions for moveable objects
+		for (auto iterator : mMoveableColliders)
 		{
 			Collider* collider = iterator.first;
 
-			collider->getOwner().isColliding(false);
+			collider->GetGameObject().SetIsColliding(false);
 			// Check for collisions with the other moveable colliders
-			auto moveableIterator = m_moveableColliders.end();
-			while ((--moveableIterator)->first != collider)
+			auto moveable_iterator = mMoveableColliders.end();
+			while ((--moveable_iterator)->first != collider)
 			{
-				Collider* moveableCollider = moveableIterator->first;
+				Collider* moveable_collider = moveable_iterator->first;
 
-				Collision collision = collide(iterator, *moveableIterator);
-				if (collision.doesCollide())
+				Collision collision = Collide(iterator, *moveable_iterator);
+				if (collision.IsColliding())
 				{
-					collider->getOwner().onCollision(collision);
+					collider->GetGameObject().OnCollision(collision);
 				}
 			}
 			// Same with static colliders
-			for (auto staticIterator : m_staticColliders)
+			for (auto static_iterator : mStaticColliders)
 			{
-				Collider* staticCollider = staticIterator.first;
+				Collider* staticCollider = static_iterator.first;
 				
-				Collision collision = collide(iterator, staticIterator);
-				if (collision.doesCollide())
+				Collision collision = Collide(iterator, static_iterator);
+				if (collision.IsColliding())
 				{
-					collider->getOwner().onCollision(collision);
+					collider->GetGameObject().OnCollision(collision);
 				}
 			}
 		}
 	}
 
-	Collision CollisionSystem::collide(
-		const std::pair<Collider*, std::type_index>& kv1,
-		const std::pair<Collider*, std::type_index>& kv2
+	Collision CollisionSystem::Collide(
+		const std::pair<Collider*, std::type_index>& first,
+		const std::pair<Collider*, std::type_index>& second
 	)
 	{
-		if (kv1.second == typeid(BoxCollider))
+		if (first.second == typeid(BoxCollider))
 		{
-			if (kv2.second == typeid(BoxCollider))
+			if (second.second == typeid(BoxCollider))
 			{
-				return collide((BoxCollider*)kv1.first, (BoxCollider*)kv2.first);
+				return Collide((BoxCollider*)first.first, (BoxCollider*)second.first);
 			}
-			else if (kv2.second == typeid(SphereCollider))
+			else if (second.second == typeid(SphereCollider))
 			{
-				return collide((BoxCollider*)kv1.first, (SphereCollider*)kv2.first);
+				return Collide((BoxCollider*)first.first, (SphereCollider*)second.first);
 			}
 		}
-		else if (kv1.second == typeid(SphereCollider))
+		else if (first.second == typeid(SphereCollider))
 		{
-			if (kv2.second == typeid(BoxCollider))
+			if (second.second == typeid(BoxCollider))
 			{
-				return collide((SphereCollider*)kv1.first, (BoxCollider*)kv2.first);
+				return Collide((SphereCollider*)first.first, (BoxCollider*)second.first);
 			}
-			else if (kv2.second == typeid(SphereCollider))
+			else if (second.second == typeid(SphereCollider))
 			{
-				return collide((SphereCollider*)kv1.first, (SphereCollider*)kv2.first);
+				return Collide((SphereCollider*)first.first, (SphereCollider*)second.first);
 			}
 		}
 		else
 		{
 			std::cout << "This collider is not handled by the system" << std::endl;
-			return Collision(false, 0.0f, kv1.first, kv2.first);
+			return Collision(false, 0.0f, first.first, second.first);
 		}
 	}
 
-	Collision CollisionSystem::collide(
-		const BoxCollider* b1,
-		const BoxCollider* b2
+	Collision CollisionSystem::Collide(
+		const BoxCollider* first,
+		const BoxCollider* second
 	)
 	{
 		return Collision(
-			   (b1->getMin().x <= b2->getMax().x && b1->getMax().x >= b2->getMin().x)
-			&& (b1->getMin().y <= b2->getMax().y && b1->getMax().y >= b2->getMin().y)
-			&& (b1->getMin().z <= b2->getMax().z && b1->getMax().z >= b2->getMin().z)
-			, std::min(std::abs(b1->getMin().y - b2->getMax().y), std::abs(b1->getMax().y - b2->getMin().y))
-			, b1 , b2
+			   (first->GetMin().x <= second->GetMax().x && first->GetMax().x >= second->GetMin().x)
+			&& (first->GetMin().y <= second->GetMax().y && first->GetMax().y >= second->GetMin().y)
+			&& (first->GetMin().z <= second->GetMax().z && first->GetMax().z >= second->GetMin().z)
+			, std::min(std::abs(first->GetMin().y - second->GetMax().y), std::abs(first->GetMax().y - second->GetMin().y))
+			, first , second
 		);
 	}
 
-	Collision CollisionSystem::collide(
-		const SphereCollider* s1,
-		const SphereCollider* s2
+	Collision CollisionSystem::Collide(
+		const SphereCollider* first,
+		const SphereCollider* second
 	)
 	{
-		float distance = glm::distance(s1->getCenter(), s2->getCenter());
+		float distance = glm::distance(first->GetCenter(), second->GetCenter());
 		return Collision(
-				distance <= (s1->getRadius() + s2->getRadius())
+				distance <= (first->GetRadius() + second->GetRadius())
 			  , distance
-			  , s1, s2
+			  , first, second
 		);
 	}
 
-	Collision CollisionSystem::collide(
-		const BoxCollider* b,
-		const SphereCollider* s
+	Collision CollisionSystem::Collide(
+		const BoxCollider* box_collider,
+		const SphereCollider* sphere_collider
 	)
 	{
-			float x = std::max(b->getMin().x, std::min(s->getCenter().x, b->getMax().x));
-			float y = std::max(b->getMin().y, std::min(s->getCenter().y, b->getMax().y));
-			float z = std::max(b->getMin().z, std::min(s->getCenter().z, b->getMax().z));
+			float x = std::max(box_collider->GetMin().x, std::min(sphere_collider->GetCenter().x, box_collider->GetMax().x));
+			float y = std::max(box_collider->GetMin().y, std::min(sphere_collider->GetCenter().y, box_collider->GetMax().y));
+			float z = std::max(box_collider->GetMin().z, std::min(sphere_collider->GetCenter().z, box_collider->GetMax().z));
 
-			float distance = glm::distance(Vec3(x, y, z), s->getCenter());
+			float distance = glm::distance(Vec3(x, y, z), sphere_collider->GetCenter());
 
 			return Collision(
-				distance <= s->getRadius()
-			  , std::min(std::abs(s->getCenter().y - b->getMax().y), std::abs(s->getCenter().y - b->getMin().y))
-			  , b, s
+				distance <= sphere_collider->GetRadius()
+			  , std::min(std::abs(sphere_collider->GetCenter().y - box_collider->GetMax().y), std::abs(sphere_collider->GetCenter().y - box_collider->GetMin().y))
+			  , box_collider, sphere_collider
 			);
 	}
 
-	Collision CollisionSystem::collide(
-		const SphereCollider* s,
-		const BoxCollider* b
+	Collision CollisionSystem::Collide(
+		const SphereCollider* sphere_collider,
+		const BoxCollider* box_collider
 	)
 	{
-		return collide(b, s);
+		return Collide(box_collider, sphere_collider);
 	}
 };

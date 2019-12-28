@@ -12,12 +12,10 @@ namespace Engine
 			const Color& ambient = Color::White,
 			const Color& diffuse = Color::White,
 			const Color& specular = Color::White,
-			const float& shininess = 128.f
+			float shininess = 128.f
 		);
 
-		~RawMaterial()
-		{
-		}
+		~RawMaterial();
 
 		static RawMaterial Emerald;	 
 		static RawMaterial Jade;	 
@@ -45,18 +43,13 @@ namespace Engine
 		static RawMaterial YellowRubber; 
 
 	private:
-		Color m_ambient;
-		Color m_diffuse;
-		Color m_specular;
-		float m_shininess;
+		Color mAmbient;
+		Color mDiffuse;
+		Color mSpecular;
+		float mShininess;
 
-		void loadGLUniforms(
-			Ref<OpenGLShader> shader
-		);
+		int GetID() const override;
 
-		inline const int getID() const override
-		{
-			return static_cast<int>(MaterialID::Raw);
-		}
+		void LoadGLUniforms(Ref<OpenGLShader> shader) override;
 	};
 }

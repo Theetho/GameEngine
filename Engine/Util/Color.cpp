@@ -23,60 +23,33 @@ namespace Engine
 	Color Color::Sand(253, 241, 184);
 	Color Color::Wood(167, 103, 38);
 
-	Color::Color(
-		const float& r,
-		const float& g,
-		const float& b,
-		const float& a
-	)
+	Color::Color(float r, float g, float b, float a)
 		: glm::vec4(r, g, b, a)
 	{
-		clip(this->x);
-		clip(this->y);
-		clip(this->z);
-		clip(this->w);
+		Clip(x); Clip(y); Clip(z); Clip(w);
 	}
-	Color::Color(
-		const int& r,
-		const int& g,
-		const int& b,
-		const int& a
-	)
+
+	Color::Color(int r,	int g, int b, int a)
 		: glm::vec4(0.0)
 	{
-		clip(r, x);
-		clip(g, y);
-		clip(b, z);
-		clip(a, w);
+		Clip(r, x);	Clip(g, y);	Clip(b, z); Clip(a, w);
 	}
 
-	Color::Color(
-		const float& rgb
-	)
+	Color::Color(float rgb)
 		: Color(rgb, rgb, rgb)
-	{
-	}
+	{}
 
-	Color::Color(
-		const int& rgb
-	)
+	Color::Color(int rgb)
 		: Color(rgb, rgb, rgb)
-	{
-	}
+	{}
 	
-	Color::Color(
-		const Color& color
-	)
+	Color::Color(const Color& color)
 		: Color(color.r, color.g, color.b, color.a)
-	{
-	}
+	{}
 	
-	Color::Color(
-		const Color&& color
-	) noexcept
+	Color::Color(const Color&& color) noexcept
 		: Color(color.r, color.g, color.b, color.a)
-	{
-	}
+	{}
 
 	Color& Color::operator=(const Color& color)
 	{
@@ -98,9 +71,10 @@ namespace Engine
 		return *this;
 	}
 
-	void Color::clip(
-		float& field
-	)
+	Color::~Color()
+	{}
+
+	void Color::Clip(float& field)
 	{
 		if (field > 1.0)
 			field = 1.0;
@@ -108,10 +82,7 @@ namespace Engine
 			field = 0.0;
 	}
 
-	void Color::clip(
-		const int& value,
-		float& field
-	)
+	void Color::Clip(int value, float& field)
 	{
 		if (value > 255)
 			field = 1.0;

@@ -1,58 +1,44 @@
 #include "EnginePch.h"
 #include "SphereCollider.h"
 #include "System/CollisionSystem.h"
-#include "System/PhysicsEngine.h"
 
 namespace Engine
 {
-	SphereCollider::SphereCollider(
-		GameObject& owner,
-		const Vec3& center,
-		const float& radius
-	)
-		: Collider(owner, center)
-		, m_radius(radius)
+	SphereCollider::SphereCollider(GameObject& game_object, const Vec3& center, float radius)
+		: Collider(game_object, center)
+		, mRadius(radius)
 	{
 		CollisionSystem::AddCollider<SphereCollider>(this);
-		//PhysicsEngine::AddCollider(*this);
 	}
 
-	SphereCollider::SphereCollider(
-		const SphereCollider& other
-	)
-		: Collider(other.m_owner, other.m_center)
-		, m_radius(other.m_radius)
+	SphereCollider::SphereCollider(const SphereCollider& sphere_collider)
+		: Collider(sphere_collider.mGameObject, sphere_collider.mCenter)
+		, mRadius(sphere_collider.mRadius)
 	{
 		CollisionSystem::AddCollider<SphereCollider>(this);
-		//PhysicsEngine::AddCollider(*this);
 	}
 
-	SphereCollider::SphereCollider(
-		const SphereCollider&& other
-	) noexcept
-		: Collider(other.m_owner, other.m_center)
-		, m_radius(other.m_radius)
+	SphereCollider::SphereCollider(const SphereCollider&& sphere_collider) noexcept
+		: Collider(sphere_collider.mGameObject, sphere_collider.mCenter)
+		, mRadius(sphere_collider.mRadius)
 	{
 		CollisionSystem::AddCollider<SphereCollider>(this);
-		//PhysicsEngine::AddCollider(*this);
 	}
 
-	SphereCollider& SphereCollider::operator=(const SphereCollider& other)
+	SphereCollider& SphereCollider::operator=(const SphereCollider& sphere_collider)
 	{
-		*this = SphereCollider(other);
+		*this = SphereCollider(sphere_collider);
 
 		CollisionSystem::AddCollider<SphereCollider>(this);
-		//PhysicsEngine::AddCollider(*this);
 		
 		return *this;
 	}
 
-	SphereCollider& SphereCollider::operator=(const SphereCollider&& other) noexcept
+	SphereCollider& SphereCollider::operator=(const SphereCollider&& sphere_collider) noexcept
 	{
-		*this = SphereCollider(other);
+		*this = SphereCollider(sphere_collider);
 
 		CollisionSystem::AddCollider<SphereCollider>(this);
-		//PhysicsEngine::AddCollider(*this);
 		
 		return *this;
 	}
@@ -60,6 +46,25 @@ namespace Engine
 	SphereCollider::~SphereCollider()
 	{
 		CollisionSystem::RemoveCollider(this);
-		//PhysicsEngine::RemoveCollider(*this);
+	}
+
+	float SphereCollider::GetRadius() const
+	{
+		return mRadius;
+	}
+
+	const Vec3& SphereCollider::GetMax() const
+	{
+		return mCenter + Vec3(mRadius, mRadius, mRadius);
+	}
+	
+	const Vec3& SphereCollider::GetMin() const
+	{
+		return mCenter - Vec3(mRadius, mRadius, mRadius);
+	}
+
+	void SphereCollider::SetScale(float scale)
+	{
+		mRadius *= scale;
 	}
 }	

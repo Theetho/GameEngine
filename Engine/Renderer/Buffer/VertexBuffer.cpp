@@ -6,12 +6,12 @@
 
 namespace Engine
 {
-	Ref<VertexBuffer> VertexBuffer::Create(
-		float* vertices, 
-		const unsigned int& size
-	)
+	VertexBuffer::~VertexBuffer()
+	{}
+
+	Ref<VertexBuffer> VertexBuffer::Create(float* vertices, unsigned int size)
 	{
-		switch (Renderer::getAPI())
+		switch (Renderer::GetAPI())
 		{
 		case Engine::API::None:
 			ENGINE_ASSERT(false, "Api not supported");

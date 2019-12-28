@@ -6,53 +6,19 @@ namespace Engine
 	class SphereCollider : public Collider
 	{
 	public:
-		SphereCollider(
-			GameObject& owner,
-			const Vec3& center,
-			const float& radius
-		);
-
-		SphereCollider(
-			const SphereCollider& other
-		);
-
-		SphereCollider(
-			const SphereCollider&& other
-		) noexcept;
-
-		SphereCollider& operator=(
-			const SphereCollider& other
-		);
-
-		SphereCollider& operator=(
-			const SphereCollider&& other
-		) noexcept;
-
+		SphereCollider(GameObject& game_object, const Vec3& center, float radius);
+		SphereCollider(const SphereCollider& sphere_collider);
+		SphereCollider(const SphereCollider&& sphere_collider) noexcept;
+		SphereCollider& operator=(const SphereCollider& sphere_collider);
+		SphereCollider& operator=(const SphereCollider&& sphere_collider) noexcept;
 		~SphereCollider();
 
-		inline void setScale(
-			const float& scale
-		)
-		{
-			m_radius *= scale;
-		}
+		float		GetRadius() const;
+		const Vec3& GetMax() const override;
+		const Vec3& GetMin() const override;
 
-		inline const float& getRadius() const
-		{
-			return m_radius;
-		}
-
-		inline const Vec3& getMax() const override
-		{
-			return m_center + Vec3(m_radius, m_radius, m_radius);
-		}
-
-		inline const Vec3& getMin() const override
-		{
-			return m_center - Vec3(m_radius, m_radius, m_radius);
-		}
-
+		void SetScale(float scale);
 	private:
-		float m_radius;
+		float mRadius;
 	};
 }

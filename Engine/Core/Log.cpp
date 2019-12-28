@@ -4,20 +4,28 @@
 
 namespace Engine
 {
+	Ref<spdlog::logger> Log::sEngineLogger;
+	Ref<spdlog::logger> Log::sApplicationLogger;
 
-	Ref<spdlog::logger> Log::s_engineLogger;
-	Ref<spdlog::logger> Log::s_appLogger;
-
-	void Log::init()
+	void Log::Initialize()
 	{
 		spdlog::set_pattern("[%H:%M:%S] [%n] : %v%$");
 
-		s_engineLogger = spdlog::stdout_color_mt("ENGINE");
-		s_engineLogger->set_level(spdlog::level::trace);
+		sEngineLogger = spdlog::stdout_color_mt("ENGINE");
+		sEngineLogger->set_level(spdlog::level::trace);
 
-		s_appLogger = spdlog::stdout_color_mt("APP");
-		s_appLogger->set_level(spdlog::level::trace);
+		sApplicationLogger = spdlog::stdout_color_mt("APP");
+		sApplicationLogger->set_level(spdlog::level::trace);
 
 	}
 
+	Ref<spdlog::logger>& Log::GetEngineLogger()
+	{
+		return sEngineLogger;
+	}
+
+	Ref<spdlog::logger>& Log::GetApplicationLogger()
+	{
+		return sApplicationLogger;
+	}
 }

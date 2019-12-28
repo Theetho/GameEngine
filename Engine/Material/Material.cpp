@@ -4,25 +4,21 @@
 
 namespace Engine
 {
-	void Material::load(
-		const Ref<Shader> shader
-	)
+	void Material::Load(Ref<Shader> shader)
 	{
-		switch (Renderer::getAPI())
+		switch (Renderer::GetAPI())
 		{
 		case API::OpenGL:
-			loadGLUniforms(std::dynamic_pointer_cast<OpenGLShader>(shader));
+			LoadGLUniforms(std::dynamic_pointer_cast<OpenGLShader>(shader));
 		default:
 			break;
 		}
 	}
 
-	void Material::loadGLUniforms(
-		Ref<OpenGLShader> shader
-	)
+	void Material::LoadGLUniforms(Ref<OpenGLShader> shader)
 	{
-		shader->bind();
-		shader->uploadUniform("u_material.id", this->getID());
+		shader->Bind();
+		shader->UploadUniform("u_material.id", this->GetID());
 	}
 
 

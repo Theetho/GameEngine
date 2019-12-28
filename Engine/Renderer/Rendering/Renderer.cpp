@@ -3,124 +3,119 @@
 
 namespace Engine
 {
-	Scope<RenderCommand> Renderer::s_renderCommand = std::make_unique<RenderCommand>();
+	Scope<RenderCommand> Renderer::sRenderCommand = std::make_unique<RenderCommand>();
 
-	Renderer::SceneData Renderer::s_sceneData;
-	Ref<Shader> Renderer::s_shader;
+	Renderer::SceneData Renderer::sSceneData;
+	Ref<Shader> Renderer::sShader;
 
-
-	void Renderer::BeginScene(
-		Camera3D& camera,
-		Ref<Shader> shader
-	)
+	API Renderer::GetAPI()
 	{
-		s_sceneData.VP = camera.getVP();
-		s_sceneData.V  = camera.getView();
-		s_sceneData.P  = camera.getProjection();
+		return sRenderCommand->GetAPI();
+	}
 
-		s_shader = shader;
+	void Renderer::SetViewport(unsigned int width, unsigned int height)
+	{
+		sRenderCommand->SetViewport(width, height);
+	}
 
-		s_shader->bind();
+	void Renderer::BeginScene(Camera3D& camera, Ref<Shader> shader)
+	{
+		sSceneData.ViewProjection = camera.GetViewProjection();
+		sSceneData.View           = camera.GetView();
+		sSceneData.Projection     = camera.GetProjection();
 
-		if (s_renderCommand->getAPI() == API::OpenGL)
+		sShader = shader;
+
+		sShader->Bind();
+
+		if (sRenderCommand->GetAPI() == API::OpenGL)
 		{
-			auto& openglShader = std::dynamic_pointer_cast<Engine::OpenGLShader>(shader);
-			openglShader->uploadUniform("u_cameraPosition", camera.getPosition());
+			auto& open_gl_shader = std::dynamic_pointer_cast<Engine::OpenGLShader>(shader);
+			open_gl_shader->UploadUniform("u_cameraPosition", camera.GetPosition());
 		}
 	}
 
-	void Renderer::Submit(
-		const Ref<VertexArray> vao,
-		const Transform& transform
-	)
+	void Renderer::Submit(Ref<VertexArray> vertex_array, const Transform& transform)
 	{
-		if (s_renderCommand->getAPI() == API::OpenGL)
+		if (sRenderCommand->GetAPI() == API::OpenGL)
 		{
-			auto& openglShader = std::dynamic_pointer_cast<Engine::OpenGLShader>(s_shader);
+			auto& open_gl_shader = std::dynamic_pointer_cast<Engine::OpenGLShader>(sShader);
 
-			openglShader->uploadUniform("u_MVP", s_sceneData.VP * transform.getModel());
-			openglShader->uploadUniform("u_model", transform.getModel());
+			open_gl_shader->UploadUniform("u_ModelViewProjection", sSceneData.ViewProjection * transform.GetModel());
+			open_gl_shader->UploadUniform("u_model", transform.GetModel());
 		}
 
-		vao->bind();
-		s_renderCommand->drawIndexed(vao);
+		vertex_array->Bind();
+		sRenderCommand->DrawIndexed(vertex_array);
 	}
 
-	void Renderer::Submit(
-		const Model& model,
-		const Transform& transform
-	)
+	void Renderer::Submit(const Model& model, const Transform& transform)
 	{
-		if (s_renderCommand->getAPI() == API::OpenGL)
+		if (sRenderCommand->GetAPI() == API::OpenGL)
 		{
-			auto& openglShader = std::dynamic_pointer_cast<Engine::OpenGLShader>(s_shader);
+			auto& open_gl_shader = std::dynamic_pointer_cast<Engine::OpenGLShader>(sShader);
 
-			openglShader->uploadUniform("u_MVP", s_sceneData.VP * transform.getModel());
-			openglShader->uploadUniform("u_model", transform.getModel());
+			open_gl_shader->UploadUniform("u_ModelViewProjection", sSceneData.ViewProjection * transform.GetModel());
+			open_gl_shader->UploadUniform("u_model", transform.GetModel());
 		}
 
 		for (const Mesh& mesh : model)
 		{
-			auto vao = mesh.getVao();
-			mesh.loadMaterial(s_shader);
-			vao->bind();
-			s_renderCommand->drawIndexed(vao);
+			auto vertex_array = mesh.GetVao();
+			mesh.LoadMaterial(sShader);
+			vertex_array->Bind();
+			sRenderCommand->DrawIndexed(vertex_array);
 		}
 	}
 
-	void Renderer::Submit(
-		const Model& model,
-		const Ref<Collider> collider
-	)
+	void Renderer::Submit(const Model& model, Ref<Collider> collider)
 	{
 		Transform transform;
-		transform.setPosition(collider->getCenter());
-		transform.setScale(collider->getMax() - collider->getMin());
+		transform.SetPosition(collider->GetCenter());
+		transform.SetScale(collider->GetMax() - collider->GetMin());
 
-		if (s_renderCommand->getAPI() == API::OpenGL)
+		if (sRenderCommand->GetAPI() == API::OpenGL)
 		{
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		 
-			auto& openglShader = std::dynamic_pointer_cast<Engine::OpenGLShader>(s_shader);
+			auto& open_gl_shader = std::dynamic_pointer_cast<Engine::OpenGLShader>(sShader);
 
-			openglShader->uploadUniform("u_MVP", s_sceneData.VP * transform.getModel());
+			open_gl_shader->UploadUniform("u_ModelViewProjection", sSceneData.ViewProjection * transform.GetModel());
 		}
 
 		for (const Mesh& mesh : model)
 		{
-			auto vao = mesh.getVao();
-			vao->bind();
-			s_renderCommand->drawIndexed(vao);
+			auto vertex_array = mesh.GetVao();
+			vertex_array->Bind();
+			sRenderCommand->DrawIndexed(vertex_array);
 		}
 		
-		if (s_renderCommand->getAPI() == API::OpenGL)
+		if (sRenderCommand->GetAPI() == API::OpenGL)
 		{
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		}
 	}
 
-	void Renderer::Submit(
-		const Skybox& skybox
-	)
+	void Renderer::Submit(const Skybox& skybox)
 	{
-		if (s_renderCommand->getAPI() == API::OpenGL)
+		if (sRenderCommand->GetAPI() == API::OpenGL)
 		{
 			glDisable(GL_CULL_FACE);
 			glDepthFunc(GL_LEQUAL);
 
-			auto& openglShader = std::dynamic_pointer_cast<Engine::OpenGLShader>(s_shader);
+			auto& open_gl_shader = std::dynamic_pointer_cast<Engine::OpenGLShader>(sShader);
 
-			openglShader->uploadUniform("u_VP", s_sceneData.VP);
+			open_gl_shader->UploadUniform("u_ViewProjection", sSceneData.ViewProjection);
 		}
 
-		for (auto& mesh : skybox.getModel()->getMeshes())
+		for (auto& mesh : skybox.GetModel()->GetMeshes())
 		{
-			auto vao = mesh.getVao();
-			vao->bind();
-			s_renderCommand->drawIndexed(vao);
+			auto vertex_array = mesh.GetVao();
+			vertex_array->Bind();
+			sRenderCommand->DrawIndexed(vertex_array);
 		}
 
-		if (s_renderCommand->getAPI() == API::OpenGL)
+		if (sRenderCommand->GetAPI() == API::OpenGL)
 		{
 			glEnable(GL_CULL_FACE);
 			glDepthFunc(GL_LESS);
@@ -129,6 +124,6 @@ namespace Engine
 
 	void Renderer::EndScene()
 	{
-		s_shader->unbind();
+		sShader->Unbind();
 	}
 }

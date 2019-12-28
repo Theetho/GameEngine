@@ -4,8 +4,8 @@
 
 #define BIT(x) x << 1
 
-#define create_event(x) Event event;\
-						event.type = x;
+#define CreateEngineEvent(x) Event event;\
+							 event.mType = x;
 
 // Event class header based on the SFML Event class and the one in The Cherno serie
 
@@ -19,12 +19,9 @@ namespace Engine
 			unsigned int width;
 			unsigned int height;
 
-			void operator()(
-				const unsigned int& width,
-				const unsigned int& height
-			)
+			inline void operator()(unsigned int width, unsigned int height)
 			{
-				this->width = width;
+				this->width  = width;
 				this->height = height;
 			}
 		};			 
@@ -33,9 +30,7 @@ namespace Engine
 		{
 			unsigned int text;
 
-			void operator()(
-				const unsigned int& text
-			)
+			inline void operator()(unsigned int text)
 			{
 				this->text = text;
 			}
@@ -45,9 +40,7 @@ namespace Engine
 		{
 			int code;
 
-			void operator()(
-				const int& code
-			)
+			inline void operator()(int code)
 			{
 				this->code = code;
 			}
@@ -58,10 +51,7 @@ namespace Engine
 			double x;
 			double y;
 
-			void operator()(
-				const double& x,
-				const double& y
-			)
+			inline void operator()(double x, double y)
 			{
 				this->x = x;
 				this->y = y;
@@ -73,10 +63,7 @@ namespace Engine
 			double x;
 			double y;
 
-			void operator()(
-				const double& x,
-				const double& y
-			)
+			inline void operator()(double x, double y)
 			{
 				this->x = x;
 				this->y = y;
@@ -87,9 +74,7 @@ namespace Engine
 		{
 			int button;
 
-			void operator()(
-				const int& button
-			)
+			inline void operator()(int button)
 			{
 				this->button = button;
 			}
@@ -109,31 +94,22 @@ namespace Engine
 			MouseButtonReleased,
 		};
 
-		Type type;
-
+		Type mType;
 		union
 		{
-			SizeEvent			sizeEvent;
-			TextEvent			textEvent;
-			KeyboardEvent		keyEvent;
-			MouseScrolledEvent	mouseScrolledEvent;
-			MouseMovedEvent		mouseMovedEvent;
-			MouseButtonEvent	mouseButtonEvent;
+			SizeEvent			mSizeEvent;
+			TextEvent			mTextEvent;
+			KeyboardEvent		mKeyEvent;
+			MouseScrolledEvent	mMouseScrolledEvent;
+			MouseMovedEvent		mMouseMovedEvent;
+			MouseButtonEvent	mMouseButtonEvent;
 		};
 
-		std::string toString();
-		
-		bool isHandled() const
-		{
-			return m_handled;
-		}
-		
-		void hasBeenHandled()
-		{
-			m_handled = true;
-		}
+		std::string ToString();
+		bool IsHandled() const;
+		void SetIsHandled(bool handled);
 	private:
-		bool m_handled = false;
+		bool mHandled = false;
 	};
 
 }

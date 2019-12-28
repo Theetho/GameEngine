@@ -3,18 +3,12 @@
 class Wall : public Engine::GameObject
 {
 public:
-	Wall(
-		const Engine::Transform& transform
-	);
+	Wall(const Engine::Transform& transform);
 	virtual ~Wall();
 
-	virtual inline const Engine::Ref<Engine::Model> getModel() const
-	{
-		return Wall::s_model;
-	}
-
+	virtual const Engine::Ref<Engine::Model> GetModel() const;
 private:
-	static Engine::Ref<Engine::Model> s_model;
-	static bool s_isInitialized;
+	static Engine::Ref<Engine::Model> sModel;
+	static bool sIsInitialized;
 };
 

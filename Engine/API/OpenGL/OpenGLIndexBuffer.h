@@ -7,28 +7,14 @@ namespace Engine
 	class OpenGLIndexBuffer : public IndexBuffer
 	{
 	public:
-		OpenGLIndexBuffer(
-			unsigned int* indices,
-			const unsigned int& count);
-		
+		OpenGLIndexBuffer(unsigned int* indices, unsigned int count);
 		~OpenGLIndexBuffer();
 
-		inline void bind() const override
-		{
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_id);
-		}
-		
-		inline void unbind() const override
-		{
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		}
-
-		inline unsigned int getCount() const override
-		{
-			return m_count;
-		}
+		void Bind() const override;
+		void Unbind() const override;
+		unsigned int GetCount() const override;
 	private:
-		unsigned int m_id;
-		unsigned int m_count;
+		unsigned int mId;
+		unsigned int mCount;
 	};
 }

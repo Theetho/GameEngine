@@ -18,9 +18,7 @@ namespace Engine
 		Bool
 	};
 
-	static unsigned int shaderDataTypeSize(
-		const ShaderDataType& type
-	)
+	static unsigned int ShaderDataTypeSize(const ShaderDataType& type)
 	{
 		switch (type)
 		{
@@ -42,9 +40,7 @@ namespace Engine
 		return 0;
 	}
 
-	static unsigned int shaderDataTypeToGLType(
-		const ShaderDataType& type
-	)
+	static unsigned int ShaderDataTypeToGLType(const ShaderDataType& type)
 	{
 		switch (type)
 		{
@@ -77,17 +73,17 @@ namespace Engine
 		BufferElement(
 			const ShaderDataType& type = ShaderDataType::None,
 			const std::string& name = "",
-			const bool& normalized = false
+			bool normalized = false
 		)
 			: name(name)
 			, type(type)
 			, offset(0)
-			, size(shaderDataTypeSize(type))
+			, size(ShaderDataTypeSize(type))
 			, normalized(normalized)
 		{
 		}
 
-		unsigned int getElementCount() const
+		inline unsigned int GetElementCount() const
 		{
 			switch (type)
 			{
@@ -113,43 +109,20 @@ namespace Engine
 	class BufferLayout
 	{
 	public:
-		BufferLayout(
-			const std::initializer_list<BufferElement>& elements
-		);
+		BufferLayout(const std::initializer_list<BufferElement>& elements);
+		~BufferLayout();
 
-		inline const std::vector<BufferElement>& getElements() const
-		{
-			return m_elements;
-		}
+		const std::vector<BufferElement>& GetElements() const;
+		unsigned int GetStride() const;
 
-		inline unsigned int	getStride() const
-		{
-			return m_stride;
-		}
-
-		inline std::vector<BufferElement>::iterator begin()
-		{
-			return m_elements.begin();
-		}
-
-		inline std::vector<BufferElement>::iterator end()
-		{
-			return m_elements.end();
-		}
-
-		inline std::vector<BufferElement>::const_iterator begin() const
-		{
-			return m_elements.begin();
-		}
-
-		inline std::vector<BufferElement>::const_iterator end() const
-		{
-			return m_elements.end();
-		}
+		std::vector<BufferElement>::iterator begin();
+		std::vector<BufferElement>::iterator end();
+		std::vector<BufferElement>::const_iterator begin() const;
+		std::vector<BufferElement>::const_iterator end() const;
 	private:
-		void calculateOffsetsAndStride();
+		void CalculateOffSetsAndStride();
 	private:
-		std::vector<BufferElement>	m_elements;
-		unsigned int				m_stride;
+		unsigned int				mStride;
+		std::vector<BufferElement>	mElements;
 	};
 }

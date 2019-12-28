@@ -7,101 +7,34 @@ namespace Engine
 	class Transform
 	{
 	public:
-		explicit Transform(
-			const Vec3& position = Vec3(0.0f),
-			const Vec3& rotation = Vec3(0.0f),
-			const Vec3& scale = Vec3(1.0f)
-		);
-
-		Transform(
-			const Transform& other
-		);
-
-		Transform(
-			const Transform&& other
-		) noexcept;
-
-		Transform& operator=(
-			const Transform& other
-		);
-
-		Transform& operator=(
-			const Transform&& other
-		) noexcept;
+		explicit Transform(const Vec3& position = Vec3(0.0f), const Vec3& rotation = Vec3(0.0f), const Vec3& scale = Vec3(1.0f));
+		Transform(const Transform& transform);
+		Transform(const Transform&& transform) noexcept;
+		Transform& operator=(const Transform& transform);
+		Transform& operator=(const Transform&& transform) noexcept;
 
 		~Transform();
-
-		inline const Mat4& getModel() const
-		{
-			return m_model;
-		}
-
-		inline Vec3& getPosition()
-		{
-			return m_position;
-		}
-
-		inline Vec3& getRotation()
-		{
-			return m_rotation;
-		}
-
-		inline Vec3& getScale()
-		{
-			return m_scale;
-		}
-
-		inline const Vec3& getPosition() const
-		{
-			return m_position;
-		}
-
-		inline const Vec3& getRotation() const
-		{
-			return m_rotation;
-		}
-
-		inline const Vec3& getScale() const
-		{
-			return m_scale;
-		}
-
-		inline void setPosition(const Vec3& position)
-		{
-			m_position = position;
-			updateModel();
-		}
-
-		inline void setRotation(const Vec3& rotation)
-		{
-			m_rotation = rotation;
-			updateModel();
-		}
-
-		inline void setScale(const Vec3& scale)
-		{
-			m_scale = scale;
-			updateModel();
-		}
 		
-		inline void setScale(const float& scale)
-		{
-			m_scale.x = scale;
-			m_scale.y = scale;
-			m_scale.z = scale;
-			updateModel();
-		}
+		void UpdateModel();
 
-		inline void updateModel()
-		{
-			m_model = Matrix::model(m_position, m_rotation, m_scale);
-		}
+		Vec3& GetPosition();
+		Vec3& GetRotation();
+		Vec3& GetScale();
+		
+		const Mat4& GetModel() const;
+		const Vec3& GetPosition() const;
+		const Vec3& GetRotation() const;
+		const Vec3& GetScale() const;
+
+		void SetPosition(const Vec3& position);
+		void SetRotation(const Vec3& rotation);
+		void SetScale(const Vec3& scale);
+		void SetScale(float scale);
 	private:
-		Vec3 m_position;
-		Vec3 m_rotation;
-		Vec3 m_scale;
-
-		Mat4 m_model;
+		Vec3 mPosition;
+		Vec3 mRotation;
+		Vec3 mScale;
+		Mat4 mModel;
 	};
 }
 

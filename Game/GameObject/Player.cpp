@@ -11,96 +11,91 @@ Player::Player(
 	: GameObject(transform)
 {
 	AddComponent<PhysicsComponent>(std::make_shared<PhysicsComponent>(*this));
-
 	AddComponent<Movement>(std::make_shared<Movement>(*this));
+	AddComponent<RigidBody>(std::make_shared<RigidBody>(*this, transform.GetPosition()));
 
-	this->setModel(model);
+	this->SetModel(model);
 }
 
 Player::~Player()
-{
-}
+{}
 
-void Player::onEvent(Engine::Event& event)
+void Player::OnEvent(Engine::Event& event)
 {
-	if (event.type == Engine::Event::KeyPressed)
+	if (event.mType == Engine::Event::KeyPressed)
 	{
-		if (event.keyEvent.code == ENGINE_KEY_SPACE)
+		if (event.mKeyEvent.code == ENGINE_KEY_SPACE)
 		{
-			Ref<Bomb> bomb = std::make_shared<Bomb>(
-				AssetManager::getModelLibrary().get("bomb"),
-				m_transform,
-				m_bombPower
-				);
+			Ref<Bomb> bomb = std::make_shared<Bomb>(AssetManager::GetModelLibrary().Get("bomb"), mTransform, mBombPower);
 
 			// Translate the bomb so the bottom is just on the floor
-			float floorLevel = m_transform.getPosition().y - (m_model->getSize().y * m_transform.getScale().y / 2.0f);
+			float floor_level = mTransform.GetPosition().y - (mModel->GetSize().y * mTransform.GetScale().y / 2.0f);
 
-			bomb->setPosition({
-				bomb->getTransform().getPosition().x,
-				floorLevel + (bomb->getModel().getSize().y * bomb->getTransform().getScale().y / 2.0f),
-				bomb->getTransform().getPosition().z
-				});
+			bomb->SetPosition({
+				bomb->GetTransform().GetPosition().x,
+				floor_level + (bomb->GetModel().GetSize().y * bomb->GetTransform().GetScale().y / 2.0f),
+				bomb->GetTransform().GetPosition().z
+			});
 
 
-			m_bombs.push_back(std::move(bomb));
+			mBombs.push_back(std::move(bomb));
 		}
 		// TEMPORARY
-		if (event.keyEvent.code == ENGINE_KEY_Q)
+		if (event.mKeyEvent.code == ENGINE_KEY_Q)
 		{
-			m_bombPower += 1.0;
-
-			std::cout << "Player's bombs power : " << m_bombPower << std::endl;
+			mBombPower += 1.0;
+			std::cout << "Player's bombs power : " << mBombPower << std::endl;
 		}
 	}
 }
 
-void Player::onCollision(
-	const Engine::Collision& collision
-)
+void Player::OnCollision(const Engine::Collision& collision)
 {
 	const float epsilon = 0.05f;
 
-	const auto& colliders = collision.getColliders();
+	const auto& colliders = collision.GetColliders();
 
-	const Collider* myCollider = &collision.getColliders().first->getOwner() == this
+	const Collider* myCollider = &collision.GetColliders().first->GetGameObject() == this
 		? colliders.first : colliders.second;
-	const Collider* otherCollider = &collision.getColliders().first->getOwner() == this
+	const Collider* otherCollider = &collision.GetColliders().first->GetGameObject() == this
 		? colliders.second : colliders.first;
 
 	// If they are close enough on the up axis, then
 	// myCollider is on top of the other (collision
 	// with the floor)
-	if (collision.distanceUpAxis() < epsilon)
+	if (collision.GetDistanceUpAxis() < epsilon)
 	{
 		auto physics = GetComponent<PhysicsComponent>();
 
 		if (physics)
-			physics->setGroundLevel(otherCollider->getMax().y + myCollider->getCenter().y - myCollider->getMin().y);
+			physics->SetGroundLevel(otherCollider->GetMax().y + myCollider->GetCenter().y - myCollider->GetMin().y);
 	}
 
 	// Else, it is a true collision
 	else
-		m_isColliding = true;
+		mIsColliding = true;
 }
 
-void Player::setModel(
-	Engine::Ref<Engine::Model> model
-)
+const Engine::Ref<Engine::Model> Player::GetModel() const
 {
-	m_model = model;
+	return mModel;
+}
 
-	/*m_model->setMaterial(
-		std::make_shared<RawMaterial>(RawMaterial::Brass)
-	);*/
+std::vector<Engine::Ref<Bomb>>& Player::GetBombs()
+{
+	return mBombs;
+}
 
-	Vec3 size = model->getSize();
+bool Player::IsMoveable() const
+{
+	return true;
+}
 
-	AddComponent<BoxCollider>(
-		std::make_shared<BoxCollider>(
-			*this,
-			m_transform.getPosition(),
-			size.x, size.y, size.z
-		)
-	);
+void Player::SetModel(Engine::Ref<Engine::Model> model)
+{
+	mModel = model;
+
+	Vec3 size = model->GetSize();
+
+	AddComponent<BoxCollider>(std::make_shared<BoxCollider>(*this, mTransform.GetPosition(), Vec3(size.x, size.y, size.z)));
 }

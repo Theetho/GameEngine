@@ -3,54 +3,77 @@
 
 using namespace Engine;
 
-Movement::Movement(
-	GameObject& owner
-)
-	: Component(owner)
-	, m_transform(owner.getTransform())
-	, m_velocity()
-	, m_rotation(0.0f)
+Movement::Movement(GameObject& gameObject)
+	: Component(gameObject)
+	, mTransform(gameObject.GetTransform())
+	, mRotation(0.0f)
 {
 }
 
-void Movement::onUpdate(const double& delta)
+Movement::~Movement()
+{}
+
+void Movement::OnUpdate(const double& delta)
 {
-	if (m_owner.isColliding())
+	auto rigid_body = mGameObject.GetComponent<RigidBody>();
+	if (!rigid_body)
+		return;
+	Vec3& velocity = rigid_body->GetVelocity();
+
+	if (mGameObject.IsColliding())
 	{
-		m_transform.getPosition() -= (m_axis["Forward"] * m_velocity.z) + (m_axis["Side"] * m_velocity.x);
-		m_owner.isColliding(false);
+		mTransform.GetPosition() -= (mAxis["Forward"] * velocity.z) + (mAxis["Side"] * velocity.x);
+		mGameObject.SetIsColliding(false);
 	}
 
-	m_velocity = Vec3(0.0f);
+	velocity = Vec3(0.0f);
 
-	if (Input::isKeyPressed(ENGINE_KEY_W))
+	if (Input::IsKeyPressed(ENGINE_KEY_W))
 	{
-		if (!Input::isKeyPressed(ENGINE_KEY_S))
+		if (!Input::IsKeyPressed(ENGINE_KEY_S))
 		{
-			m_transform.getRotation().y = m_rotation + 0.0f;
-			m_velocity.z += m_speed * delta;
+			mTransform.GetRotation().y = mRotation + 0.0f;
+			velocity.z += mSpeed * delta;
 		}
 	}
-	else if (Input::isKeyPressed(ENGINE_KEY_S))
+	else if (Input::IsKeyPressed(ENGINE_KEY_S))
 	{
-		m_transform.getRotation().y = m_rotation + 180.0f;
-		m_velocity.z -= m_speed * delta;
+		mTransform.GetRotation().y = mRotation + 180.0f;
+		velocity.z -= mSpeed * delta;
 	}
 
-	if (Input::isKeyPressed(ENGINE_KEY_A))
+	if (Input::IsKeyPressed(ENGINE_KEY_A))
 	{
-		if (!Input::isKeyPressed(ENGINE_KEY_D))
+		if (!Input::IsKeyPressed(ENGINE_KEY_D))
 		{
-			m_transform.getRotation().y = m_rotation + 90.0f;
-			m_velocity.x -= m_speed * delta;
+			mTransform.GetRotation().y = mRotation + 90.0f;
+			velocity.x -= mSpeed * delta;
 		}
 	}
-	else if (Input::isKeyPressed(ENGINE_KEY_D))
+	else if (Input::IsKeyPressed(ENGINE_KEY_D))
 	{
-		m_transform.getRotation().y = m_rotation + 270.0f;
-		m_velocity.x += m_speed * delta;
+		mTransform.GetRotation().y = mRotation + 270.0f;
+		velocity.x += mSpeed * delta;
 	}
 
-	m_transform.getPosition() += (m_axis["Forward"] * m_velocity.z) + (m_axis["Side"] * m_velocity.x);
-	m_transform.updateModel();
+	mTransform.GetPosition() += (mAxis["Forward"] * velocity.z) + (mAxis["Side"] * velocity.x);
+	mTransform.UpdateModel();
+}
+
+void Movement::SetForwardAxis(const Engine::Vec3& axis)
+{
+	mAxis["Forward"] = glm::normalize(axis);
+	mAxis["Side"] = glm::cross(mAxis["Forward"], mAxis["Up"]);
+
+	// the dot product between the forward axis and the z axis is
+	// in [-1, 0, 1], which gives [180, 90, 0] with acos.
+	mRotation = glm::degrees(std::acos(glm::dot(mAxis["Forward"], Engine::Vec3(0.0f, 0.0f, 1.0f))));
+
+	// as 0 gives only 90 (where it could be 270)
+	if (mRotation == 90.0f)
+	{
+		// we add the dot product between the forward axis and the x axis,
+		// which is either 0 or 180, which gives 90 or 270.
+		mRotation += glm::degrees(std::acos(glm::dot(mAxis["Forward"], { 1.0f, 0.0f, 0.0f })));
+	}
 }

@@ -1,26 +1,33 @@
 #include "EnginePch.h"
 #include "RenderCommand.h"
+#include "API/OpenGL/OpenGLRenderer.h"
 
 namespace Engine
 {
-	RendererAPI* RenderCommand::s_renderer = new OpenGLRenderer();
+	RendererAPI* RenderCommand::sRenderer = new OpenGLRenderer();
 
-	void RenderCommand::setClearColor(
-		const Color& color
-	)
+	API RenderCommand::GetAPI()
 	{
-		s_renderer->setClearColor(color);
+		return RendererAPI::sApi;
+	}
+
+	void RenderCommand::SetViewport(unsigned int width, unsigned int height)
+	{
+		sRenderer->SetViewport(width, height);
+	}
+
+	void RenderCommand::SetClearColor(const Color& color)
+	{
+		sRenderer->SetClearColor(color);
 	}
 	
-	void RenderCommand::clear()
+	void RenderCommand::Clear()
 	{
-		s_renderer->clear();
+		sRenderer->Clear();
 	}
 	
-	void RenderCommand::drawIndexed(
-		const Ref<VertexArray>& vao
-	)
+	void RenderCommand::DrawIndexed(Ref<VertexArray> vertex_array)
 	{
-		s_renderer->drawIndexed(vao);
+		sRenderer->DrawIndexed(vertex_array);
 	}
 }

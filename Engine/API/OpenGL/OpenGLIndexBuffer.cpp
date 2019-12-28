@@ -4,21 +4,33 @@
 
 namespace Engine
 {
-	OpenGLIndexBuffer::OpenGLIndexBuffer(
-		unsigned int* indices,
-		const unsigned int& count
-	)
-		: m_id(0)
-		, m_count(count)
+	OpenGLIndexBuffer::OpenGLIndexBuffer(unsigned int* indices, unsigned int count)
+		: mId(0)
+		, mCount(count)
 	{
-		glCreateBuffers(1, &m_id);
+		glCreateBuffers(1, &mId);
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_id);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mId);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), indices, GL_STATIC_DRAW);
 	}
 	
 	OpenGLIndexBuffer::~OpenGLIndexBuffer()
 	{
-		glDeleteBuffers(1, &m_id);
+		glDeleteBuffers(1, &mId);
+	}
+
+	void OpenGLIndexBuffer::Bind() const
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mId);
+	}
+
+	void OpenGLIndexBuffer::Unbind() const
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	}
+
+	unsigned int OpenGLIndexBuffer::GetCount() const
+	{
+		return mCount;
 	}
 }

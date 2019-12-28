@@ -3,22 +3,33 @@
 
 namespace Engine
 {
-	DirectionalLight::DirectionalLight(
-		const Vec3&  direction, 
-		const Color& color
-	)
+	DirectionalLight::DirectionalLight(const Vec3& direction, const Color& color)
 		: Light(color)
-		, m_direction(direction)
+		, mDirection(direction)
+	{}
+
+	DirectionalLight::~DirectionalLight()
+	{}
+
+	int DirectionalLight::GetID() const
 	{
+		return static_cast<int>(LightID::Directional);
 	}
 
-	void DirectionalLight::loadGLUniforms(
-		Ref<OpenGLShader> shader,
-		const unsigned int& index
-	)
+	const Vec3& DirectionalLight::GetDirection() const
 	{
-		Light::loadGLUniforms(shader, index);
+		return mDirection;
+	}
 
-		shader->uploadUniform("u_lights[" + std::to_string(index) + "].direction", m_direction);
+	void DirectionalLight::SetDirection(const Vec3& direction)
+	{
+		mDirection = direction;
+	}
+
+	void DirectionalLight::LoadGLUniforms(Ref<OpenGLShader> shader, unsigned int index)
+	{
+		Light::LoadGLUniforms(shader, index);
+
+		shader->UploadUniform("u_lights[" + std::to_string(index) + "].direction", mDirection);
 	}
 }

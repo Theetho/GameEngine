@@ -3,41 +3,32 @@
 
 using namespace Engine;
 
-Ref<Model> Wall::s_model;
-bool Wall::s_isInitialized = false;
+Ref<Model> Wall::sModel;
+bool Wall::sIsInitialized = false;
 
-Wall::Wall(
-	const Transform& transform
-)
+Wall::Wall(const Transform& transform)
 	: GameObject(transform)
 {
-	if (!s_isInitialized)
+	if (!sIsInitialized)
 	{
-		s_isInitialized = true;
+		sIsInitialized = true;
 
-		s_model = AssetManager::getModelLibrary().load("cube/cube.obj", "wall");
+		sModel = AssetManager::GetModelLibrary().Load("cube/cube.obj", "wall");
 
-		auto texture = std::vector<Ref<Texture2D>>({ AssetManager::getTexture2DLibrary().load("wall.jpg", "wall") });
+		auto texture = std::vector<Ref<Texture2D>>({ AssetManager::GetTexture2DLibrary().Load("wall.jpg", "wall") });
 
-		s_model->setMaterial(
-			std::make_shared<PBRMaterial>(
-				texture,
-				texture,
-				texture,
-				texture
-			)
-		);
+		sModel->SetMaterial(std::make_shared<PBRMaterial>(texture, texture, texture, texture));
 	}
 
-	Vec3 size = s_model->getSize() * m_transform.getScale();
+	Vec3 size = sModel->GetSize() * mTransform.GetScale();
 
-	this->AddComponent<BoxCollider>(
-		std::make_shared<BoxCollider>(
-			*this, m_transform.getPosition(), size.x, size.y, size.z
-		)
-	);
+	this->AddComponent<BoxCollider>(std::make_shared<BoxCollider>(*this, mTransform.GetPosition(), Vec3(size.x, size.y, size.z)));
 }
 
 Wall::~Wall()
+{}
+
+const Engine::Ref<Engine::Model> Wall::GetModel() const
 {
+	return Wall::sModel;
 }

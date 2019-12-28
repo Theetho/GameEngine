@@ -3,26 +3,17 @@
 
 using namespace Engine;
 
-Map::Map(
-	const unsigned int& width,
-	const unsigned int& height,
-	const Vec3& blockSize
-)
-	: m_width(width)
-	, m_height(height)
-	, m_blockSize(blockSize)
-	, m_entry()
-{
-}
+Map::Map(unsigned int width, unsigned int height, const Vec3& block_size)
+	: mWidth(width)
+	, mHeight(height)
+	, mBlockSize(block_size)
+	, mEntry()
+{}
 
 Map::~Map()
-{
-}
+{}
 
-void Map::onUpdate(
-	const double& delta,
-	bool remove
-)
+void Map::OnUpdate(const double& delta, bool remove)
 {
 	// We only remove the walls that exploded
 	// when their is no more bombs in the world
@@ -32,15 +23,70 @@ void Map::onUpdate(
 	if (!remove)
 		return;
 
-	m_destructibleWalls.erase(
+	mDestructibleWalls.erase(
 		std::remove_if(
-			m_destructibleWalls.begin(),
-			m_destructibleWalls.end(),
+			mDestructibleWalls.begin(),
+			mDestructibleWalls.end(),
 			[](const DestructibleWall& wall)
 			{
 				return wall.hasExploded;
 			}
 		),
-		m_destructibleWalls.end()
+		mDestructibleWalls.end()
 	);
+}
+
+void Map::AddWalls(const Wall& wall)
+{
+	mWalls.push_back(std::move(wall));
+}
+
+void Map::AddWalls(const DestructibleWall& wall)
+{
+	mDestructibleWalls.push_back(std::move(wall));
+}
+
+void Map::AddFloor(const Floor& floor)
+{
+	mFloor.push_back(std::move(floor));
+}
+
+void Map::AddFloor(const ExitCell& floor)
+{
+	mExit = floor;
+}
+
+const ExitCell& Map::GetExit() const
+{
+	return mExit;
+}
+
+const Engine::Vec3& Map::GetEntry() const
+{
+	return mEntry;
+}
+
+const std::vector<Wall>& Map::GetWalls() const
+{
+	return mWalls;
+}
+
+const std::vector<DestructibleWall>& Map::GetDestructibleWalls() const
+{
+	return mDestructibleWalls;
+}
+
+std::vector<DestructibleWall>& Map::GetDestructibleWalls()
+{
+	return mDestructibleWalls;
+}
+
+const std::vector<Floor>& Map::GetFloor() const
+{
+	return mFloor;
+}
+
+void Map::SetEntry(const Engine::Vec3& entry)
+{
+	mEntry = entry;
 }

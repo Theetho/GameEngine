@@ -7,39 +7,16 @@ namespace Engine
 	class DirectionalLight : public Light
 	{
 	public:
-		DirectionalLight(
-			const Vec3& direction,
-			const Color& color = Color::White
-		);
+		DirectionalLight(const Vec3& direction, const Color& color = Color::White);
+		~DirectionalLight();
 
-		~DirectionalLight()
-		{
-		}
+		virtual int GetID() const override;
+		const Vec3& GetDirection() const;
 
-		inline void setDirection(
-			const Vec3& direction
-		)
-		{
-			m_direction = direction;
-		}
-
-		inline const Vec3& getDirection() const
-		{
-			return m_direction;
-		}
-
-		virtual inline const int getID() const
-		{
-			return static_cast<int>(LightID::Directional);
-		}
-
-
+		void SetDirection(const Vec3& direction);
 	private:
-		Vec3 m_direction;
+		Vec3 mDirection;
 
-		void loadGLUniforms(
-			Ref<OpenGLShader> shader,
-			const unsigned int& index
-		) override;
+		void LoadGLUniforms(Ref<OpenGLShader> shader, unsigned int index) override;
 	};
 }

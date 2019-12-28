@@ -7,41 +7,15 @@ namespace Engine
 	class Color : public glm::vec4
 	{
 	public:
-		explicit Color(
-			const float& r,
-			const float& g,
-			const float& b,
-			const float& a = 1.0
-		);
-		explicit Color(
-			const int& r,
-			const int& g,
-			const int& b,
-			const int& a = 255
-		);
-		explicit Color(
-			const float& rgb = 0.0
-		);
-		explicit Color(
-			const int& rgb = 0
-		);
-		Color(
-			const Color& color
-		);
-		Color(
-			const Color&& color
-		) noexcept;
-		~Color()
-		{
-		}
-
-		Color& operator=(
-			const Color& color
-		);
-
-		Color& operator=(
-			const Color&& color
-		) noexcept;
+		explicit Color(float r, float g, float b, float a = 1.0);
+		explicit Color(int r, int g, int b, int a = 255);
+		explicit Color(float rgb = 0.0);
+		explicit Color(int rgb = 0);
+		Color(const Color& color);
+		Color(const Color&& color) noexcept;
+		Color& operator=(const Color& color);
+		Color& operator=(const Color&& color) noexcept;
+		~Color();
 
 		static Color White;
 		static Color Silver;
@@ -64,13 +38,8 @@ namespace Engine
 		static Color Wood;
 
 	private:
-		void clip(
-			float& field
-		);
-		void clip(
-			const int& value,
-			float& field
-		);
+		void Clip(float& field);
+		void Clip(int value, float& field);
 	};
 }
 

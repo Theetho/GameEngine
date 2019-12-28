@@ -5,105 +5,127 @@
 
 namespace Engine
 {
+	GameObject::GameObject(const Transform& transform)
+		: mTransform(transform)
+		, mIsColliding(false)
+	{}
 
-	GameObject::GameObject(
-		const Transform& transform
-	)
-		: m_transform(transform)
-		, m_isColliding(false)
-	{
-	}
+	GameObject::GameObject(const GameObject& gameObject)
+		: mTransform(gameObject.mTransform)
+		, mIsColliding(gameObject.mIsColliding)
+		, mComponents(gameObject.mComponents)
+	{}
 
-	GameObject::GameObject(
-		const GameObject& other
-	)
-		: m_transform(other.m_transform)
-		, m_isColliding(other.m_isColliding)
-		, m_components(other.m_components)
-	{
-	}
+	GameObject::GameObject(const GameObject&& gameObject) noexcept
+		: mTransform(gameObject.mTransform)
+		, mIsColliding(gameObject.mIsColliding)
+		, mComponents(gameObject.mComponents)
+	{}
 
-	GameObject::GameObject(
-		const GameObject&& other
-	) noexcept
-		: m_transform(other.m_transform)
-		, m_isColliding(other.m_isColliding)
-		, m_components(other.m_components)
+	GameObject& GameObject::operator=(const GameObject& gameObject)
 	{
-	}
-
-	GameObject& GameObject::operator=(const GameObject& other)
-	{
-		m_transform = other.m_transform;
-		m_isColliding = other.m_isColliding;
-		m_components = other.m_components;
+		mTransform = gameObject.mTransform;
+		mIsColliding = gameObject.mIsColliding;
+		mComponents = gameObject.mComponents;
 
 		return *this;
 	}
 
-	GameObject& GameObject::operator=(const GameObject&& other) noexcept
+	GameObject& GameObject::operator=(const GameObject&& gameObject) noexcept
 	{
-		m_transform = other.m_transform;
-		m_isColliding = other.m_isColliding;
-		m_components = other.m_components;
+		mTransform = gameObject.mTransform;
+		mIsColliding = gameObject.mIsColliding;
+		mComponents = gameObject.mComponents;
 
 		return *this;
 	}
 
 	GameObject::~GameObject()
-	{
-	}
+	{}
 
-	void GameObject::onUpdate(
-		const double& delta
-	)
+	void GameObject::OnUpdate(const double& delta)
 	{
-		for (auto kv : m_components)
+		for (auto kv : mComponents)
 		{
-			kv.second->onUpdate(delta);
+			kv.second->OnUpdate(delta);
 		}
 	}
 
 	// Meant to be overrided
-	void GameObject::onEvent(
-		Event& event
-	)
-	{
-	}
+	void GameObject::OnEvent(Event& event)
+	{}
 
 	// Meant to be overrided
-	void GameObject::onCollision(
-		const Collision& collision
-	)
+	void GameObject::OnCollision(const Collision& collision)
+	{}
+	
+	bool GameObject::IsJumping() const
 	{
-		return;
+		return false;
+	}
+
+	bool GameObject::IsMoving() const
+	{
+		return false;
+	}
+
+	bool GameObject::IsMoveable() const
+	{
+		return false;
+	}
+
+	bool GameObject::IsColliding() const
+	{
+		return mIsColliding;
+	}
+
+	void GameObject::SetIsColliding(bool colliding)
+	{
+		mIsColliding = colliding;
 	}
 	
-	bool GameObject::isJumping() const
+	Transform& GameObject::GetTransform()
 	{
-		return false;
+		return mTransform;
+	}
+	
+	const Transform& GameObject::GetTransform() const
+	{
+		return mTransform;
 	}
 
-	bool GameObject::isMoving() const
+	const Vec3& GameObject::GetFront() const
 	{
-		return false;
+		float rotation = glm::radians(mTransform.GetRotation().y);
+
+		return Vec3(sin(rotation), 0.0f, cos(rotation));
 	}
 
-	bool GameObject::isMoveable() const
+	void GameObject::SetPosition(const Vec3& position)
 	{
-		return false;
+		mTransform.SetPosition(position);
 	}
 
-	void GameObject::setScale(const Vec3& scale)
+	void GameObject::SetRotation(const Vec3& rotation)
 	{
-		m_transform.setScale(scale);
+		mTransform.SetRotation(rotation);
+	}
+
+	void GameObject::SetScale(float scale)
+	{
+		SetScale(Vec3(scale));
+	}
+
+	void GameObject::SetScale(const Vec3& scale)
+	{
+		mTransform.SetScale(scale);
 
 		auto box    = GetComponent<BoxCollider>();
 		auto sphere = GetComponent<SphereCollider>();
 		
 		if (box)
-			box->setScale(scale);
-		else if (sphere)
-			sphere->setScale(scale.x);
+			box->SetScale(scale);
+		if (sphere)
+			sphere->SetScale(scale.x);
 	}
 }

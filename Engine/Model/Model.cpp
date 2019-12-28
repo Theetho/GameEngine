@@ -3,48 +3,97 @@
 #include "Core/Log.h"
 #include "Core/AssetManager.h"
 #include "assimp/Importer.hpp"
-#include "assimp/postprocess.h"
+#include "assimp/postProcess.h"
 
 namespace Engine
 {
-	std::string Model::s_folderPath = "";
+	std::string Model::sFolderPath = "";
 
-	Model::Model(
-		const std::string& filePath,
-		const std::string& name,
-		const bool& useFolderPath
-	)
-		: m_name(name)
-		, m_dimensions()
+	Model::Model(const std::string& file_path, const std::string& name, bool use_folder_path)
+		: mName(name)
+		, mDimensions()
 	{
-		loadModel(filePath, useFolderPath);
+		LoadModel(file_path, use_folder_path);
 
-		m_size = m_dimensions.max - m_dimensions.min;
+		mSize = mDimensions.max - mDimensions.min;
 	}
 
-	Ref<Model> Model::Create(
-		const std::string& filePath,
-		const std::string& name,
-		const bool& useFolderPath
-	)
-	{
-		ENGINE_ASSERT(s_folderPath != "");
+	Model::~Model()
+	{}
 
-		return std::make_shared<Model>(filePath, name, useFolderPath);
+	Ref<Model> Model::Create( const std::string& file_path, const std::string& name, bool use_folder_path)
+	{
+		ENGINE_ASSERT(sFolderPath != "");
+
+		return std::make_shared<Model>(file_path, name, use_folder_path);
 	}
 
-	void Model::loadModel(
-		const std::string& filePath,
-		const bool& useFolderPath
+	void Model::SetFolder(const std::string& folder_path)
+	{
+		sFolderPath = folder_path;
+	}
+
+	void Model::SetName(const std::string& name)
+	{
+		mName = name;
+	}
+
+	const std::string& Model::GetName() const
+	{
+		return mName;
+	}
+
+	const std::vector<Mesh>& Model::GetMeshes() const
+	{
+		return mMeshes;
+	}
+
+	const Vec3& Model::GetSize() const
+	{
+		return mSize;
+	}
+
+	std::vector<Mesh>::iterator Model::begin()
+	{
+		return mMeshes.begin();
+	}
+
+	const std::vector<Mesh>::const_iterator Model::begin() const
+	{
+		return mMeshes.cbegin();
+	}
+
+	std::vector<Mesh>::iterator Model::end()
+	{
+		return mMeshes.end();
+	}
+
+	const std::vector<Mesh>::const_iterator Model::end() const
+	{
+		return mMeshes.cend();
+	}
+
+	void Model::SetMaterial(Ref<Material> material)
+	{
+		for (auto& mesh : mMeshes)
+		{
+			mesh.SetMaterial(material);
+		}
+	}
+
+
+	void Model::LoadModel(
+		const std::string& file_path,
+		bool use_folder_path
 	)
 	{
 		Assimp::Importer importer;
 
 		// Loading the model
-		const aiScene* scene = useFolderPath ? 
-			importer.ReadFile(s_folderPath + filePath, aiProcess_Triangulate | aiProcess_FlipUVs)
+		const aiScene* scene = use_folder_path ? 
+			importer.ReadFile(sFolderPath + file_path, aiProcess_Triangulate | aiProcess_FlipUVs)
 			:
-			importer.ReadFile(filePath, aiProcess_Triangulate | aiProcess_FlipUVs)
+			importer.ReadFile(file_path, aiProcess_Triangulate | aiProcess_FlipUVs)
 			;
 
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
@@ -53,12 +102,12 @@ namespace Engine
 			return;
 		}
 
-		m_path = filePath.substr(0, filePath.find_last_of('/') + 1);
+		mPath = file_path.substr(0, file_path.find_last_of('/') + 1);
 
-		processNode(scene->mRootNode, scene);
+		ProcessNode(scene->mRootNode, scene);
 	}
 
-	void Model::processNode(
+	void Model::ProcessNode(
 		aiNode* node, 
 		const aiScene* scene
 	)
@@ -67,16 +116,16 @@ namespace Engine
 		for (unsigned int i = 0; i < node->mNumMeshes; ++i)
 		{
 			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-			m_meshes.push_back(processMesh(mesh, scene));
+			mMeshes.push_back(ProcessMesh(mesh, scene));
 		}
 		// Then do the same for each of its children
 		for (unsigned int i = 0; i < node->mNumChildren; ++i)
 		{
-			processNode(node->mChildren[i], scene);
+			ProcessNode(node->mChildren[i], scene);
 		}
 	}
 
-	Mesh Model::processMesh(
+	Mesh Model::ProcessMesh(
 		aiMesh* mesh,
 		const aiScene* scene
 	)
@@ -93,7 +142,7 @@ namespace Engine
 			vertices.push_back(mesh->mVertices[i].y);
 			vertices.push_back(mesh->mVertices[i].z);
 
-			updateDimensions(
+			UpdateDimensions(
 				{
 					mesh->mVertices[i].x,
 					mesh->mVertices[i].y,
@@ -119,7 +168,7 @@ namespace Engine
 			vertices.push_back(mesh->mNormals[i].z);
 		}
 
-		// process indices
+		// Process indices
 		for (unsigned int i = 0; i < mesh->mNumFaces; ++i)
 		{
 			const aiFace& face = mesh->mFaces[i];
@@ -128,21 +177,21 @@ namespace Engine
 				indices.push_back(face.mIndices[j]);
 			}
 		}
-		// process material
+		// Process material
 		if (mesh->mMaterialIndex > 0)
 		{
 			aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 			
-			std::vector<Ref<Texture2D>> ambientMaps = loadMaterial(material,
+			std::vector<Ref<Texture2D>> ambientMaps = LoadMaterial(material,
 				aiTextureType_AMBIENT, "_height");
 			
-			std::vector<Ref<Texture2D>> diffuseMaps = loadMaterial(material,
+			std::vector<Ref<Texture2D>> diffuseMaps = LoadMaterial(material,
 				aiTextureType_DIFFUSE, "_diffuse");
 
-			std::vector<Ref<Texture2D>> specularMaps = loadMaterial(material,
+			std::vector<Ref<Texture2D>> specularMaps = LoadMaterial(material,
 				aiTextureType_SPECULAR, "_specular");
 
-			std::vector< Ref<Texture2D>> normalMaps = loadMaterial(material, 
+			std::vector< Ref<Texture2D>> normalMaps = LoadMaterial(material, 
 				aiTextureType_HEIGHT, "_normal");
 
 			materials = std::make_shared<PBRMaterial>(ambientMaps, diffuseMaps, specularMaps, normalMaps);
@@ -154,7 +203,7 @@ namespace Engine
 
 		return Mesh(vertices, indices, materials);
 	}
-	std::vector<Ref<Texture2D>> Model::loadMaterial(
+	std::vector<Ref<Texture2D>> Model::LoadMaterial(
 		aiMaterial* mat, 
 		const aiTextureType& type,
 		const std::string& name
@@ -166,28 +215,28 @@ namespace Engine
 		{
 			aiString str;
 			mat->GetTexture(type, i, &str);
-			Ref<Texture2D> texture = AssetManager::getTexture2DLibrary().load(s_folderPath + m_path + str.C_Str(), str.C_Str() + name, false);
+			Ref<Texture2D> texture = AssetManager::GetTexture2DLibrary().Load(sFolderPath + mPath + str.C_Str(), str.C_Str() + name, false);
 			textures.push_back(texture);
 		}
 
 		return textures;
 	}
 
-	void Model::updateDimensions(
+	void Model::UpdateDimensions(
 		const Vec3& vector
 	)
 	{
-		if (vector.x > m_dimensions.max.x)
-			m_dimensions.max.x = vector.x;
-		else if (vector.x < m_dimensions.min.x)
-			m_dimensions.min.x = vector.x;
-		if (vector.y > m_dimensions.max.y)
-			m_dimensions.max.y = vector.y;
-		else if (vector.y < m_dimensions.min.y)
-			m_dimensions.min.y = vector.y;
-		if (vector.z > m_dimensions.max.z)
-			m_dimensions.max.z = vector.z;
-		else if (vector.z < m_dimensions.min.z)
-			m_dimensions.min.z = vector.z;
+		if (vector.x > mDimensions.max.x)
+			mDimensions.max.x = vector.x;
+		else if (vector.x < mDimensions.min.x)
+			mDimensions.min.x = vector.x;
+		if (vector.y > mDimensions.max.y)
+			mDimensions.max.y = vector.y;
+		else if (vector.y < mDimensions.min.y)
+			mDimensions.min.y = vector.y;
+		if (vector.z > mDimensions.max.z)
+			mDimensions.max.z = vector.z;
+		else if (vector.z < mDimensions.min.z)
+			mDimensions.min.z = vector.z;
 	}
 }

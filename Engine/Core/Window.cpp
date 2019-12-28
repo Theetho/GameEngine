@@ -8,121 +8,128 @@ namespace Engine
 
 /// Window
 
-	bool Window::s_GLFWInitialized(false);
+	bool WindowWindows::sGLFWInitialized(false);
 
 	Window::Window()
-	{
-	}
+	{}
 
 	Window::~Window()
+	{}
+
+	Window* Window::Create(const WindowData& window_data)
 	{
+	#ifdef ENGINE_WINDOWS
+		return new WindowWindows(window_data);
+	#endif // ENGINE_WINDOWS
 	}
 
-	Window* Window::Create(
-		const Window::WindowData& windowData
-	)
+	unsigned int Window::GetWidth() const
 	{
-		#ifdef ENGINE_WINDOWS
-		return new WindowWindows(windowData);
-		#endif // ENGINE_WINDOWS
+		return mData.width;
+	}
+
+	unsigned int Window::GetHeight() const
+	{
+		return mData.height;
+	}
+
+	const std::string& Window::GetTitle() const
+	{
+		return mData.title;
+	}
+
+	void Window::SetEventCallback(const EventCallbackFunction& event_callback)
+	{
+		mData.event_callback = event_callback;
 	}
 
 /// Windows window
 
-	WindowWindows::WindowWindows(
-		const WindowData& windowData
-	)
+	WindowWindows::WindowWindows(const WindowData& window_data)
 	{
-		this->initialize(windowData);
+		this->Initialize(window_data);
 	}
 	
 	WindowWindows::~WindowWindows()
 	{
-		this->shutdown();
+		this->Shutdown();
 	}
 	
-	void WindowWindows::onUpdate(
-		const double& delta
-	)
+	void WindowWindows::OnUpdate(const double& delta)
 	{
 		glfwPollEvents();
-		m_context->swapBuffers();
+		mContext->SwapBuffers();
 	}
 	
-	void WindowWindows::resize(
-		const unsigned int& width, 
-		const unsigned int& height
-	)
+	void WindowWindows::Resize(unsigned int width, unsigned int height)
 	{
-		m_data.width =	width;
-		m_data.height = height;
+		mData.width =	width;
+		mData.height = height;
 
-		glfwSetWindowSize(m_window, width, height);
+		glfwSetWindowSize(mWindow, width, height);
 
 		ENGINE_LOG_TRACE("Resized the window {0} to {1} x {2}",
-						 m_data.title, width, height);
+						 mData.title, width, height);
 	}
 
-	void WindowWindows::setFullscreen(const bool& set)
+	void* WindowWindows::GetOSWindow()
 	{
-		if (set)
+		return mWindow;
+	}
+
+	void WindowWindows::SetFullscreen(bool Set)
+	{
+		if (Set)
 		{
 			auto monitor = glfwGetPrimaryMonitor();
 			auto videoMode = glfwGetVideoMode(monitor);
-			glfwSetWindowMonitor(m_window, monitor, 0, 0, videoMode->width, videoMode->height, GLFW_DONT_CARE);
+			glfwSetWindowMonitor(mWindow, monitor, 0, 0, videoMode->width, videoMode->height, GLFW_DONT_CARE);
 		}
 		else
 		{
-			glfwSetWindowMonitor(m_window, nullptr, 200, 200, m_data.getDefaultWidth(), m_data.getDefaultHeight(), GLFW_DONT_CARE);
+			glfwSetWindowMonitor(mWindow, nullptr, 200, 200, mData.GetDefaultWidth(), mData.GetDefaultHeight(), GLFW_DONT_CARE);
 		}
 	}
 	
-	void WindowWindows::initialize(
-		const WindowData& windowData
-	)
+	void WindowWindows::Initialize(const WindowData& window_data)
 	{
-		m_data.width =	windowData.width;
-		m_data.height = windowData.height;
-		m_data.title =	windowData.title;
+		mData.width  = window_data.width;
+		mData.height = window_data.height;
+		mData.title  = window_data.title;
 
-		if (!s_GLFWInitialized)
+		if (!sGLFWInitialized)
 		{
 			int status = glfwInit();
-			ENGINE_ASSERT(status, "Failed to initialize GLFW");
-			s_GLFWInitialized = true;
+			ENGINE_ASSERT(status, "Failed to Initialize GLFW");
+			sGLFWInitialized = true;
 		}
 
-		m_window = glfwCreateWindow(
-			m_data.width,
-			m_data.height,
-			m_data.title.c_str(),
-			nullptr, nullptr
-		);
+		mWindow = glfwCreateWindow(mData.width, mData.height, mData.title.c_str(), nullptr, nullptr);
 
-		m_context = new OpenGLContext(m_window);
-		m_context->initialize();
+		mContext = new OpenGLContext(mWindow);
+		mContext->Initialize();
 
-		glfwSetWindowUserPointer(m_window, &m_data);
+		glfwSetWindowUserPointer(mWindow, &mData);
 
-		this->setCallbacks();
+		this->SetCallbacks();
 
 		ENGINE_LOG_TRACE(
 			"Creating a window \"{0}\", {1} x {2}",
-			m_data.title, m_data.width, m_data.height
+			mData.title, mData.width, mData.height
 		);
 	}
 	
-	void WindowWindows::shutdown()
+	void WindowWindows::Shutdown()
 	{
-		glfwDestroyWindow(m_window);
-		ENGINE_LOG_TRACE("Closed the window \"{0}\"", m_data.title);
-		delete m_context;
+		glfwDestroyWindow(mWindow);
+		ENGINE_LOG_TRACE("Closed the window \"{0}\"", mData.title);
+		delete mContext;
 	}
 	
-	void WindowWindows::setCallbacks()
+	void WindowWindows::SetCallbacks()
 	{
 		// Resize window
-		glfwSetWindowSizeCallback(m_window, [](
+		glfwSetWindowSizeCallback(mWindow, [](
 			GLFWwindow* window,
 			int width,
 			int height)
@@ -131,27 +138,27 @@ namespace Engine
 				data.width = width;
 				data.height = height;
 
-				create_event(Event::Resized);
-				event.sizeEvent(width, height);
+				CreateEngineEvent(Event::Resized);
+				event.mSizeEvent(width, height);
 
-				data.eventCallback(event);
+				data.event_callback(event);
 			}
 		);
 
 		// Closing the window
-		glfwSetWindowCloseCallback(m_window, [](
+		glfwSetWindowCloseCallback(mWindow, [](
 			GLFWwindow* window)
 			{
 				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-				create_event(Event::Closed);
+				CreateEngineEvent(Event::Closed);
 				
-				data.eventCallback(event);
+				data.event_callback(event);
 			}
 		);
 
 		// Keyboard events
-		glfwSetKeyCallback(m_window, [](
+		glfwSetKeyCallback(mWindow, [](
 			GLFWwindow* window,
 			int key,
 			int scancode,
@@ -164,20 +171,20 @@ namespace Engine
 
 				if (action == GLFW_PRESS)
 				{
-					event.type = Event::KeyPressed;
-					event.keyEvent(key);
+					event.mType = Event::KeyPressed;
+					event.mKeyEvent(key);
 				}
 				else if (action == GLFW_RELEASE)
 				{
-					event.type = Event::KeyReleased;
-					event.keyEvent(key);
+					event.mType = Event::KeyReleased;
+					event.mKeyEvent(key);
 				}
 				
-				data.eventCallback(event);
+				data.event_callback(event);
 			}
 		);
 
-		glfwSetMouseButtonCallback(m_window, [](
+		glfwSetMouseButtonCallback(mWindow, [](
 			GLFWwindow* window,
 			int button,
 			int action,
@@ -189,59 +196,59 @@ namespace Engine
 
 				if (action == GLFW_PRESS)
 				{
-					event.type = Event::MouseButtonPressed;
-					event.mouseButtonEvent(button);
+					event.mType = Event::MouseButtonPressed;
+					event.mMouseButtonEvent(button);
 				}
 				else if (action == GLFW_RELEASE)
 				{
-					event.type = Event::MouseButtonReleased;
-					event.mouseButtonEvent(button);
+					event.mType = Event::MouseButtonReleased;
+					event.mMouseButtonEvent(button);
 				}
 
-				data.eventCallback(event);
+				data.event_callback(event);
 			}
 		);
 
 		// Text entered
-		glfwSetCharCallback(m_window, [](
+		glfwSetCharCallback(mWindow, [](
 			GLFWwindow* window,
 			unsigned int codepoint)
 			{
 				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 				
-				create_event(Event::TextEntered);
-				event.textEvent(codepoint);
+				CreateEngineEvent(Event::TextEntered);
+				event.mTextEvent(codepoint);
 
-				data.eventCallback(event);
+				data.event_callback(event);
 			}
 		);
 
 		// Scrolled event (only on y-axis)
-		glfwSetScrollCallback(m_window, [](
+		glfwSetScrollCallback(mWindow, [](
 			GLFWwindow* window,
-			double xoffset, 
-			double yoffset)
+			double xoffSet, 
+			double yoffSet)
 			{
 				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-				create_event(Event::MouseScrolled);
-				event.mouseScrolledEvent(xoffset, yoffset);
+				CreateEngineEvent(Event::MouseScrolled);
+				event.mMouseScrolledEvent(xoffSet, yoffSet);
 
-				data.eventCallback(event);
+				data.event_callback(event);
 			}
 		);
 
-		glfwSetCursorPosCallback(m_window, [](
+		glfwSetCursorPosCallback(mWindow, [](
 			GLFWwindow* window,
 			double xpos,
 			double ypos)
 			{
 				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-				create_event(Event::MouseMoved);
-				event.mouseMovedEvent(xpos, ypos);
+				CreateEngineEvent(Event::MouseMoved);
+				event.mMouseMovedEvent(xpos, ypos);
 
-				data.eventCallback(event);
+				data.event_callback(event);
 			}
 		);
 	}

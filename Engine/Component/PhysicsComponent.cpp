@@ -5,53 +5,96 @@
 
 namespace Engine
 {
-	const PhysicsComponent::Force PhysicsComponent::s_force(5.0f, 0.3f);
+	const PhysicsComponent::Force PhysicsComponent::sForce(5.0f, 0.3f);
 
 	PhysicsComponent::PhysicsComponent(
-		GameObject& owner
+		GameObject& gameObject
 	)
-		: Component(owner)
-		, m_transform(owner.getTransform())
-		, m_groundLevel(0.0f)
-		, m_jump()
-		, m_percentage(1.0f, 1.0f)
+		: Component(gameObject)
+		, mTransform(gameObject.GetTransform())
+		, mGroundLevel(0.0f)
+		, m_Jump()
+		, mPercentage(1.0f, 1.0f)
 	{
-		m_jump.isJumping = true;
+		m_Jump.is_jumping = true;
 	}
 
 	PhysicsComponent::~PhysicsComponent()
 	{
 	}
 
-	void PhysicsComponent::onUpdate(
-		const double& delta
-	)
+	void PhysicsComponent::OnUpdate(const double& delta)
 	{
-		Vec3& position = m_transform.getPosition();
+		Vec3& position = mTransform.GetPosition();
 		
 		// Gravity
-		if (!m_jump.isJumping && (position.y > m_groundLevel))
+		if (!m_Jump.is_jumping && (position.y > mGroundLevel))
 		{
-			position.y -= m_percentage.gravity * s_force.gravity * (float)delta;
+			position.y -= mPercentage.gravity * sForce.gravity * (float)delta;
 		}
 		// Jump
-		else if (m_jump.isJumping)
+		else if (m_Jump.is_jumping)
 		{
-			position.y   += m_jump.jumpStrengh * delta;
-			m_jump.delta += delta;
-			if (m_jump.delta >= m_jump.jumpDuration)
+			position.y   += m_Jump.jump_strengh * delta;
+			m_Jump.delta += delta;
+			if (m_Jump.delta >= m_Jump.jump_duration)
 			{
-				m_jump.isJumping = false;
-				m_jump.isFalling = true;
-				m_jump.delta = 0;
+				m_Jump.is_jumping = false;
+				m_Jump.is_falling = true;
+				m_Jump.delta = 0;
 			}
 		}
 		// Only goes here when the object hits the ground
-		else if (m_jump.isFalling)
+		else if (m_Jump.is_falling)
 		{
-			m_jump.isFalling = false;
+			m_Jump.is_falling = false;
 		}
 
-		m_groundLevel = -1000.0f;
+		mGroundLevel = -1000.0f;
+	}
+
+	float PhysicsComponent::GetGravity() const
+	{
+		return mPercentage.gravity * sForce.gravity;
+	}
+	
+	float PhysicsComponent::GetGroundLevel() const
+	{
+		return mGroundLevel;
+	}
+	
+	float PhysicsComponent::GetFriction() const
+	{
+		return mPercentage.friction * sForce.friction;
+	}
+	
+	bool PhysicsComponent::IsInAir() const
+	{
+		return m_Jump.is_jumping || m_Jump.is_falling;
+	}
+	
+	bool PhysicsComponent::IsJumping() const
+	{
+		return m_Jump.is_jumping;
+	}
+	
+	bool PhysicsComponent::IsFalling() const
+	{
+		return m_Jump.is_falling;
+	}
+	
+	void PhysicsComponent::SetGroundLevel(float value)
+	{
+		mGroundLevel = value;
+	}
+	
+	void PhysicsComponent::SetFrictionPecentage(float percentage)
+	{
+		mPercentage.friction = percentage;
+	}
+	
+	void PhysicsComponent::SetIsJumping()
+	{
+		m_Jump.is_jumping = true;
 	}
 }

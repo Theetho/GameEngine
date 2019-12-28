@@ -4,149 +4,142 @@
 using namespace Engine;
 
 
-Bomb::Bomb(
-	Ref<Model> model,
-	const Transform& transform,
-	float power
-)
+Bomb::Bomb(Ref<Model> model, const Transform& transform, float power)
 	: GameObject(transform)
-	, m_model(*model)
-	, m_power(power)
-	, m_material(true)
-	, m_materials({
+	, mModel(*model)
+	, mPower(power)
+	, mMaterial(true)
+	, mMaterials({
 		std::make_shared<RawMaterial>(RawMaterial::Obsidian),
 		std::make_shared<RawMaterial>()
 	 })
 {
-	setScale(0.2);
-	m_model.setMaterial(m_materials[0]);
+	SetScale(0.2);
+	mModel.SetMaterial(mMaterials[0]);
 }
 
 Bomb::~Bomb()
 {
 }
 
-void Bomb::onUpdate(
-	const double& delta
-)
+void Bomb::OnUpdate(const double& delta)
 {
-	GameObject::onUpdate(delta);
+	GameObject::OnUpdate(delta);
 
-	m_lifetime.lifetime += delta;
+	mLifetime.lifetime += delta;
 
-
-	if (m_lifetime.lifetime >= m_lifetime.timeUntilExplosion)
+	if (mLifetime.lifetime >= mLifetime.time_until_explosion)
 	{
-		this->animate();
+		this->Animate();
 	}
 }
 
-void Bomb::animate()
+void Bomb::IncreasePower()
 {
-	if (m_lifetime.lifetime >= m_lifetime.timesActualExplosion[2])
+	mPower += 1.0f;
+}
+
+void Bomb::Animate()
+{
+	if (mLifetime.lifetime >= mLifetime.time_actual_explosion[2])
 	{
-		this->explode();
+		this->Explode();
 	}
-	else if (m_lifetime.lifetime >= m_lifetime.timesActualExplosion[1])
+	else if (mLifetime.lifetime >= mLifetime.time_actual_explosion[1])
 	{
-		m_model.setMaterial(m_materials[1]); 
-		m_transform.setScale(m_transform.getScale() * m_lifetime.scaleFactor);
-		m_lifetime.timesActualExplosion[1] += m_lifetime.timesActualExplosion[0];
+		mModel.SetMaterial(mMaterials[1]); 
+		mTransform.SetScale(mTransform.GetScale() * mLifetime.scale_factor);
+		mLifetime.time_actual_explosion[1] += mLifetime.time_actual_explosion[0];
 	}
-	else if (m_lifetime.lifetime >= m_lifetime.timesExplosion[1]
-		&& m_lifetime.lifetime < m_lifetime.timesExplosion[2])
+	else if (mLifetime.lifetime >= mLifetime.time_explosion[1]
+		&& mLifetime.lifetime < mLifetime.time_explosion[2])
 	{	
-		m_model.setMaterial(
-			(m_material ? m_materials[0] : m_materials[1])
+		mModel.SetMaterial(
+			(mMaterial ? mMaterials[0] : mMaterials[1])
 		);
-		m_material = !m_material;
+		mMaterial = !mMaterial;
 
-		m_lifetime.timesExplosion[1] += m_lifetime.timesExplosion[0];
+		mLifetime.time_explosion[1] += mLifetime.time_explosion[0];
 	}
-
 }
 
-void Bomb::explode()
+void Bomb::Explode()
 {
 	hasExploded = true;
-	for (auto wall : m_surroundingWalls)
+	for (auto wall : mSurroundingWalls)
 	{
-		wall->explode();
+		wall->Explode();
 	}
 }
 
-void Bomb::setModel(
+void Bomb::SetModel(
 	Ref<Model> model)
 {
-	m_model = *model;
+	mModel = *model;
 }
 
-void Bomb::getSurroundingWalls(
-	Map& worldMap
+const Engine::Model& Bomb::GetModel() const
+{
+	return mModel;
+}
+
+void Bomb::GetSurroundingWalls(
+	Map& world_map
 )
 {
 	Vec4 majorPoints{
-		m_transform.getPosition().x - (m_model.getSize().x / 2.0f * m_transform.getScale().x),
-		m_transform.getPosition().x + (m_model.getSize().x / 2.0f * m_transform.getScale().x),
-		m_transform.getPosition().z - (m_model.getSize().z / 2.0f * m_transform.getScale().z),
-		m_transform.getPosition().z + (m_model.getSize().z / 2.0f * m_transform.getScale().z)
+		mTransform.GetPosition().x - (mModel.GetSize().x / 2.0f * mTransform.GetScale().x),
+		mTransform.GetPosition().x + (mModel.GetSize().x / 2.0f * mTransform.GetScale().x),
+		mTransform.GetPosition().z - (mModel.GetSize().z / 2.0f * mTransform.GetScale().z),
+		mTransform.GetPosition().z + (mModel.GetSize().z / 2.0f * mTransform.GetScale().z)
 	};
 
-	for (auto& wall : worldMap.getDestructibleWalls())
+	for (auto& wall : world_map.GetDestructibleWalls())
 	{
-		if (!wall.isEnabled())
+		if (!wall.IsEnabled())
 			continue;
 
 		auto boundingBox = wall.GetComponent<BoxCollider>();
 		
-		Vec3 vectorBetweenCenters = m_transform.getPosition() - wall.getTransform().getPosition();
+		Vec3 vector_between_centers = mTransform.GetPosition() - wall.GetTransform().GetPosition();
 		
-		float distanceX = std::abs(vectorBetweenCenters.x);
-		float distanceZ = std::abs(vectorBetweenCenters.z);
+		float distance_x = std::abs(vector_between_centers.x);
+		float distance_z = std::abs(vector_between_centers.z);
 
-		float radiusX = m_model.getSize().x / 2.0f * m_transform.getScale().x;
-		float radiusZ = m_model.getSize().z / 2.0f * m_transform.getScale().z;
+		float radius_x = mModel.GetSize().x / 2.0f * mTransform.GetScale().x;
+		float radius_z = mModel.GetSize().z / 2.0f * mTransform.GetScale().z;
 
-		float wallSizeX = wall.getModel()->getSize().x * wall.getTransform().getScale().x;
-		float wallSizeZ = wall.getModel()->getSize().z * wall.getTransform().getScale().z;
+		float wall_size_x = wall.GetModel()->GetSize().x * wall.GetTransform().GetScale().x;
+		float wall_size_z = wall.GetModel()->GetSize().z * wall.GetTransform().GetScale().z;
 
-		if ((areAlignOnAxis(majorPoints[0], majorPoints[1], boundingBox->getMin().x, boundingBox->getMax().x)
-		||   areAlignOnAxis(majorPoints[2], majorPoints[3], boundingBox->getMin().z, boundingBox->getMax().z))
-		&&	(areCloseEnough(radiusX, wallSizeX, distanceX)
-		||   areCloseEnough(radiusZ, wallSizeZ, distanceZ)))
+		if ((AreAlignOnAxis(majorPoints[0], majorPoints[1], boundingBox->GetMin().x, boundingBox->GetMax().x)
+		||   AreAlignOnAxis(majorPoints[2], majorPoints[3], boundingBox->GetMin().z, boundingBox->GetMax().z))
+		&&	(AreCloseEnough(radius_x, wall_size_x, distance_x)
+		||   AreCloseEnough(radius_z, wall_size_z, distance_z)))
 		{
 
-			m_surroundingWalls.push_back(&wall);
+			mSurroundingWalls.push_back(&wall);
 		}
 	}
 }
 
-bool Bomb::areAlignOnAxis(
-	float minBombPoint,
-	float maxBombPoint,
-	float minWallPoint,
-	float maxWallPoint
-)
+bool Bomb::AreAlignOnAxis(float min_bomb_point, float max_bomb_point, float min_wall_point, float max_wall_point)
 {	//	 Check if the bomb is aligned with the wall, like this :
 	//	 _______      _______      _______
 	//  |\ ___ /| or |\ ___ /| or |\ ___ /|
 	//	| |	  | |	 | |   | |	  | |   | |
 	//   \|O__|/	  \|_O_|/	   \|__O|/
 	//	   	
-	return minWallPoint <= minBombPoint && maxBombPoint <= maxWallPoint;
+	return min_wall_point <= min_bomb_point && max_bomb_point <= max_wall_point;
 }
 
-bool Bomb::areCloseEnough(
-	float bombRadius,
-	float wallSize,
-	float distance
-)
+bool Bomb::AreCloseEnough(float bomb_radius, float wall_size, float distance)
 {	//	  __
 	// _O|__| -> min distance required between centers
-	float min = bombRadius + (wallSize * 0.5f);
+	float min = bomb_radius + (wall_size * 0.5f);
 	//	  __
 	// O_|__| -> max distance authorized between centers
 	// It increases with bomb's power
-	float max = (wallSize * m_power) - bombRadius;
+	float max = (wall_size * mPower) - bomb_radius;
 	return distance >= min && distance <= max;
 }

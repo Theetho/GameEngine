@@ -6,7 +6,6 @@
 #include "Camera3D.h"
 #include "Include/Renderer.h"
 #include "System/CollisionSystem.h"
-#include "System/PhysicsEngine.h"
 
 namespace Engine
 {
@@ -14,49 +13,27 @@ namespace Engine
 	{
 	public:
 		Application();
-
 		virtual ~Application();
 
-		inline static Application& get()
-		{ 
-			return *s_instance;
-		}
+		static Application& Get();
 
-		void run();
-
-		void onEvent(
-			Event& event
-		);
-	
-		inline void pushLayer(
-			Layer* layer
-		)
-		{
-			m_layerStack.push(layer);
-		}
-
-		inline void popLayer()
-		{
-			m_layerStack.pop();
-		}
-
-		inline Window& getWindow() 
-		{
-			return *m_window; 
-		}
-
+		void Run();
+		void OnEvent(Event& event);
+		void PushLayer(Layer* layer);
+		void PopLayer();
+		
+		Window& GetWindow();
 	private:
-		Scope<Window>		   m_window;
-		Ref<CollisionSystem>   m_collisionSystem;
-	//	PhysicsEngine*		   m_physicsEngine;
-		bool				   m_running = true;
-		LayerStack			   m_layerStack;
-		double				   m_time = 0.0, m_deltaTime = 0.0;
-		double				   m_FPS_CAP = 1.0 / 60.0;
-	private:
-		static Application* s_instance;
+		static Application*	   sInstance;
+		
+		Scope<Window>		   mWindow;
+		Ref<CollisionSystem>   mCollisionSystem;
+		bool				   mRunning = true;
+		LayerStack			   mLayerStack;
+		double				   mTime = 0.0, mDeltaTime = 0.0;
+		double				   mFpsCap = 1.0 / 60.0;
 	};
 
 	// Has to be define by the game
-	Application* createApplication();
+	Application* CreateApplication();
 }

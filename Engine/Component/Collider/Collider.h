@@ -8,103 +8,47 @@
 
 namespace Engine
 {
+	// Declaration
 	class Collision;
 
 	class Collider : public Component
 	{
-
 	public:
-		Collider(
-			GameObject& owner,
-			const Vec3& center
-		);
+		Collider(GameObject& game_object, const Vec3& center);
+		Collider(const Collider& collider);
+		Collider(const Collider&& collider) noexcept;
+		Collider& operator=(const Collider& collider);
+		Collider& operator=(const Collider&& collider) noexcept;
+		virtual ~Collider();
 
-		Collider(
-			const Collider& other
-		);
+		virtual void OnUpdate(const double& delta) override;
+		virtual void AttachRigidBody(RigidBody* rigid_body);
 
-		Collider(
-			const Collider&& other
-		) noexcept;
-
-		Collider& operator=(
-			const Collider& other
-		);
-
-		Collider& operator=(
-			const Collider&& other
-		) noexcept;
-
-		virtual ~Collider()
-		{	
-		}
-
-		virtual void onUpdate(
-			const double& delta
-		) override;
-
-		inline const Vec3& getCenter() const
-		{
-			return m_center;
-		}
-
-		inline virtual const Vec3& getMax() const = 0;
-
-		inline virtual const Vec3& getMin() const = 0;
-
-		inline virtual void attachRigidBody(
-			RigidBody* rigidBody
-		)
-		{
-			m_rigidBody = rigidBody;
-		}
-
-		inline virtual const RigidBody* getRigidBody() const
-		{
-			return m_rigidBody;
-		}
-
+		virtual const Vec3&      GetCenter() const;
+		virtual const Vec3&      GetMax() const = 0;
+		virtual const Vec3&      GetMin() const = 0;
+		virtual const RigidBody* GetRigidBody() const;
 	protected:
-		Vec3 m_center;
-		Vec3 m_offset;
-		RigidBody* m_rigidBody = nullptr;
+		Vec3	   mCenter;
+		Vec3	   mOffset;
+		RigidBody* mRigidBody = nullptr;
 	};
 
-	// struct that store data
-	// of a collision
+	// Class that stores data of a collision
 	class Collision
 	{
 	public:
-		Collision(
-			const bool& collide,
-			const float& distanceUpAxis,
-			const Collider* c1,
-			const Collider* c2
-		)
-			: m_collide(collide)
-			, m_distanceUpAxis(distanceUpAxis)
-			, m_colliders({ c1, c2 })
-		{}
+		Collision(bool collide, float distance_up_axis, const Collider* first, const Collider* second);
 
-		inline const bool& doesCollide() const
-		{
-			return m_collide;
-		}
-		inline const float& distanceUpAxis() const
-		{
-			return m_distanceUpAxis;
-		}
-		inline const std::pair<const Collider*, const Collider*>& getColliders() const
-		{
-			return m_colliders;
-		}
-
+		bool  IsColliding() const;
+		float GetDistanceUpAxis() const;
+		const std::pair<const Collider*, const Collider*>& GetColliders() const;
 	private:
 		// The two colliders that are supposedly colliding
-		const std::pair<const Collider*, const Collider*> m_colliders;
+		const std::pair<const Collider*, const Collider*> mColliders;
 		// Boolean to tell whether the two colliders are colliding
-		const bool  m_collide;
+		const bool  mIsColliding;
 		// The distance beetween the two colliders on the up axis
-		const float m_distanceUpAxis;
+		const float mDistanceUpAxis;
 	};
 }

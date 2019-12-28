@@ -8,20 +8,11 @@ namespace Engine
 	{
 	public:
 		OpenGLUniformBuffer();
-		
 		~OpenGLUniformBuffer();
 
-		inline void bind() const override
-		{
-			glBindBuffer(GL_UNIFORM_BUFFER, m_id);
-		}
-
-		inline void unbind() const override
-		{
-			glBindBuffer(GL_UNIFORM_BUFFER, 0);
-		}
-
+		void Bind() const override;
+		void Unbind() const override;
 	private:
-		unsigned int m_id;
+		unsigned int mId;
 	};
 }

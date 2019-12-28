@@ -8,20 +8,12 @@ namespace Engine
 	{
 	public:
 		virtual ~Layer()
-		{
-		}
+		{}
 
-		virtual void onAttach() = 0;
-
-		virtual void onDetach() = 0;
-
-		virtual void onUpdate(
-			const double& delta
-		) = 0;
-
-		virtual void onEvent(
-			Event& event
-		) = 0;
+		virtual void OnAttach() = 0;
+		virtual void OnDetach() = 0;
+		virtual void OnUpdate(const double& delta) = 0;
+		virtual void OnEvent(Event& event) = 0;
 	};
 };
 

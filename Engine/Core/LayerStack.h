@@ -8,31 +8,24 @@ namespace Engine
 	{
 	public:
 		LayerStack();
-
 		~LayerStack();
 
-		void push(
-			Layer* layer
-		);
+		void Push(Layer* layer);
+		void Pop();
 
-		void pop();
-
-		inline bool isEmpty() const
-		{
-			return !m_stack.size();
-		}
+		bool IsEmpty() const;
 
 		std::vector<Layer*>::iterator begin() 
 		{ 
-			return m_stack.begin();
+			return mStack.begin();
 		}
 		std::vector<Layer*>::iterator end()
 		{
-			return m_stack.end(); 
+			return mStack.end(); 
 		}
 
 	private:
-		std::vector<Layer*>	m_stack;
-		unsigned int		m_insert = 0;
+		std::vector<Layer*>	mStack;
+		unsigned int		mInsert = 0;
 	};
 }

@@ -5,118 +5,118 @@
 using namespace Engine;
 
 BombermanLayer::BombermanLayer()
-	: m_player(AssetManager::getModelLibrary().load("varyasuit/DolBarriersuit.obj", "player"))
-	, m_camera(m_player, 6.0f)
-	, m_skybox("Skyboxes/Day")
+	: mPlayer(AssetManager::GetModelLibrary().Load("varyasuit/DolBarriersuit.obj", "player"))
+	, mCamera(mPlayer, 6.0f)
+	, mSkybox("Skyboxes/Day")
 {
 }
 
 BombermanLayer::~BombermanLayer()
 {}
 
-void BombermanLayer::onAttach()
+void BombermanLayer::OnAttach()
 {
-	m_map = FileLoader::loadMap("Assets/MapFiles/map_1.map");
+	mMap = FileLoader::LoadMap("AsSets/MapFiles/map_1.map");
 
-	AssetManager::getModelLibrary().load("sphere/sphere.obj", "bomb");
+	AssetManager::GetModelLibrary().Load("sphere/sphere.obj", "bomb");
 
-	m_player.setPosition(m_map->getEntry());
-	m_player.setScale(0.05f);
+	mPlayer.SetPosition(mMap->GetEntry());
+	mPlayer.SetScale(0.05f);
 
-	m_lights.push_back(
-		std::make_shared<DirectionalLight>(Vec3(0.05f, -1.0f, 0.0f), Color(0.7f, 0.7f, 0.7f))
+	mLights.push_back(
+		std::make_shared<DirectionalLight>(Vec3(0.5f, -0.5f, 0.0f))
 	);
 	
-	Ref<Shader> shader = AssetManager::getShaderLibrary().load("lights_materials.glsl", "scene");
-	Ref<Shader> shader_pbr = AssetManager::getShaderLibrary().load("lights_PBR.glsl", "player");
-	AssetManager::getShaderLibrary().load("skybox.glsl", "skybox");
+	Ref<Shader> shader = AssetManager::GetShaderLibrary().Load("lights_materials.glsl", "scene");
+	Ref<Shader> shader_pbr = AssetManager::GetShaderLibrary().Load("lights_PBR.glsl", "player");
+	AssetManager::GetShaderLibrary().Load("skybox.glsl", "skybox");
 
-	for (int i = 0; i < m_lights.size(); ++i)
+	for (int i = 0; i < mLights.size(); ++i)
 	{
-		m_lights[i]->load(shader, i);
-		m_lights[i]->load(shader_pbr, i);
+		mLights[i]->Load(shader, i);
+		mLights[i]->Load(shader_pbr, i);
 	}
 
-	RenderCommand::setClearColor(Color::Black);
-	Input::toggleCursor();
+	RenderCommand::SetClearColor(Color::Black);
+	Input::ToggleCursor();
 }
 
-void BombermanLayer::onDetach()
+void BombermanLayer::OnDetach()
 {}
 
-void BombermanLayer::onUpdate(
+void BombermanLayer::OnUpdate(
 	const double& delta
 )
 {
-	m_player.onUpdate(delta);
-	m_camera.onUpdate(delta);
-	m_map->onUpdate(delta, m_bombs.size() == 0);
+	mPlayer.OnUpdate(delta);
+	mCamera.OnUpdate(delta);
+	mMap->OnUpdate(delta, mBombs.size() == 0);
 
-	while(m_player.getBombs().size())
+	while(mPlayer.GetBombs().size())
 	{
-		auto bomb = m_player.getBombs()[m_player.getBombs().size() - 1];
-		bomb->getSurroundingWalls(*m_map);
-		m_bombs.push_back(bomb);
-		m_player.getBombs().pop_back();
+		auto bomb = mPlayer.GetBombs()[mPlayer.GetBombs().size() - 1];
+		bomb->GetSurroundingWalls(*mMap);
+		mBombs.push_back(bomb);
+		mPlayer.GetBombs().pop_back();
 	}
 	
-	RenderCommand::clear();
+	RenderCommand::Clear();
 
-	Ref<Shader> shader = AssetManager::getShaderLibrary().get("scene");
-	Ref<Shader> shader_pbr = AssetManager::getShaderLibrary().get("player");
-	Ref<Shader> shader_skybox = AssetManager::getShaderLibrary().get("skybox");
+	Ref<Shader> shader = AssetManager::GetShaderLibrary().Get("scene");
+	Ref<Shader> shader_pbr = AssetManager::GetShaderLibrary().Get("player");
+	Ref<Shader> shader_skybox = AssetManager::GetShaderLibrary().Get("skybox");
 
-	Renderer::BeginScene(m_camera, shader_pbr);
+	Renderer::BeginScene(mCamera, shader_pbr);
 
-	for (auto wall : m_map->getWalls())
-		Renderer::Submit(*wall.getModel(), wall.getTransform());
+	for (auto wall : mMap->GetWalls())
+		Renderer::Submit(*wall.GetModel(), wall.GetTransform());
 
-	for (auto wall : m_map->getDestructibleWalls())
+	for (auto wall : mMap->GetDestructibleWalls())
 	{
-		if (wall.isEnabled())
+		if (wall.IsEnabled())
 		{
-			Renderer::Submit(*wall.getModel(), wall.getTransform());
+			Renderer::Submit(*wall.GetModel(), wall.GetTransform());
 		}
 	}
 
-	for (auto floor : m_map->getFloor())
-		Renderer::Submit(*floor.getModel(), floor.getTransform());
+	for (auto floor : mMap->GetFloor())
+		Renderer::Submit(*floor.GetModel(), floor.GetTransform());
 	
-	Renderer::Submit(*m_map->getExit().getModel(), m_map->getExit().getTransform());
+	Renderer::Submit(*mMap->GetExit().GetModel(), mMap->GetExit().GetTransform());
 
-	Renderer::Submit(*m_player.getModel(), m_player.getTransform());
+	Renderer::Submit(*mPlayer.GetModel(), mPlayer.GetTransform());
 
 	Renderer::EndScene();
 	
-	Renderer::BeginScene(m_camera, shader);
+	Renderer::BeginScene(mCamera, shader);
 	
-	auto bomb = m_bombs.begin();
-	for (size_t i = 0; i < m_bombs.size();)
+	auto bomb = mBombs.begin();
+	for (size_t i = 0; i < mBombs.size();)
 	{
-		if (m_bombs[i]->hasExploded)
+		if (mBombs[i]->hasExploded)
 		{
-			m_bombs.erase(bomb);
+			mBombs.erase(bomb);
 			continue;
 		}
 		
-		m_bombs[i]->onUpdate(delta);
-		Renderer::Submit(m_bombs[i]->getModel(), m_bombs[i]->getTransform());
+		mBombs[i]->OnUpdate(delta);
+		Renderer::Submit(mBombs[i]->GetModel(), mBombs[i]->GetTransform());
 		++i; ++bomb;
 	}
 	
 	Renderer::EndScene();
 	
-	Renderer::BeginScene(m_camera, shader_skybox);
+	Renderer::BeginScene(mCamera, shader_skybox);
 	
-	Renderer::Submit(m_skybox);
+	Renderer::Submit(mSkybox);
 
 	Renderer::EndScene();
 }
 
-void BombermanLayer::onEvent(
+void BombermanLayer::OnEvent(
 	Engine::Event & event
 )
 {
-	m_camera.onEvent(event);
-	m_player.onEvent(event);
+	mCamera.OnEvent(event);
+	mPlayer.OnEvent(event);
 }

@@ -7,51 +7,23 @@ namespace Engine
 	class Shader
 	{
 	public:
-		Shader(
-			const std::string& filePath,
-			const std::string& name,
-			const bool& useFolderPath
-		);
+		Shader(const std::string& file_path, const std::string& name, bool use_folder_path);
+		virtual ~Shader();
 
-		virtual ~Shader() 
-		{
-		}
+		static Ref<Shader> Create(const std::string& file_path, const std::string& name, bool use_folder_path);
 
-		virtual void bind() const = 0;
-
-		virtual void unbind() const = 0;
-
-		static Ref<Shader> Create(
-			const std::string& filePath,
-			const std::string& name,
-			const bool& useFolderPath
-		);
-
-		static void setFolder(
-			const std::string& folderPath
-		)
-		{
-			s_folderPath = folderPath;
-		}
-
-		inline virtual void setName(
-			const std::string& name
-		)
-		{
-			m_name = name;
-		}
+		virtual void Bind() const = 0;
+		virtual void Unbind() const = 0;
 		
-		inline virtual std::string getName() const
-		{
-			return m_name;
-		}
+		virtual const std::string& GetName() const;
 
+		static void SetFolder(const std::string& folder_path);
+		virtual void SetName(const std::string& name);
 	protected:
-		virtual void readFile(
-			const std::string& filePath
-		) = 0;
-		static std::string s_folderPath;
-		std::string m_name;
+		static std::string sFolderPath;
+		std::string mName;
+		
+		virtual void ReadFile(const std::string& file_path) = 0;
 	};
 }
 

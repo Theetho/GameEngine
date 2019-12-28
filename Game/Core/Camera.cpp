@@ -10,74 +10,72 @@ Camera::Camera(
 )
 	: Camera3DLocked(target, distance)
 {
-	m_angle.yaw = 180.0f;
+	mAngles.yaw = 180.0f;
 }
 
 Camera::~Camera()
 {
 }
 
-void Camera::onUpdate(
-	const double& delta
-)
+void Camera::OnUpdate(const double& delta)
 {
-	Camera3D::onUpdate(delta);
+	Camera3D::OnUpdate(delta);
 
-	calculateZoom();
-	calculatePitch();
-	calculateAngleAroundPlayer();
+	CalculateZoom();
+	CalculatePitch();
+	CalculateAngleAroundPlayer();
 
-	float horizontal = calculateHorizontalDistance();
-	float vertical   = calculateVerticalDistance();
+	float horizontal = CalculateHorizontalDistance();
+	float vertical   = CalculateVerticalDistance();
 
-	m_position.x = m_target.getTransform().getPosition().x - horizontal * sin(glm::radians(m_angle.yaw));
-	m_position.z = m_target.getTransform().getPosition().z + horizontal * cos(glm::radians(m_angle.yaw));
-	m_position.y = m_target.getTransform().getPosition().y + vertical;
+	mPosition.x = mTarget.GetTransform().GetPosition().x - horizontal * sin(glm::radians(mAngles.yaw));
+	mPosition.z = mTarget.GetTransform().GetPosition().z + horizontal * cos(glm::radians(mAngles.yaw));
+	mPosition.y = mTarget.GetTransform().GetPosition().y + vertical;
 
-	updateTargetAxis();
+	UpdateTargetAxis();
 }
 
-void Camera::calculateAngleAroundPlayer()
+void Camera::CalculateAngleAroundPlayer()
 {
-	if (Input::isMouseButtonPressed(ENGINE_MOUSE_BUTTON_LEFT))
+	if (Input::IsMouseButtonPressed(ENGINE_MOUSE_BUTTON_LEFT))
 	{
-		m_angle.yaw -= Input::getMouseOffset().x * 0.05f;
-		if (m_angle.yaw < 0.0f)
+		mAngles.yaw -= Input::GetMouseOffset().x * 0.05f;
+		if (mAngles.yaw < 0.0f)
 		{
-			m_angle.yaw += 360.f;
+			mAngles.yaw += 360.f;
 		}
-		else if (m_angle.yaw > 360.0f)
+		else if (mAngles.yaw > 360.0f)
 		{
-			m_angle.yaw -= 360.f;
+			mAngles.yaw -= 360.f;
 		}
 	}
 }
 
-void Camera::updateTargetAxis()
+void Camera::UpdateTargetAxis()
 {
-	auto movement = m_target.GetComponent<Movement>();
+	auto movement = mTarget.GetComponent<Movement>();
 
 	if (!movement)
 		return;
 
 	Vec3 axis;
 
-	if (m_angle.yaw < 45.f || m_angle.yaw >= 315.f)
+	if (mAngles.yaw < 45.f || mAngles.yaw >= 315.f)
 	{
 		axis = Vec3(0.0f, 0.0f, -1.0f);
 	}
-	else if (m_angle.yaw < 135.f)
+	else if (mAngles.yaw < 135.f)
 	{
 		axis = Vec3(1.0f, 0.0f, 0.0f);
 	}
-	else if (m_angle.yaw < 225.f)
+	else if (mAngles.yaw < 225.f)
 	{
 		axis = Vec3(0.0f, 0.0f, 1.0f);
 	}
-	else if (m_angle.yaw < 315.f)
+	else if (mAngles.yaw < 315.f)
 	{
 		axis = Vec3(-1.0f, 0.0f, 0.0f);
 	}
 
-	movement->setForwardAxis(axis);
+	movement->SetForwardAxis(axis);
 }

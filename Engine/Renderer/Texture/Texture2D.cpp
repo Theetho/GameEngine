@@ -6,27 +6,21 @@
 
 namespace Engine
 {
-	Texture2D::Texture2D(
-		const std::string& filePath,
-		const std::string& name,
-		const bool& useFolderPath
-	)
-		: Texture(filePath, name, useFolderPath)
-	{
-	}
+	Texture2D::Texture2D(const std::string& file_path, const std::string& name, bool use_folder_path)
+		: Texture(file_path, name, use_folder_path)
+	{}
 
-	Ref<Texture2D> Texture2D::Create(
-		const std::string& filePath,
-		const std::string& name,
-		const bool& useFolderPath
-	)
+	Texture2D::~Texture2D()
+	{}
+
+	Ref<Texture2D> Texture2D::Create(const std::string& file_path, const std::string& name, bool use_folder_path)
 	{
-		switch (Renderer::getAPI())
+		switch (Renderer::GetAPI())
 		{
 		case Engine::API::None:
 			ENGINE_ASSERT(false, "Api not supported");
 		case Engine::API::OpenGL:
-			return std::make_shared<OpenGLTexture2D>(filePath, name, useFolderPath);
+			return std::make_shared<OpenGLTexture2D>(file_path, name, use_folder_path);
 		}
 	}
 }

@@ -3,28 +3,28 @@
 
 namespace Engine
 {
-	Component::Component(
-		GameObject& owner
-	)
-		: m_owner(owner)
-	{
-	}
+	Component::Component(GameObject& game_object)
+		: mGameObject(game_object)
+	{}
 
-	Component::Component(
-		const Component& other
-	) 
-		: m_owner(other.m_owner)
-	{
-	}
+	Component::Component(const Component& component) 
+		: mGameObject(component.mGameObject)
+	{}
 
-	Component::Component(
-		const Component&& other
-	) noexcept
-		: m_owner(other.m_owner)
-	{
-	}
+	Component::Component(const Component&& component) noexcept
+		: mGameObject(component.mGameObject)
+	{}
 
 	Component::~Component()
+	{}
+
+	GameObject& Component::GetGameObject()
 	{
+		return mGameObject;
+	}
+
+	const GameObject& Component::GetGameObject() const
+	{
+		return mGameObject;
 	}
 }

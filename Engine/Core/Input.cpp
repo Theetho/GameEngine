@@ -4,65 +4,82 @@
 
 namespace Engine
 {
-	Input* Input::s_instance = nullptr;
+	Input* Input::sInstance = nullptr;
 
 	Input::Input()
-		: m_cursor(true)
+		: mCursor(true)
 	{
-		ENGINE_ASSERT(!s_instance, "Input instance already created");
-		s_instance = this;
+		ENGINE_ASSERT(!sInstance, "Input instance already created");
+		sInstance = this;
 	}
 
 	Input::~Input()
-	{
-	}
+	{}
 
 	Input* Input::Create()
 	{
-#ifdef ENGINE_WINDOWS
+	#ifdef ENGINE_WINDOWS
 		return new InputWindows;
-#endif // ENGINE_WINDOWS
+	#endif // ENGINE_WINDOWS
 	}
 
+	bool Input::IsKeyPressed(int keycode)
+	{
+		return sInstance->IsKeyPressedImplementation(keycode);
+	}
+
+	bool Input::IsMouseButtonPressed(int button)
+	{
+		return sInstance->IsMouseButtonPressedImplementation(button);
+	}
+
+	Vec2 Input::GetMousePosition() 
+	{
+		return sInstance->GetMousePositionImplementation();
+	}
+
+	Vec2 Input::GetMouseOffset() 
+	{
+		return sInstance->GetMouseOffsetImplementation();
+	}
+
+	void Input::ToggleCursor()
+	{
+		sInstance->ToggleCursorImplementation();
+	}
 
 /// Windows input 
 	InputWindows::InputWindows()
 		: Input()
-	{
-	}
+	{}
 	
 	InputWindows::~InputWindows()
-	{
-	}
+	{}
 	
-	bool InputWindows::isKeyPressedImplementation(
-		const int& keycode
-	) const
+	bool InputWindows::IsKeyPressedImplementation(int keycode) const
 	{
 		auto window = static_cast<GLFWwindow*>(
-			Application::get().getWindow().getOSWindow()
+			Application::Get().GetWindow().GetOSWindow()
 		);
 		int key_state = glfwGetKey(window, keycode);
 		
 		return key_state == GLFW_PRESS || key_state == GLFW_REPEAT;
 	}
 	
-	bool InputWindows::isMouseButtonPressedImplementation(
-		const int& button
-	) const
+	bool InputWindows::IsMouseButtonPressedImplementation(int button) const
 	{
 		auto window = static_cast<GLFWwindow*>(
-			Application::get().getWindow().getOSWindow()
+			Application::Get().GetWindow().GetOSWindow()
 		);
 		int button_state = glfwGetMouseButton(window, button);
 
 		return button_state == GLFW_PRESS || button_state == GLFW_REPEAT;
 	}
 	
-	Vec2 InputWindows::getMousePositionImplementation() const
+	Vec2 InputWindows::GetMousePositionImplementation()
 	{
 		auto window = static_cast<GLFWwindow*>(
-			Application::get().getWindow().getOSWindow()
+			Application::Get().GetWindow().GetOSWindow()
 		);
 		double x, y;
 		glfwGetCursorPos(window, &x, &y);
@@ -70,34 +87,31 @@ namespace Engine
 		return Vec2(x, y);
 	}
 	
-	Vec2 InputWindows::getMouseOffsetImplementation()
+	Vec2 InputWindows::GetMouseOffsetImplementation()
 	{
 		auto window = static_cast<GLFWwindow*>(
-			Application::get().getWindow().getOSWindow()
+			Application::Get().GetWindow().GetOSWindow()
 			);
 		double x, y;
 		glfwGetCursorPos(window, &x, &y);
 
-		Vec2 currentMousePosition(x, y);
+		Vec2 current_mouse_position(x, y);
 
-		Vec2 offset = 
-			m_previousMousePosition 
-		  - currentMousePosition
-		;
+		Vec2 offset = mPreviousMousePosition - current_mouse_position;
 
-		m_previousMousePosition = currentMousePosition;
+		mPreviousMousePosition = current_mouse_position;
 
 		return offset;
 	}
 	
-	void InputWindows::toggleCursorImplementation()
+	void InputWindows::ToggleCursorImplementation()
 	{
-		m_cursor = !m_cursor;
+		mCursor = !mCursor;
 
 		auto window = static_cast<GLFWwindow*>(
-			Application::get().getWindow().getOSWindow()
+			Application::Get().GetWindow().GetOSWindow()
 		);
-		m_cursor
+		mCursor
 		?
 		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL)
 		:

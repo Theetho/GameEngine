@@ -3,19 +3,12 @@
 class Camera : public Engine::Camera3DLocked
 {
 public:
-	Camera(
-		const Engine::GameObject& target,
-		float distance
-	);
+	Camera(const Engine::GameObject& target, float distance);
 	~Camera();
 
-	void onUpdate(
-		const double& delta
-	) override;
-
-	void calculateAngleAroundPlayer() override;
-
+	void OnUpdate( const double& delta) override;
+	void CalculateAngleAroundPlayer() override;
 private:
-	void updateTargetAxis();
+	void UpdateTargetAxis();
 };
 

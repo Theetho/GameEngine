@@ -5,53 +5,59 @@
 namespace Engine
 {
 	OpenGLVertexArray::OpenGLVertexArray()
-		: m_id(0)
+		: mId(0)
 	{
-		glCreateVertexArrays(1, &m_id);
-		glBindVertexArray(m_id);
+		glCreateVertexArrays(1, &mId);
+		glBindVertexArray(mId);
 	}
 
 	OpenGLVertexArray::~OpenGLVertexArray()
 	{
-		glDeleteVertexArrays(1, &m_id);
+		glDeleteVertexArrays(1, &mId);
+	}
+
+	void OpenGLVertexArray::Bind() const
+	{
+		glBindVertexArray(mId);
+	}
+
+	void OpenGLVertexArray::Unbind() const
+	{
+		glBindVertexArray(0);
 	}
 	
-	void OpenGLVertexArray::addVertexBuffer(
-		const Ref<VertexBuffer>& vbo
-	)
+	void OpenGLVertexArray::AddVertexBuffer(Ref<VertexBuffer> vertex_buffer)
 	{
-		glBindVertexArray(m_id);
-		vbo->bind();
+		glBindVertexArray(mId);
+		vertex_buffer->Bind();
 
-		ENGINE_ASSERT(vbo->getLayout().getElements().size(), "Vbo has no layout");
+		ENGINE_ASSERT(vertex_buffer->GetLayout().GetElements().size(), "Vbo has no layout");
 
 		unsigned int index = 0;
 
-		const auto& layout = vbo->getLayout();
+		const auto& layout = vertex_buffer->GetLayout();
 
 		for (const auto& element : layout)
 		{
 			glEnableVertexAttribArray(index);
 			glVertexAttribPointer(
 				index++,
-				element.getElementCount(),
-				shaderDataTypeToGLType(element.type),
+				element.GetElementCount(),
+				ShaderDataTypeToGLType(element.type),
 				element.normalized ? GL_TRUE : GL_FALSE,
-				layout.getStride(),
+				layout.GetStride(),
 				(const void*)element.offset
 			);
 		}
 
-		m_vbos.push_back(vbo);
+		mVertexBuffers.push_back(vertex_buffer);
 	}
 	
-	void OpenGLVertexArray::addIndexBuffer(
-		const Ref<IndexBuffer>& ibo
-	)
+	void OpenGLVertexArray::AddIndexBuffer(Ref<IndexBuffer> ibo)
 	{
-		glBindVertexArray(m_id);
-		ibo->bind();
+		glBindVertexArray(mId);
+		ibo->Bind();
 
-		m_ibo = ibo;
+		mIndexBuffer = ibo;
 	}
 }

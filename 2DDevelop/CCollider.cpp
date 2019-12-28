@@ -7,9 +7,10 @@ CCollider::CCollider(
 )
 	: mGameObject(gameObject)
 	, mCenter(center)
-	, mBounds(bounds)
 	, mOffset(center - gameObject.GetPosition())
 {
+	mBounds["Max"] = bounds;
+	mBounds["Min"] = bounds;
 }
 
 CCollider::~CCollider()
@@ -42,6 +43,11 @@ void CCollider::OnCollisionExit()
 const sf::Vector2f& CCollider::GetCenter() const
 {
 	return mCenter;
+}
+
+const std::unordered_map<const char*, sf::Vector2f>& CCollider::GetBounds() const
+{
+	return mBounds;
 }
 
 void CCollider::AttachRigidBody(CRigidBody* rigidBody)

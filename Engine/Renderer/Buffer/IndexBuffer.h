@@ -5,19 +5,13 @@ namespace Engine
 	class IndexBuffer
 	{
 	public:
-		virtual ~IndexBuffer()
-		{
-		}
+		virtual ~IndexBuffer();
 
-		virtual void bind() const = 0;
+		static Ref<IndexBuffer> Create(unsigned int* indices, unsigned int count);
 
-		virtual void unbind() const = 0;
+		virtual void Bind() const = 0;
+		virtual void Unbind() const = 0;
 
-		virtual unsigned int getCount() const = 0;
-
-		static Ref<IndexBuffer> Create(
-			unsigned int* indices,
-			const unsigned int& count
-		);
+		virtual unsigned int GetCount() const = 0;
 	};
 }

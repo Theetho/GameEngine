@@ -4,24 +4,23 @@
 namespace Engine
 {
 	Benchmark::Benchmark()
-		: m_start(std::chrono::high_resolution_clock::now())
-	{
-	}
+		: mStart(std::chrono::high_resolution_clock::now())
+	{}
+
 	Benchmark::~Benchmark()
-	{
-	}
+	{}
 
-	void Benchmark::tick()
+	void Benchmark::Tick()
 	{
-		m_end = std::chrono::high_resolution_clock::now();
+		mEnd = std::chrono::high_resolution_clock::now();
 
-		auto start = std::chrono::time_point_cast<std::chrono::microseconds>(m_start).time_since_epoch().count();
-		auto end = std::chrono::time_point_cast<std::chrono::microseconds>(m_end).time_since_epoch().count();
+		auto start = std::chrono::time_point_cast<std::chrono::microseconds>(mStart).time_since_epoch().count();
+		auto end = std::chrono::time_point_cast<std::chrono::microseconds>(mEnd).time_since_epoch().count();
 	
 		auto duration = end - start;
 
 		std::cout << duration << "us (" << duration * 0.001 << " ms)\n";
 
-		m_start = m_end;
+		mStart = mEnd;
 	}
 }

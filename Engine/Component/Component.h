@@ -2,41 +2,26 @@
 
 namespace Engine
 {
+	// Avoid mutual inclusion
 	class GameObject;
+
+	/// Abstract base class
 
 	class Component
 	{
 	public:
-		Component(
-			GameObject& owner
-		);
-
-		Component(
-			const Component& other
-		);
-
-		Component(
-			const Component&& other
-		) noexcept;
-
+		Component(GameObject& game_object);
+		Component(const Component& component);
+		Component(const Component&& component) noexcept;
 		virtual ~Component();
 
-		virtual void onUpdate(
-			const double& delta
-		) = 0;
+		virtual void OnUpdate(const double& delta) = 0;
 
-		inline GameObject& getOwner()
-		{
-			return m_owner;
-		}
-
-		inline const GameObject& getOwner() const
-		{
-			return m_owner;
-		}
+		virtual GameObject&		  GetGameObject();
+		virtual const GameObject& GetGameObject() const;
 
 	protected:
-		GameObject& m_owner;
+		GameObject& mGameObject;
 	};
 }
 

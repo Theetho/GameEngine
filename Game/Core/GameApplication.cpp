@@ -6,10 +6,10 @@
 GameApplication::GameApplication()
 	: Application()
 {
-	Engine::Shader::setFolder("./Assets/Shaders/");
-	Engine::Texture::setFolder("./Assets/Textures/");
-	Engine::Model::setFolder("./Assets/Models/");
-	this->pushLayer(new BombermanLayer());
+	Engine::Shader::SetFolder("./Assets/Shaders/");
+	Engine::Texture::SetFolder("./Assets/Textures/");
+	Engine::Model::SetFolder("./Assets/Models/");
+	this->PushLayer(new BombermanLayer());
 
 	//this->getWindow().setFullscreen(true);
 }
@@ -18,7 +18,7 @@ GameApplication::~GameApplication()
 {
 }
 
-Engine::Application* Engine::createApplication()
+Engine::Application* Engine::CreateApplication()
 {
 	return new GameApplication();
 }

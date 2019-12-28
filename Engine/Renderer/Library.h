@@ -10,65 +10,49 @@ namespace Engine
 	class Library
 	{
 	public:
-		virtual ~Library()
-		{
-		}
+		inline virtual ~Library()
+		{}
 
-		virtual void add(
-			const Ref<T>& t
-		)
+		inline void   Add(const Ref<T>& t)
 		{
-			if (!exists(t->getName()))
-				m_references[t->getName()] = t;
+			if (!Exists(t->GetName()))
+				mReferences[t->GetName()] = t;
 		}
-
-		virtual const Ref<T>& load(
-			const std::string& filePath,
-			std::string name = "",
-			const bool& useFolderPath = true
-		)
+		inline Ref<T> Load(const std::string& file_path, std::string name = "", bool use_folder_path = true)
 		{
 			if (name == "")
-				name = extractName(filePath);
+				name = ExtractName(file_path);
 
-			if (!exists(name))
+			if (!Exists(name))
 			{
-				m_references[name] = T::Create(filePath, name, useFolderPath);
+				mReferences[name] = T::Create(file_path, name, use_folder_path);
 			}
 
-			return m_references[name];
+			return mReferences[name];
 		}
-
-		virtual const Ref<T>& get(
-			const std::string& name
-		)
+		inline Ref<T> Get(const std::string& name)
 		{
-			if (exists(name))
+			if (Exists(name))
 			{
-				return m_references[name];
+				return mReferences[name];
 			}
 		}
-
-		virtual bool exists(
-			const std::string& name
-		)
+		inline bool   Exists(const std::string& name)
 		{
-			return m_references.find(name) != m_references.end();
+			return mReferences.find(name) != mReferences.end();
 		}
 	protected:
-		std::unordered_map<std::string, Ref<T>> m_references;
+		std::unordered_map<std::string, Ref<T>> mReferences;
 
-		inline std::string extractName(
-			const std::string& filePath
-		)
+		inline std::string ExtractName(const std::string& file_path)
 		{
 			// Getting the name from the file path
-			size_t lastSlash = filePath.find_last_of("/\\");
+			size_t lastSlash = file_path.find_last_of("/\\");
 			lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
-			size_t lastDot = filePath.rfind('.');
-			int count = lastDot == std::string::npos ? filePath.size() - lastSlash : lastDot - lastSlash;
+			size_t lastDot = file_path.rfind('.');
+			int count = lastDot == std::string::npos ? file_path.size() - lastSlash : lastDot - lastSlash;
 
-			return filePath.substr(lastSlash, count);
+			return file_path.substr(lastSlash, count);
 		}
 	};
 

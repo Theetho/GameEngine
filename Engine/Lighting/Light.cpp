@@ -4,33 +4,38 @@
 
 namespace Engine
 {
-	Light::Light(
-		const Color& color
-	)
-		: m_color(color)
-	{
-	}
+	Light::Light(const Color& color)
+		: mColor(color)
+	{}
 
-	void Light::load(
-		Ref<Shader> shader,
-		const unsigned int& index
-	)
+	Light::~Light()
+	{}
+
+	void Light::Load(Ref<Shader> shader, unsigned int index)
 	{
-		switch (Renderer::getAPI())
+		switch (Renderer::GetAPI())
 		{
 		case API::OpenGL:
-			loadGLUniforms(std::dynamic_pointer_cast<OpenGLShader>(shader), index);
+			LoadGLUniforms(std::dynamic_pointer_cast<OpenGLShader>(shader), index);
 		default:
 			break;
 		}
 	}
-	void Light::loadGLUniforms(
-		Ref<OpenGLShader> shader,
-		const unsigned int& index
-	)
+
+	const Color& Light::GetColor() const
 	{
-		shader->bind();
-		shader->uploadUniform("u_lights[" + std::to_string(index) + "].id",	   this->getID());
-		shader->uploadUniform("u_lights[" + std::to_string(index) + "].color", Vec3(m_color));
+		return mColor;
+	}
+
+	void Light::SetColor(const Color& color)
+	{
+		mColor = color;
+	}
+
+	void Light::LoadGLUniforms(Ref<OpenGLShader> shader, unsigned int index)
+	{
+		shader->Bind();
+		shader->UploadUniform("u_lights[" + std::to_string(index) + "].id",	   this->GetID());
+		shader->UploadUniform("u_lights[" + std::to_string(index) + "].color", Vec3(mColor));
 	}
 }

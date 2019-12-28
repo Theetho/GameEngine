@@ -5,35 +5,38 @@
 
 namespace Engine
 {
-	Skybox::Skybox(
-		const std::string& filePath,
-		const std::string& name,
-		const float& size,
-		const bool& useFolderPath
-	)
-	{
-		m_cubeMap = CubeMap::Create(filePath, name, useFolderPath);
-		m_cube = AssetManager::getModelLibrary().load("cube/cube.obj");
-	}
+	Skybox::Skybox(const std::string& file_path, const std::string& name, float size, bool use_folder_path)
+		: mCubeMap(CubeMap::Create(file_path, name, use_folder_path))
+		, mModel(AssetManager::GetModelLibrary().Load("cube/cube.obj"))
+	{}
 
-	void Skybox::load(
-		Ref<Shader> shader
-	)
+	Skybox::~Skybox()
+	{}
+
+	void Skybox::Load(Ref<Shader> shader)
 	{
-		switch (Renderer::getAPI())
+		switch (Renderer::GetAPI())
 		{
 		case Engine::API::None:
 			ENGINE_ASSERT(false, "Api not supported");
 		case Engine::API::OpenGL:
-			loadOpenGL(std::dynamic_pointer_cast<OpenGLShader>(shader));
+			LoadOpenGL(std::dynamic_pointer_cast<OpenGLShader>(shader));
 		}
 	}
 
-	void Skybox::loadOpenGL(
-		Ref<OpenGLShader> shader
-	)
+	void Skybox::Bind(unsigned int slot) const
 	{
-		shader->bind();
-		shader->uploadUniform("u_skybox", 0);
+		mCubeMap->Bind(slot);
+	}
+
+	Ref<Model> Skybox::GetModel() const
+	{
+		return mModel;
+	}
+
+	void Skybox::LoadOpenGL(Ref<OpenGLShader> shader)
+	{
+		shader->Bind();
+		shader->UploadUniform("u_skybox", 0);
 	}
 }

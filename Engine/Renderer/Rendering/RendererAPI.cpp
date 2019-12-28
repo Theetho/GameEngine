@@ -3,14 +3,8 @@
 
 namespace Engine
 {
-	API RendererAPI::s_api;
+	API RendererAPI::sApi;
 
-	OpenGLRenderer::OpenGLRenderer()
-	{
-		s_api = API::OpenGL;
-	}
-
-	OpenGLRenderer::~OpenGLRenderer()
-	{
-	}
+	RendererAPI::~RendererAPI()
+	{}
 }

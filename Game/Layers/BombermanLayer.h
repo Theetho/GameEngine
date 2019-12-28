@@ -11,18 +11,16 @@ public:
 	BombermanLayer();
 	~BombermanLayer();
 
-	void onAttach() override;
-	void onDetach() override;
-	void onUpdate(const double& delta) override;
-	void onEvent(Engine::Event& event) override;
-
+	void OnAttach() override;
+	void OnDetach() override;
+	void OnUpdate(const double& delta) override;
+	void OnEvent(Engine::Event& event) override;
 private:
-	//Engine::Camera3DLocked					m_camera;
-	Camera									m_camera;
-	Player									m_player;
-	Engine::Scope<Map>						m_map;
-	std::vector<Engine::Ref<Engine::Light>> m_lights;
-	std::vector<Engine::Ref<Bomb>>			m_bombs;
-	Engine::Skybox							m_skybox;
+	Camera									mCamera;
+	Player									mPlayer;
+	Engine::Scope<Map>						mMap;
+	std::vector<Engine::Ref<Engine::Light>> mLights;
+	std::vector<Engine::Ref<Bomb>>			mBombs;
+	Engine::Skybox							mSkybox;
 };
 

@@ -7,39 +7,27 @@ namespace Engine
 	{
 	public:
 		CollisionSystem();
-
 		~CollisionSystem();
 
-		void onUpdate(
-			const double& delta
-		);
+		void OnUpdate(const double& delta);
 
-		inline static Ref<CollisionSystem> Create()
-		{
-			return std::make_shared<CollisionSystem>();
-		}
-
-		inline static Ref<CollisionSystem> Get()
-		{
-			return s_instance;
-		}
+		static Ref<CollisionSystem> Create();
+		static Ref<CollisionSystem> Get();
 
 		template<typename T>
-		inline static void AddCollider(
-			Collider* collider
-		)
+		static void AddCollider(Collider* collider)
 		{
 			static_assert(std::is_base_of<Collider, T>::value, "T is not a collider");
 			
-			if (s_instance)
+			if (sInstance)
 			{
-				if (collider->getOwner().isMoveable() && !s_instance->m_moveableColliders.count(collider))
+				if (collider->GetGameObject().IsMoveable() && !sInstance->mMoveableColliders.count(collider))
 				{
-					s_instance->m_moveableColliders.insert(std::pair<Collider*, std::type_index>(collider,typeid(T)));
+					sInstance->mMoveableColliders.insert(std::pair<Collider*, std::type_index>(collider,typeid(T)));
 				}
-				else if (!s_instance->m_staticColliders.count(collider))
+				else if (!sInstance->mStaticColliders.count(collider))
 				{
-					s_instance->m_staticColliders.insert(std::pair<Collider*, std::type_index>(collider, typeid(T)));
+					sInstance->mStaticColliders.insert(std::pair<Collider*, std::type_index>(collider, typeid(T)));
 				}
 			}
 		}
@@ -48,51 +36,51 @@ namespace Engine
 			Collider* collider
 		)
 		{
-			if (s_instance)
+			if (sInstance)
 			{
-				if (s_instance->m_moveableColliders.count(collider))
+				if (sInstance->mMoveableColliders.count(collider))
 				{
-					s_instance->m_moveableColliders.erase(collider);
+					sInstance->mMoveableColliders.erase(collider);
 				}
 				else
 				{
-					s_instance->m_staticColliders.erase(collider);
+					sInstance->mStaticColliders.erase(collider);
 				}
 			}
 		}
 
 	private:
-		static Ref<CollisionSystem> s_instance;
+		static Ref<CollisionSystem> sInstance;
 
-		std::unordered_map<Collider*, std::type_index> m_moveableColliders;
-		std::unordered_map<Collider*, std::type_index> m_staticColliders;
+		std::unordered_map<Collider*, std::type_index> mMoveableColliders;
+		std::unordered_map<Collider*, std::type_index> mStaticColliders;
 
-		void checkForMovingObjectsCollisions();
+		void CheckForMovingObjectsCollisions();
 
-		Collision collide(
-			const std::pair<Collider*, std::type_index>& kv1,
-			const std::pair<Collider*, std::type_index>& kv2
+		Collision Collide(
+			const std::pair<Collider*, std::type_index>& first,
+			const std::pair<Collider*, std::type_index>& second
 		);
 
-		Collision collide(
-			const BoxCollider* b1,
-			const BoxCollider* b2
+		Collision Collide(
+			const BoxCollider* first,
+			const BoxCollider* second
 		);
 
-		Collision collide(
-			const SphereCollider* s1,
-			const SphereCollider* s2
+		Collision Collide(
+			const SphereCollider* first,
+			const SphereCollider* second
 
 		);
 
-		Collision collide(
-			const BoxCollider* b,
-			const SphereCollider* s
+		Collision Collide(
+			const BoxCollider* box_collider,
+			const SphereCollider* sphere_collider
 		);
 
-		Collision collide(
-			const SphereCollider* s,
-			const BoxCollider* b
+		Collision Collide(
+			const SphereCollider* sphere_collider,
+			const BoxCollider* box_collider
 		);
 	};
 }

@@ -3,74 +3,76 @@
 
 namespace Engine
 {
-	std::string EventToString(
-		Event* event
-	)
+	std::string Event::ToString()
 	{
-		std::stringstream ss;
+		std::stringstream result;
 
-		switch (event->type)
+		switch (this->mType)
 		{
 			case Event::Type::Resized:
-				ss	<< "Resized event : " 
-					<< event->sizeEvent.width
+				result	<< "Resized this : " 
+					<< this->mSizeEvent.width
 					<< " " 
-					<< event->sizeEvent.height 
+					<< this->mSizeEvent.height 
 					<< '\n';
 				break;
 			case Event::Type::Closed:
-				ss	<< "Closed event\n";
+				result	<< "Closed this\n";
 				break;
 			case Event::Type::TextEntered:
-				ss	<< "Text entered event : "
-					<< static_cast<char>(event->textEvent.text)
+				result	<< "Text entered this : "
+					<< static_cast<char>(this->mTextEvent.text)
 					<< '\n';
 				break;
 			case Event::Type::KeyPressed:
-				ss	<< "Key pressed event : "
-					<< event->keyEvent.code
+				result	<< "Key pressed this : "
+					<< this->mKeyEvent.code
 					<< '\n';
 				break;
 			case Event::Type::KeyReleased:
-				ss	<< "Key released event : "
-					<< event->keyEvent.code
+				result	<< "Key released this : "
+					<< this->mKeyEvent.code
 					<< '\n';
 				break;
 			case Event::Type::MouseScrolled:
-				ss	<< "Mouse scrolled event : "
-					<< event->mouseScrolledEvent.x
+				result	<< "Mouse scrolled this : "
+					<< this->mMouseScrolledEvent.x
 					<< " "
-					<< event->mouseScrolledEvent.y
+					<< this->mMouseScrolledEvent.y
 					<< '\n';
 				break;
 			case Event::Type::MouseMoved:
-				ss	<< "Mouse moved event : "
-					<< event->mouseMovedEvent.x
+				result	<< "Mouse moved this : "
+					<< this->mMouseMovedEvent.x
 					<< " "
-					<< event->mouseMovedEvent.y
+					<< this->mMouseMovedEvent.y
 					<< '\n';
 				break;
 			case Event::Type::MouseButtonPressed:
-				ss	<< "Mouse button pressed event : "
-					<< event->mouseButtonEvent.button
+				result	<< "Mouse button pressed this : "
+					<< this->mMouseButtonEvent.button
 					<< '\n';
 				break;
 			case Event::Type::MouseButtonReleased:
-				ss	<< "Mouse button released event : "
-					<< event->mouseButtonEvent.button
+				result	<< "Mouse button released this : "
+					<< this->mMouseButtonEvent.button
 					<< '\n';
 				break;
 			default: 
-				ss	<< "Unhandled event\n";
+				result	<< "Unhandled this\n";
 				break;
 		}
 
-		return ss.str();
+		return result.str();
 	}
 
-	std::string Event::toString()
+	bool Event::IsHandled() const
 	{
-		return EventToString(this);
+		return mHandled;
 	}
 
+	void Event::SetIsHandled(bool handled)
+	{
+		mHandled = handled;
+	}
 }

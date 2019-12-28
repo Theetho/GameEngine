@@ -2,25 +2,25 @@
 
 #ifdef ENGINE_WINDOWS
 
-extern Engine::Application* Engine::createApplication();
+extern Engine::Application* Engine::CreateApplication();
 
 namespace Engine
 {
-	void init()
+	void Initialize()
 	{
-		Engine::Log::init();
+		Engine::Log::Initialize();
 		Engine::Input::Create();
-		Engine::Shader::setFolder("../Engine/Assets/Shaders/");
-		Engine::Texture::setFolder("../Engine/Assets/Textures/");
+		Engine::Shader::SetFolder("../Engine/Assets/Shaders/");
+		Engine::Texture::SetFolder("../Engine/Assets/Textures/");
 	}
 }
 
 int main(int argc, char** argv)
 {
-	Engine::init();
+	Engine::Initialize();
 
-	Engine::Application *app = Engine::createApplication();
-	app->run();
+	Engine::Application *app = Engine::CreateApplication();
+	app->Run();
 	delete app;
 	return 0;
 }

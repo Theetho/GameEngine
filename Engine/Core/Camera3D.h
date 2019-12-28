@@ -11,121 +11,61 @@ namespace Engine
 	class Camera3D
 	{
 	public:
-		Camera3D(
-			const Vec3& position = Vec3(0.0f, 1.0f, 0.0f)
-		);
-
+		Camera3D(const Vec3& position = Vec3(0.0f, 1.0f, 0.0f));
 		virtual ~Camera3D();
 
-		virtual void onUpdate(
-			const double& delta
-		);
+		virtual void OnUpdate(const double& delta);
+		virtual void OnEvent(Event& event);
 
-		virtual void onEvent(
-			Event& event
-		);
-
-		inline void setPosition(
-			const Vec3& position
-		)
-		{
-			m_position = position;
-		}
-
-		inline const Vec3& getPosition() const
-		{
-			return m_position;
-		}
-
-		inline const float& getPitch() const
-		{
-			return m_angle.pitch;
-		}
-
-		inline const float& getYaw() const
-		{
-			return m_angle.yaw;
-		}
-
-		inline const float& getRoll() const
-		{
-			return m_angle.roll;
-		}
-
-		inline const Mat4& getView() const
-		{
-			return m_view;	
-		}
+		float GetPitch() const;
+		float GetYaw() const;
+		float GetRoll() const;
 		
-		inline const Mat4& getProjection() const
-		{
-			return m_projection;
-		}
-		
-		inline const Mat4& getVP() const
-		{
-			return m_VP;
-		}
+		const Vec3& GetPosition() const;
+		const Mat4& GetView() const;
+		const Mat4& GetProjection() const;
+		const Mat4& GetViewProjection() const;
 
+		void SetPosition(const Vec3& position)
+		{
+			mPosition = position;
+		}
 	protected:
-		Mat4 m_view;
-		Mat4 m_projection;
-		Mat4 m_VP;
-
-		Vec3 m_position;
-
+		Mat4 mView;
+		Mat4 mProjection;
+		Mat4 mViewProjection;
+		Vec3 mPosition;
 		struct EulerAngle
 		{
 			float pitch;
 			float yaw;
 			float roll;
 		};
-		EulerAngle m_angle;
+		EulerAngle mAngles;
 
-		void updateVP();
-
-		inline void calculatePitch()
-		{
-			if (Input::isMouseButtonPressed(ENGINE_MOUSE_BUTTON_RIGHT))
-			{
-				m_angle.pitch -= Input::getMouseOffset().y * 0.05f;
-
-				if (m_angle.pitch > 89.f)
-					m_angle.pitch = 89.f;
-				else if (m_angle.pitch < 0.f)
-					m_angle.pitch = 0.f;
-			}
-		}
+		void UpdateViewProjection();
+		void CalculatePitch();
 	};
 
 	class Camera3DLocked : public Camera3D
 	{
 	public:
-		Camera3DLocked(
-			const GameObject& target,
-			const float& distance = 6.0f
-		);
+		Camera3DLocked(const GameObject& target, float distance = 6.0f);
 		virtual ~Camera3DLocked();
 
-		virtual void onUpdate(
-			const double& delta
-		) override;
-
-		virtual void onEvent(
-			Event& event
-		) override;
-
+		virtual void OnUpdate(const double& delta) override;
+		virtual void OnEvent(Event& event) override;
 	protected:
-		const GameObject& m_target;
+		const GameObject& mTarget;
 
-		float m_distance;
-		float m_angleAroundTarget;
+		float mDistance;
+		float mAngleAroundTarget;
 
-		virtual float calculateHorizontalDistance();
-		virtual float calculateVerticalDistance();
-		virtual void  calculateCameraPosition();
-		virtual void  calculateZoom();
-		virtual void  calculateAngleAroundPlayer();
+		virtual float CalculateHorizontalDistance();
+		virtual float CalculateVerticalDistance();
+		virtual void  CalculateCameraPosition();
+		virtual void  CalculateZoom();
+		virtual void  CalculateAngleAroundPlayer();
 	};
 }
 

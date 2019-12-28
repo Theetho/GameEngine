@@ -6,85 +6,96 @@
 #include <thread>
 #include <chrono>
 
-#define bind_function(x) std::bind(&x, this, std::placeholders::_1)
+#define BindFunction(x) std::bind(&x, this, std::placeholders::_1)
 
 #ifdef ENGINE_WINDOWS
-	#define get_engine_time glfwGetTime()
+	#define GetEngineTime glfwGetTime()
 #endif // ENGINE_WINDOWS
 
 namespace Engine
 {
-	Application* Application::s_instance = nullptr;
+	Application* Application::sInstance = nullptr;
 
 	Application::Application()
-		: m_layerStack()
-		, m_time(get_engine_time)
+		: mLayerStack()
+		, mTime(GetEngineTime)
 	{
-		ENGINE_ASSERT(!s_instance, "Application already created");
-		s_instance = this;
+		ENGINE_ASSERT(!sInstance, "Application already created");
+		sInstance = this;
 
-		m_window = Scope<Window>(Window::Create());
-		m_window->setEventCallback(
-			bind_function(Application::onEvent)
-		);
-
-		m_collisionSystem = CollisionSystem::Get();
-//		m_physicsEngine = PhysicsEngine::GetInstance();
+		mWindow = Scope<Window>(Window::Create());
+		mWindow->SetEventCallback(BindFunction(Application::OnEvent));
+		mCollisionSystem = CollisionSystem::Get();
 	}
 
 	Application::~Application()
+	{}
+
+	Application& Application::Get()
 	{
+		return *sInstance;
 	}
 	
-	void Application::run()
+	void Application::Run()
 	{
-		while (m_running)
+		while (mRunning)
 		{
-			m_time = get_engine_time;
+			mTime = GetEngineTime;
 
 			// --- Updates ---
-			for (Layer* layer : m_layerStack)
+			for (Layer* layer : mLayerStack)
 			{
-				layer->onUpdate(m_deltaTime);
+				layer->OnUpdate(mDeltaTime);
 			}
 			// ---------------
 			
-		//	m_physicsEngine->onUpdate(m_deltaTime);
+			mCollisionSystem->OnUpdate(mDeltaTime);
 
-			m_collisionSystem->onUpdate(m_deltaTime);
+			mWindow->OnUpdate(mDeltaTime);
 
-			m_window->onUpdate(m_deltaTime);
-
-			m_deltaTime = get_engine_time - m_time;
+			mDeltaTime = GetEngineTime - mTime;
 			
 			// ---------------------------
 		}
 	}
 	
-	void Application::onEvent(
-		Event& event
-	)
+	void Application::OnEvent(Event& event)
 	{
-		if (event.type == Event::Type::Closed || Input::isKeyPressed(GLFW_KEY_ESCAPE))
+		if (event.mType == Event::Type::Closed || Input::IsKeyPressed(GLFW_KEY_ESCAPE))
 		{
-			m_running = false;
-			event.hasBeenHandled();
+			mRunning = false;
+			event.SetIsHandled(true);
 		}
 		
-		else if (event.type == Event::Type::Resized)
+		else if (event.mType == Event::Type::Resized)
 		{
-			m_window->resize(event.sizeEvent.width, event.sizeEvent.height);
-			Renderer::setViewport(event.sizeEvent.width, event.sizeEvent.height);
+			mWindow->Resize(event.mSizeEvent.width, event.mSizeEvent.height);
+			Renderer::SetViewport(event.mSizeEvent.width, event.mSizeEvent.height);
 		}
 		
-		if (!m_layerStack.isEmpty())
+		if (!mLayerStack.IsEmpty())
 		{
-			auto layer = m_layerStack.end();
-			while (layer != m_layerStack.begin() && !event.isHandled())
+			auto layer = mLayerStack.end();
+			while (layer != mLayerStack.begin() && !event.IsHandled())
 			{
-				(*--layer)->onEvent(event);
+				(*--layer)->OnEvent(event);
 			}
 		}
 		
-	}	
+	}
+
+	void Application::PushLayer(Layer* layer)
+	{
+		mLayerStack.Push(layer);
+	}
+	
+	void Application::PopLayer()
+	{
+		mLayerStack.Pop();
+	}
+	
+	Window& Application::GetWindow()
+	{
+		return *mWindow;
+	}
 }

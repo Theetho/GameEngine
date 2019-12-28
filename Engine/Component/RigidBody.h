@@ -8,26 +8,25 @@ namespace Engine
 	class RigidBody : public Component
 	{
 	public:
-		RigidBody(
-			GameObject& owner,
-			Vec3 position
-		);
+		RigidBody(GameObject& game_object, const Vec3& position);
 
 		~RigidBody();
 		
-		void useGravity(
-			bool use
-		);
+		void OnUpdate(const double& delta) override;
 
+		bool		IsUsingGravity() const;
+		Vec3&		GetVelocity();
+		const Vec3& GetVelocity() const;
+		
+		void SetUseGravity(bool use);
 	private:
-		friend class PhysicsEngine;
-		bool m_useGravity  = true;
-		bool m_isKinematic = false;
-		float m_mass       = 1.0f;
+		bool  mUseGravity  = true;
+		bool  mIsKinematic = false;
+		float mMass       = 1.0f;
+		Vec3  mPosition;
+		Vec3  mRotation;
+		Vec3  mVelocity;
 
-		Vec3 m_position;
-		Vec3 m_rotation;
-		Vec3 m_velocity;
 	};
 }
 

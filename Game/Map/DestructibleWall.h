@@ -10,25 +10,18 @@ public:
 	);
 	~DestructibleWall();
 
-	inline const Engine::Ref<Engine::Model> getModel() const override
-	{
-		return s_model;
-	} 
+	const Engine::Ref<Engine::Model> GetModel() const override;
 
-	inline bool isEnabled() const
-	{
-		return m_enable;
-	}
-
-	void explode();
+	bool IsEnabled() const;
+	void Explode();
 
 	bool hasExploded = false;
 private:
-	static Engine::Ref<Engine::Model> s_model;
-	static bool s_isInitialized;
-	bool m_enable = true;
+	static Engine::Ref<Engine::Model> sModel;
+	static bool sIsInitialized;
+	bool mEnable = true;
 
-	void disable();
+	void Disable();
 	
 };
 

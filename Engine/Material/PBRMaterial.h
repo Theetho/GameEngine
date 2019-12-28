@@ -14,22 +14,16 @@ namespace Engine
 			const std::vector<Ref<Texture2D>>& specular,
 			const std::vector<Ref<Texture2D>>& normal
 		);
-
-		~PBRMaterial() {};
+		~PBRMaterial();
 
 	private:
-		std::vector<Ref<Texture2D>> m_ambient;
-		std::vector<Ref<Texture2D>> m_diffuse;
-		std::vector<Ref<Texture2D>> m_specular;
-		std::vector<Ref<Texture2D>> m_normal;
+		std::vector<Ref<Texture2D>> mAmbient;
+		std::vector<Ref<Texture2D>> mDiffuse;
+		std::vector<Ref<Texture2D>> mSpecular;
+		std::vector<Ref<Texture2D>> mNormal;
 
-		inline const int getID() const override
-		{
-			return static_cast<int>(MaterialID::PBR);
-		}
+		int GetID() const override;
 
-		void loadGLUniforms(
-			Ref<OpenGLShader> shader
-		) override;
+		void LoadGLUniforms(Ref<OpenGLShader> shader) override;
 	};
 }

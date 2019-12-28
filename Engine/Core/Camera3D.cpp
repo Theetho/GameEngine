@@ -8,122 +8,159 @@ namespace Engine
 
 /// Camera3D
 
-	Camera3D::Camera3D(
-		const Vec3& position
-	)
-		: m_view()
-		, m_projection(Matrix::projection())
-		, m_VP()
+	Camera3D::Camera3D(const Vec3& position)
+		: mView()
+		, mProjection(Matrix::Projection())
 	{
-		m_angle.pitch = 52.0f;
-		m_angle.yaw   = 0.0f;
-		m_angle.roll  = 0.0f;
-		updateVP();
+		mAngles.pitch = 52.0f;
+		mAngles.yaw   = 0.0f;
+		mAngles.roll  = 0.0f;
+		UpdateViewProjection();
 	}
 
 	Camera3D::~Camera3D()
+	{}
+
+	void Camera3D::OnUpdate(const double& delta)
 	{
+		UpdateViewProjection();
 	}
 
-	void Camera3D::onUpdate(const double& delta)
+	void Camera3D::OnEvent(Event& event)
 	{
-		updateVP();
-	}
-
-	void Camera3D::onEvent(Event& event)
-	{
-		if (event.type == Event::Type::Resized)
+		if (event.mType == Event::Type::Resized)
 		{
-			m_projection = Matrix::projection(
-				70.0f,
-				static_cast<double>(event.sizeEvent.width)
-			  / static_cast<double>(event.sizeEvent.height)
-			);
+			mProjection = Matrix::Projection(70.0f, static_cast<double>(event.mSizeEvent.width) / static_cast<double>(event.mSizeEvent.height));
 		}
 	}
 
-	void Camera3D::updateVP()
+	float Camera3D::GetPitch() const
 	{
-		m_view = Matrix::view(*this);
-		m_VP   = m_projection * m_view;
+		return mAngles.pitch;
+	}
+
+	float Camera3D::GetYaw() const
+	{
+		return mAngles.yaw;
+	}
+
+	float Camera3D::GetRoll() const
+	{
+		return mAngles.roll;
+	}
+
+	const Vec3& Camera3D::GetPosition() const
+	{
+		return mPosition;
+	}
+
+	const Mat4& Camera3D::GetView() const
+	{
+		return mView;
+	}
+
+	const Mat4& Camera3D::GetProjection() const
+	{
+		return mProjection;
+	}
+
+	const Mat4& Camera3D::GetViewProjection() const
+	{
+		return mViewProjection;
+	}
+
+	void Camera3D::UpdateViewProjection()
+	{
+		mView = Matrix::View(*this);
+		mViewProjection   = mProjection * mView;
+	}
+
+	void Camera3D::CalculatePitch()
+	{
+		if (Input::IsMouseButtonPressed(ENGINE_MOUSE_BUTTON_RIGHT))
+		{
+			mAngles.pitch -= Input::GetMouseOffset().y * 0.05f;
+
+			if (mAngles.pitch > 89.f)
+				mAngles.pitch = 89.f;
+			else if (mAngles.pitch < 0.f)
+				mAngles.pitch = 0.f;
+		}
 	}
 
 /// Camera3DLocked 
 
-	Camera3DLocked::Camera3DLocked(
-		const GameObject& target,
-		const float& distance
-	)
+	Camera3DLocked::Camera3DLocked(const GameObject& target, float distance)
 		: Camera3D()
-		, m_target(target)
-		, m_distance(distance)
-		, m_angleAroundTarget(0.0f)
-	{
-	}
+		, mTarget(target)
+		, mDistance(distance)
+		, mAngleAroundTarget(0.0f)
+	{}
 
 	Camera3DLocked::~Camera3DLocked()
 	{
 	}
 
-	void Camera3DLocked::onUpdate(const double& delta)
+	void Camera3DLocked::OnUpdate(const double& delta)
 	{
-		Camera3D::onUpdate(delta);
+		Camera3D::OnUpdate(delta);
 
-		calculateZoom();
-		calculatePitch();
-		calculateAngleAroundPlayer();
-		calculateCameraPosition();
-		m_angle.yaw = 180 - (m_target.getTransform().getRotation().y + m_angleAroundTarget);
+		CalculateZoom();
+		CalculatePitch();
+		CalculateAngleAroundPlayer();
+		CalculateCameraPosition();
+		mAngles.yaw = 180 - (mTarget.GetTransform().GetRotation().y + mAngleAroundTarget);
 	}
 
-	void Camera3DLocked::onEvent(Event& event)
+	void Camera3DLocked::OnEvent(Event& event)
 	{
-		Camera3D::onEvent(event);
+		Camera3D::OnEvent(event);
 
-		if (event.type == Event::Type::MouseScrolled)
+		if (event.mType == Event::Type::MouseScrolled)
 		{
-			m_distance -= event.mouseScrolledEvent.y;
+			mDistance -= event.mMouseScrolledEvent.y;
 		}
 	}
 
-	float Camera3DLocked::calculateHorizontalDistance()
+	float Camera3DLocked::CalculateHorizontalDistance()
 	{
-		return m_distance * cos(glm::radians(m_angle.pitch));
+		return mDistance * cos(glm::radians(mAngles.pitch));
 	}
-	float Camera3DLocked::calculateVerticalDistance()
+	
+	float Camera3DLocked::CalculateVerticalDistance()
 	{
-		return m_distance * sin(glm::radians(m_angle.pitch));
+		return mDistance * sin(glm::radians(mAngles.pitch));
 	}
-	void Camera3DLocked::calculateCameraPosition()
+	
+	void Camera3DLocked::CalculateCameraPosition()
 	{
-		auto& playerPosition = m_target.getTransform().getPosition();
-		float horizontal = calculateHorizontalDistance();
+		auto& playerPosition = mTarget.GetTransform().GetPosition();
+		float horizontal = CalculateHorizontalDistance();
 		
-		float theta = m_target.getTransform().getRotation().y + m_angleAroundTarget;
+		float theta = mTarget.GetTransform().GetRotation().y + mAngleAroundTarget;
 		
-		m_position.x = playerPosition.x - horizontal * sin(glm::radians(theta));
-		m_position.z = playerPosition.z - horizontal * cos(glm::radians(theta));
+		mPosition.x = playerPosition.x - horizontal * sin(glm::radians(theta));
+		mPosition.z = playerPosition.z - horizontal * cos(glm::radians(theta));
 		
-		float vertical = calculateVerticalDistance();
-		m_position.y = playerPosition.y + vertical;
+		float vertical = CalculateVerticalDistance();
+		mPosition.y = playerPosition.y + vertical;
 	}
 
-	void Camera3DLocked::calculateZoom()
+	void Camera3DLocked::CalculateZoom()
 	{
-		if (m_distance < 0.5)
-			m_distance = 0.5;
+		if (mDistance < 0.5)
+			mDistance = 0.5;
 	}
 
-	void Camera3DLocked::calculateAngleAroundPlayer()
+	void Camera3DLocked::CalculateAngleAroundPlayer()
 	{
-		if (Input::isMouseButtonPressed(ENGINE_MOUSE_BUTTON_LEFT))
+		if (Input::IsMouseButtonPressed(ENGINE_MOUSE_BUTTON_LEFT))
 		{
-			m_angleAroundTarget += Input::getMouseOffset().x * 0.05f;
+			mAngleAroundTarget += Input::GetMouseOffset().x * 0.05f;
 		}
-		if (m_angleAroundTarget != 0 && Input::isKeyPressed(ENGINE_KEY_E) || Input::isKeyPressed(ENGINE_KEY_Q))
+		if (mAngleAroundTarget != 0 && Input::IsKeyPressed(ENGINE_KEY_E) || Input::IsKeyPressed(ENGINE_KEY_Q))
 		{
-			m_angleAroundTarget = 0;
+			mAngleAroundTarget = 0;
 		}
 	}
-
 }

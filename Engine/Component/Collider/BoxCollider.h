@@ -7,67 +7,25 @@ namespace Engine
 	class BoxCollider : public Collider
 	{
 	public:
-		BoxCollider(
-			GameObject& owner,
-			const Vec3& center,
-			const float& width,
-			const float& height,
-			const float& depth
-		);
-
-		BoxCollider(
-			const BoxCollider& other
-		);
-
-		BoxCollider(
-			const BoxCollider&& other
-		) noexcept;
-		
-		BoxCollider& operator=(
-			const BoxCollider& other
-		);
-
-		BoxCollider& operator=(
-			const BoxCollider&& other
-		) noexcept;
-
+		BoxCollider(GameObject& game_object, const Vec3& center, const Vec3& bounds);
+		BoxCollider(const BoxCollider& box_collider);
+		BoxCollider(const BoxCollider&& box_collider) noexcept;
+		BoxCollider& operator=(const BoxCollider& box_collider);
+		BoxCollider& operator=(const BoxCollider&& box_collider) noexcept;
 		~BoxCollider();
 
-		void onUpdate(
-			const double& delta
-		) override;
+		void OnUpdate(const double& delta) override;
 
-		inline const Vec3& getMax() const override
-		{
-			return m_max;
-		}
+		const Vec3& GetMax() const override;
+		const Vec3& GetMin() const override;
 
-		inline const Vec3& getMin() const override
-		{
-			return m_min;
-		}
-
-		inline void setScale(
-			const Vec3& scale
-		)
-		{
-			m_width  *= scale.x;
-			m_height *= scale.y;
-			m_depth  *= scale.z;
-		}
-
-		inline void setScale(
-			const float& scale
-		)
-		{
-			setScale(Vec3(scale));
-		}
-
+		void SetScale(const Vec3& scale);
+		void SetScale(float scale);
 	private:
-		float m_width, m_height, m_depth;
+		float mWidth, mHeight, mDepth;
 		// Top Right Front point (width, height, depth) / 2
-		Vec3  m_max;
-		// Bottom Left Back point (-width, -height, - depth) / 2
-		Vec3  m_min;
+		Vec3  mMaxExtent;
+		// Bottom Left Back point (-width, -height, -depth) / 2
+		Vec3  mMinExtent;
 	};
 }

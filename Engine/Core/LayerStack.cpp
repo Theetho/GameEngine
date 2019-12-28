@@ -4,25 +4,26 @@
 namespace Engine
 {
 	LayerStack::LayerStack()
-	{
-	}
+	{}
 
 	LayerStack::~LayerStack()
+	{}
+	
+	void LayerStack::Push(Layer* layer)
 	{
+		mStack.push_back(layer);
+		layer->OnAttach();
 	}
 	
-	void LayerStack::push(
-		Layer* layer
-	)
+	void LayerStack::Pop()
 	{
-		m_stack.push_back(layer);
-		layer->onAttach();
+		Layer* layer = mStack.back();
+		mStack.pop_back();
+		layer->OnDetach();
 	}
-	
-	void LayerStack::pop()
+
+	bool LayerStack::IsEmpty() const
 	{
-		Layer* layer = m_stack.back();
-		m_stack.pop_back();
-		layer->onDetach();
+		return !mStack.size();
 	}
 }

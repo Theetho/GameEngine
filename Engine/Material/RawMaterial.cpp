@@ -33,24 +33,29 @@ namespace Engine
 		const Color& ambient,
 		const Color& diffuse,
 		const Color& specular,
-		const float& shininess
+		float shininess
 	)
-		: m_ambient(ambient)
-		, m_diffuse(diffuse)
-		, m_specular(specular)
-		, m_shininess(shininess)
+		: mAmbient(ambient)
+		, mDiffuse(diffuse)
+		, mSpecular(specular)
+		, mShininess(shininess)
+	{}
+
+	RawMaterial::~RawMaterial()
+	{}
+
+	int RawMaterial::GetID() const
 	{
+		return static_cast<int>(MaterialID::Raw);
 	}
 
-	void RawMaterial::loadGLUniforms(
-		Ref<OpenGLShader> shader
-	)
+	void RawMaterial::LoadGLUniforms(Ref<OpenGLShader> shader)
 	{
-		Material::loadGLUniforms(shader);
+		Material::LoadGLUniforms(shader);
 
-		shader->uploadUniform("u_material.shininess", m_shininess);
-		shader->uploadUniform("u_material.ambient",   Vec3(m_ambient));
-		shader->uploadUniform("u_material.diffuse",   Vec3(m_diffuse));
-		shader->uploadUniform("u_material.specular",  Vec3(m_specular));
+		shader->UploadUniform("u_material.shininess", mShininess);
+		shader->UploadUniform("u_material.ambient",   Vec3(mAmbient));
+		shader->UploadUniform("u_material.diffuse",   Vec3(mDiffuse));
+		shader->UploadUniform("u_material.specular",  Vec3(mSpecular));
 	}
 }

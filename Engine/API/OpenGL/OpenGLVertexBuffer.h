@@ -7,36 +7,17 @@ namespace Engine
 	class OpenGLVertexBuffer : public VertexBuffer
 	{
 	public:
-		OpenGLVertexBuffer(
-			float* vertices, 
-			const unsigned int& count
-		);
-		
+		OpenGLVertexBuffer(float* vertices, unsigned int count);
 		~OpenGLVertexBuffer();
 
-		inline void bind() const override
-		{
-			glBindBuffer(GL_ARRAY_BUFFER, m_id);
-		}
-		
-		inline void unbind() const override
-		{
-			glBindBuffer(GL_ARRAY_BUFFER, 0);
-		}
+		void Bind() const override;
+		void Unbind() const override;
 
-		inline void setLayout(
-			const BufferLayout& layout
-		) override
-		{
-			m_layout = layout;
-		}
+		const BufferLayout& GetLayout() const override;
 
-		inline const BufferLayout& getLayout() const override
-		{
-			return m_layout;
-		}
+		void SetLayout(const BufferLayout& layout) override;
 	private:
-		unsigned int m_id;
-		BufferLayout m_layout;
+		unsigned int mId;
+		BufferLayout mLayout;
 	};
 }

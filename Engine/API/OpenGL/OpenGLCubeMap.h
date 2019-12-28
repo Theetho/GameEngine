@@ -7,27 +7,14 @@ namespace Engine
 	class OpenGLCubeMap : public CubeMap
 	{
 	public:
-		OpenGLCubeMap(
-			const std::string& folderPath,
-			const std::string& name,
-			const bool& useFolderPath
-		);
+		OpenGLCubeMap(const std::string& folder_path, const std::string& name, bool use_folder_path);
 		~OpenGLCubeMap();
 
-		inline void bind(
-			const unsigned int& slot = 0
-		) const override
-		{
-			glBindTextureUnit(slot, m_id);
-		}
-
-		inline void unbind() const override
-		{
-			glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-		}
+		void Bind(unsigned int slot = 0) const override;
+		void Unbind() const override;
 
 	private:
-		unsigned int m_id;
+		unsigned int mId;
 	};
 }
 

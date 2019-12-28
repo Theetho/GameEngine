@@ -4,35 +4,49 @@
 
 namespace Engine
 {
-	Mesh::Mesh(
-		std::vector<float>& vertices, 
-		std::vector<unsigned int>& indices,
-		Ref<Material> material
-	)
-		: m_vertices(vertices)
-		, m_indices(indices)
-		, m_material(material)
+	Mesh::Mesh(std::vector<float>& vertices, std::vector<unsigned int>& indices, Ref<Material> material)
+		: mVertices(vertices)
+		, mIndices(indices)
+		, mMaterial(material)
 	{
-		m_vao = VertexArray::Create();
+		mVertexArray = VertexArray::Create();
 
-		auto vbo = VertexBuffer::Create(
+		auto vertex_buffer = VertexBuffer::Create(
 			vertices.data(),
 			vertices.size()
 		);
 
-		vbo->setLayout({
+		vertex_buffer->SetLayout({
 			{Engine::ShaderDataType::Float3, "in_position"},
 			{Engine::ShaderDataType::Float2, "in_textureCoords"},
 			{Engine::ShaderDataType::Float3, "in_normal"}
 		});
 
-		m_vao->addVertexBuffer(vbo);
+		mVertexArray->AddVertexBuffer(vertex_buffer);
 
-		auto ibo = IndexBuffer::Create(
+		auto index_buffer = IndexBuffer::Create(
 			indices.data(),
 			indices.size()
 		);
 
-		m_vao->addIndexBuffer(ibo);
+		mVertexArray->AddIndexBuffer(index_buffer);
+	}
+
+	Mesh::~Mesh()
+	{}
+
+	void Mesh::LoadMaterial(Ref<Shader> shader) const
+	{
+		mMaterial->Load(shader);
+	}
+
+	Ref<VertexArray> Mesh::GetVao() const
+	{
+		return mVertexArray;
+	}
+
+	void Mesh::SetMaterial(Ref<Material> material)
+	{
+		mMaterial = material;
 	}
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="SAP">
+      <UniqueIdentifier>{A91C880B-1526-887C-9EA1-9E7C0AAA937C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CBoxCollider.h" />
+    <ClInclude Include="CCircle.h" />
+    <ClInclude Include="CCollider.h" />
+    <ClInclude Include="CCollision.h" />
+    <ClInclude Include="CGameObject.h" />
+    <ClInclude Include="CMaths.h" />
+    <ClInclude Include="CPhysicsEngine.h" />
+    <ClInclude Include="CRectangle.h" />
+    <ClInclude Include="CRigidBody.h" />
+    <ClInclude Include="CSphereCollider.h" />
+    <ClInclude Include="CWindow.h" />
+    <ClInclude Include="SAP\CSAP.h">
+      <Filter>SAP</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CBoxCollider.cpp" />
+    <ClCompile Include="CCircle.cpp" />
+    <ClCompile Include="CCollider.cpp" />
+    <ClCompile Include="CCollision.cpp" />
+    <ClCompile Include="CGameObject.cpp" />
+    <ClCompile Include="CMain.cpp" />
+    <ClCompile Include="CPhysicsEngine.cpp" />
+    <ClCompile Include="CRectangle.cpp" />
+    <ClCompile Include="CRigidBody.cpp" />
+    <ClCompile Include="CSphereCollider.cpp" />
+    <ClCompile Include="CWindow.cpp" />
+    <ClCompile Include="SAP\CSAP.cpp">
+      <Filter>SAP</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

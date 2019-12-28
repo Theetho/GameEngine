@@ -146,6 +146,7 @@
     <ClInclude Include="API\OpenGL\OpenGLContext.h" />
     <ClInclude Include="API\OpenGL\OpenGLCubeMap.h" />
     <ClInclude Include="API\OpenGL\OpenGLIndexBuffer.h" />
+    <ClInclude Include="API\OpenGL\OpenGLRenderer.h" />
     <ClInclude Include="API\OpenGL\OpenGLShader.h" />
     <ClInclude Include="API\OpenGL\OpenGLTexture2D.h" />
     <ClInclude Include="API\OpenGL\OpenGLUniformBuffer.h" />
@@ -209,7 +210,6 @@
     <ClInclude Include="Renderer\Texture\Texture.h" />
     <ClInclude Include="Renderer\Texture\Texture2D.h" />
     <ClInclude Include="System\CollisionSystem.h" />
-    <ClInclude Include="System\PhysicsEngine.h" />
     <ClInclude Include="Util\Benchmark.h" />
     <ClInclude Include="Util\Color.h" />
     <ClInclude Include="Util\ConfigFile.h" />
@@ -588,6 +588,7 @@
     <ClCompile Include="API\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="API\OpenGL\OpenGLCubeMap.cpp" />
     <ClCompile Include="API\OpenGL\OpenGLIndexBuffer.cpp" />
+    <ClCompile Include="API\OpenGL\OpenGLRenderer.cpp" />
     <ClCompile Include="API\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="API\OpenGL\OpenGLTexture2D.cpp" />
     <ClCompile Include="API\OpenGL\OpenGLUniformBuffer.cpp" />
@@ -604,7 +605,6 @@
     <ClCompile Include="Core\Camera3D.cpp" />
     <ClCompile Include="Core\Event.cpp" />
     <ClCompile Include="Core\Input.cpp" />
-    <ClCompile Include="Core\Layer.cpp" />
     <ClCompile Include="Core\LayerStack.cpp" />
     <ClCompile Include="Core\Log.cpp" />
     <ClCompile Include="Core\Window.cpp" />
@@ -636,7 +636,6 @@
     <ClCompile Include="Renderer\Texture\Texture.cpp" />
     <ClCompile Include="Renderer\Texture\Texture2D.cpp" />
     <ClCompile Include="System\CollisionSystem.cpp" />
-    <ClCompile Include="System\PhysicsEngine.cpp" />
     <ClCompile Include="Util\Benchmark.cpp" />
     <ClCompile Include="Util\Color.cpp" />
     <ClCompile Include="Util\ConfigFile.cpp" />

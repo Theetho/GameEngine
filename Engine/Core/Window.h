@@ -9,122 +9,75 @@ namespace Engine
 	{
 	public:
 		using EventCallbackFunction = std::function<void(Event&)>;
-
 		struct WindowData
 		{
 			std::string				title;
 			unsigned int			width;
 			unsigned int			height;
-			EventCallbackFunction	eventCallback;
+			EventCallbackFunction	event_callback;
 
 			WindowData(
 				const std::string& title = "Engine Window",
-				const unsigned int& width = WindowData::getDefaultWidth(),
-				const unsigned int& height = WindowData::getDefaultHeight()
+				unsigned int width = WindowData::GetDefaultWidth(),
+				unsigned int height = WindowData::GetDefaultHeight()
 			)
 				: title(title)
 				, width(width)
 				, height(height)
 			{}
 
-			static const unsigned int getDefaultWidth()
+			static inline unsigned int GetDefaultWidth()
 			{
 				return 1280;
 			}
-			static const unsigned int getDefaultHeight()
+			static inline unsigned int GetDefaultHeight()
 			{
 				return 720;
 			}
 		};
 
 		Window();
-
 		virtual ~Window();
 
-		virtual void  onUpdate(
-			const double& delta
-		) = 0;
-
-		virtual void  resize(
-			const unsigned int& width,
-			const unsigned int& height
-		) = 0;
+		static Window* Create(const WindowData& window_data = WindowData());
 		
-		virtual void* getOSWindow() = 0;
-
-		virtual void setFullscreen(
-			const bool& set
-		) = 0;
-
-		inline void			setEventCallback(
-			const EventCallbackFunction& eventCallback
-		)
-		{
-			m_data.eventCallback = eventCallback;
-		}
+		virtual void OnUpdate(const double& delta) = 0;
+		virtual void Resize(unsigned int width, unsigned int height) = 0;
 		
-		inline unsigned int getWidth() const
-		{
-			return m_data.width;
-		}
+		virtual void*			   GetOSWindow() = 0;
+		virtual unsigned int	   GetWidth() const;
+		virtual unsigned int	   GetHeight() const;
+		virtual const std::string& GetTitle() const;
 		
-		inline unsigned int getHeight() const
-		{
-			return m_data.height;
-		}
-		
-		inline std::string	getTitle() const
-		{
-			return m_data.title;
-		}
-
-		static Window* Create(
-			const WindowData& windowData = WindowData()
-		);
+		virtual void SetFullscreen(bool fullscreen) = 0;
+		virtual void SetEventCallback(const EventCallbackFunction& event_callback);
 	protected:
-		WindowData	m_data;
-
-		static bool s_GLFWInitialized;
+		WindowData	mData;
 	};
+
+	// Windows window
 
 	class WindowWindows : public Window
 	{
 	public:
-		WindowWindows(
-			const WindowData& windowData
-		);
-
+		WindowWindows(const WindowData& window_data);
 		~WindowWindows();
 
-		void  onUpdate(
-			const double& delta
-		) override;
+		void OnUpdate(const double& delta) override;
+		void Resize(unsigned int width, unsigned int height);
 
-		void  resize(
-			const unsigned int& width,
-			const unsigned int& height
-		);
+		void SetFullscreen(bool set);
 
-		void setFullscreen(
-			const bool& set
-		);
-
-		inline void* getOSWindow() 
-		{ 
-			return m_window;
-		}
-
+		void* GetOSWindow();
 	private:
-		GLFWwindow*			m_window;
-		GraphicsContext*	m_context;
+		GLFWwindow*		 mWindow;
+		GraphicsContext* mContext;
+		static bool		 sGLFWInitialized;
 
-		void initialize(
-			const WindowData& windowData
-		);
+		void Initialize(const WindowData& window_data);
+		void Shutdown();
 		
-		void shutdown();
-		
-		void setCallbacks();
+		void SetCallbacks();
 	};
 }
 

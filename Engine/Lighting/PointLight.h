@@ -29,60 +29,29 @@ namespace Engine
 			float constant;
 
 			Attenuation(
-				const float& quadratic = 0.000007f,
-				const float& linear    = 0.0014f,
-				const float& constant  = 1.0f
+				float quadratic = 0.000007f,
+				float linear    = 0.0014f,
+				float constant  = 1.0f
 			)
 				: quadratic(quadratic)
 				, linear(linear)
 				, constant(constant)
-			{
-			}
+			{}
 		};
 
-		PointLight(
-			const Vec3&		   position,
-			const Attenuation& attenuation = Attenuation(),
-			const Color&	   color = Color::White
-		);
+		PointLight(const Vec3& position, const Attenuation& attenuation = Attenuation(), const Color& color = Color::White);
+		virtual ~PointLight();
 
-		virtual ~PointLight(){}
+		virtual int				   GetID() const override;
+		virtual Attenuation&	   GetAttenuation();
+		virtual const Vec3&		   GetPosition() const;
+		virtual const Attenuation& GetAttenuation() const;
 
-		inline void setPosition(
-			const Vec3& position
-		)
-		{
-			m_position = position;
-		}
-
-		inline const Vec3& getPosition() const
-		{
-			return m_position;
-		}
-
-		inline const Attenuation& getAttenuation() const
-		{
-			return m_attenuation;
-		}
-
-		inline Attenuation& getAttenuation()
-		{
-			return m_attenuation;
-		}
-
-		virtual inline const int getID() const
-		{
-			return static_cast<int>(LightID::Point);
-		}
-
+		void SetPosition(const Vec3& position);
 	private:
-		Vec3		m_position;
-		Attenuation m_attenuation;
-
+		Vec3		mPosition;
+		Attenuation mAttenuation;
 	protected:
-		void loadGLUniforms(
-			Ref<OpenGLShader> shader,
-			const unsigned int& index
-		) override;
+		void LoadGLUniforms(Ref<OpenGLShader> shader, unsigned int index) override;
 	};
 }

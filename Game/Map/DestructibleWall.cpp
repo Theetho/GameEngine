@@ -3,47 +3,47 @@
 
 using namespace Engine;
 
-Ref<Model> DestructibleWall::s_model;
-bool DestructibleWall::s_isInitialized = false;
+Ref<Model> DestructibleWall::sModel;
+bool DestructibleWall::sIsInitialized = false;
 
-DestructibleWall::DestructibleWall(
-	const Transform& transform
-)
+DestructibleWall::DestructibleWall(const Transform& transform)
 	: Wall(transform)
 {
-	if (!s_isInitialized)
+	if (!sIsInitialized)
 	{
-		s_isInitialized = true;
+		sIsInitialized = true;
 
-		s_model = AssetManager::getModelLibrary().load("cube/cube.obj", "destructible_wall");
+		sModel = AssetManager::GetModelLibrary().Load("cube/cube.obj", "destructible_wall");
 
-		auto texture = std::vector<Ref<Texture2D>>({ AssetManager::getTexture2DLibrary().load("snow.jpg") });
+		auto texture = std::vector<Ref<Texture2D>>({ AssetManager::GetTexture2DLibrary().Load("snow.jpg") });
 
-		s_model->setMaterial(
-			std::make_shared<PBRMaterial>(
-				texture,
-				texture,
-				texture,
-				texture
-				)
-		);
+		sModel->SetMaterial(std::make_shared<PBRMaterial>(texture, texture, texture, texture));
 	}
 }
 
 DestructibleWall::~DestructibleWall()
+{}
+
+bool DestructibleWall::IsEnabled() const
 {
+	return mEnable;
 }
 
-void DestructibleWall::explode()
+void DestructibleWall::Explode()
 {
 	this->hasExploded = true;
 	// We hide the wall and destroy its collider
 	// before removing it from the world
-	this->disable();
+	this->Disable();
 }
 
-void DestructibleWall::disable()
+void DestructibleWall::Disable()
 {
 	RemoveComponent<Engine::BoxCollider>();
-	m_enable = false;
+	mEnable = false;
+}
+
+const Engine::Ref<Engine::Model> DestructibleWall::GetModel() const
+{
+	return sModel;
 }

@@ -3,24 +3,37 @@
 
 namespace Engine
 {
-	RigidBody::RigidBody(
-		GameObject& owner,
-		Vec3 position
-	)
-		: Component(owner)
-		, m_position(position)
-		, m_rotation(0.0f)
-		, m_velocity(0.0f)
-	{
-	}
+	RigidBody::RigidBody(GameObject& game_object,const Vec3& position)
+		: Component(game_object)
+		, mPosition(position)
+		, mRotation(0.0f)
+		, mVelocity(0.0f)
+	{}
+
 	RigidBody::~RigidBody()
+	{}
+
+	void RigidBody::SetUseGravity(bool use)
 	{
+		mUseGravity = use;
 	}
 
-	void RigidBody::useGravity(
-		bool use
-	)
+	bool RigidBody::IsUsingGravity() const
 	{
-		m_useGravity = use;
+		return mUseGravity;
+	}
+
+	const Vec3& RigidBody::GetVelocity() const
+	{
+		return mVelocity;
+	}
+
+	Vec3& RigidBody::GetVelocity()
+	{
+		return mVelocity;
+	}
+
+	void RigidBody::OnUpdate(const double& delta)
+	{
 	}
 }

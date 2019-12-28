@@ -4,26 +4,50 @@
 
 namespace Engine
 {
-	std::string Texture::s_folder = "";
+	std::string Texture::sFolder = "";
 
-	Texture::Texture(
-		const std::string& filePath,
-		const std::string& name,
-		const bool& useFolderPath
-	)
-		: m_name(name)
-		, m_width(0)
-		, m_height(0)
+	Texture::Texture(const std::string& file_path, const std::string& name, bool use_folder_path)
+		: mName(name)
+		, mWidth(0)
+		, mHeight(0)
 	{
 		// Setting the name of the texture
-		if (m_name == "")
+		if (mName == "")
 		{
-			auto lastSlash = filePath.find_last_of("/\\");
-			lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
-			auto lastDot = filePath.rfind('.');
-			int count = lastDot == std::string::npos ? filePath.size() - lastSlash : lastDot - lastSlash;
+			auto last_slash = file_path.find_last_of("/\\");
+			last_slash = last_slash == std::string::npos ? 0 : last_slash + 1;
+			auto last_dot = file_path.rfind('.');
+			int count = last_dot == std::string::npos ? file_path.size() - last_slash : last_dot - last_slash;
 
-			m_name = filePath.substr(lastSlash, count);
+			mName = file_path.substr(last_slash, count);
 		}
+	}
+	
+	Texture::~Texture()
+	{}
+	
+	unsigned int Texture::GetWidth() const
+	{
+		return mWidth;
+	}
+	
+	unsigned int Texture::GetHeight() const
+	{
+		return mHeight;
+	}
+
+	const std::string& Texture::GetName() const
+	{
+		return mName;
+	}
+	
+	void Texture::SetFolder(const std::string& folder)
+	{
+		sFolder = folder;
+	}
+	
+	void Texture::SetName(const std::string& name)
+	{
+		mName = name;
 	}
 }

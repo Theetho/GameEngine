@@ -3,39 +3,34 @@
 
 using namespace Engine;
 
-Ref<Model> ExitCell::s_model;
-bool ExitCell::s_isInitialized = false;
+Ref<Model> ExitCell::sModel;
+bool ExitCell::sIsInitialized = false;
 
-ExitCell::ExitCell(
-	const Transform& transform
-)
+ExitCell::ExitCell(const Transform& transform)
 	: Floor(transform)
 {
-	if (!s_isInitialized)
+	if (!sIsInitialized)
 	{
-		s_isInitialized = true;
+		sIsInitialized = true;
 
-		s_model = AssetManager::getModelLibrary().load("stairs/stairs.obj", "stairs");
+		sModel = AssetManager::GetModelLibrary().Load("stairs/stairs.obj", "stairs");
 
-		auto texture = std::vector<Ref<Texture2D>>({ AssetManager::getTexture2DLibrary().load("wall.jpg", "wall") });
+		auto texture = std::vector<Ref<Texture2D>>({ AssetManager::GetTexture2DLibrary().Load("wall.jpg", "wall") });
 
-		s_model->setMaterial(
-			std::make_shared<PBRMaterial>(
-				texture,
-				texture,
-				texture,
-				texture
-				)
-		);
+		sModel->SetMaterial(std::make_shared<PBRMaterial>(texture, texture, texture, texture));
 	}
-	m_transform.setScale(m_transform.getScale() * 0.5f);
-	m_transform.setRotation({ 0.0f, 90.0f, 0.0f });
+	mTransform.SetScale(mTransform.GetScale() * 0.5f);
+	mTransform.SetRotation({ 0.0f, 90.0f, 0.0f });
 
-	Vec3 size = s_model->getSize() * m_transform.getScale();
+	Vec3 size = sModel->GetSize() * mTransform.GetScale();
 
 	RemoveComponent<BoxCollider>();
 }
 
 ExitCell::~ExitCell()
+{}
+
+const Engine::Ref<Engine::Model> ExitCell::GetModel() const
 {
+	return sModel;
 }

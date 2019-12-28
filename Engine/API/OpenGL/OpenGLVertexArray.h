@@ -8,30 +8,16 @@ namespace Engine
 	{
 	public:
 		OpenGLVertexArray();
-		
 		~OpenGLVertexArray();
 
-		inline void bind() const override
-		{
-			glBindVertexArray(m_id);
-		}
-		
-		inline void unbind() const override
-		{
-			glBindVertexArray(0);
-		}
+		void Bind() const override;
+		void Unbind() const override;
 
-		void addVertexBuffer(
-			const Ref<VertexBuffer>& vbo
-		) override;
-		
-		void addIndexBuffer(
-			const Ref<IndexBuffer>& vbo
-		) override;
-
+		void AddVertexBuffer(Ref<VertexBuffer> vertex_buffer) override;
+		void AddIndexBuffer(Ref<IndexBuffer> index_buffer) override;
 	private:
-		unsigned int m_id;
-		unsigned int m_index = 0;
+		unsigned int mId;
+		unsigned int mIndex = 0;
 	};
 }
 

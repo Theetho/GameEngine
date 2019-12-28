@@ -9,115 +9,42 @@ namespace Engine
 	class Model
 	{
 	public:
-		Model(
-			const std::string& filePath,
-			const std::string& name,
-			const bool& useFolderPath
-		);
+		Model(const std::string& file_path, const std::string& name, bool use_folder_path);
+		virtual ~Model();
 
-		virtual ~Model()
-		{
-		}
+		static Ref<Model> Create(const std::string& file_path, const std::string& name, bool use_folder_path);
+		static void SetFolder(const std::string& folder_path);
 
-		static Ref<Model> Create(
-			const std::string& filePath,
-			const std::string& name,
-			const bool& useFolderPath
-		);
+		virtual void SetName(const std::string& name);
 
-		static inline void setFolder(
-			const std::string& folderPath
-		)
-		{
-			s_folderPath = folderPath;
-		}
+		virtual const std::string& GetName() const;
+		virtual const std::vector<Mesh>& GetMeshes() const;
+		virtual const Vec3& GetSize() const;
 
-		inline virtual void setName(
-			const std::string& name
-		)
-		{
-			m_name = name;
-		}
+		void SetMaterial(Ref<Material> material);
 
-		inline virtual std::string getName() const
-		{
-			return m_name;
-		}
-
-		inline const std::vector<Mesh>& getMeshes() const
-		{
-			return m_meshes;
-		}
-
-		inline std::vector<Mesh>::iterator begin()
-		{
-			return m_meshes.begin();
-		}
-		inline const std::vector<Mesh>::const_iterator begin() const
-		{
-			return m_meshes.cbegin();
-		}
-		inline std::vector<Mesh>::iterator end()
-		{
-			return m_meshes.end();
-		}
-		inline const std::vector<Mesh>::const_iterator end() const
-		{
-			return m_meshes.cend();
-		}
-
+		std::vector<Mesh>::iterator begin();
+		const std::vector<Mesh>::const_iterator begin() const;
+		std::vector<Mesh>::iterator end();
+		const std::vector<Mesh>::const_iterator end() const;
+	private:
+		static std::string sFolderPath;
+		std::string mPath;
+		std::string mName;
+		std::vector<Mesh> mMeshes;
+		Vec3 mSize;
 		struct Dimension
 		{
 			Vec3 max = Vec3(0.0f);
 			Vec3 min = Vec3(0.0f);
 		};
-
-		inline const Vec3& getSize() const
-		{
-			return m_size;
-		}
-
-		inline void setMaterial(
-			Ref<Material> material
-		)
-		{
-			for (auto& mesh : m_meshes)
-			{
-				mesh.setMaterial(material);
-			}
-		}
-
-	private:
-		static std::string s_folderPath;
+		Dimension mDimensions;
 		
-		std::string m_path;
-		std::string m_name;
-		std::vector<Mesh> m_meshes;
-		Vec3 m_size;
-		Dimension m_dimensions;
-		
-		void loadModel(
-			const std::string& filePath,
-			const bool& useFolderPath
-		);
-		void processNode(
-			aiNode* node,
-			const aiScene* scene
-		);
-		Mesh processMesh(
-			aiMesh* mesh,
-			const aiScene* scene
-		);
-
-		std::vector<Ref<Texture2D>> loadMaterial(
-			aiMaterial* mat,
-			const aiTextureType& type,
-			const std::string& name
-		);
-
-		void updateDimensions(
-			const Vec3& vector
-		);
+		void LoadModel(const std::string& file_path, bool use_folder_path);
+		void ProcessNode(aiNode* node, const aiScene* scene);
+		Mesh ProcessMesh(aiMesh* mesh, const aiScene* scene);
+		std::vector<Ref<Texture2D>> LoadMaterial(aiMaterial* mat, const aiTextureType& type, const std::string& name);
+		void UpdateDimensions(const Vec3& vector);
 	};
 }
 

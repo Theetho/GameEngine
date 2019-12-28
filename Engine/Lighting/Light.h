@@ -9,36 +9,17 @@ namespace Engine
 	class Light
 	{
 	public:
-		explicit Light(
-			const Color& color = Color::White
-		);
+		explicit Light(const Color& color = Color::White);
+		virtual ~Light();
 
-		virtual ~Light()
-		{
-		}
+		virtual void Load(Ref<Shader> shader, unsigned int index);
 
-		void load(
-			Ref<Shader> shader,
-			const unsigned int& index
-		);
+		virtual int GetID() const = 0;
+		virtual const Color& GetColor() const;
 
-		inline void setColor(
-			const Color& color
-		)
-		{
-			m_color = color;
-		}
-
-		inline const Color& getColor() const
-		{
-			return m_color;
-		}
-
-		virtual inline const int getID() const = 0;
-
+		virtual void SetColor(const Color& color);
 	private:
-		Color m_color;
-		
+		Color mColor;
 	protected:
 		enum class LightID
 		{
@@ -48,9 +29,6 @@ namespace Engine
 			Spot
 		};
 
-		virtual void loadGLUniforms(
-			Ref<OpenGLShader> shader,
-			const unsigned int& index
-		);
+		virtual void LoadGLUniforms(Ref<OpenGLShader> shader, unsigned int index);
 	};
 }

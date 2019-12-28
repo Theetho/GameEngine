@@ -8,18 +8,16 @@ namespace Engine
 	{
 	public:
 
-		#ifdef ENGINE_WINDOWS
-		OpenGLContext(
-			GLFWwindow* window
-		);
-		#endif
+	#ifdef ENGINE_WINDOWS
+		OpenGLContext(GLFWwindow* window);
+	#endif
 
 		~OpenGLContext();
 
-		void initialize() override;
+		void Initialize() override;
+		void SwapBuffers() override;
 
-		void swapBuffers() override;
 	private:
-		GLFWwindow* m_window;
+		GLFWwindow* mWindow;
 	};
 }

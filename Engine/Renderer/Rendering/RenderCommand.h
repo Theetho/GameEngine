@@ -7,31 +7,13 @@ namespace Engine
 	class RenderCommand
 	{
 	public:
-		static inline API getAPI()
-		{
-			return RendererAPI::s_api;
-		}
-
-		static inline void setViewport(
-			const unsigned int& width,
-			const unsigned int& height
-		)
-		{
-			s_renderer->setViewport(width, height);
-		}
-		
-		static void setClearColor(
-			const Color& color
-		);
-		
-		static void clear();
-
-		static void drawIndexed(
-			const Ref<VertexArray>& vao
-		);
-
+		static API GetAPI();
+		static void SetViewport(unsigned int width, unsigned int height);
+		static void SetClearColor(const Color& color);
+		static void Clear();
+		static void DrawIndexed(Ref<VertexArray> vertex_array);
 	private:
-		static RendererAPI* s_renderer;
+		static RendererAPI* sRenderer;
 	};
 }
 

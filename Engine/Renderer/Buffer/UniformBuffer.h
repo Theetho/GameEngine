@@ -5,12 +5,11 @@ namespace Engine
 	class UniformBuffer
 	{
 	public:
-		virtual ~UniformBuffer() {}
-
-		virtual void bind() const = 0;
-
-		virtual void unbind() const = 0;
+		virtual ~UniformBuffer();
 
 		static Ref<UniformBuffer> Create();
+
+		virtual void Bind() const = 0;
+		virtual void Unbind() const = 0;
 	};
 }

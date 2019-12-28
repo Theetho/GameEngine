@@ -5,17 +5,12 @@
 class ExitCell : public Floor
 {
 public:
-	ExitCell(
-		const Engine::Transform& transform = Engine::Transform()
-	);
+	ExitCell(const Engine::Transform& transform = Engine::Transform());
 	~ExitCell();
 
-	const Engine::Ref<Engine::Model> getModel() const override
-	{
-		return s_model;
-	}
+	const Engine::Ref<Engine::Model> GetModel() const override;
 private:
-	static Engine::Ref<Engine::Model> s_model;
-	static bool s_isInitialized;
+	static Engine::Ref<Engine::Model> sModel;
+	static bool sIsInitialized;
 };
 

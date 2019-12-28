@@ -1,5 +1,6 @@
 #pragma once
 
+#include <unordered_map>
 #include "SFML/Graphics.hpp"
 #include "CGameObject.h"
 #include "CRigidBody.h"
@@ -19,6 +20,7 @@ public:
 	virtual sf::Vector2f GetPointOnBounds(const SRay& velocity) = 0;
 	virtual sf::Vector2f GetNormalAtPoint(const sf::Vector2f& point) = 0;
 	const sf::Vector2f& GetCenter() const;
+	const std::unordered_map<const char*, sf::Vector2f>& GetBounds() const;
 	void AttachRigidBody(CRigidBody* rigidBody);
 protected:
 	friend class CPhysicsEngine;
@@ -26,6 +28,8 @@ protected:
 	CRigidBody* mRigidBody = nullptr;
 	sf::Vector2f mCenter;
 	sf::Vector2f mOffset;
-	sf::Vector2f mBounds;
+	std::unordered_map<const char*, sf::Vector2f> mBounds = {
+		{"Min", {0,0}}, {"Max", {0,0}}
+	};
 };
 

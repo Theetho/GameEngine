@@ -5,9 +5,6 @@
 class FileLoader
 {
 public:
-	static Engine::Scope<Map> loadMap(
-		const std::string& filePath
-	);
-
+	static Engine::Scope<Map> LoadMap(const std::string& file_path);
 };
 

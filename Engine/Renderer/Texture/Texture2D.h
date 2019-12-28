@@ -7,22 +7,10 @@ namespace Engine
 	class Texture2D : public Texture
 	{
 	public:
-		Texture2D(
-			const std::string& filePath,
-			const std::string& name,
-			const bool& useFolderPath
-		);
+		Texture2D(const std::string& file_path, const std::string& name, bool use_folder_path);
+		virtual ~Texture2D();
 
-		virtual ~Texture2D()
-		{
-
-		}
-
-		static Ref<Texture2D> Create(
-			const std::string& filePath,
-			const std::string& name,
-			const bool& useFolderPath
-		);
+		static Ref<Texture2D> Create(const std::string& file_path, const std::string& name, bool use_folder_path);
 	};
 }
 

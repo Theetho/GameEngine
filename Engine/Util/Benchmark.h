@@ -9,10 +9,10 @@ namespace Engine
 		Benchmark();
 		~Benchmark();
 
-		void tick();
+		void Tick();
 	private:
-		std::chrono::time_point<std::chrono::high_resolution_clock> m_start;
-		std::chrono::time_point<std::chrono::high_resolution_clock> m_end;
+		std::chrono::time_point<std::chrono::high_resolution_clock> mStart;
+		std::chrono::time_point<std::chrono::high_resolution_clock> mEnd;
 	};
 }
 

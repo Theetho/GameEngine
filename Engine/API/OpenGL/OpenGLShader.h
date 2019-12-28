@@ -8,141 +8,88 @@ namespace Engine
 	class OpenGLShader : public Shader
 	{
 	public:
-		OpenGLShader(
-			const std::string& filePath,
-			const std::string& name,
-			const bool& useFolderPath
-		);
-		
+		OpenGLShader(const std::string& file_path, const std::string& name, bool use_folder_path);
 		~OpenGLShader();
 
-		inline void bind() const
+		void Bind() const
 		{
-			glUseProgram(m_id);
+			glUseProgram(mId);
 		}
-		
-		inline void unbind() const
+		void Unbind() const
 		{
 			glUseProgram(0);
 		}
-
-		// Int
-		inline void uploadUniform(
-			const std::string& name,
-			const int& value
-		)
+		
+		void UploadUniform(const std::string& name, int value)
 		{
 			glUniform1i(
-				getLocation(name),
+				GetLocation(name),
 				value
 			);
 		}
-
-		// Float
-		inline void uploadUniform(
-			const std::string& name,
-			const float& value
-		)
+		void UploadUniform(const std::string& name, float value)
 		{
 			glUniform1f(
-				getLocation(name),
+				GetLocation(name),
 				value
 			);
 		}
-
-		// Vec2
-		inline void uploadUniform(
-			const std::string& name,
-			const Vec2& vector
-		)
+		void UploadUniform(const std::string& name, const Vec2& vector)
 		{
 			glUniform2f(
-				getLocation(name),
+				GetLocation(name),
 				vector.x,
 				vector.y
 			);
 		}
-
-		// Vec3
-		inline void uploadUniform(
-			const std::string& name,
-			const Vec3& vector
-		)
+		void UploadUniform(const std::string& name, const Vec3& vector)
 		{
 			glUniform3f(
-				getLocation(name),
+				GetLocation(name),
 				vector.x,
 				vector.y,
 				vector.z
 			);
 		}
-
-		// Vec4
-		inline void uploadUniform(
-			const std::string& name,
-			const Vec4& vector
-		)
+		void UploadUniform(const std::string& name, const Vec4& vector)
 		{
 			glUniform4f(
-				getLocation(name),
+				GetLocation(name),
 				vector.x,
 				vector.y,
 				vector.z,
 				vector.w
 			);
 		}
-
-		// Mat3
-		inline void uploadUniform(
-			const std::string& name,
-			const Mat3& matrix
-		)
+		void UploadUniform(const std::string& name, const Mat3& matrix)
 		{
 			glUniformMatrix3fv(
-				getLocation(name),
+				GetLocation(name),
 				1,
 				GL_FALSE,
 				glm::value_ptr(matrix)
 			);
 		}
-
-		// Mat4
-		inline void uploadUniform(
-			const std::string& name,
-			const Mat4& matrix
-		)
+		void UploadUniform(const std::string& name, const Mat4& matrix)
 		{
 			glUniformMatrix4fv(
-				getLocation(name),
+				GetLocation(name),
 				1,
 				GL_FALSE,
 				glm::value_ptr(matrix)
 			);
 		}
-
 	private:
-		unsigned int m_id;
-		std::unordered_map<GLenum, std::string> m_shaderSources;
+		unsigned int mId;
+		std::unordered_map<GLenum, std::string> mShaderSources;
 
-		unsigned int compile(
-			const std::string& src,
-			const GLenum& shaderType
-		);
-
-		void link(
-			const std::vector<unsigned int>& ids
-		);
-
-		void readFile(
-			const std::string& filePath
-		) override;
-
-		inline int getLocation(
-			const std::string& name
-		) const
+		int			 GetLocation(const std::string& name) const
 		{
-			return glGetUniformLocation(m_id, name.c_str());
+			return glGetUniformLocation(mId, name.c_str());
 		}
+		void		 Link(const std::vector<unsigned int>& ids);
+		void		 ReadFile(const std::string& file_path) override;
+		unsigned int Compile(const std::string& source_file, GLenum shader_type);
 	};
 }
 

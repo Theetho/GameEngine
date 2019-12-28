@@ -6,24 +6,38 @@ namespace Engine
 	SpotLight::SpotLight(
 		const Vec3& position,
 		const Vec3& direction,
-		const float& cutOff,
+		float cut_off,
 		const Attenuation& attenuation,
 		const Color& color
 	)
 		: PointLight(position, attenuation, color)
-		, m_direction(direction)
-		, m_cutOff(cutOff)
+		, mDirection(direction)
+		, mCutOff(cut_off)
+	{}
+
+	SpotLight::~SpotLight()
+	{}
+
+	const Vec3& SpotLight::GetDirection() const
 	{
+		return mDirection;
 	}
 
-	void SpotLight::loadGLUniforms(
-		Ref<OpenGLShader> shader,
-		const unsigned int& index
-	)
+	float SpotLight::GetCutOff() const
 	{
-		PointLight::loadGLUniforms(shader, index);
+		return mCutOff;
+	}
 
-		shader->uploadUniform("u_lights[" + std::to_string(index) + "].cutOff"   , glm::cos(glm::radians(m_cutOff)));
-		shader->uploadUniform("u_lights[" + std::to_string(index) + "].direction", m_direction);
+	int SpotLight::GetID() const
+	{
+		return static_cast<int>(LightID::Spot);
+	}
+
+	void SpotLight::LoadGLUniforms(Ref<OpenGLShader> shader, unsigned int index)
+	{
+		PointLight::LoadGLUniforms(shader, index);
+
+		shader->UploadUniform("u_lights[" + std::to_string(index) + "].cutOff"   , glm::cos(glm::radians(mCutOff)));
+		shader->UploadUniform("u_lights[" + std::to_string(index) + "].direction", mDirection);
 	}
 }

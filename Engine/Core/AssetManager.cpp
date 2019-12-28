@@ -3,7 +3,22 @@
 
 namespace Engine
 {
-	ShaderLibrary AssetManager::s_shaderLibrary;
-	Texture2DLibrary AssetManager::s_texture2DLibrary;
-	ModelLibrary AssetManager::s_modelLibrary;
+	ShaderLibrary	 AssetManager::sShaderLibrary;
+	Texture2DLibrary AssetManager::sTexture2DLibrary;
+	ModelLibrary	 AssetManager::sModelLibrary;
+
+	ShaderLibrary& AssetManager::GetShaderLibrary()
+	{
+		return sShaderLibrary;
+	}
+	
+	Texture2DLibrary& AssetManager::GetTexture2DLibrary()
+	{
+		return sTexture2DLibrary;
+	}
+	
+	ModelLibrary& AssetManager::GetModelLibrary()
+	{
+		return sModelLibrary;
+	}
 }

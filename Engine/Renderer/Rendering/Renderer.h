@@ -12,56 +12,25 @@ namespace Engine
 	class Renderer
 	{
 	public:
-		inline static API getAPI()
-		{
-			return s_renderCommand->getAPI();
-		}
-
-		inline static void setViewport(
-			const unsigned int& width,
-			const unsigned int& height
-		)
-		{
-			s_renderCommand->setViewport(width, height);
-		}
-	
-		static void BeginScene(
-			Camera3D& camera,
-			Ref<Shader> shader
-		);
-
-		static void Submit(
-			const Ref<VertexArray> vao,
-			const Transform& transform
-		);
-
-		static void Submit(
-			const Model& model,
-			const Transform& transform
-		);
-
-		static void Submit(
-			const Model& model,
-			const Ref<Collider> collider
-		);
-
-		static void Submit(
-			const Skybox& skybox
-		);
-
+		static API GetAPI();
+		static void SetViewport(unsigned int width, unsigned int height);
+		static void BeginScene(Camera3D& camera, Ref<Shader> shader);
+		static void Submit(Ref<VertexArray> vertex_array, const Transform& transform);
+		static void Submit(const Model& model, const Transform& transform);
+		static void Submit(const Model& model, Ref<Collider> collider);
+		static void Submit(const Skybox& skybox);
 		static void EndScene();
-
 	private:
-		static Scope<RenderCommand> s_renderCommand;
-		static Ref<Shader> s_shader;
+		static Scope<RenderCommand> sRenderCommand;
+		static Ref<Shader> sShader;
 
 		struct SceneData
 		{
-			Mat4 VP;
-			Mat4 V;
-			Mat4 P;
+			Mat4 ViewProjection;
+			Mat4 View;
+			Mat4 Projection;
 		};
-		static SceneData s_sceneData;
+		static SceneData sSceneData;
 	};
 }
 
