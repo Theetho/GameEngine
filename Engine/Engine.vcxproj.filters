@@ -1387,6 +1387,7 @@
     </ClInclude>
     <ClInclude Include="API\OpenGL\OpenGLRenderer.h" />
     <ClInclude Include="Component\PhysicsComponent.h" />
+    <ClInclude Include="Renderer\Rendering\Renderable.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API\OpenGL\OpenGLContext.cpp">
@@ -1545,5 +1546,6 @@
     </ClCompile>
     <ClCompile Include="API\OpenGL\OpenGLRenderer.cpp" />
     <ClCompile Include="Component\PhysicsComponent.cpp" />
+    <ClCompile Include="Renderer\Rendering\Renderable.cpp" />
   </ItemGroup>
 </Project>

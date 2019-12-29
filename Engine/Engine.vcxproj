@@ -202,6 +202,7 @@
     <ClInclude Include="Renderer\Buffer\VertexBuffer.h" />
     <ClInclude Include="Renderer\GraphicsContext.h" />
     <ClInclude Include="Renderer\Library.h" />
+    <ClInclude Include="Renderer\Rendering\Renderable.h" />
     <ClInclude Include="Renderer\Rendering\RenderCommand.h" />
     <ClInclude Include="Renderer\Rendering\Renderer.h" />
     <ClInclude Include="Renderer\Rendering\RendererAPI.h" />

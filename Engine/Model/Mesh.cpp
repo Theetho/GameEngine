@@ -1,6 +1,8 @@
 #include "EnginePch.h"
 #include "Core/Log.h"
 #include "Mesh.h"
+#include "Renderer/Rendering/Renderer.h"
+#include "API/OpenGL/OpenGLShader.h"
 
 namespace Engine
 {
@@ -11,10 +13,7 @@ namespace Engine
 	{
 		mVertexArray = VertexArray::Create();
 
-		auto vertex_buffer = VertexBuffer::Create(
-			vertices.data(),
-			vertices.size()
-		);
+		auto vertex_buffer = VertexBuffer::Create(vertices.data(), vertices.size());
 
 		vertex_buffer->SetLayout({
 			{Engine::ShaderDataType::Float3, "in_position"},
@@ -24,10 +23,7 @@ namespace Engine
 
 		mVertexArray->AddVertexBuffer(vertex_buffer);
 
-		auto index_buffer = IndexBuffer::Create(
-			indices.data(),
-			indices.size()
-		);
+		auto index_buffer = IndexBuffer::Create(indices.data(),	indices.size());
 
 		mVertexArray->AddIndexBuffer(index_buffer);
 	}
@@ -48,5 +44,12 @@ namespace Engine
 	void Mesh::SetMaterial(Ref<Material> material)
 	{
 		mMaterial = material;
+	}
+
+	void Mesh::Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const
+	{
+		LoadMaterial(shader);
+		mVertexArray->Bind();
+		render_command->DrawIndexed(mVertexArray);
 	}
 }

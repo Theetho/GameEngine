@@ -1,5 +1,6 @@
 #include "EnginePch.h"
 #include "RigidBody.h"
+#include "Collider.h"
 
 namespace Engine
 {
@@ -8,7 +9,8 @@ namespace Engine
 		, mPosition(position)
 		, mRotation(0.0f)
 		, mVelocity(0.0f)
-	{}
+	{
+	}
 
 	RigidBody::~RigidBody()
 	{}

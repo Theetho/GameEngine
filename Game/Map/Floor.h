@@ -10,5 +10,7 @@ public:
 private:
 	static Engine::Ref<Engine::Model> sModel;
 	static bool sIsInitialized;
+
+	void Render(Engine::Ref<Engine::RenderCommand> render_command, Engine::Ref<Engine::Shader> shader) const override;
 };
 

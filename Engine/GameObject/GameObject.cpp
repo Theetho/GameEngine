@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Include/Component.h"
 #include "Core/Log.h"
+#include "API/OpenGL/OpenGLShader.h"
 
 namespace Engine
 {
@@ -127,5 +128,14 @@ namespace Engine
 			box->SetScale(scale);
 		if (sphere)
 			sphere->SetScale(scale.x);
+	}
+	void GameObject::Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const
+	{
+		if (render_command->GetAPI() == API::OpenGL)
+		{
+			auto& open_gl_shader = std::dynamic_pointer_cast<Engine::OpenGLShader>(shader);
+
+			open_gl_shader->UploadUniform("u_model", mTransform.GetModel());
+		}
 	}
 }

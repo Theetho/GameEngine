@@ -34,3 +34,9 @@ const Engine::Ref<Engine::Model> ExitCell::GetModel() const
 {
 	return sModel;
 }
+
+void ExitCell::Render(Engine::Ref<Engine::RenderCommand> render_command, Engine::Ref<Engine::Shader> shader) const
+{
+	GameObject::Render(render_command, shader);
+	Renderable::Render(sModel, render_command, shader);
+}

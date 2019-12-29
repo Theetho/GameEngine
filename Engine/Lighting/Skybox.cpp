@@ -39,4 +39,21 @@ namespace Engine
 		shader->Bind();
 		shader->UploadUniform("u_skybox", 0);
 	}
+
+	void Skybox::Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const
+	{
+		if (render_command->GetAPI() == API::OpenGL)
+		{
+			glDisable(GL_CULL_FACE);
+			glDepthFunc(GL_LEQUAL);
+		}
+
+		Renderable::Render(mModel, render_command, shader);
+
+		if (render_command->GetAPI() == API::OpenGL)
+		{
+			glEnable(GL_CULL_FACE);
+			glDepthFunc(GL_LESS);
+		}
+	}
 }

@@ -9,7 +9,7 @@ out vec2 v_textureCoords;
 out vec3 v_normal;
 out vec3 v_fragmentPosition;
 
-uniform mat4 u_ModelViewProjection;
+uniform mat4 u_view_projection;
 uniform mat4 u_model;
 
 void main()
@@ -17,7 +17,7 @@ void main()
 	v_textureCoords = in_textureCoords;
 	v_normal = (u_model * vec4(in_normal, 0.0)).xyz;
 	v_fragmentPosition = vec3(u_model * vec4(in_position, 1.0));
-	gl_Position = u_ModelViewProjection * vec4(in_position, 1.0);
+	gl_Position = u_view_projection * u_model * vec4(in_position, 1.0);
 }
 #type fragment
 #version 450 core

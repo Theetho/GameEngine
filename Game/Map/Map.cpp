@@ -90,3 +90,20 @@ void Map::SetEntry(const Engine::Vec3& entry)
 {
 	mEntry = entry;
 }
+
+void Map::Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const
+{
+	for (auto& wall : mWalls)
+	{
+		Renderable::Render(&wall, render_command, shader);
+	}
+	for (auto& wall : mDestructibleWalls)
+	{
+		Renderable::Render(&wall, render_command, shader);
+	}
+	for (auto& floor : mFloor)
+	{
+		Renderable::Render(&floor, render_command, shader);
+	}
+	Renderable::Render(&mExit, render_command, shader);
+}

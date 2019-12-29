@@ -1,9 +1,7 @@
 #include "pch.h"
 #include "FileLoader.h"
 
-Engine::Scope<Map> FileLoader::LoadMap(
-	const std::string& file_path
-)
+Engine::Scope<Map> FileLoader::LoadMap(const std::string& file_path)
 {
 	unsigned int height, width;
 	float size = 1.0f;

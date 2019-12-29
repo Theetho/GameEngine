@@ -1,6 +1,8 @@
 #include "EnginePch.h"
 #include "SphereCollider.h"
 #include "System/CollisionSystem.h"
+#include "API/OpenGL/OpenGLShader.h"
+#include "Core/AssetManager.h"
 
 namespace Engine
 {
@@ -66,5 +68,30 @@ namespace Engine
 	void SphereCollider::SetScale(float scale)
 	{
 		mRadius *= scale;
+	}
+	void SphereCollider::Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const
+	{
+		Transform transform;
+		transform.SetPosition(mCenter);
+		transform.SetScale(mRadius);
+
+		if (render_command->GetAPI() == API::OpenGL)
+		{
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+			auto& open_gl_shader = std::dynamic_pointer_cast<Engine::OpenGLShader>(shader);
+
+			open_gl_shader->UploadUniform("u_model", transform.GetModel());
+		}
+
+		for (auto& mesh : AssetManager::GetModelLibrary().Get("bomb")->GetMeshes())
+		{
+			Renderable::Render(&mesh, render_command, shader);
+		}
+
+		if (render_command->GetAPI() == API::OpenGL)
+		{
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		}
 	}
 }	

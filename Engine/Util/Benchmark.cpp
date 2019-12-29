@@ -8,7 +8,9 @@ namespace Engine
 	{}
 
 	Benchmark::~Benchmark()
-	{}
+	{
+		Tick();
+	}
 
 	void Benchmark::Tick()
 	{

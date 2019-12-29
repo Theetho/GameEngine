@@ -11,7 +11,7 @@ namespace Engine
 	// Declaration
 	class Collision;
 
-	class Collider : public Component
+	class Collider : public Component, public Renderable
 	{
 	public:
 		Collider(GameObject& game_object, const Vec3& center);
@@ -22,16 +22,16 @@ namespace Engine
 		virtual ~Collider();
 
 		virtual void OnUpdate(const double& delta) override;
-		virtual void AttachRigidBody(RigidBody* rigid_body);
+		virtual void AttachRigidBody(Ref<RigidBody> rigid_body);
 
-		virtual const Vec3&      GetCenter() const;
-		virtual const Vec3&      GetMax() const = 0;
-		virtual const Vec3&      GetMin() const = 0;
-		virtual const RigidBody* GetRigidBody() const;
+		virtual const Vec3&			 GetCenter() const;
+		virtual const Vec3&			 GetMax() const = 0;
+		virtual const Vec3&			 GetMin() const = 0;
+		virtual const Ref<RigidBody> GetRigidBody() const;
 	protected:
-		Vec3	   mCenter;
-		Vec3	   mOffset;
-		RigidBody* mRigidBody = nullptr;
+		Vec3		   mCenter;
+		Vec3		   mOffset;
+		Ref<RigidBody> mRigidBody = nullptr;
 	};
 
 	// Class that stores data of a collision

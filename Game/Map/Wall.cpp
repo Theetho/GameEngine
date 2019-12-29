@@ -32,3 +32,9 @@ const Engine::Ref<Engine::Model> Wall::GetModel() const
 {
 	return Wall::sModel;
 }
+
+void Wall::Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const
+{
+	GameObject::Render(render_command, shader);
+	Renderable::Render(sModel, render_command, shader);
+}

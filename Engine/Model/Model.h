@@ -6,7 +6,7 @@
 
 namespace Engine
 {
-	class Model
+	class Model : public Renderable
 	{
 	public:
 		Model(const std::string& file_path, const std::string& name, bool use_folder_path);
@@ -45,6 +45,8 @@ namespace Engine
 		Mesh ProcessMesh(aiMesh* mesh, const aiScene* scene);
 		std::vector<Ref<Texture2D>> LoadMaterial(aiMaterial* mat, const aiTextureType& type, const std::string& name);
 		void UpdateDimensions(const Vec3& vector);
+
+		void Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const override;
 	};
 }
 

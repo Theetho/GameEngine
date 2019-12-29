@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "GameApplication.h"
 #include "Layers/BombermanLayer.h"
-#include "Layers/MapLayer.h"
 
 GameApplication::GameApplication()
 	: Application()
@@ -11,7 +10,7 @@ GameApplication::GameApplication()
 	Engine::Model::SetFolder("./Assets/Models/");
 	this->PushLayer(new BombermanLayer());
 
-	//this->getWindow().setFullscreen(true);
+	this->GetWindow().SetFullscreen(true);
 }
 
 GameApplication::~GameApplication()

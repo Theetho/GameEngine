@@ -20,5 +20,7 @@ namespace Engine
 		void SetScale(float scale);
 	private:
 		float mRadius;
+
+		void Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const override;
 	};
 }

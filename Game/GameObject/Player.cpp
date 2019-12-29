@@ -4,9 +4,7 @@
 
 using namespace Engine;
 
-Player::Player(
-	Ref<Model> model,
-	const Transform& transform
+Player::Player(Ref<Model> model, const Transform& transform
 )
 	: GameObject(transform)
 {
@@ -98,4 +96,10 @@ void Player::SetModel(Engine::Ref<Engine::Model> model)
 	Vec3 size = model->GetSize();
 
 	AddComponent<BoxCollider>(std::make_shared<BoxCollider>(*this, mTransform.GetPosition(), Vec3(size.x, size.y, size.z)));
+}
+
+void Player::Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const
+{
+	GameObject::Render(render_command, shader);
+	Renderable::Render(mModel, render_command, shader);
 }

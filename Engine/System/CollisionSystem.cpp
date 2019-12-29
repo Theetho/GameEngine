@@ -2,6 +2,7 @@
 #include "CollisionSystem.h"
 #include "GameObject/GameObject.h"
 #include "Component/PhysicsComponent.h"
+#include "Util/Benchmark.h"
 
 namespace Engine
 {
@@ -17,6 +18,7 @@ namespace Engine
 
 	void CollisionSystem::OnUpdate(const double& delta)
 	{
+	//	Benchmark timer;
 		CheckForMovingObjectsCollisions();
 	}
 
@@ -84,7 +86,7 @@ namespace Engine
 		{
 			if (second.second == typeid(BoxCollider))
 			{
-				return Collide((SphereCollider*)first.first, (BoxCollider*)second.first);
+				return Collide((BoxCollider*)second.first, (SphereCollider*)first.first);
 			}
 			else if (second.second == typeid(SphereCollider))
 			{
@@ -98,56 +100,41 @@ namespace Engine
 		}
 	}
 
-	Collision CollisionSystem::Collide(
-		const BoxCollider* first,
-		const BoxCollider* second
-	)
+	Collision CollisionSystem::Collide(const BoxCollider* first, const BoxCollider* second)
 	{
-		return Collision(
-			   (first->GetMin().x <= second->GetMax().x && first->GetMax().x >= second->GetMin().x)
-			&& (first->GetMin().y <= second->GetMax().y && first->GetMax().y >= second->GetMin().y)
-			&& (first->GetMin().z <= second->GetMax().z && first->GetMax().z >= second->GetMin().z)
-			, std::min(std::abs(first->GetMin().y - second->GetMax().y), std::abs(first->GetMax().y - second->GetMin().y))
-			, first , second
-		);
+		bool collide = first->GetMin().x <= second->GetMax().x 
+					&& first->GetMax().x >= second->GetMin().x
+					&& first->GetMin().y <= second->GetMax().y 
+					&& first->GetMax().y >= second->GetMin().y
+					&& first->GetMin().z <= second->GetMax().z 
+					&& first->GetMax().z >= second->GetMin().z;
+		float distance_up_axis = std::min(std::abs(first->GetMin().y - second->GetMax().y), std::abs(first->GetMax().y - second->GetMin().y));
+		
+		return Collision(collide, distance_up_axis, first, second);
 	}
 
-	Collision CollisionSystem::Collide(
-		const SphereCollider* first,
-		const SphereCollider* second
-	)
+	Collision CollisionSystem::Collide(const SphereCollider* first, const SphereCollider* second)
 	{
 		float distance = glm::distance(first->GetCenter(), second->GetCenter());
-		return Collision(
-				distance <= (first->GetRadius() + second->GetRadius())
-			  , distance
-			  , first, second
-		);
+		bool collide   = distance <= (first->GetRadius() + second->GetRadius());
+		
+		return Collision(collide, distance, first, second);
 	}
 
-	Collision CollisionSystem::Collide(
-		const BoxCollider* box_collider,
-		const SphereCollider* sphere_collider
-	)
+	Collision CollisionSystem::Collide(const BoxCollider* box_collider, const SphereCollider* sphere_collider)
 	{
-			float x = std::max(box_collider->GetMin().x, std::min(sphere_collider->GetCenter().x, box_collider->GetMax().x));
-			float y = std::max(box_collider->GetMin().y, std::min(sphere_collider->GetCenter().y, box_collider->GetMax().y));
-			float z = std::max(box_collider->GetMin().z, std::min(sphere_collider->GetCenter().z, box_collider->GetMax().z));
+		// Get box closest point to sphere center by clamping
+		float x = std::max(box_collider->GetMin().x, std::min(sphere_collider->GetCenter().x, box_collider->GetMax().x));
+		float y = std::max(box_collider->GetMin().y, std::min(sphere_collider->GetCenter().y, box_collider->GetMax().y));
+		float z = std::max(box_collider->GetMin().z, std::min(sphere_collider->GetCenter().z, box_collider->GetMax().z));
 
-			float distance = glm::distance(Vec3(x, y, z), sphere_collider->GetCenter());
+		float distance = (x - sphere_collider->GetCenter().x) * (x - sphere_collider->GetCenter().x) +
+						 (y - sphere_collider->GetCenter().y) * (y - sphere_collider->GetCenter().y) +
+						 (z - sphere_collider->GetCenter().z) * (z - sphere_collider->GetCenter().z);
 
-			return Collision(
-				distance <= sphere_collider->GetRadius()
-			  , std::min(std::abs(sphere_collider->GetCenter().y - box_collider->GetMax().y), std::abs(sphere_collider->GetCenter().y - box_collider->GetMin().y))
-			  , box_collider, sphere_collider
-			);
-	}
+		bool collide = distance < (sphere_collider->GetRadius() * sphere_collider->GetRadius());
+		float distance_up_axis = y - sphere_collider->GetCenter().y + sphere_collider->GetRadius();
 
-	Collision CollisionSystem::Collide(
-		const SphereCollider* sphere_collider,
-		const BoxCollider* box_collider
-	)
-	{
-		return Collide(box_collider, sphere_collider);
+		return Collision(collide, distance_up_axis, box_collider, sphere_collider);
 	}
 };

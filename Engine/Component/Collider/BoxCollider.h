@@ -27,5 +27,7 @@ namespace Engine
 		Vec3  mMaxExtent;
 		// Bottom Left Back point (-width, -height, -depth) / 2
 		Vec3  mMinExtent;
+
+		void Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const override;
 	};
 }

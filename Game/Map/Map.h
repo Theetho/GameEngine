@@ -4,7 +4,7 @@
 #include "DestructibleWall.h"
 #include "ExitCell.h"
 
-class Map
+class Map : public Engine::Renderable
 {
 public:
 	Map(unsigned int width, unsigned int height,const Engine::Vec3& block_size);
@@ -31,5 +31,7 @@ private:
 	std::vector<Wall>			  mWalls;
 	std::vector<Floor>			  mFloor;
 	std::vector<DestructibleWall> mDestructibleWalls;
+
+	void Render(Engine::Ref<Engine::RenderCommand> render_command, Engine::Ref<Engine::Shader> shader) const override;
 };
 

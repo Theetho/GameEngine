@@ -2,12 +2,13 @@
 
 #include "Transform.h"
 #include "Component/Component.h"
+#include "Renderer/Rendering/Renderable.h"
 
 namespace Engine
 {
 	class Collision;
 
-	class GameObject
+	class GameObject : public Renderable
 	{
 	public:
 		explicit GameObject(const Transform& transform = Transform());
@@ -43,8 +44,21 @@ namespace Engine
 		{
 			static_assert(std::is_base_of<Component, T>::value, "T is not a component");
 
-			if (mComponents.find(typeid(T)) == mComponents.end())
-				mComponents[typeid(T)] = component;
+			auto* type = &typeid(T);
+
+			if (mComponents.find(*type) == mComponents.end())
+			{
+				mComponents[*type] = component;
+
+				if (*type == typeid(RigidBody))
+				{
+					auto collider = std::dynamic_pointer_cast<Collider>(GetComponent<BoxCollider>());
+					if (!collider)
+						collider = std::dynamic_pointer_cast<Collider>(GetComponent<SphereCollider>());
+					if (collider)
+						collider->AttachRigidBody(std::dynamic_pointer_cast<RigidBody>(component));
+				}
+			}
 		}
 		template<typename T>
 		void RemoveComponent()
@@ -90,6 +104,8 @@ namespace Engine
 		bool      mIsColliding;
 		
 		std::unordered_map<std::type_index, Ref<Component>> mComponents;
+
+		virtual void Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const override;
 	};
 }
 

@@ -22,6 +22,6 @@ private:
 	bool mEnable = true;
 
 	void Disable();
-	
+	void Render(Engine::Ref<Engine::RenderCommand> render_command, Engine::Ref<Engine::Shader> shader) const override;
 };
 

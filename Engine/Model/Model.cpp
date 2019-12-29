@@ -239,4 +239,12 @@ namespace Engine
 		else if (vector.z < mDimensions.min.z)
 			mDimensions.min.z = vector.z;
 	}
+
+	void Model::Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const
+	{
+		for (auto& mesh : mMeshes)
+		{
+			Renderable::Render(&mesh, render_command, shader);
+		}
+	}
 }

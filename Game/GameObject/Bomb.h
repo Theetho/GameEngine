@@ -40,5 +40,6 @@ private:
 	bool AreCloseEnough(float bomb_radius, float wall_size, float distance);
 	void Animate();
 	void Explode();
+	void Render(Engine::Ref<Engine::RenderCommand> render_command, Engine::Ref<Engine::Shader> shader) const override;
 };
 

@@ -143,3 +143,10 @@ bool Bomb::AreCloseEnough(float bomb_radius, float wall_size, float distance)
 	float max = (wall_size * mPower) - bomb_radius;
 	return distance >= min && distance <= max;
 }
+
+
+void Bomb::Render(Engine::Ref<Engine::RenderCommand> render_command, Engine::Ref<Engine::Shader> shader) const
+{
+	GameObject::Render(render_command, shader);
+	Renderable::Render(&mModel, render_command, shader);
+}

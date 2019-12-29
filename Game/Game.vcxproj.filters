@@ -39,9 +39,6 @@
     <ClInclude Include="Layers\BombermanLayer.h">
       <Filter>Layers</Filter>
     </ClInclude>
-    <ClInclude Include="Layers\MapLayer.h">
-      <Filter>Layers</Filter>
-    </ClInclude>
     <ClInclude Include="Map\DestructibleWall.h">
       <Filter>Map</Filter>
     </ClInclude>
@@ -79,9 +76,6 @@
       <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Layers\BombermanLayer.cpp">
-      <Filter>Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="Layers\MapLayer.cpp">
       <Filter>Layers</Filter>
     </ClCompile>
     <ClCompile Include="Map\DestructibleWall.cpp">

@@ -11,24 +11,29 @@ namespace Engine
 		: Component(game_object)
 		, mCenter(center)
 		, mOffset(center - game_object.GetTransform().GetPosition())
-	{}
+		, mRigidBody(game_object.GetComponent<RigidBody>())
+	{
+	}
 
 	Collider::Collider(const Collider & collider)
 		: Component(collider.mGameObject)
 		, mCenter(collider.mCenter)
 		, mOffset(collider.mOffset)
+		, mRigidBody(collider.mRigidBody)
 	{}
 
 	Collider::Collider(const Collider&& collider) noexcept
 		: Component(collider.mGameObject)
 		, mCenter(collider.mCenter)
 		, mOffset(collider.mOffset)
+		, mRigidBody(collider.mRigidBody)
 	{}
 
 	Collider& Collider::operator=(const Collider& collider)
 	{
 		mGameObject = collider.mGameObject;
-		mCenter = collider.mCenter;
+		mCenter     = collider.mCenter;
+		mRigidBody  = collider.mRigidBody;
 
 		return *this;
 	}
@@ -36,7 +41,8 @@ namespace Engine
 	Collider& Collider::operator=(const Collider&& collider) noexcept
 	{
 		mGameObject = collider.mGameObject;
-		mCenter = collider.mCenter;
+		mCenter     = collider.mCenter;
+		mRigidBody  = collider.mRigidBody;
 
 		return *this;
 	}
@@ -49,7 +55,7 @@ namespace Engine
 		mCenter = mGameObject.GetTransform().GetPosition() + mOffset;
 	}
 
-	void Collider::AttachRigidBody(RigidBody* rigid_body)
+	void Collider::AttachRigidBody(Ref<RigidBody> rigid_body)
 	{
 		mRigidBody = rigid_body;
 	}
@@ -59,7 +65,7 @@ namespace Engine
 		return mCenter;
 	}
 	
-	const RigidBody* Collider::GetRigidBody() const
+	const Ref<RigidBody> Collider::GetRigidBody() const
 	{
 		return mRigidBody;
 	}

@@ -146,7 +146,6 @@
     <ClInclude Include="GameObject\Bomb.h" />
     <ClInclude Include="GameObject\Player.h" />
     <ClInclude Include="Layers\BombermanLayer.h" />
-    <ClInclude Include="Layers\MapLayer.h" />
     <ClInclude Include="Map\DestructibleWall.h" />
     <ClInclude Include="Map\ExitCell.h" />
     <ClInclude Include="Map\Floor.h" />
@@ -162,7 +161,6 @@
     <ClCompile Include="GameObject\Bomb.cpp" />
     <ClCompile Include="GameObject\Player.cpp" />
     <ClCompile Include="Layers\BombermanLayer.cpp" />
-    <ClCompile Include="Layers\MapLayer.cpp" />
     <ClCompile Include="Map\DestructibleWall.cpp" />
     <ClCompile Include="Map\ExitCell.cpp" />
     <ClCompile Include="Map\Floor.cpp" />

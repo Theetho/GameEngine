@@ -11,9 +11,7 @@ namespace Engine
 
 		void OnUpdate(const double& delta);
 
-		static Ref<CollisionSystem> Create();
 		static Ref<CollisionSystem> Get();
-
 		template<typename T>
 		static void AddCollider(Collider* collider)
 		{
@@ -21,7 +19,8 @@ namespace Engine
 			
 			if (sInstance)
 			{
-				if (collider->GetGameObject().IsMoveable() && !sInstance->mMoveableColliders.count(collider))
+				auto rigid_body = collider->GetGameObject().GetComponent<RigidBody>();
+				if (rigid_body && !sInstance->mMoveableColliders.count(collider))
 				{
 					sInstance->mMoveableColliders.insert(std::pair<Collider*, std::type_index>(collider,typeid(T)));
 				}
@@ -31,10 +30,7 @@ namespace Engine
 				}
 			}
 		}
-
-		static void RemoveCollider(
-			Collider* collider
-		)
+		static void RemoveCollider(Collider* collider)
 		{
 			if (sInstance)
 			{
@@ -48,8 +44,8 @@ namespace Engine
 				}
 			}
 		}
-
 	private:
+		static Ref<CollisionSystem> Create();
 		static Ref<CollisionSystem> sInstance;
 
 		std::unordered_map<Collider*, std::type_index> mMoveableColliders;
@@ -57,30 +53,9 @@ namespace Engine
 
 		void CheckForMovingObjectsCollisions();
 
-		Collision Collide(
-			const std::pair<Collider*, std::type_index>& first,
-			const std::pair<Collider*, std::type_index>& second
-		);
-
-		Collision Collide(
-			const BoxCollider* first,
-			const BoxCollider* second
-		);
-
-		Collision Collide(
-			const SphereCollider* first,
-			const SphereCollider* second
-
-		);
-
-		Collision Collide(
-			const BoxCollider* box_collider,
-			const SphereCollider* sphere_collider
-		);
-
-		Collision Collide(
-			const SphereCollider* sphere_collider,
-			const BoxCollider* box_collider
-		);
+		Collision Collide(const std::pair<Collider*, std::type_index>& first, const std::pair<Collider*, std::type_index>& second);
+		Collision Collide(const BoxCollider* first, const BoxCollider* second);
+		Collision Collide(const SphereCollider* first, const SphereCollider* second);
+		Collision Collide(const BoxCollider* box_collider, const SphereCollider* sphere_collider);
 	};
 }

@@ -20,6 +20,8 @@ private:
 	Engine::Ref<Engine::Model>	   mModel;
 	std::vector<Engine::Ref<Bomb>> mBombs;
 	float mBombPower = 1.5f;
+
+	void Render(Engine::Ref<Engine::RenderCommand> render_command, Engine::Ref<Engine::Shader> shader) const override;
 };
 
 
