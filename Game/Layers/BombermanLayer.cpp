@@ -55,7 +55,7 @@ void BombermanLayer::OnUpdate(
 	const double& delta
 )
 {
-	mPlayer.OnUpdate(delta);
+	//mPlayer.OnUpdate(delta);
 	mCamera.OnUpdate(delta);
 	//mMap->OnUpdate(delta, mBombs.size() == 0);
 	//
@@ -79,7 +79,7 @@ void BombermanLayer::OnUpdate(
 
 	Renderer::Submit(shader_terrain, mTerrain);
 	//Renderer::Submit(shader_pbr, *mMap);
-	Renderer::Submit(shader_pbr, mPlayer);
+	//Renderer::Submit(shader_pbr, mPlayer);
 	
 	//auto bomb = mBombs.begin();
 	//for (size_t i = 0; i < mBombs.size();)
