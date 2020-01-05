@@ -8,6 +8,7 @@ public:
 	Player(Engine::Ref<Engine::Model> model, const Engine::Transform& transform = Engine::Transform());
 	~Player();
 
+	void OnUpdate(const double& delta) override;
 	void OnEvent(Engine::Event& event) override;
 	void OnCollision(const Engine::Collision& collision) override;
 

@@ -1,15 +1,21 @@
 #include "EnginePch.h"
 #include "RigidBody.h"
-#include "Collider.h"
+#include "./Collider.h"
+#include "GameObject/GameObject.h"
 
 namespace Engine
 {
-	RigidBody::RigidBody(GameObject& game_object,const Vec3& position)
+	RigidBody::RigidBody(GameObject& game_object)
 		: Component(game_object)
-		, mPosition(position)
-		, mRotation(0.0f)
+		, mTransform(game_object.GetTransform())
 		, mVelocity(0.0f)
 	{
+		auto box    = std::dynamic_pointer_cast<Collider>(game_object.GetComponent<BoxCollider>());
+		auto sphere = std::dynamic_pointer_cast<Collider>(game_object.GetComponent<SphereCollider>());
+		if (box)
+			box->AttachRigidBody();
+		if (sphere)
+			sphere->AttachRigidBody();
 	}
 
 	RigidBody::~RigidBody()
@@ -18,6 +24,11 @@ namespace Engine
 	void RigidBody::SetUseGravity(bool use)
 	{
 		mUseGravity = use;
+	}
+
+	void RigidBody::SetGroundLevel(float value)
+	{
+		mGroundLevel = value;
 	}
 
 	bool RigidBody::IsUsingGravity() const
@@ -30,6 +41,11 @@ namespace Engine
 		return mVelocity;
 	}
 
+	float RigidBody::GetGroundLevel() const
+	{
+		return mGroundLevel;
+	}
+
 	Vec3& RigidBody::GetVelocity()
 	{
 		return mVelocity;
@@ -37,5 +53,9 @@ namespace Engine
 
 	void RigidBody::OnUpdate(const double& delta)
 	{
+		Vec3& position = mTransform.GetPosition();
+		position += mVelocity;
+		
+		mTransform.UpdateModel();
 	}
 }

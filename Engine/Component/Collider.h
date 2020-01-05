@@ -3,3 +3,4 @@
 #include "Collider/BoxCollider.h"
 #include "Collider/Collider.h"
 #include "Collider/SphereCollider.h"
+#include "Collider/TerrainCollider.h"

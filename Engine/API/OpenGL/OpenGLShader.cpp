@@ -1,6 +1,7 @@
 #include "EnginePch.h"
 #include "OpenGLShader.h"
 #include "Core/Log.h"
+#include "Include/Maths.h"
 
 namespace Engine
 {
@@ -43,6 +44,51 @@ namespace Engine
 		glDeleteProgram(mId);
 	}
 
+	void OpenGLShader::Bind() const
+	{
+		glUseProgram(mId);
+	}
+
+	void OpenGLShader::Unbind() const
+	{
+		glUseProgram(0);
+	}
+
+	void OpenGLShader::UploadUniform(const std::string& name, int value)
+	{
+		glUniform1i(GetLocation(name), value);
+	}
+
+	void OpenGLShader::UploadUniform(const std::string& name, float value)
+	{
+		glUniform1f(GetLocation(name),value);
+	}
+
+	void OpenGLShader::UploadUniform(const std::string& name, const Vec2& vector)
+	{
+		glUniform2f(GetLocation(name), vector.x, vector.y);
+	}
+
+	void OpenGLShader::UploadUniform(const std::string& name, const Vec3& vector)
+	{
+		glUniform3f(GetLocation(name), vector.x, vector.y, vector.z);
+	}
+
+	void OpenGLShader::UploadUniform(const std::string& name, const Vec4& vector)
+	{
+		glUniform4f(GetLocation(name), vector.x, vector.y, vector.z, vector.w);
+	}
+
+	void OpenGLShader::UploadUniform(const std::string& name, const Mat3& matrix)
+	{
+		glUniformMatrix3fv(GetLocation(name), 1, GL_FALSE, glm::value_ptr(matrix));
+	}
+
+	void OpenGLShader::UploadUniform(const std::string& name, const Mat4& matrix)
+	{
+		glUniformMatrix4fv(GetLocation(name), 1, GL_FALSE, glm::value_ptr(matrix));
+	}
+
 	unsigned int OpenGLShader::Compile(const std::string& source_file, GLenum shader_type)
 	{
 		// Create an empty vertexSrc shader handle
@@ -79,6 +125,11 @@ namespace Engine
 		}
 		
 		return shader;
+	}
+
+	int OpenGLShader::GetLocation(const std::string& name) const
+	{
+		return glGetUniformLocation(mId, name.c_str());
 	}
 
 	void OpenGLShader::Link(

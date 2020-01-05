@@ -1,14 +1,12 @@
 #pragma once
 
 #include "Component/Component.h"
-#include "Component//RigidBody.h"
-#include "GameObject/GameObject.h"
-#include "Renderer/Buffer/VertexArray.h"
+#include "Renderer/Rendering/Renderable.h"
+#include "Component/RigidBody.h"
 #include "Include/Maths.h"
 
 namespace Engine
 {
-	// Declaration
 	class Collision;
 
 	class Collider : public Component, public Renderable
@@ -22,16 +20,18 @@ namespace Engine
 		virtual ~Collider();
 
 		virtual void OnUpdate(const double& delta) override;
-		virtual void AttachRigidBody(Ref<RigidBody> rigid_body);
+		virtual void AttachRigidBody();
 
 		virtual const Vec3&			 GetCenter() const;
-		virtual const Vec3&			 GetMax() const = 0;
-		virtual const Vec3&			 GetMin() const = 0;
+		virtual const Vec3&			 GetMax() const;
+		virtual const Vec3&			 GetMin() const;
 		virtual const Ref<RigidBody> GetRigidBody() const;
 	protected:
 		Vec3		   mCenter;
 		Vec3		   mOffset;
 		Ref<RigidBody> mRigidBody = nullptr;
+
+		virtual void UpdateCollisionSystem() = 0;
 	};
 
 	// Class that stores data of a collision

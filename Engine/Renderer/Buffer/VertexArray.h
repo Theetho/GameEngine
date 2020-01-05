@@ -2,10 +2,11 @@
 
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
+#include "Renderer/Rendering/Renderable.h"
 
 namespace Engine
 {
-	class VertexArray
+	class VertexArray : public Renderable
 	{
 	public:
 		virtual ~VertexArray();
@@ -23,6 +24,8 @@ namespace Engine
 	protected:
 		std::vector<Ref<VertexBuffer>> mVertexBuffers;
 		Ref<IndexBuffer>			   mIndexBuffer;
+
+		virtual void Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const override;
 	};
 }
 

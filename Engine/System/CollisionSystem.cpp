@@ -18,8 +18,41 @@ namespace Engine
 
 	void CollisionSystem::OnUpdate(const double& delta)
 	{
-	//	Benchmark timer;
 		CheckForMovingObjectsCollisions();
+	}
+
+	void CollisionSystem::AddTerrain(TerrainCollider* collider)
+	{
+		sInstance->mTerrains.push_back(collider);
+	}
+
+	void CollisionSystem::RemoveCollider(Collider* collider)
+	{
+		if (sInstance)
+		{
+			if (sInstance->mMoveableColliders.count(collider))
+			{
+				sInstance->mMoveableColliders.erase(collider);
+			}
+			else if (sInstance->mStaticColliders.count(collider))
+			{
+				sInstance->mStaticColliders.erase(collider);
+			}
+			else
+			{
+				sInstance->mTerrains.erase(
+					std::remove_if(
+						sInstance->mTerrains.begin(),
+						sInstance->mTerrains.end(),
+						[collider](const TerrainCollider* terrain)
+						{
+							return terrain == collider;
+						}
+					),
+					sInstance->mTerrains.end()
+				);
+			}
+		}
 	}
 
 	Ref<CollisionSystem> CollisionSystem::Create()
@@ -38,6 +71,9 @@ namespace Engine
 		for (auto iterator : mMoveableColliders)
 		{
 			Collider* collider = iterator.first;
+
+			if (collider->GetRigidBody()->IsUsingGravity())
+				collider->GetRigidBody()->GetVelocity().y -= 9.81f;
 
 			collider->GetGameObject().SetIsColliding(false);
 			// Check for collisions with the other moveable colliders
@@ -62,6 +98,19 @@ namespace Engine
 				{
 					collider->GetGameObject().OnCollision(collision);
 				}
+			}
+			// Then we check if the game object is not below the terrain
+			for (auto terrain : mTerrains)
+			{
+				auto height = terrain->GetGroundLevel(collider->GetGameObject());
+				
+				/*auto physics = collider->GetGameObject().GetComponent<PhysicsComponent>();
+				if (physics)
+					physics->SetGroundLevel(height);*/
+
+				//if (collider->GetGameObject().GetTransform().GetPosition().y < height)
+				auto rigid_body = collider->GetRigidBody();
+				rigid_body->SetGroundLevel(terrain->GetGroundLevel(collider->GetGameObject()));
 			}
 		}
 	}

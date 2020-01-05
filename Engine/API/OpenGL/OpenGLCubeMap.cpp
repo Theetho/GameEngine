@@ -56,8 +56,7 @@ namespace Engine
 	}
 
 	OpenGLCubeMap::~OpenGLCubeMap()
-	{
-	}
+	{}
 
 	void OpenGLCubeMap::Bind(unsigned int slot) const
 	{

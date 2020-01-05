@@ -15,7 +15,7 @@ CSphereCollider::~CSphereCollider()
 
 sf::Vector2f CSphereCollider::GetPointOnBounds(const SRay& velocity)
 {
-	return mCenter + (velocity.direction * mBounds.y);
+	return mCenter;// + (velocity.direction * mBounds.y);
 }
 
 sf::Vector2f CSphereCollider::GetNormalAtPoint(const sf::Vector2f& point)

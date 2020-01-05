@@ -1,8 +1,9 @@
 #include "EnginePch.h"
 #include "BoxCollider.h"
+#include "GameObject/Transform.h"
 #include "System/CollisionSystem.h"
-#include "API/OpenGL/OpenGLShader.h"
 #include "Core/AssetManager.h"
+#include "API/OpenGL/OpenGLShader.h"
 
 namespace Engine
 {
@@ -90,6 +91,12 @@ namespace Engine
 	void BoxCollider::SetScale(float scale)
 	{
 		SetScale(Vec3(scale));
+	}
+
+	void BoxCollider::UpdateCollisionSystem()
+	{
+		CollisionSystem::RemoveCollider(this);
+		CollisionSystem::AddCollider<BoxCollider>(this);
 	}
 
 	void BoxCollider::Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const

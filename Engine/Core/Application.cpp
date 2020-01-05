@@ -42,6 +42,8 @@ namespace Engine
 		{
 			mTime = GetEngineTime;
 
+			mCollisionSystem->OnUpdate(mDeltaTime);
+			
 			// --- Updates ---
 			for (Layer* layer : mLayerStack)
 			{
@@ -49,8 +51,6 @@ namespace Engine
 			}
 			// ---------------
 			
-			mCollisionSystem->OnUpdate(mDeltaTime);
-
 			mWindow->OnUpdate(mDeltaTime);
 
 			mDeltaTime = GetEngineTime - mTime;

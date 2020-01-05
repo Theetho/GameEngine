@@ -1,4 +1,5 @@
 #include "EnginePch.h"
+#include "GameObject/GameObject.h"
 #include "Collider.h"
 #include "Core/Log.h"
 
@@ -12,15 +13,15 @@ namespace Engine
 		, mCenter(center)
 		, mOffset(center - game_object.GetTransform().GetPosition())
 		, mRigidBody(game_object.GetComponent<RigidBody>())
-	{
-	}
+	{}
 
 	Collider::Collider(const Collider & collider)
 		: Component(collider.mGameObject)
 		, mCenter(collider.mCenter)
 		, mOffset(collider.mOffset)
 		, mRigidBody(collider.mRigidBody)
-	{}
+	{
+	}
 
 	Collider::Collider(const Collider&& collider) noexcept
 		: Component(collider.mGameObject)
@@ -32,6 +33,7 @@ namespace Engine
 	Collider& Collider::operator=(const Collider& collider)
 	{
 		mGameObject = collider.mGameObject;
+		mOffset		= collider.mOffset;
 		mCenter     = collider.mCenter;
 		mRigidBody  = collider.mRigidBody;
 
@@ -41,6 +43,7 @@ namespace Engine
 	Collider& Collider::operator=(const Collider&& collider) noexcept
 	{
 		mGameObject = collider.mGameObject;
+		mOffset		= collider.mOffset;
 		mCenter     = collider.mCenter;
 		mRigidBody  = collider.mRigidBody;
 
@@ -55,14 +58,25 @@ namespace Engine
 		mCenter = mGameObject.GetTransform().GetPosition() + mOffset;
 	}
 
-	void Collider::AttachRigidBody(Ref<RigidBody> rigid_body)
+	void Collider::AttachRigidBody()
 	{
-		mRigidBody = rigid_body;
+		mRigidBody = mGameObject.GetComponent<RigidBody>();
+		UpdateCollisionSystem();
 	}
 	
 	const Vec3& Collider::GetCenter() const
 	{
 		return mCenter;
+	}
+
+	const Vec3& Collider::GetMax() const
+	{
+		return Vec3(0.0f);
+	}
+
+	const Vec3& Collider::GetMin() const
+	{
+		return Vec3(0.0f);
 	}
 	
 	const Ref<RigidBody> Collider::GetRigidBody() const

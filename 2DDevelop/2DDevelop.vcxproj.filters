@@ -1,38 +1,310 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Noise">
+      <UniqueIdentifier>{6323C10D-CF37-E9BE-98B9-8C1E048DE5EF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Noise\core">
+      <UniqueIdentifier>{BB69685D-A721-AAAA-1029-8306FCFF449B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Noise\threadpp">
+      <UniqueIdentifier>{EA316BE0-D6FF-5EE6-BF93-CF0CAB003B4B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Noise\utils">
+      <UniqueIdentifier>{23F3BD0B-8FA8-3601-189D-30D884512D05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{888B590D-F46A-D8A8-FD82-637F69E13E0A}</UniqueIdentifier>
+    </Filter>
     <Filter Include="SAP">
       <UniqueIdentifier>{A91C880B-1526-887C-9EA1-9E7C0AAA937C}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CBoxCollider.h" />
-    <ClInclude Include="CCircle.h" />
-    <ClInclude Include="CCollider.h" />
-    <ClInclude Include="CCollision.h" />
-    <ClInclude Include="CGameObject.h" />
-    <ClInclude Include="CMaths.h" />
-    <ClInclude Include="CPhysicsEngine.h" />
-    <ClInclude Include="CRectangle.h" />
-    <ClInclude Include="CRigidBody.h" />
-    <ClInclude Include="CSphereCollider.h" />
-    <ClInclude Include="CWindow.h" />
+    <ClInclude Include="Noise\core\Noise.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseAbsolute.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseAddition.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseBillow.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseBlend.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseCheckerboard.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseClamp.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseConfig.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseConstant.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseCurve.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseExceptions.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseExponent.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseGenerator.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseInvert.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseMath.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseMaximum.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseMinimum.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseModule.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseMultiply.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoisePerlin.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoisePipeline.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoisePipelineJobs.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoisePlatform.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoisePower.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoisePrerequisites.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseRidgedMulti.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseScaleBias.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseScalePoint.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseSelect.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseStdHeaders.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseTerrace.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseThreadedPipeline.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseTranslatePoint.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseTurbulence.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseVectorTable.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\core\NoiseVoronoi.h">
+      <Filter>Noise\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\stb_image.h">
+      <Filter>Noise</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\stb_image_write.h">
+      <Filter>Noise</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\threadpp\Thread.h">
+      <Filter>Noise\threadpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\threadpp\ThreadCondition.h">
+      <Filter>Noise\threadpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\threadpp\ThreadImplementation.h">
+      <Filter>Noise\threadpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\threadpp\ThreadMutex.h">
+      <Filter>Noise\threadpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\threadpp\ThreadPlatform.h">
+      <Filter>Noise\threadpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\threadpp\ThreadPrerequisites.h">
+      <Filter>Noise\threadpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\threadpp\ThreadStdHeaders.h">
+      <Filter>Noise\threadpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\utils\NoiseBuilders.h">
+      <Filter>Noise\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\utils\NoiseColourValue.h">
+      <Filter>Noise\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\utils\NoiseEndianUtils.h">
+      <Filter>Noise\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\utils\NoiseGradientRenderer.h">
+      <Filter>Noise\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\utils\NoiseImage.h">
+      <Filter>Noise\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\utils\NoiseInStream.h">
+      <Filter>Noise\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\utils\NoiseJobQueue.h">
+      <Filter>Noise\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\utils\NoiseOutStream.h">
+      <Filter>Noise\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\utils\NoiseReader.h">
+      <Filter>Noise\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\utils\NoiseSystem.h">
+      <Filter>Noise\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\utils\NoiseUtils.h">
+      <Filter>Noise\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\utils\NoiseWriter.h">
+      <Filter>Noise\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\CBoxCollider.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\CCircle.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\CCollider.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\CCollision.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\CGameObject.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\CMaths.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\CPhysicsEngine.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\CRectangle.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\CRigidBody.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\CSphereCollider.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\CWindow.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
     <ClInclude Include="SAP\CSAP.h">
       <Filter>SAP</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CBoxCollider.cpp" />
-    <ClCompile Include="CCircle.cpp" />
-    <ClCompile Include="CCollider.cpp" />
-    <ClCompile Include="CCollision.cpp" />
-    <ClCompile Include="CGameObject.cpp" />
-    <ClCompile Include="CMain.cpp" />
-    <ClCompile Include="CPhysicsEngine.cpp" />
-    <ClCompile Include="CRectangle.cpp" />
-    <ClCompile Include="CRigidBody.cpp" />
-    <ClCompile Include="CSphereCollider.cpp" />
-    <ClCompile Include="CWindow.cpp" />
+    <ClCompile Include="Noise\Main.cpp">
+      <Filter>Noise</Filter>
+    </ClCompile>
+    <ClCompile Include="Noise\stbi.cpp">
+      <Filter>Noise</Filter>
+    </ClCompile>
+    <ClCompile Include="Noise\utils\NoiseBuilders.cpp">
+      <Filter>Noise\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Noise\utils\NoiseColourValue.cpp">
+      <Filter>Noise\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Noise\utils\NoiseEndianUtils.cpp">
+      <Filter>Noise\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Noise\utils\NoiseGradientRenderer.cpp">
+      <Filter>Noise\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Noise\utils\NoiseImage.cpp">
+      <Filter>Noise\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Noise\utils\NoiseInStream.cpp">
+      <Filter>Noise\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Noise\utils\NoiseJobQueue.cpp">
+      <Filter>Noise\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Noise\utils\NoiseModules.cpp">
+      <Filter>Noise\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Noise\utils\NoiseOutStream.cpp">
+      <Filter>Noise\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Noise\utils\NoiseReader.cpp">
+      <Filter>Noise\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Noise\utils\NoiseSystem.cpp">
+      <Filter>Noise\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Noise\utils\NoiseWriter.cpp">
+      <Filter>Noise\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\CBoxCollider.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\CCircle.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\CCollider.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\CCollision.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\CGameObject.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\CMain.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\CPhysicsEngine.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\CRectangle.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\CRigidBody.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\CSphereCollider.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\CWindow.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
     <ClCompile Include="SAP\CSAP.cpp">
       <Filter>SAP</Filter>
     </ClCompile>

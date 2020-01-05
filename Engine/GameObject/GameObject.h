@@ -49,15 +49,6 @@ namespace Engine
 			if (mComponents.find(*type) == mComponents.end())
 			{
 				mComponents[*type] = component;
-
-				if (*type == typeid(RigidBody))
-				{
-					auto collider = std::dynamic_pointer_cast<Collider>(GetComponent<BoxCollider>());
-					if (!collider)
-						collider = std::dynamic_pointer_cast<Collider>(GetComponent<SphereCollider>());
-					if (collider)
-						collider->AttachRigidBody(std::dynamic_pointer_cast<RigidBody>(component));
-				}
 			}
 		}
 		template<typename T>

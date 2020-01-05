@@ -28,6 +28,7 @@ namespace Engine
 		// Bottom Left Back point (-width, -height, -depth) / 2
 		Vec3  mMinExtent;
 
+		void UpdateCollisionSystem() override;
 		void Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const override;
 	};
 }

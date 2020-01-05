@@ -49,7 +49,6 @@ namespace Engine
 	void Mesh::Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const
 	{
 		LoadMaterial(shader);
-		mVertexArray->Bind();
-		render_command->DrawIndexed(mVertexArray);
+		Renderable::Render(mVertexArray, render_command, shader);
 	}
 }

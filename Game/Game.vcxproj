@@ -141,7 +141,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Component\Movement.h" />
-    <ClInclude Include="Core\Camera.h" />
+    <ClInclude Include="Core\CameraFree.h" />
+    <ClInclude Include="Core\CameraLocked.h" />
     <ClInclude Include="Core\GameApplication.h" />
     <ClInclude Include="GameObject\Bomb.h" />
     <ClInclude Include="GameObject\Player.h" />
@@ -156,7 +157,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\Movement.cpp" />
-    <ClCompile Include="Core\Camera.cpp" />
+    <ClCompile Include="Core\CameraFree.cpp" />
+    <ClCompile Include="Core\CameraLocked.cpp" />
     <ClCompile Include="Core\GameApplication.cpp" />
     <ClCompile Include="GameObject\Bomb.cpp" />
     <ClCompile Include="GameObject\Player.cpp" />

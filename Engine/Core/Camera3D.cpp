@@ -9,7 +9,8 @@ namespace Engine
 /// Camera3D
 
 	Camera3D::Camera3D(const Vec3& position)
-		: mView()
+		: mPosition(position)
+		, mView()
 		, mProjection(Matrix::Projection())
 	{
 		mAngles.pitch = 52.0f;
@@ -71,8 +72,8 @@ namespace Engine
 
 	void Camera3D::UpdateViewProjection()
 	{
-		mView = Matrix::View(*this);
-		mViewProjection   = mProjection * mView;
+		mView			= Matrix::View(*this);
+		mViewProjection = mProjection * mView;
 	}
 
 	void Camera3D::CalculatePitch()
@@ -88,10 +89,30 @@ namespace Engine
 		}
 	}
 
+	void Camera3D::ClampAngles()
+	{
+		if (mAngles.yaw < 0.0f)
+		{
+			mAngles.yaw += 360.f;
+		}
+		else if (mAngles.yaw > 360.0f)
+		{
+			mAngles.yaw -= 360.f;
+		}
+		if (mAngles.pitch < -89.0f)
+		{
+			mAngles.pitch = -89.0f;
+		}
+		else if (mAngles.pitch > 89.0f)
+		{
+			mAngles.pitch = 89.0f;
+		}
+	}
+
 /// Camera3DLocked 
 
 	Camera3DLocked::Camera3DLocked(const GameObject& target, float distance)
-		: Camera3D()
+		: Camera3D(Vec3())
 		, mTarget(target)
 		, mDistance(distance)
 		, mAngleAroundTarget(0.0f)

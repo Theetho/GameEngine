@@ -3,7 +3,8 @@
 #include "GameObject/Player.h"
 #include "Map/Map.h"
 #include "GameObject/Bomb.h"
-#include "Core/Camera.h"
+#include "Core/CameraLocked.h"
+#include "Core/CameraFree.h"
 
 class BombermanLayer : public Engine::Layer
 {
@@ -16,8 +17,10 @@ public:
 	void OnUpdate(const double& delta) override;
 	void OnEvent(Engine::Event& event) override;
 private:
-	Camera									mCamera;
+	//CameraLocked							mCamera;
+	CameraFree								mCamera;
 	Player									mPlayer;
+	Engine::Terrain							mTerrain;
 	Engine::Scope<Map>						mMap;
 	std::vector<Engine::Ref<Engine::Light>> mLights;
 	std::vector<Engine::Ref<Bomb>>			mBombs;

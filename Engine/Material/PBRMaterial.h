@@ -14,6 +14,7 @@ namespace Engine
 			const std::vector<Ref<Texture2D>>& specular,
 			const std::vector<Ref<Texture2D>>& normal
 		);
+		PBRMaterial(Ref<Texture2D> ambient, Ref<Texture2D> diffuse, Ref<Texture2D> specular, Ref<Texture2D> normal);
 		~PBRMaterial();
 
 	private:

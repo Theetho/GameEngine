@@ -1,5 +1,6 @@
 #include "EnginePch.h"
 #include "OpenGLRenderer.h"
+#include "Renderer/Buffer/VertexArray.h"
 
 namespace Engine
 {
@@ -16,9 +17,9 @@ namespace Engine
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 	
-	void OpenGLRenderer::DrawIndexed(Ref<VertexArray> vertex_array)
+	void OpenGLRenderer::DrawIndexed(const VertexArray& vertex_array)
 	{
-		glDrawElements(GL_TRIANGLES, vertex_array->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+		glDrawElements(GL_TRIANGLES, vertex_array.GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 	}
 	
 	void OpenGLRenderer::SetViewport(unsigned int width, unsigned int height)

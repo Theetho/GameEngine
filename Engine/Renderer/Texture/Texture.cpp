@@ -1,6 +1,5 @@
 #include "EnginePch.h"
 #include "Texture.h"
-#include <filesystem>
 
 namespace Engine
 {
@@ -8,8 +7,6 @@ namespace Engine
 
 	Texture::Texture(const std::string& file_path, const std::string& name, bool use_folder_path)
 		: mName(name)
-		, mWidth(0)
-		, mHeight(0)
 	{
 		// Setting the name of the texture
 		if (mName == "")
@@ -25,16 +22,6 @@ namespace Engine
 	
 	Texture::~Texture()
 	{}
-	
-	unsigned int Texture::GetWidth() const
-	{
-		return mWidth;
-	}
-	
-	unsigned int Texture::GetHeight() const
-	{
-		return mHeight;
-	}
 
 	const std::string& Texture::GetName() const
 	{

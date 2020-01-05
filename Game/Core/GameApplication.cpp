@@ -10,7 +10,7 @@ GameApplication::GameApplication()
 	Engine::Model::SetFolder("./Assets/Models/");
 	this->PushLayer(new BombermanLayer());
 
-	this->GetWindow().SetFullscreen(true);
+	//this->GetWindow().SetFullscreen(true);
 }
 
 GameApplication::~GameApplication()

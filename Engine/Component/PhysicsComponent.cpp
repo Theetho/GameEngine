@@ -25,32 +25,32 @@ namespace Engine
 
 	void PhysicsComponent::OnUpdate(const double& delta)
 	{
-		Vec3& position = mTransform.GetPosition();
-		
-		// Gravity
-		if (!m_Jump.is_jumping && (position.y > mGroundLevel))
-		{
-			position.y -= mPercentage.gravity * sForce.gravity * (float)delta;
-		}
-		// Jump
-		else if (m_Jump.is_jumping)
-		{
-			position.y   += m_Jump.jump_strengh * delta;
-			m_Jump.delta += delta;
-			if (m_Jump.delta >= m_Jump.jump_duration)
-			{
-				m_Jump.is_jumping = false;
-				m_Jump.is_falling = true;
-				m_Jump.delta = 0;
-			}
-		}
-		// Only goes here when the object hits the ground
-		else if (m_Jump.is_falling)
-		{
-			m_Jump.is_falling = false;
-		}
+		//Vec3& position = mTransform.GetPosition();
+		//
+		//// Gravity
+		//if (!m_Jump.is_jumping && (position.y > mGroundLevel))
+		//{
+		//	position.y -= mPercentage.gravity * sForce.gravity * (float)delta;
+		//}
+		//// Jump
+		//else if (m_Jump.is_jumping)
+		//{
+		//	position.y   += m_Jump.jump_strengh * delta;
+		//	m_Jump.delta += delta;
+		//	if (m_Jump.delta >= m_Jump.jump_duration)
+		//	{
+		//		m_Jump.is_jumping = false;
+		//		m_Jump.is_falling = true;
+		//		m_Jump.delta = 0;
+		//	}
+		//}
+		//// Only goes here when the object hits the ground
+		//else if (m_Jump.is_falling)
+		//{
+		//	m_Jump.is_falling = false;
+		//}
 
-		mGroundLevel = -1000.0f;
+		//mGroundLevel = -1000.0f;
 	}
 
 	float PhysicsComponent::GetGravity() const

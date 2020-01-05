@@ -8,15 +8,26 @@ Player::Player(Ref<Model> model, const Transform& transform
 )
 	: GameObject(transform)
 {
-	AddComponent<PhysicsComponent>(std::make_shared<PhysicsComponent>(*this));
 	AddComponent<Movement>(std::make_shared<Movement>(*this));
-	AddComponent<RigidBody>(std::make_shared<RigidBody>(*this, transform.GetPosition()));
+	AddComponent<RigidBody>(std::make_shared<RigidBody>(*this));
 
 	this->SetModel(model);
 }
 
 Player::~Player()
 {}
+
+void Player::OnUpdate(const double& delta)
+{
+	GameObject::OnUpdate(delta);
+	float& height = mTransform.GetPosition().y;
+	float ground_level = GetComponent<RigidBody>()->GetGroundLevel();
+	
+	if (height - mModel->GetSize().y * mTransform.GetScale().y < ground_level)
+		height = ground_level + mModel->GetSize().y * mTransform.GetScale().y;
+
+	mTransform.UpdateModel();
+}
 
 void Player::OnEvent(Engine::Event& event)
 {

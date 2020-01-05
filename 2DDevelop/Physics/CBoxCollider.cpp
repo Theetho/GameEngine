@@ -14,9 +14,9 @@ CBoxCollider::~CBoxCollider()
 
 sf::Vector2f CBoxCollider::GetPointOnBounds(const SRay& velocity)
 {
-	float ratio = std::min(mBounds.x / std::abs(velocity.direction.x), mBounds.y / std::abs(velocity.direction.y));
+	//float ratio = std::min(mBounds.x / std::abs(velocity.direction.x), mBounds.y / std::abs(velocity.direction.y));
 
-	return mCenter + (velocity.direction * ratio);
+	return mCenter;// +(velocity.direction * ratio);
 }
 
 sf::Vector2f CBoxCollider::GetNormalAtPoint(const sf::Vector2f& point)
@@ -24,7 +24,7 @@ sf::Vector2f CBoxCollider::GetNormalAtPoint(const sf::Vector2f& point)
 	auto newPoint = mCenter - point;
 
 	return sf::Vector2f(
-		std::abs(newPoint.x) == mBounds.x ? (newPoint.x / std::abs(newPoint.x)) : 0.0f,
-		std::abs(newPoint.y) == mBounds.y ? (newPoint.y / std::abs(newPoint.y)) : 0.0f
+	//	std::abs(newPoint.x) == mBounds.x ? (newPoint.x / std::abs(newPoint.x)) : 0.0f,
+	//	std::abs(newPoint.y) == mBounds.y ? (newPoint.y / std::abs(newPoint.y)) : 0.0f
 	);
 }

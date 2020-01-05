@@ -26,8 +26,13 @@ namespace Engine
 		sRenderer->Clear();
 	}
 	
-	void RenderCommand::DrawIndexed(Ref<VertexArray> vertex_array)
+	void RenderCommand::DrawIndexed(const VertexArray& vertex_array)
 	{
 		sRenderer->DrawIndexed(vertex_array);
+	}
+
+	void RenderCommand::DrawIndexed(Ref<VertexArray> vertex_array)
+	{
+		sRenderer->DrawIndexed(*vertex_array);
 	}
 }

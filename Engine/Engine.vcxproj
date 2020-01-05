@@ -156,6 +156,7 @@
     <ClInclude Include="Component\Collider\BoxCollider.h" />
     <ClInclude Include="Component\Collider\Collider.h" />
     <ClInclude Include="Component\Collider\SphereCollider.h" />
+    <ClInclude Include="Component\Collider\TerrainCollider.h" />
     <ClInclude Include="Component\Component.h" />
     <ClInclude Include="Component\PhysicsComponent.h" />
     <ClInclude Include="Component\RigidBody.h" />
@@ -184,6 +185,7 @@
     <ClInclude Include="Include\OpenGLAPI.h" />
     <ClInclude Include="Include\Renderer.h" />
     <ClInclude Include="Include\System.h" />
+    <ClInclude Include="Include\Terrain.h" />
     <ClInclude Include="Include\Util.h" />
     <ClInclude Include="Lighting\DirectionalLight.h" />
     <ClInclude Include="Lighting\Light.h" />
@@ -202,8 +204,8 @@
     <ClInclude Include="Renderer\Buffer\VertexBuffer.h" />
     <ClInclude Include="Renderer\GraphicsContext.h" />
     <ClInclude Include="Renderer\Library.h" />
-    <ClInclude Include="Renderer\Rendering\Renderable.h" />
     <ClInclude Include="Renderer\Rendering\RenderCommand.h" />
+    <ClInclude Include="Renderer\Rendering\Renderable.h" />
     <ClInclude Include="Renderer\Rendering\Renderer.h" />
     <ClInclude Include="Renderer\Rendering\RendererAPI.h" />
     <ClInclude Include="Renderer\Shader.h" />
@@ -211,9 +213,11 @@
     <ClInclude Include="Renderer\Texture\Texture.h" />
     <ClInclude Include="Renderer\Texture\Texture2D.h" />
     <ClInclude Include="System\CollisionSystem.h" />
+    <ClInclude Include="Terrain\Terrain.h" />
     <ClInclude Include="Util\Benchmark.h" />
     <ClInclude Include="Util\Color.h" />
     <ClInclude Include="Util\ConfigFile.h" />
+    <ClInclude Include="Util\MathsFunctions.h" />
     <ClInclude Include="Util\Matrix.h" />
     <ClInclude Include="Vendor\glm\glm\common.hpp" />
     <ClInclude Include="Vendor\glm\glm\detail\_features.hpp" />
@@ -598,6 +602,7 @@
     <ClCompile Include="Component\Collider\BoxCollider.cpp" />
     <ClCompile Include="Component\Collider\Collider.cpp" />
     <ClCompile Include="Component\Collider\SphereCollider.cpp" />
+    <ClCompile Include="Component\Collider\TerrainCollider.cpp" />
     <ClCompile Include="Component\Component.cpp" />
     <ClCompile Include="Component\PhysicsComponent.cpp" />
     <ClCompile Include="Component\RigidBody.cpp" />
@@ -637,9 +642,11 @@
     <ClCompile Include="Renderer\Texture\Texture.cpp" />
     <ClCompile Include="Renderer\Texture\Texture2D.cpp" />
     <ClCompile Include="System\CollisionSystem.cpp" />
+    <ClCompile Include="Terrain\Terrain.cpp" />
     <ClCompile Include="Util\Benchmark.cpp" />
     <ClCompile Include="Util\Color.cpp" />
     <ClCompile Include="Util\ConfigFile.cpp" />
+    <ClCompile Include="Util\MathsFunctions.cpp" />
     <ClCompile Include="Util\Matrix.cpp" />
     <ClCompile Include="Vendor\stb\stb_image.cpp" />
   </ItemGroup>

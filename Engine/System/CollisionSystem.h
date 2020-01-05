@@ -1,5 +1,7 @@
 #pragma once
+
 #include "Component/Collider.h"
+#include "GameObject/GameObject.h"
 
 namespace Engine
 {
@@ -30,26 +32,15 @@ namespace Engine
 				}
 			}
 		}
-		static void RemoveCollider(Collider* collider)
-		{
-			if (sInstance)
-			{
-				if (sInstance->mMoveableColliders.count(collider))
-				{
-					sInstance->mMoveableColliders.erase(collider);
-				}
-				else
-				{
-					sInstance->mStaticColliders.erase(collider);
-				}
-			}
-		}
+		static void AddTerrain(TerrainCollider* collider);
+		static void RemoveCollider(Collider* collider);
 	private:
 		static Ref<CollisionSystem> Create();
 		static Ref<CollisionSystem> sInstance;
 
 		std::unordered_map<Collider*, std::type_index> mMoveableColliders;
 		std::unordered_map<Collider*, std::type_index> mStaticColliders;
+		std::vector<TerrainCollider*>				   mTerrains;
 
 		void CheckForMovingObjectsCollisions();
 

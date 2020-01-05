@@ -1,5 +1,6 @@
 #include "EnginePch.h"
 #include "SphereCollider.h"
+#include "GameObject/Transform.h"
 #include "System/CollisionSystem.h"
 #include "API/OpenGL/OpenGLShader.h"
 #include "Core/AssetManager.h"
@@ -69,6 +70,13 @@ namespace Engine
 	{
 		mRadius *= scale;
 	}
+
+	void SphereCollider::UpdateCollisionSystem()
+	{
+		CollisionSystem::RemoveCollider(this);
+		CollisionSystem::AddCollider<SphereCollider>(this);
+	}
+
 	void SphereCollider::Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const
 	{
 		Transform transform;

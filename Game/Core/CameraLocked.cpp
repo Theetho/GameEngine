@@ -1,10 +1,10 @@
 #include "pch.h"
-#include "Camera.h"
+#include "CameraLocked.h"
 #include "Component/Movement.h"
 
 using namespace Engine;
 
-Camera::Camera(
+CameraLocked::CameraLocked(
 	const GameObject& target,
 	float distance
 )
@@ -13,11 +13,10 @@ Camera::Camera(
 	mAngles.yaw = 180.0f;
 }
 
-Camera::~Camera()
-{
-}
+CameraLocked::~CameraLocked()
+{}
 
-void Camera::OnUpdate(const double& delta)
+void CameraLocked::OnUpdate(const double& delta)
 {
 	Camera3D::OnUpdate(delta);
 
@@ -35,7 +34,7 @@ void Camera::OnUpdate(const double& delta)
 	UpdateTargetAxis();
 }
 
-void Camera::CalculateAngleAroundPlayer()
+void CameraLocked::CalculateAngleAroundPlayer()
 {
 	if (Input::IsMouseButtonPressed(ENGINE_MOUSE_BUTTON_LEFT))
 	{
@@ -51,7 +50,7 @@ void Camera::CalculateAngleAroundPlayer()
 	}
 }
 
-void Camera::UpdateTargetAxis()
+void CameraLocked::UpdateTargetAxis()
 {
 	auto movement = mTarget.GetComponent<Movement>();
 

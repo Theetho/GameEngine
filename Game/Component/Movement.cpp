@@ -26,7 +26,8 @@ void Movement::OnUpdate(const double& delta)
 		mGameObject.SetIsColliding(false);
 	}
 
-	velocity = Vec3(0.0f);
+	velocity.x = 0.0f;
+	velocity.z = 0.0f;
 
 	if (Input::IsKeyPressed(ENGINE_KEY_W))
 	{
@@ -56,8 +57,7 @@ void Movement::OnUpdate(const double& delta)
 		velocity.x += mSpeed * delta;
 	}
 
-	mTransform.GetPosition() += (mAxis["Forward"] * velocity.z) + (mAxis["Side"] * velocity.x);
-	mTransform.UpdateModel();
+	velocity += (mAxis["Forward"] * velocity.z) + (mAxis["Side"] * velocity.x);
 }
 
 void Movement::SetForwardAxis(const Engine::Vec3& axis)

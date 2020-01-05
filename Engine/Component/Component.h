@@ -2,7 +2,6 @@
 
 namespace Engine
 {
-	// Avoid mutual inclusion
 	class GameObject;
 
 	/// Abstract base class

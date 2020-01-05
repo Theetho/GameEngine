@@ -15,7 +15,7 @@ ExitCell::ExitCell(const Transform& transform)
 
 		sModel = AssetManager::GetModelLibrary().Load("stairs/stairs.obj", "stairs");
 
-		auto texture = std::vector<Ref<Texture2D>>({ AssetManager::GetTexture2DLibrary().Load("wall.jpg", "wall") });
+		auto texture = AssetManager::GetTexture2DLibrary().Load("wall.jpg");
 
 		sModel->SetMaterial(std::make_shared<PBRMaterial>(texture, texture, texture, texture));
 	}

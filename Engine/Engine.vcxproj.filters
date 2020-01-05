@@ -46,6 +46,9 @@
     <Filter Include="System">
       <UniqueIdentifier>{6AD049D2-5672-74A8-3F2D-88FC2B6EFBF8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Terrain">
+      <UniqueIdentifier>{7AABC339-E68A-42D5-EFA2-CDAB5B01A936}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Util">
       <UniqueIdentifier>{23A78D7C-0FDE-8E0D-B8CA-7410A4E00A0F}</UniqueIdentifier>
     </Filter>
@@ -84,6 +87,9 @@
     <ClInclude Include="API\OpenGL\OpenGLIndexBuffer.h">
       <Filter>API\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="API\OpenGL\OpenGLRenderer.h">
+      <Filter>API\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="API\OpenGL\OpenGLShader.h">
       <Filter>API\OpenGL</Filter>
     </ClInclude>
@@ -111,7 +117,13 @@
     <ClInclude Include="Component\Collider\SphereCollider.h">
       <Filter>Component\Collider</Filter>
     </ClInclude>
+    <ClInclude Include="Component\Collider\TerrainCollider.h">
+      <Filter>Component\Collider</Filter>
+    </ClInclude>
     <ClInclude Include="Component\Component.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\PhysicsComponent.h">
       <Filter>Component</Filter>
     </ClInclude>
     <ClInclude Include="Component\RigidBody.h">
@@ -188,6 +200,9 @@
     <ClInclude Include="Include\System.h">
       <Filter>Include</Filter>
     </ClInclude>
+    <ClInclude Include="Include\Terrain.h">
+      <Filter>Include</Filter>
+    </ClInclude>
     <ClInclude Include="Include\Util.h">
       <Filter>Include</Filter>
     </ClInclude>
@@ -245,6 +260,9 @@
     <ClInclude Include="Renderer\Rendering\RenderCommand.h">
       <Filter>Renderer\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\Rendering\Renderable.h">
+      <Filter>Renderer\Rendering</Filter>
+    </ClInclude>
     <ClInclude Include="Renderer\Rendering\Renderer.h">
       <Filter>Renderer\Rendering</Filter>
     </ClInclude>
@@ -266,6 +284,9 @@
     <ClInclude Include="System\CollisionSystem.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="Terrain\Terrain.h">
+      <Filter>Terrain</Filter>
+    </ClInclude>
     <ClInclude Include="Util\Benchmark.h">
       <Filter>Util</Filter>
     </ClInclude>
@@ -273,6 +294,9 @@
       <Filter>Util</Filter>
     </ClInclude>
     <ClInclude Include="Util\ConfigFile.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\MathsFunctions.h">
       <Filter>Util</Filter>
     </ClInclude>
     <ClInclude Include="Util\Matrix.h">
@@ -1385,9 +1409,6 @@
     <ClInclude Include="Vendor\stb\stb_image.h">
       <Filter>Vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="API\OpenGL\OpenGLRenderer.h" />
-    <ClInclude Include="Component\PhysicsComponent.h" />
-    <ClInclude Include="Renderer\Rendering\Renderable.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API\OpenGL\OpenGLContext.cpp">
@@ -1397,6 +1418,9 @@
       <Filter>API\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="API\OpenGL\OpenGLIndexBuffer.cpp">
+      <Filter>API\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="API\OpenGL\OpenGLRenderer.cpp">
       <Filter>API\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="API\OpenGL\OpenGLShader.cpp">
@@ -1423,7 +1447,13 @@
     <ClCompile Include="Component\Collider\SphereCollider.cpp">
       <Filter>Component\Collider</Filter>
     </ClCompile>
+    <ClCompile Include="Component\Collider\TerrainCollider.cpp">
+      <Filter>Component\Collider</Filter>
+    </ClCompile>
     <ClCompile Include="Component\Component.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\PhysicsComponent.cpp">
       <Filter>Component</Filter>
     </ClCompile>
     <ClCompile Include="Component\RigidBody.cpp">
@@ -1529,6 +1559,9 @@
     <ClCompile Include="System\CollisionSystem.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="Terrain\Terrain.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
     <ClCompile Include="Util\Benchmark.cpp">
       <Filter>Util</Filter>
     </ClCompile>
@@ -1538,14 +1571,14 @@
     <ClCompile Include="Util\ConfigFile.cpp">
       <Filter>Util</Filter>
     </ClCompile>
+    <ClCompile Include="Util\MathsFunctions.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
     <ClCompile Include="Util\Matrix.cpp">
       <Filter>Util</Filter>
     </ClCompile>
     <ClCompile Include="Vendor\stb\stb_image.cpp">
       <Filter>Vendor\stb</Filter>
     </ClCompile>
-    <ClCompile Include="API\OpenGL\OpenGLRenderer.cpp" />
-    <ClCompile Include="Component\PhysicsComponent.cpp" />
-    <ClCompile Include="Renderer\Rendering\Renderable.cpp" />
   </ItemGroup>
 </Project>

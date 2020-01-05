@@ -11,7 +11,7 @@ namespace Engine
 	class Camera3D
 	{
 	public:
-		Camera3D(const Vec3& position = Vec3(0.0f, 1.0f, 0.0f));
+		Camera3D(const Vec3& position);
 		virtual ~Camera3D();
 
 		virtual void OnUpdate(const double& delta);
@@ -45,6 +45,7 @@ namespace Engine
 
 		void UpdateViewProjection();
 		void CalculatePitch();
+		void ClampAngles();
 	};
 
 	class Camera3DLocked : public Camera3D

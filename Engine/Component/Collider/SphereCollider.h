@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Collider.h"
 
 namespace Engine
@@ -21,6 +22,7 @@ namespace Engine
 	private:
 		float mRadius;
 
+		void UpdateCollisionSystem() override;
 		void Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const override;
 	};
 }

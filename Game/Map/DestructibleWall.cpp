@@ -15,7 +15,7 @@ DestructibleWall::DestructibleWall(const Transform& transform)
 
 		sModel = AssetManager::GetModelLibrary().Load("cube/cube.obj", "destructible_wall");
 
-		auto texture = std::vector<Ref<Texture2D>>({ AssetManager::GetTexture2DLibrary().Load("snow.jpg") });
+		auto texture = AssetManager::GetTexture2DLibrary().Load("snow.jpg");
 
 		sModel->SetMaterial(std::make_shared<PBRMaterial>(texture, texture, texture, texture));
 	}

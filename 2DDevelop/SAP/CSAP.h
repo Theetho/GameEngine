@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "CBoxCollider.h"
+#include "../Physics/CBoxCollider.h"
 
 /// Implementation of the Sweep And Prune algorithm
 

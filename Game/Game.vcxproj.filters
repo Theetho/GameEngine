@@ -24,7 +24,10 @@
     <ClInclude Include="Component\Movement.h">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Camera.h">
+    <ClInclude Include="Core\CameraFree.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\CameraLocked.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\GameApplication.h">
@@ -63,7 +66,10 @@
     <ClCompile Include="Component\Movement.cpp">
       <Filter>Component</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Camera.cpp">
+    <ClCompile Include="Core\CameraFree.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\CameraLocked.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\GameApplication.cpp">

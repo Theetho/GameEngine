@@ -18,7 +18,7 @@ void HandleInput(
 	bool& running
 );
 
-int main(int argc, char** argv)
+int test(int argc, char** argv)
 {
 	bool running = true;
 	// Window

@@ -15,7 +15,7 @@ Floor::Floor(const Transform& transform)
 
 		sModel = AssetManager::GetModelLibrary().Load("cube/cube.obj", "floor");
 
-		auto texture = std::vector<Ref<Texture2D>>({ AssetManager::GetTexture2DLibrary().Load("lawn.png")});
+		auto texture = AssetManager::GetTexture2DLibrary().Load("lawn.png");
 
 		sModel->SetMaterial(std::make_shared<PBRMaterial>(texture, texture, texture, texture));
 	}

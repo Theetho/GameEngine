@@ -15,6 +15,13 @@ namespace Engine
 		, mNormal(normal)
 	{}
 
+	PBRMaterial::PBRMaterial(Ref<Texture2D> ambient, Ref<Texture2D> diffuse, Ref<Texture2D> specular, Ref<Texture2D> normal)
+		: mAmbient({ ambient })
+		, mDiffuse({ diffuse })
+		, mSpecular({ specular })
+		, mNormal({ normal })
+	{}
+
 	PBRMaterial::~PBRMaterial()
 	{}
 
