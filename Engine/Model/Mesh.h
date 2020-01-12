@@ -1,11 +1,13 @@
 #pragma once
 
-#include "Include/Material.h"
-#include "Renderer/Buffer/VertexArray.h"
 #include "Renderer/Rendering/Renderable.h"
 
 namespace Engine
 {
+	class Shader;
+	class Material;
+	class VertexArray;
+
 	class Mesh : public Renderable
 	{
 	public:

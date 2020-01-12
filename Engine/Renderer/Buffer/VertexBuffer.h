@@ -17,5 +17,8 @@ namespace Engine
 		virtual const BufferLayout& GetLayout() const = 0;
 
 		virtual void SetLayout(const BufferLayout& layout) = 0;
+	protected:
+		VertexBuffer();
+		BufferLayout mLayout;
 	};
 }

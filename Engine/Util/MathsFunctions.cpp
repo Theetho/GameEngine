@@ -1,6 +1,7 @@
 #include "EnginePch.h"
 #include "MathsFunctions.h"
 
+
 namespace Engine
 {
 	float MathsFunctions::BarryCentric(const Vec3& p1, const Vec3& p2, const Vec3& p3, const Vec2& pos)

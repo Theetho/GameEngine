@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Component/Movement.h"
-
 class CameraFree : public Engine::Camera3D
 {
 public:
@@ -10,6 +8,7 @@ public:
 
 	void OnUpdate(const double& delta) override;
 	void OnEvent(Engine::Event& event) override;
+	void OnCollision(const Engine::Collision& collision) override;
 private:
 	const float  mSpeed = 20.0f;
 	Engine::Vec3 mVelocity;

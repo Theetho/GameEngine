@@ -1,7 +1,10 @@
 #include "EnginePch.h"
 #include "Skybox.h"
-#include "Renderer/Rendering/Renderer.h"
+#include "Renderer/Rendering.h"
 #include "Core/AssetManager.h"
+#include "Renderer/Texture/CubeMap.h"
+#include "API/OpenGL/OpenGLShader.h"
+#include "Model/Model.h"
 
 namespace Engine
 {

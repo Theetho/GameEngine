@@ -1,6 +1,6 @@
 #include "EnginePch.h"
 #include "OpenGLRenderer.h"
-#include "Renderer/Buffer/VertexArray.h"
+#include "Renderer/Buffer.h"
 
 namespace Engine
 {

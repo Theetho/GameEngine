@@ -1,6 +1,7 @@
 #include "EnginePch.h"
 #include "Input.h"
 #include "Application.h"
+#include "Window.h"
 
 namespace Engine
 {
@@ -35,17 +36,22 @@ namespace Engine
 
 	Vec2 Input::GetMousePosition() 
 	{
-		return sInstance->GetMousePositionImplementation();
+		return sInstance->mMouse.position;
 	}
 
 	Vec2 Input::GetMouseOffset() 
 	{
-		return sInstance->GetMouseOffsetImplementation();
+		return sInstance->mMouse.movement;
 	}
 
 	void Input::ToggleCursor()
 	{
 		sInstance->ToggleCursorImplementation();
+	}
+
+	void Input::UpdateMouse()
+	{
+		sInstance->UpdateMouseImplementation();
 	}
 
 /// Windows input 
@@ -76,34 +82,6 @@ namespace Engine
 		return button_state == GLFW_PRESS || button_state == GLFW_REPEAT;
 	}
 	
-	Vec2 InputWindows::GetMousePositionImplementation()
-	{
-		auto window = static_cast<GLFWwindow*>(
-			Application::Get().GetWindow().GetOSWindow()
-		);
-		double x, y;
-		glfwGetCursorPos(window, &x, &y);
-
-		return Vec2(x, y);
-	}
-	
-	Vec2 InputWindows::GetMouseOffsetImplementation()
-	{
-		auto window = static_cast<GLFWwindow*>(
-			Application::Get().GetWindow().GetOSWindow()
-			);
-		double x, y;
-		glfwGetCursorPos(window, &x, &y);
-
-		Vec2 current_mouse_position(x, y);
-
-		Vec2 offset = mPreviousMousePosition - current_mouse_position;
-
-		mPreviousMousePosition = current_mouse_position;
-
-		return offset;
-	}
-	
 	void InputWindows::ToggleCursorImplementation()
 	{
 		mCursor = !mCursor;
@@ -117,5 +95,18 @@ namespace Engine
 		:
 		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED) 
 		;
+	}
+	
+	void InputWindows::UpdateMouseImplementation()
+	{
+		auto window = static_cast<GLFWwindow*>(
+			Application::Get().GetWindow().GetOSWindow()
+			);
+		double x, y;
+		glfwGetCursorPos(window, &x, &y);
+
+		mMouse.position = Vec2(x, y);
+		mMouse.movement = mMouse.previous - mMouse.position;
+		mMouse.previous = mMouse.position;
 	}
 }

@@ -4,8 +4,8 @@
 namespace Engine
 {
 	OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, unsigned int count)
-		: mId(0)
-		, mLayout({})
+		: VertexBuffer()
+		, mId(0)
 	{
 		glCreateBuffers(1, &mId);
 

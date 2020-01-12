@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Event.h"
-
 namespace Engine
 {
+	class Event;
+
 	class Layer
 	{
 	public:

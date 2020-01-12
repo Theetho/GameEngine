@@ -2,7 +2,9 @@
 #include "Core/Log.h"
 #include "Mesh.h"
 #include "Renderer/Rendering/Renderer.h"
+#include "Renderer/Buffer.h"
 #include "API/OpenGL/OpenGLShader.h"
+#include "Material/Material.h"
 
 namespace Engine
 {

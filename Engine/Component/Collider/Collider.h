@@ -2,13 +2,12 @@
 
 #include "Component/Component.h"
 #include "Renderer/Rendering/Renderable.h"
-#include "Component/RigidBody.h"
-#include "Include/Maths.h"
 
 namespace Engine
 {
 	class Collision;
-
+	class RigidBody;
+	
 	class Collider : public Component, public Renderable
 	{
 	public:

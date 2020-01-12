@@ -1,16 +1,14 @@
 #pragma once
 
-#include "Util/Color.h"
-
 namespace Engine
 {
+	class VertexArray;
+
 	enum class API
 	{
 		None,
 		OpenGL
 	};
-
-	class VertexArray;
 
 	class RendererAPI
 	{

@@ -1,9 +1,10 @@
 #pragma once
 
-#include "API/OpenGL/OpenGLShader.h"
-
 namespace Engine
 {
+	class Shader;
+	class OpenGLShader;
+
 	class Material
 	{
 	public:

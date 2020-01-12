@@ -4,10 +4,12 @@
 layout(location = 0) in vec3 in_position;
 layout(location = 1) in vec2 in_textureCoords;
 layout(location = 2) in vec3 in_normal;
+layout(location = 3) in vec3 in_color;
 
 out vec2 v_textureCoords;
 out vec3 v_normal;
 out vec3 v_fragmentPosition;
+out vec3 v_color;
 
 uniform mat4 u_view_projection;
 uniform mat4 u_model;
@@ -17,6 +19,7 @@ void main()
 	v_textureCoords = in_textureCoords * 40.0f;
 	v_normal = (u_model * vec4(in_normal, 0.0)).xyz;
 	v_fragmentPosition = vec3(u_model * vec4(in_position, 1.0));
+	v_color = in_color;
 	gl_Position = u_view_projection * u_model * vec4(in_position, 1.0);
 }
 #type fragment
@@ -43,20 +46,21 @@ struct Light
 
 uniform vec3 u_cameraPosition;
 uniform Light u_lights[MAX_NUMBER_OF_LIGHT];
-uniform sampler2D u_terrain;
+//uniform sampler2D u_terrain;
 
 in vec2 v_textureCoords;
 in vec3 v_normal;
 in vec3 v_fragmentPosition;
+in vec3 v_color;
 
 vec4 CalculateDirectionalLight(Light light)
 {	
-	vec3 terrainColor = texture(u_terrain, v_textureCoords).xyz;
+	//vec3 terrainColor = texture(u_terrain, v_textureCoords).xyz;
 	
 	vec3 normal = normalize(v_normal);
 	vec3 lightDirection = normalize(- light.direction);
 	float diffuseFactor = max(dot(normal, lightDirection), 0.0);
-	vec3 diffuseColor = diffuseFactor * light.color * terrainColor;
+	vec3 diffuseColor = diffuseFactor * light.color * v_color;//terrainColor;
 	
 	return vec4(diffuseColor, 1.0);
 }
@@ -65,7 +69,7 @@ vec4 CalculateDirectionalLight(Light light)
 
 vec4 CalculatePointLight(Light light)
 {
-	vec3 terrainColor = texture(u_terrain, v_textureCoords).xyz;
+	//vec3 terrainColor = texture(u_terrain, v_textureCoords).xyz;
 	vec3 normal = normalize(v_normal);
 	vec3 lightDirection = normalize(light.position - v_fragmentPosition);
 
@@ -73,7 +77,7 @@ vec4 CalculatePointLight(Light light)
 	float attenuation = 1.0 / (light.constant + light.linear * d + light.quadratic * pow(d, 2));
 
 	float diffuseFactor = max(dot(normal, lightDirection), 0.0);
-	vec3 diffuseColor = diffuseFactor * attenuation * light.color * terrainColor;
+	vec3 diffuseColor = diffuseFactor * attenuation * light.color * v_color;//terrainColor;
 
 	return vec4(diffuseColor, 1.0);
 }
@@ -82,13 +86,13 @@ vec4 CalculatePointLight(Light light)
 
 vec4 CalculateSpotLight(Light light)
 {
-	vec3 terrainColor = texture(u_terrain, v_textureCoords).xyz;
+	//vec3 terrainColor = texture(u_terrain, v_textureCoords).xyz;
 	vec3 normal = normalize(v_normal);
 	vec3 lightDirection = normalize(light.position - v_fragmentPosition);
 	
 	float theta = dot(lightDirection, normalize(- light.direction));
 
-	vec3 ambientColor = light.color * terrainColor * 0.1;
+	vec3 ambientColor = light.color * 0.1 * v_color;//terrainColor;
 	
 	if (theta > light.cutOff)
 	{
@@ -96,7 +100,7 @@ vec4 CalculateSpotLight(Light light)
 		float attenuation = 1.0 / (light.constant + light.linear * d + light.quadratic * pow(d, 2));		
 
 		float diffuseFactor = max(dot(normal, lightDirection), 0.0);
-		vec3 diffuseColor = diffuseFactor * attenuation * light.color * terrainColor;
+		vec3 diffuseColor = diffuseFactor * attenuation * light.color * v_color;//terrainColor;
 		
 		return vec4(diffuseColor, 1.0);
 	}

@@ -18,6 +18,5 @@ namespace Engine
 		void SetLayout(const BufferLayout& layout) override;
 	private:
 		unsigned int mId;
-		BufferLayout mLayout;
 	};
 }

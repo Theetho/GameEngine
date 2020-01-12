@@ -17,7 +17,7 @@ DestructibleWall::DestructibleWall(const Transform& transform)
 
 		auto texture = AssetManager::GetTexture2DLibrary().Load("snow.jpg");
 
-		sModel->SetMaterial(std::make_shared<PBRMaterial>(texture, texture, texture, texture));
+		sModel->SetMaterial(CreateRef<PBRMaterial>(texture, texture, texture, texture));
 	}
 }
 

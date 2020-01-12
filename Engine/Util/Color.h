@@ -1,10 +1,8 @@
 #pragma once
 
-#include "glm/glm.hpp"
-
 namespace Engine
 {
-	class Color : public glm::vec4
+	class Color : public Vec4
 	{
 	public:
 		explicit Color(float r, float g, float b, float a = 1.0);
@@ -15,6 +13,14 @@ namespace Engine
 		Color(const Color&& color) noexcept;
 		Color& operator=(const Color& color);
 		Color& operator=(const Color&& color) noexcept;
+		Color operator+(const Color& color) const;
+		Color operator-(const Color& color) const;
+		Color operator/(const Color& color) const;
+		Color operator*(const Color& color) const;
+		Color operator+(float factor) const;
+		Color operator-(float factor) const;
+		Color operator/(float factor) const;
+		Color operator*(float factor) const;
 		~Color();
 
 		static Color White;
@@ -37,9 +43,12 @@ namespace Engine
 		static Color Sand;
 		static Color Wood;
 
+		static Color Lerp(const Color& a, const Color& b, float factor);
+
 	private:
 		void Clip(float& field);
 		void Clip(int value, float& field);
 	};
 }
+
 

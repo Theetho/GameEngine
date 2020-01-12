@@ -3,7 +3,7 @@
 #include "SFML/Window.hpp"
 #include "SFML/Network.hpp"
 #include "SFML/System.hpp"
-#include "CWindow.h"
+//#include "CWindow.h"
 #include "CRectangle.h"
 #include "CCircle.h"
 #include "CPhysicsEngine.h"
@@ -22,9 +22,9 @@ int test(int argc, char** argv)
 {
 	bool running = true;
 	// Window
-	CWindow window;
-	window.Initialize(VideoMode(1280, 720), "Physics Test");
-	window.mWindow.setFramerateLimit(FPS_CAP);
+	//Window window;
+	//window.Initialize(VideoMode(1280, 720), "Physics Test");
+	////window.mWindow.setFramerateLimit(FPS_CAP);
 
 	Event event;
 	CCircle circle(50.0f, Vector2f(400.0f, 100.0f));
@@ -55,9 +55,9 @@ int test(int argc, char** argv)
 
 	while (running)
 	{
-		window.mWindow.clear(Color::Black);
+		//window.mWindow.clear(Color::Black);
 
-		window.mWindow.pollEvent(event);
+		//window.mWindow.pollEvent(event);
 
 		HandleInput(event, running);
 		CPhysicsEngine::GetInstance()->OnUpdate(1.0f / FPS_CAP);
@@ -73,11 +73,11 @@ int test(int argc, char** argv)
 		else
 			player.setOutlineColor(Color::Green);
 
-		//window.mWindow.draw(floor);
-		window.mWindow.draw(circle);
-		window.mWindow.draw(rectangle);
-		window.mWindow.draw(player);
-		window.mWindow.display();
+		////window.mWindow.draw(floor);
+		//window.mWindow.draw(circle);
+		//window.mWindow.draw(rectangle);
+		//window.mWindow.draw(player);
+		//window.mWindow.display();
 	}
 
 	return 0;

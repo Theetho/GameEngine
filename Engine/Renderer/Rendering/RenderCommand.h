@@ -1,9 +1,11 @@
 #pragma once
 
-#include "RendererAPI.h"
-
 namespace Engine
 {
+	class RendererAPI;
+	enum class API;
+	class VertexArray;
+
 	class RenderCommand
 	{
 	public:

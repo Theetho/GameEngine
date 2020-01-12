@@ -1,11 +1,18 @@
 #include "EnginePch.h"
 #include "GameObject.h"
 #include "Include/Component.h"
-#include "Core/Log.h"
 #include "API/OpenGL/OpenGLShader.h"
+#include "Renderer/Rendering/RendererAPI.h"
+#include "Renderer/Rendering/RenderCommand.h"
 
 namespace Engine
 {
+	GameObject::GameObject()
+		: mTransform(Transform())
+		, mIsColliding(false)
+	{
+	}
+
 	GameObject::GameObject(const Transform& transform)
 		: mTransform(transform)
 		, mIsColliding(false)

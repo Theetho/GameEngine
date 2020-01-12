@@ -1,10 +1,10 @@
 #include "EnginePch.h"
 #include "Application.h"
-#include "Log.h"
-#include "Renderer/Rendering/Renderer.h"
-#include "Util/Matrix.h"
 #include <thread>
 #include <chrono>
+#include "Include/Core.h"
+#include "System/CollisionSystem.h"
+#include "Renderer/Rendering/Renderer.h"
 
 #define BindFunction(x) std::bind(&x, this, std::placeholders::_1)
 
@@ -42,6 +42,8 @@ namespace Engine
 		{
 			mTime = GetEngineTime;
 
+			Input::UpdateMouse();
+
 			mCollisionSystem->OnUpdate(mDeltaTime);
 			
 			// --- Updates ---
@@ -66,7 +68,7 @@ namespace Engine
 			mRunning = false;
 			event.SetIsHandled(true);
 		}
-		
+
 		else if (event.mType == Event::Type::Resized)
 		{
 			mWindow->Resize(event.mSizeEvent.width, event.mSizeEvent.height);

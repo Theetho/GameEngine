@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Event.h"
-#include "Renderer/GraphicsContext.h"
-
 namespace Engine
 {
+	class Event;
+	class GraphicsContext;
+
 	class Window
 	{
 	public:

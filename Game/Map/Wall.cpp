@@ -17,12 +17,12 @@ Wall::Wall(const Transform& transform)
 
 		auto texture = AssetManager::GetTexture2DLibrary().Load("wall.jpg");
 
-		sModel->SetMaterial(std::make_shared<PBRMaterial>(texture, texture, texture, texture));
+		sModel->SetMaterial(CreateRef<PBRMaterial>(texture, texture, texture, texture));
 	}
 
 	Vec3 size = sModel->GetSize() * mTransform.GetScale();
 
-	this->AddComponent<BoxCollider>(std::make_shared<BoxCollider>(*this, mTransform.GetPosition(), Vec3(size.x, size.y, size.z)));
+	this->AddComponent<BoxCollider>(CreateRef<BoxCollider>(*this, mTransform.GetPosition(), Vec3(size.x, size.y, size.z)));
 }
 
 Wall::~Wall()

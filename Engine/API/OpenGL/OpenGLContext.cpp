@@ -1,7 +1,5 @@
 #include "EnginePch.h"
 #include "OpenGLContext.h"
-#include "Core/Log.h"
-#include "Renderer/Rendering/Renderer.h"
 
 namespace Engine
 {

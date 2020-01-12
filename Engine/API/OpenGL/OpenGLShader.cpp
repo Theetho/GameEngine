@@ -1,7 +1,5 @@
 #include "EnginePch.h"
 #include "OpenGLShader.h"
-#include "Core/Log.h"
-#include "Include/Maths.h"
 
 namespace Engine
 {

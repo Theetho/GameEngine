@@ -7,6 +7,8 @@ CameraFree::CameraFree(const Vec3& position)
 	: Camera3D(position)
 	, mVelocity()
 {
+	AddComponent<RigidBody>(CreateRef<RigidBody>(*this));
+	AddComponent<BoxCollider>(CreateRef<BoxCollider>(*this, position, Vec3(1.0, 1.0, 1.0)));
 }
 
 CameraFree::~CameraFree()
@@ -15,6 +17,7 @@ CameraFree::~CameraFree()
 
 void CameraFree::OnUpdate(const double& delta)
 {
+	GameObject::OnUpdate(delta);
 	mVelocity = Vec3();
 
 	if (Input::IsKeyPressed(ENGINE_KEY_W))
@@ -65,7 +68,7 @@ void CameraFree::OnUpdate(const double& delta)
 	float dx = mVelocity.x * sin(glm::radians(180 - mAngles.yaw)) - mVelocity.z * cos(glm::radians(180 - mAngles.yaw));
 	float dz = mVelocity.x * cos(glm::radians(180 - mAngles.yaw)) + mVelocity.z * sin(glm::radians(180 - mAngles.yaw));
 	mPosition += Vec3(dx, mVelocity.y, dz);
-
+	mTransform.SetPosition(mPosition);
 	Camera3D::ClampAngles();
 	Camera3D::OnUpdate(delta);
 }
@@ -73,4 +76,10 @@ void CameraFree::OnUpdate(const double& delta)
 void CameraFree::OnEvent(Event& event)
 {
 	//Camera3D::OnEvent(event);
+}
+
+void CameraFree::OnCollision(const Collision& collision)
+{
+	mPosition.y = collision.GetDistanceUpAxis() + 1.0;
+	mTransform.SetPosition(mPosition);
 }

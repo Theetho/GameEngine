@@ -1,5 +1,6 @@
 #include "EnginePch.h"
 #include "RawMaterial.h"
+#include "API/OpenGL/OpenGLShader.h"
 
 namespace Engine
 {

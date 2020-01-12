@@ -8,8 +8,8 @@ Player::Player(Ref<Model> model, const Transform& transform
 )
 	: GameObject(transform)
 {
-	AddComponent<Movement>(std::make_shared<Movement>(*this));
-	AddComponent<RigidBody>(std::make_shared<RigidBody>(*this));
+	AddComponent<Movement>(CreateRef<Movement>(*this));
+	AddComponent<RigidBody>(CreateRef<RigidBody>(*this));
 
 	this->SetModel(model);
 }
@@ -35,7 +35,7 @@ void Player::OnEvent(Engine::Event& event)
 	{
 		if (event.mKeyEvent.code == ENGINE_KEY_SPACE)
 		{
-			Ref<Bomb> bomb = std::make_shared<Bomb>(AssetManager::GetModelLibrary().Get("bomb"), mTransform, mBombPower);
+			Ref<Bomb> bomb = CreateRef<Bomb>(AssetManager::GetModelLibrary().Get("bomb"), mTransform, mBombPower);
 
 			// Translate the bomb so the bottom is just on the floor
 			float floor_level = mTransform.GetPosition().y - (mModel->GetSize().y * mTransform.GetScale().y / 2.0f);
@@ -72,17 +72,17 @@ void Player::OnCollision(const Engine::Collision& collision)
 	// If they are close enough on the up axis, then
 	// myCollider is on top of the other (collision
 	// with the floor)
-	if (collision.GetDistanceUpAxis() < epsilon)
-	{
-		auto physics = GetComponent<PhysicsComponent>();
-
-		if (physics)
-			physics->SetGroundLevel(otherCollider->GetMax().y + myCollider->GetCenter().y - myCollider->GetMin().y);
-	}
+	//if (collision.GetDistanceUpAxis() < epsilon)
+	//{
+	//	auto physics = GetComponent<PhysicsComponent>();
+	//
+	//	if (physics)
+	//		physics->SetGroundLevel(otherCollider->GetMax().y + myCollider->GetCenter().y - myCollider->GetMin().y);
+	//}
 
 	// Else, it is a true collision
-	else
-		mIsColliding = true;
+	//else
+	//	mIsColliding = true;
 }
 
 const Engine::Ref<Engine::Model> Player::GetModel() const
@@ -106,7 +106,7 @@ void Player::SetModel(Engine::Ref<Engine::Model> model)
 
 	Vec3 size = model->GetSize();
 
-	AddComponent<BoxCollider>(std::make_shared<BoxCollider>(*this, mTransform.GetPosition(), Vec3(size.x, size.y, size.z)));
+	AddComponent<BoxCollider>(CreateRef<BoxCollider>(*this, mTransform.GetPosition(), Vec3(size.x, size.y, size.z)));
 }
 
 void Player::Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const

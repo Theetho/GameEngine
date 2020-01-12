@@ -1,7 +1,7 @@
 #include "CPhysicsEngine.h"
 #include <algorithm>
 #include "CMaths.h"
-#include "CWindow.h"
+//#include "CWindow.h"
 
 CPhysicsEngine* CPhysicsEngine::sInstance = new CPhysicsEngine();
 

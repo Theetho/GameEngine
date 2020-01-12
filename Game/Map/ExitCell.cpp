@@ -17,7 +17,7 @@ ExitCell::ExitCell(const Transform& transform)
 
 		auto texture = AssetManager::GetTexture2DLibrary().Load("wall.jpg");
 
-		sModel->SetMaterial(std::make_shared<PBRMaterial>(texture, texture, texture, texture));
+		sModel->SetMaterial(CreateRef<PBRMaterial>(texture, texture, texture, texture));
 	}
 	mTransform.SetScale(mTransform.GetScale() * 0.5f);
 	mTransform.SetRotation({ 0.0f, 90.0f, 0.0f });

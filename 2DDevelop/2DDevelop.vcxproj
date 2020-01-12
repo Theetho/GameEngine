@@ -150,8 +150,13 @@
     <ClInclude Include="Physics\CRectangle.h" />
     <ClInclude Include="Physics\CRigidBody.h" />
     <ClInclude Include="Physics\CSphereCollider.h" />
-    <ClInclude Include="Physics\CWindow.h" />
-    <ClInclude Include="SAP\CSAP.h" />
+    <ClInclude Include="UILib\Button.h" />
+    <ClInclude Include="UILib\Input.h" />
+    <ClInclude Include="UILib\Slider.h" />
+    <ClInclude Include="UILib\Table.h" />
+    <ClInclude Include="UILib\UIElement.h" />
+    <ClInclude Include="UILib\UILib.h" />
+    <ClInclude Include="UILib\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Noise\FastNoise.cpp" />
@@ -167,8 +172,8 @@
     <ClCompile Include="Physics\CRectangle.cpp" />
     <ClCompile Include="Physics\CRigidBody.cpp" />
     <ClCompile Include="Physics\CSphereCollider.cpp" />
-    <ClCompile Include="Physics\CWindow.cpp" />
-    <ClCompile Include="SAP\CSAP.cpp" />
+    <ClCompile Include="UILib\UIElement.cpp" />
+    <ClCompile Include="UILib\Window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

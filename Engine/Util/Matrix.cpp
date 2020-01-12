@@ -1,5 +1,7 @@
 #include "EnginePch.h"
 #include "Matrix.h"
+#include "Core/Camera3D.h"
+
 
 namespace Engine
 {

@@ -1,8 +1,5 @@
 #pragma once
 
-#include "Util/Color.h"
-#include "Include/Maths.h"
-
 namespace Engine
 {
 	class Texture

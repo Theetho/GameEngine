@@ -123,9 +123,6 @@
     <ClInclude Include="Component\Component.h">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="Component\PhysicsComponent.h">
-      <Filter>Component</Filter>
-    </ClInclude>
     <ClInclude Include="Component\RigidBody.h">
       <Filter>Component</Filter>
     </ClInclude>
@@ -1409,6 +1406,9 @@
     <ClInclude Include="Vendor\stb\stb_image.h">
       <Filter>Vendor\stb</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\Buffer.h" />
+    <ClInclude Include="Renderer\Rendering.h" />
+    <ClInclude Include="Renderer\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API\OpenGL\OpenGLContext.cpp">
@@ -1451,9 +1451,6 @@
       <Filter>Component\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Component\Component.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Component\PhysicsComponent.cpp">
       <Filter>Component</Filter>
     </ClCompile>
     <ClCompile Include="Component\RigidBody.cpp">
@@ -1580,5 +1577,6 @@
     <ClCompile Include="Vendor\stb\stb_image.cpp">
       <Filter>Vendor\stb</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\Rendering\Renderable.cpp" />
   </ItemGroup>
 </Project>

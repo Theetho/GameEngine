@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Component.h"
-#include "Include/Maths.h"
-#include "GameObject/Transform.h"
 
 namespace Engine
 {
+	class Transform;
+
 	class RigidBody : public Component
 	{
 	public:

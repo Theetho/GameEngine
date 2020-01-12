@@ -1,7 +1,8 @@
 #include "EnginePch.h"
 #include "RigidBody.h"
-#include "./Collider.h"
-#include "GameObject/GameObject.h"
+#include "Collider.h"
+#include "Include/GameObject.h"
+
 
 namespace Engine
 {

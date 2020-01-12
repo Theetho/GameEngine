@@ -1,6 +1,8 @@
 #include "EnginePch.h"
 #include "Material.h"
 #include "Renderer/Rendering/Renderer.h"
+#include "Renderer/Rendering/RendererAPI.h"
+#include "API/OpenGL/OpenGLShader.h"
 
 namespace Engine
 {

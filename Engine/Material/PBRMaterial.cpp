@@ -1,5 +1,7 @@
 #include "EnginePch.h"
 #include "PBRMaterial.h"
+#include "API/OpenGL/OpenGLShader.h"
+#include "Renderer/Texture/Texture2D.h"
 
 namespace Engine
 {

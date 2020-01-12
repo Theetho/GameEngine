@@ -1,15 +1,16 @@
 #include "EnginePch.h"
 #include "Camera3D.h"
-#include "Util/Matrix.h"
-#include "GameObject/GameObject.h"
+#include "Event.h"
+#include "Input.h"
+#include "GameObject/Transform.h"
 
 namespace Engine
 {
-
 /// Camera3D
 
 	Camera3D::Camera3D(const Vec3& position)
-		: mPosition(position)
+		: GameObject(Transform(position))
+		, mPosition(position)
 		, mView()
 		, mProjection(Matrix::Projection())
 	{

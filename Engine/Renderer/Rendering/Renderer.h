@@ -1,15 +1,13 @@
 #pragma once
 
-#include "RenderCommand.h"
-#include "Renderable.h"
-#include "../Library.h"
-#include "Model/Model.h"
-#include "Component/Collider/Collider.h"
-#include "Core/Camera3D.h"
-#include "Lighting/Skybox.h"
-
 namespace Engine
 {
+	class Camera3D;
+	enum class API;
+	class Shader;
+	class Renderable;
+	class RenderCommand;
+
 	class Renderer
 	{
 	public:

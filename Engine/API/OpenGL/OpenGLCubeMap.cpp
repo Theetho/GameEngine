@@ -1,7 +1,6 @@
 #include "EnginePch.h"
 #include "OpenGLCubeMap.h"
 #include <filesystem>
-#include "Core/Log.h"
 
 namespace Engine
 {

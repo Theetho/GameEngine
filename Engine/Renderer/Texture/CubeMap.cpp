@@ -2,6 +2,7 @@
 #include "CubeMap.h"
 #include <filesystem>
 #include "Renderer/Rendering/Renderer.h"
+#include "Renderer/Rendering/RendererAPI.h"
 #include "API/OpenGL/OpenGLCubeMap.h"
 
 namespace Engine
@@ -20,7 +21,7 @@ namespace Engine
 		case Engine::API::None:
 			ENGINE_ASSERT(false, "Api not supported");
 		case Engine::API::OpenGL:
-			return std::make_shared<OpenGLCubeMap>(file_path, name, use_folder_path);
+			return CreateRef<OpenGLCubeMap>(file_path, name, use_folder_path);
 		}
 	}
 }

@@ -1,17 +1,19 @@
 #pragma once
 
-#include "Transform.h"
-#include "Component/Component.h"
 #include "Renderer/Rendering/Renderable.h"
+#include "Include/Component.h"
+#include "Transform.h"
 
 namespace Engine
 {
 	class Collision;
+	class Event;
 
 	class GameObject : public Renderable
 	{
 	public:
-		explicit GameObject(const Transform& transform = Transform());
+		GameObject();
+		GameObject(const Transform& transform);
 		GameObject(const GameObject& other);
 		GameObject(const GameObject&& other) noexcept;
 		GameObject& operator=(const GameObject& other);

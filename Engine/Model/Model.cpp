@@ -4,6 +4,8 @@
 #include "Core/AssetManager.h"
 #include "assimp/Importer.hpp"
 #include "assimp/postProcess.h"
+#include "Mesh.h"
+#include "Include/Material.h"
 
 namespace Engine
 {
@@ -25,7 +27,7 @@ namespace Engine
 	{
 		ENGINE_ASSERT(sFolderPath != "");
 
-		return std::make_shared<Model>(file_path, name, use_folder_path);
+		return CreateRef<Model>(file_path, name, use_folder_path);
 	}
 
 	void Model::SetFolder(const std::string& folder_path)
@@ -194,11 +196,11 @@ namespace Engine
 			std::vector< Ref<Texture2D>> normalMaps = LoadMaterial(material, 
 				aiTextureType_HEIGHT, "_normal");
 
-			materials = std::make_shared<PBRMaterial>(ambientMaps, diffuseMaps, specularMaps, normalMaps);
+			materials = CreateRef<PBRMaterial>(ambientMaps, diffuseMaps, specularMaps, normalMaps);
 		}
 		else
 		{
-			materials = std::make_shared<RawMaterial>();
+			materials = CreateRef<RawMaterial>();
 		}
 
 		return Mesh(vertices, indices, materials);

@@ -1,10 +1,13 @@
 #pragma once
 
-#include "Component/Collider.h"
-#include "GameObject/GameObject.h"
-
 namespace Engine
 {
+	class Collider;
+	class TerrainCollider;
+	class BoxCollider;
+	class SphereCollider;
+	class Collision;
+
 	class CollisionSystem
 	{
 	public:

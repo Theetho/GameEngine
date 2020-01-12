@@ -1,10 +1,9 @@
 #pragma once
 
-#include "Include/Maths.h"
-#include "Core/Camera3D.h"
-
 namespace Engine
 {
+	class Camera3D;
+	
 	class Matrix
 	{
 	public:

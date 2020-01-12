@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Shader.h"
-#include "Texture/Texture2D.h"
-#include "Model/Model.h"
+#include "Model/Model.h";
+#include "Renderer/Shader.h";
+#include "Renderer/Texture/Texture2D.h";
 
 namespace Engine
 {

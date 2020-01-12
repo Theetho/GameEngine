@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Include/Maths.h"
-
 namespace Engine
 {
 	class Input
@@ -20,13 +18,21 @@ namespace Engine
 	protected:
 		virtual bool IsKeyPressedImplementation(int keycode) const = 0;
 		virtual bool IsMouseButtonPressedImplementation(int button) const = 0;
-		virtual Vec2 GetMousePositionImplementation() = 0;
-		virtual Vec2 GetMouseOffsetImplementation() = 0;
 		virtual void ToggleCursorImplementation() = 0;
+		virtual void UpdateMouseImplementation() = 0;
 	private:
+		friend class Application;
 		static Input* sInstance;
+		static void UpdateMouse();
 	protected:
 		bool mCursor;
+		struct Mouse
+		{
+			Vec2 position;
+			Vec2 previous;
+			Vec2 movement;
+		};
+		Mouse mMouse;
 		Vec2 mPreviousMousePosition;
 	};
 
@@ -38,8 +44,7 @@ namespace Engine
 	private:
 		bool IsKeyPressedImplementation(int keycode) const override;
 		bool IsMouseButtonPressedImplementation(int button) const override;
-		Vec2 GetMousePositionImplementation() override;
-		Vec2 GetMouseOffsetImplementation() override;
 		void ToggleCursorImplementation() override;
+		void UpdateMouseImplementation() override;
 	};
 }

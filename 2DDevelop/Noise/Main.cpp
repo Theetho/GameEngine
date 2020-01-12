@@ -3,29 +3,11 @@
 #include <iostream>
 #include <sstream>
 #include <array>
-#include "SFML/Graphics.hpp"
-#include "SFML/Window.hpp"
-#include "SFML/System.hpp"
-#include "FastNoise.h"
 
-#define ApplyFontSize(x, y) x.setCharacterSize(y);\
-					    x.setStyle(Text::Regular);\
-					    x.setFillColor(Color::White)
-#define ApplyFont(x) ApplyFontSize(x, 30)
+#include "FastNoise.h"
+#include "UILib/UILib.h"
 
 using namespace sf;
-
-namespace Shared
-{
-	int _width    = 256;
-	int _height   = 256;
-	int _channels = 4;
-	std::vector<unsigned char> _height_map;
-	Font _font;
-	Vector2f _mouse_position;
-	Vector2f _previous_mouse_position;
-	Vector2f _mouse_movement;
-}
 
 struct Data
 {
@@ -36,239 +18,97 @@ struct Data
 	double scale;
 };
 
-class Button : public Drawable
+namespace Shared
 {
-public:
-	Button(const char* label, const Vector2f& position)
-		: mLabel(label, Shared::_font)
-	{
-		mLabel.setPosition(position);
-		ApplyFont(mLabel);
-	}
-	~Button(){}
-	void OnUpdate()
-	{
-		mLabel.setFillColor(Color::White);
+	int _width    = 1024;
+	int _height   = 1024;
+	int _channels = 4;
+	std::vector<unsigned char> _height_map;
+	std::vector<unsigned char> _height_map_colored;
+	Font _font;
+	Vector2f _mouse_position;
+	Vector2f _previous_mouse_position;
+	Vector2f _mouse_movement;
+	Data _data;
+}
 
-		float left   = mLabel.getGlobalBounds().left;
-		float top    = mLabel.getGlobalBounds().top;
-		float right  = left + mLabel.getGlobalBounds().width;
-		float bottom = top  + mLabel.getGlobalBounds().height;
-
-		if (Shared::_mouse_position.x >= left && Shared::_mouse_position.x <= right && Shared::_mouse_position.y >= top && Shared::_mouse_position.y <= bottom)
+static sf::Color ApplyColor(float grey_scale)
+{	
+	std::map<float, sf::Color> colors{
+		{ 0.3f,  sf::Color(10, 75, 120) }, // Deep water
+		{ 0.4f,  sf::Color(15, 100, 190) }, // Water
+		{ 0.45f, sf::Color(250, 245, 170) }, // Sand
+		{ 0.55f, sf::Color(100, 200, 0) }, // Grass 1
+		{ 0.6f,  sf::Color(50, 100, 0) }, // Grass 2
+		{ 0.7f,  sf::Color(90, 60, 20) }, // Rock 1
+		{ 0.9f,  sf::Color(60, 40, 10) }, // Rock 2
+		{ 1.0f,  sf::Color(sf::Color::White) }, // Snow
+	};
+	auto color = colors.begin();
+	while (color != colors.end())
+	{
+		if (grey_scale <= color->first)
 		{
-			mLabel.setFillColor(Color(128,0,0));
-			if (Mouse::isButtonPressed(Mouse::Button::Left))
-			{
-				mClick = true;
-			}
-			else if (mClick)
-			{
-				const char* path = "../Game/Assets/Textures/Heightmaps/generated_height_map.png";
-				stbi_write_png(path, Shared::_width, Shared::_height, Shared::_channels, Shared::_height_map.data(), Shared::_width * Shared::_channels);
-				std::cout << "Image saved at " << path << std::endl;
-				mClick = false;
-			}
+			return color->second;
 		}
+		++color;
 	}
+}
 
-private:
-	Text mLabel;
-	bool	 mClick = false;
-
-	virtual void draw(RenderTarget& target, RenderStates states) const override
-	{
-		target.draw(mLabel);
-	}
-};
-
-class Slider : public Drawable
+static void GenerateHeightMap()
 {
-public:
-	Slider(double min, double max, Vector2f position, double* value)
-		: mMax(max)
-		, mMin(min)
-		, mValue((max - min) / (double)2)
-		, mShape({ 100, 100 })
-		, mLabel("", Shared::_font)
-		, mReference(value)
-	{
-		mShape.setPosition(position);
-		mShape.setFillColor(Color::Transparent);
-
-		mLine.setSize(Vector2f(50, 4));
-		mLine.setPosition(position + Vector2f(25, 23));
-		mLine.setFillColor(Color(128, 128, 128));
-		mLine.setOutlineColor(Color(40, 40, 40));
-		mLine.setOutlineThickness(1);
-
-		mCursor.setRadius(4);
-		mCursor.setPosition(position + Vector2f(46, 21));
-		mCursor.setFillColor(Color(128, 128, 128));
-		mCursor.setOutlineColor(Color(40, 40, 40));
-		mCursor.setOutlineThickness(1);
-		
-		std::stringstream ss;
-		ss << mValue;
-		mLabel.setString(ss.str());
-		mLabel.setPosition(position + Vector2f(82, 21 - mLabel.getGlobalBounds().height / 2.0f));
-		ApplyFontSize(mLabel, 20);
-	}
-	void OnUpdate()
-	{
-		if (Mouse::isButtonPressed(Mouse::Button::Left))
-			mCursor.setPosition(mCursor.getPosition() + Vector2f(Shared::_mouse_movement.x, 0.0f));
-	
-		float min_x = mLine.getPosition().x - mCursor.getRadius();
-		float max_x = min_x + mLine.getGlobalBounds().width;
-		float cursor_x = mCursor.getPosition().x;
-		
-		mValue = (double)((cursor_x - min_x) / (max_x - min_x));
-
-		std::stringstream ss;
-		ss << mValue;
-		mLabel.setString(ss.str());
-		mLabel.setPosition(mShape.getPosition() + Vector2f(82, 21 - mLabel.getGlobalBounds().height / 2.0f));
-
-		mCursor.setPosition(sf::Vector2f(std::max(std::min(max_x, cursor_x), min_x), mCursor.getPosition().y));
-	
-		*mReference = mValue;
-	}
-	double GetValue() const
-	{
-		return mValue;
-	}
-private:
-	double mMin;
-	double mMax;
-	double mValue;
-	double* mReference;
-	double mStep = 0.01;
-	Text		   mLabel;
-	RectangleShape mLine;
-	//RectangleShape mCursor;
-	CircleShape    mCursor;
-	RectangleShape mShape;
-
-	virtual void draw(RenderTarget& target, RenderStates states) const override
-	{
-		target.draw(mShape);
-		target.draw(mLine);
-		target.draw(mCursor);
-		target.draw(mLabel);
-	}
-};
-
-static void GenerateHeightMap(const Data& data, int width, int height, std::vector<unsigned char>& height_map)
-{
-	height_map.clear();
+	Shared::_height_map.clear();
+	Shared::_height_map_colored.clear();
 
 	FastNoise noise;
 	noise.SetNoiseType(FastNoise::PerlinFractal);
-	noise.SetSeed(data.seed);
-	noise.SetFractalOctaves(data.octave);
-	noise.SetFractalLacunarity(data.lacunarity);
-	noise.SetFractalGain(data.persistence);
+	noise.SetSeed(Shared::_data.seed);
+	noise.SetFractalOctaves(Shared::_data.octave);
+	noise.SetFractalLacunarity(Shared::_data.lacunarity);
+	noise.SetFractalGain(Shared::_data.persistence);
 
 	double max = -6000.0, min = 6000.0;
 
-	for (int row = 0; row < height; ++row)
+	for (int row = 0; row < Shared::_height; ++row)
 	{
-		for (int column = 0; column < width; ++column)
+		for (int column = 0; column < Shared::_width; ++column)
 		{
-			double noise_value = noise.GetNoise((double)row / data.scale, (double)column / data.scale);
+			double noise_value = noise.GetNoise((double)row / Shared::_data.scale, (double)column / Shared::_data.scale);
 			max = max < noise_value ? noise_value : max;
 			min = min > noise_value ? noise_value : min;
 		}
 	}
-	for (int row = 0; row < height; ++row)
+	for (int row = 0; row < Shared::_height; ++row)
 	{
-		for (int column = 0; column < width; ++column)
+		for (int column = 0; column < Shared::_width; ++column)
 		{
-			double noise_value = noise.GetNoise((double)row / data.scale, (double)column / data.scale);
+			double noise_value = noise.GetNoise((double)row / Shared::_data.scale, (double)column / Shared::_data.scale);
 			unsigned char color = ((noise_value - min) / (max - min)) * 255;
-			height_map.push_back(color);
-			height_map.push_back(color);
-			height_map.push_back(color);
-			height_map.push_back(255);
+			Shared::_height_map.push_back(color);
+			Shared::_height_map.push_back(color);
+			Shared::_height_map.push_back(color);
+			Shared::_height_map.push_back(255);
+
+			auto colored = ApplyColor((noise_value - min) / (max - min));
+			Shared::_height_map_colored.push_back(colored.r);
+			Shared::_height_map_colored.push_back(colored.g);
+			Shared::_height_map_colored.push_back(colored.b);
+			Shared::_height_map_colored.push_back(255);
 		}
 	}
 }
 
-static void HandleInput(const Event& event, bool& running, Data& data)
+static void HandleInput(const Event& event, bool& running)
 {
 	if (event.type == Event::Closed)
 	{
 		running = false;
-	}
-	else if (event.type == Event::MouseMoved)
-	{
-		Shared::_previous_mouse_position = Shared::_mouse_position;
-		Shared::_mouse_position = Vector2f(event.mouseMove.x, event.mouseMove.y);
-		Shared::_mouse_movement = Shared::_mouse_position - Shared::_previous_mouse_position;
 	}
 	else if (event.type == Event::KeyPressed)
 	{
 		if (event.key.code == Keyboard::Escape)
 		{
 			running = false;
-		}
-		if (event.key.code == Keyboard::M)
-		{
-			data.seed = rand();
-			GenerateHeightMap(data, Shared::_width, Shared::_height, Shared::_height_map);
-		}
-		if (event.key.code == Keyboard::O)
-		{
-			if (Keyboard::isKeyPressed(Keyboard::LShift))
-			{
-				data.octave = (data.octave - 1) % 8;;
-			}
-			else
-			{
-				data.octave = (data.octave + 1) % 8;
-			}
-			GenerateHeightMap(data, Shared::_width, Shared::_height, Shared::_height_map);
-		}
-		if (event.key.code == Keyboard::L)
-		{
-			if (Keyboard::isKeyPressed(Keyboard::LShift))
-			{
-				data.lacunarity /= 2;
-			}
-			else
-			{
-				data.lacunarity *= 2;
-			}
-			data.lacunarity = std::max(0.0625, data.lacunarity);
-			GenerateHeightMap(data, Shared::_width, Shared::_height, Shared::_height_map);
-		}
-		if (event.key.code == Keyboard::D)
-		{
-			if (Keyboard::isKeyPressed(Keyboard::LShift))
-			{
-				data.persistence /= 2;
-			}
-			else
-			{
-				data.persistence *= 2;
-			}
-			data.persistence = std::max(pow(2, -32), data.persistence);
-			GenerateHeightMap(data, Shared::_width, Shared::_height, Shared::_height_map);
-		}
-		if (event.key.code == Keyboard::S)
-		{
-			if (Keyboard::isKeyPressed(Keyboard::LShift))
-			{
-				data.scale -= 0.01;
-			}
-			else
-			{
-				data.scale += 0.01;
-			}
-			data.scale = std::max(0.0, data.scale);
-			data.scale = std::min(1.0, data.scale);
-			GenerateHeightMap(data, Shared::_width, Shared::_height, Shared::_height_map);
 		}
 	}
 }
@@ -277,72 +117,75 @@ int main()
 {
 	srand(time(0));
 
-	Data data;
+	Shared::_data.seed = rand();
+	Shared::_data.octave = 8;
+	Shared::_data.lacunarity = 2;
+	Shared::_data.persistence = 0.5;
+	Shared::_data.scale = 0.758;
 
-	data.seed = rand();
-	data.octave = 8;
-	data.lacunarity = 2;
-	data.persistence = 0.5;
-	data.scale = 0.276;
+	GenerateHeightMap();
 
-	GenerateHeightMap(data, Shared::_width, Shared::_height, Shared::_height_map);
-
-	RenderWindow window;
-	VideoMode window_size(1280, 720);
-	window.create(window_size, "HeightMap");
+	UILib::Window window(1280, 720, "HeightMap");
 	bool running = true;
+	bool colored = false;
 
 	// Height map
 	Texture texture;
 	texture.create(Shared::_width, Shared::_height);
 	Sprite map(texture);
-	map.setScale(2, 2);
-	map.setPosition(window_size.width / 2 - map.getGlobalBounds().width / 2, window_size.height / 2 - map.getGlobalBounds().height / 2);
+	map.setScale(512.f / (float)Shared::_width, 512.f / (float)Shared::_height);
+	//map.setScale(2, 2);
+	map.setPosition(window.GetWidth() / 2 - map.getGlobalBounds().width / 2, window.GetHeight() / 2 - map.getGlobalBounds().height / 2);
 
-	// Instructions
-	Shared::_font.loadFromFile("Noise/Font/consola.ttf");
-	Text instructions("init", Shared::_font);
-	ApplyFont(instructions);
+	int& seed = Shared::_data.seed;
 
-	Button save("Save", Vector2f(window_size.width * 0.05f, window_size.height * 0.8f));
-	std::array<Slider, 3> sliders{
-		Slider(0, 1, { 50, 540 }, &data.scale),
-		Slider(0, 1, { 50, 600 }, &data.lacunarity),
-		Slider(0, 1, { 50, 660 }, &data.persistence)
+	auto save_image = []()
+	{
+		std::ostringstream name;
+		name << Shared::_data.seed << "_" <<
+			    Shared::_data.octave << "_" <<
+			    Shared::_data.lacunarity << "_" <<
+			    Shared::_data.persistence << "_" <<
+			    Shared::_data.scale << ".png";
+
+		stbi_write_png(("../Game/Assets/Textures/Heightmaps/" + name.str()).c_str(), Shared::_width, Shared::_height, Shared::_channels, Shared::_height_map.data(), Shared::_width * Shared::_channels);
+		std::cout << "Image saved " << std::endl;
 	};
+
+	window.AddUIElement(new UILib::Button(Vector2f(380, 30), [&seed](){ seed = rand(); GenerateHeightMap(); }, "Generate"));
+	window.AddUIElement(new UILib::Slider<double> (Shared::_data.scale, 0.0, 1.0, 0.01, Vector2f(150, 70), &GenerateHeightMap, "Scale"));
+	window.AddUIElement(new UILib::Slider<double> (Shared::_data.lacunarity, 1.0, 10.0, 0.1, Vector2f(150, 110), &GenerateHeightMap, "Lacunarity"));
+	window.AddUIElement(new UILib::Slider<double> (Shared::_data.persistence, 0.0, 1.0, 0.01, Vector2f(150, 150), &GenerateHeightMap, "Persistence"));
+	window.AddUIElement(new UILib::Slider<size_t> (Shared::_data.octave, 1, 8, 1, Vector2f(150, 190), &GenerateHeightMap, "Octave"));
+	window.AddUIElement(new UILib::Button(Vector2f(120, 600),save_image, "Save"));
+	window.AddUIElement(new UILib::Button(Vector2f(120, 560), [&colored](){colored = !colored;}, "Color scale"));
+	window.AddUIElement(new UILib::Input<int>(seed, Vector2f(150, 30), &GenerateHeightMap, "Seed"));
 
 	while (running)
 	{
-		window.clear(Color::Black);
+		window.Clear(Color(200, 200, 200));
 
 		Event event;
-		window.pollEvent(event);
+		while (window.PollEvent(event))
+		{
+			HandleInput(event, running);
+		}
 
-		HandleInput(event, running, data);
+		window.UpdateUI();
 
-		save.OnUpdate();
-		for (auto slider : sliders)
-			slider.OnUpdate();
-
-		Uint8* pixels = Shared::_height_map.data();
+		Uint8* pixels;
+		if (colored)
+			pixels = Shared::_height_map_colored.data();
+		else
+			pixels = Shared::_height_map.data();
 		texture.update(pixels);
 		
-		std::stringstream ss;
-		ss <<
-		"(m)seed       : " << data.seed <<
-		"\n(s)scale      : " << data.scale <<
-		"\n(o)octave	 : " << data.octave <<
-		"\n(l)lacunarity : " << data.lacunarity <<
-		"\n(d)persistence: " << data.persistence;
-		instructions.setString(ss.str().c_str());
-		
-		window.draw(map);
-		window.draw(instructions);
-		window.draw(save);
-		for (auto slider : sliders)
-			window.draw(slider);
-		window.display();
+		window.RenderUI();
+		window.Draw(map);
+		window.Display();
 	}
+
+	for (auto it : window.GetUIElements()) delete it;
 
 	return 0;
 }

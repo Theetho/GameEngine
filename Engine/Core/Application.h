@@ -1,14 +1,14 @@
 #pragma once
 
-#include "Window.h"
 #include "LayerStack.h"
-#include "Input.h"
-#include "Camera3D.h"
-#include "Include/Renderer.h"
-#include "System/CollisionSystem.h"
 
 namespace Engine
 {
+	class Event;
+	class Layer;
+	class Window;
+	class CollisionSystem;
+
 	class Application
 	{
 	public:

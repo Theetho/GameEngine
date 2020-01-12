@@ -1,7 +1,9 @@
 #include "EnginePch.h"
 #include "VertexArray.h"
-#include "Renderer/Rendering/Renderer.h"
+#include "Renderer/Rendering.h"
 #include "API/OpenGL/OpenGLVertexArray.h"
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
 
 namespace Engine
 {
@@ -15,7 +17,7 @@ namespace Engine
 		case Engine::API::None:
 			ENGINE_ASSERT(false, "Api not supported");
 		case Engine::API::OpenGL:
-			return std::make_shared<OpenGLVertexArray>();
+			return CreateRef<OpenGLVertexArray>();
 		}
 
 		return nullptr;

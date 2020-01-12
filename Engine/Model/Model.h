@@ -1,11 +1,15 @@
 #pragma once
 
-#include "Mesh.h"
-#include "Include/Maths.h"
+#include "Renderer/Rendering/Renderable.h"
 #include "assimp/scene.h"
 
 namespace Engine
 {
+	class Mesh;
+	class Material;
+	
+	class Texture2D;
+
 	class Model : public Renderable
 	{
 	public:

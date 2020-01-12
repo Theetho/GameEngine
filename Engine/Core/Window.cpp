@@ -1,7 +1,10 @@
 #include "EnginePch.h"
 #include "Window.h"
-#include "API/OpenGL/OpenGLContext.h"
 #include "Log.h"
+#define EVENT_CPP
+#include "Event.h"
+#undef EVENT_CPP
+#include "API/OpenGL/OpenGLContext.h"
 
 namespace Engine
 {

@@ -1,5 +1,6 @@
 #include "EnginePch.h"
 #include "DirectionalLight.h"
+#include "API/OpenGL/OpenGLShader.h"
 
 namespace Engine
 {

@@ -10,8 +10,8 @@ Bomb::Bomb(Ref<Model> model, const Transform& transform, float power)
 	, mPower(power)
 	, mMaterial(true)
 	, mMaterials({
-		std::make_shared<RawMaterial>(RawMaterial::Obsidian),
-		std::make_shared<RawMaterial>()
+		CreateRef<RawMaterial>(RawMaterial::Obsidian),
+		CreateRef<RawMaterial>()
 	 })
 {
 	SetScale(0.2);

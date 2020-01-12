@@ -1,11 +1,11 @@
 #include "EnginePch.h"
-#include "GameObject/GameObject.h"
 #include "Collider.h"
-#include "Core/Log.h"
+#include "Include/GameObject.h"
+#include "Component/RigidBody.h"
+
 
 namespace Engine
 {
-
 /// Abstrat base class
 
 	Collider::Collider(GameObject& game_object, const Vec3& center)

@@ -1,14 +1,13 @@
 #pragma once
 
-#include "Input.h"
+#ifdef EVENT_CPP
 
 #define BIT(x) x << 1
 
 #define CreateEngineEvent(x) Event event;\
 							 event.mType = x;
-
+#endif //EVENT_CPP
 // Event class header based on the SFML Event class and the one in The Cherno serie
-
 namespace Engine
 {
 	class Event

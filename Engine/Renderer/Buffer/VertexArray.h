@@ -1,11 +1,12 @@
 #pragma once
 
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
 #include "Renderer/Rendering/Renderable.h"
 
 namespace Engine
 {
+	class VertexBuffer;
+	class IndexBuffer;
+
 	class VertexArray : public Renderable
 	{
 	public:

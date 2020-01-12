@@ -158,7 +158,6 @@
     <ClInclude Include="Component\Collider\SphereCollider.h" />
     <ClInclude Include="Component\Collider\TerrainCollider.h" />
     <ClInclude Include="Component\Component.h" />
-    <ClInclude Include="Component\PhysicsComponent.h" />
     <ClInclude Include="Component\RigidBody.h" />
     <ClInclude Include="Core\Application.h" />
     <ClInclude Include="Core\AssetManager.h" />
@@ -197,6 +196,7 @@
     <ClInclude Include="Material\RawMaterial.h" />
     <ClInclude Include="Model\Mesh.h" />
     <ClInclude Include="Model\Model.h" />
+    <ClInclude Include="Renderer\Buffer.h" />
     <ClInclude Include="Renderer\Buffer\BufferLayout.h" />
     <ClInclude Include="Renderer\Buffer\IndexBuffer.h" />
     <ClInclude Include="Renderer\Buffer\UniformBuffer.h" />
@@ -204,11 +204,13 @@
     <ClInclude Include="Renderer\Buffer\VertexBuffer.h" />
     <ClInclude Include="Renderer\GraphicsContext.h" />
     <ClInclude Include="Renderer\Library.h" />
+    <ClInclude Include="Renderer\Rendering.h" />
     <ClInclude Include="Renderer\Rendering\RenderCommand.h" />
     <ClInclude Include="Renderer\Rendering\Renderable.h" />
     <ClInclude Include="Renderer\Rendering\Renderer.h" />
     <ClInclude Include="Renderer\Rendering\RendererAPI.h" />
     <ClInclude Include="Renderer\Shader.h" />
+    <ClInclude Include="Renderer\Texture.h" />
     <ClInclude Include="Renderer\Texture\CubeMap.h" />
     <ClInclude Include="Renderer\Texture\Texture.h" />
     <ClInclude Include="Renderer\Texture\Texture2D.h" />
@@ -604,7 +606,6 @@
     <ClCompile Include="Component\Collider\SphereCollider.cpp" />
     <ClCompile Include="Component\Collider\TerrainCollider.cpp" />
     <ClCompile Include="Component\Component.cpp" />
-    <ClCompile Include="Component\PhysicsComponent.cpp" />
     <ClCompile Include="Component\RigidBody.cpp" />
     <ClCompile Include="Core\Application.cpp" />
     <ClCompile Include="Core\AssetManager.cpp" />
@@ -634,6 +635,7 @@
     <ClCompile Include="Renderer\Buffer\UniformBuffer.cpp" />
     <ClCompile Include="Renderer\Buffer\VertexArray.cpp" />
     <ClCompile Include="Renderer\Buffer\VertexBuffer.cpp" />
+    <ClCompile Include="Renderer\Rendering\Renderable.cpp" />
     <ClCompile Include="Renderer\Rendering\RenderCommand.cpp" />
     <ClCompile Include="Renderer\Rendering\Renderer.cpp" />
     <ClCompile Include="Renderer\Rendering\RendererAPI.cpp" />

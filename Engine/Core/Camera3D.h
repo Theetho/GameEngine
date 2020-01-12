@@ -1,14 +1,12 @@
 #pragma once
 
-#include "Include/Maths.h"
-#include "Event.h"
-#include "Input.h"
+#include "GameObject/GameObject.h"
 
 namespace Engine
 {
-	class GameObject;
+	class Event;
 
-	class Camera3D
+	class Camera3D : public GameObject
 	{
 	public:
 		Camera3D(const Vec3& position);

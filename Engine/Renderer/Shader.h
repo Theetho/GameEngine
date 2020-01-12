@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Include/Maths.h"
-
 namespace Engine
 {
 	class Shader

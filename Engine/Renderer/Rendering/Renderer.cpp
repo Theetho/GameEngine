@@ -1,10 +1,12 @@
 #include "EnginePch.h"
-#include "Renderer.h"
-#include "Component/Collider/SphereCollider.h"
+#include "Renderer/Rendering.h"
+#include "Core/Camera3D.h"
+#include "API/OpenGL/OpenGLShader.h"
+
 
 namespace Engine
 {
-	Ref<RenderCommand> Renderer::sRenderCommand = std::make_shared<RenderCommand>();
+	Ref<RenderCommand> Renderer::sRenderCommand = CreateRef<RenderCommand>();
 
 	Renderer::SceneData Renderer::sSceneData;
 	Ref<Shader> Renderer::sShader;

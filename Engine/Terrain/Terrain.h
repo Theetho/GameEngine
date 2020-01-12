@@ -1,11 +1,12 @@
 #pragma once
 
-#include "Renderer/Rendering/Renderable.h"
 #include "GameObject/GameObject.h"
-#include "Model/Mesh.h"
 
 namespace Engine
 {
+	class VertexArray;
+	class Texture2D;
+
 	class Terrain : public GameObject
 	{
 	public:
@@ -17,7 +18,6 @@ namespace Engine
 		///////////////////////////
 		Terrain(const Vec2& grid_position, const char* height_map_path = nullptr, const Vec2& dimension = Vec2(1000));
 		~Terrain();
-		float* operator[](unsigned int i) const;
 		///////////////////////////
 		/// Return the height of the vertex with coordinates (x, y).
 		/// @params x, y: coordinates of the vertex on the terrain,
@@ -39,15 +39,24 @@ namespace Engine
 		/// Generate a normal vector for a given vertex.
 		/// @params x, y: coordinates of the vertex on the terrain.
 		///////////////////////////
-		Vec3  GenerateNormal(unsigned int x, unsigned int y);
+		Vec3  GenerateNormal(unsigned int x, unsigned int y) const;
+		Color GenerateColor(unsigned int x, unsigned int y) const;
+		float GetMultiplier(float& height) const;
 		void  Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const override;
 	private:
-		static const float sMaxHeight;
+		struct Biome
+		{
+			float height;
+			float multiplier;
+			Color color;
+			Biome(float height, float multiplier, Color color);
+		};
+		static const std::map<const char*, Biome>sBiome;
 		Vec2			   mDimension;
 		Vec2			   mResolution; // Number of subdivision
 		float**			   mHeights;
 		Ref<VertexArray>   mVertexArray;
-		Ref<Texture2D>	   mTexture;
+		//Ref<Texture2D>	   mTexture;
 		Ref<Texture2D>	   mHeightMap;
 	};
 }

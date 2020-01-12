@@ -1,5 +1,6 @@
 #include "EnginePch.h"
 #include "Component.h"
+#include "GameObject/GameObject.h"
 
 namespace Engine
 {

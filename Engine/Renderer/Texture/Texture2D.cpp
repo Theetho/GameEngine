@@ -1,9 +1,10 @@
 #include "EnginePch.h"
 #include "Texture2D.h"
 #include <filesystem>
-#include "../Rendering/Renderer.h"
-#include "Core/Log.h"
+#include "Renderer/Rendering/Renderer.h"
+#include "Renderer/Rendering/RendererAPI.h"
 #include "API/OpenGL/OpenGLTexture2D.h"
+
 
 namespace Engine
 {
@@ -39,7 +40,7 @@ namespace Engine
 		case Engine::API::None:
 			ENGINE_ASSERT(false, "Api not supported");
 		case Engine::API::OpenGL:
-			return std::make_shared<OpenGLTexture2D>(file_path, name, use_folder_path);
+			return CreateRef<OpenGLTexture2D>(file_path, name, use_folder_path);
 		}
 	}
 
@@ -51,6 +52,11 @@ namespace Engine
 	unsigned int Texture2D::GetHeight() const
 	{
 		return mHeight;
+	}
+
+	Color Texture2D::GetPixel(unsigned int x, unsigned int y) const
+	{
+		return GetPixel(Vec2(x, y));
 	}
 
 	Color Texture2D::GetPixel(const Vec2& pixel) const

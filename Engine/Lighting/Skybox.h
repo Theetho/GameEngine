@@ -1,11 +1,14 @@
 #pragma once
 
-#include "Renderer/Texture/CubeMap.h"
-#include "Renderer/Shader.h"
-#include "Model/Model.h"
+#include "Renderer/Rendering/Renderable.h"
 
 namespace Engine
 {
+	class Shader;
+	class OpenGLShader;
+	class Model;
+	class CubeMap;
+
 	class Skybox : public Renderable
 	{
 	public:

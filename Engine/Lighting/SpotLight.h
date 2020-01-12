@@ -1,8 +1,12 @@
 #pragma once
+
 #include "PointLight.h"
 
 namespace Engine
 {
+	
+	class Color;
+
 	class SpotLight : public PointLight
 	{
 	public:

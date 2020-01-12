@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Util/Color.h"
-#include "API/OpenGL/OpenGLShader.h"
-#include "Include/Maths.h"
-
 namespace Engine
 {
+	class Color;
+	class Shader;
+	class OpenGLShader;
+
 	class Light
 	{
 	public:

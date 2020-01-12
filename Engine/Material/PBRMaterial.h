@@ -1,10 +1,12 @@
 #pragma once
 
 #include "Material.h"
-#include "Renderer/Texture/Texture2D.h"
 
 namespace Engine
 {
+	class Texture2D;
+	class OpenGLShader;
+
 	class PBRMaterial : public Material
 	{
 	public:

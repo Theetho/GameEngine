@@ -71,8 +71,56 @@ namespace Engine
 		return *this;
 	}
 
+	Color Color::operator+(const Color& color) const
+	{
+		return Color(r + color.r, g + color.g, b + color.b);
+	}
+
+	Color Color::operator-(const Color& color) const
+	{
+		return Color(r - color.r, g - color.g, b - color.b);
+	}
+
+	Color Color::operator/(const Color& color) const
+	{
+		#define check(x) x == 0 ? 1.f : x
+		return Color(r / check(color.r), g / check(color.g), b / check(color.b));
+	}
+
+	Color Color::operator*(const Color& color) const
+	{
+		return Color(r * color.r, g * color.g, b * color.b);
+	}
+
+	Color Color::operator+(float factor) const
+	{
+		return Color(r + factor, g + factor, b + factor);
+	}
+
+	Color Color::operator-(float factor) const
+	{
+		return Color(r - factor, g - factor, b - factor);
+	}
+
+	Color Color::operator/(float factor) const
+	{
+		if (!factor)
+			return Color::Black;
+		return Color(r / factor, g / factor, b / factor);
+	}
+
+	Color Color::operator*(float factor) const
+	{
+		return Color(r * factor, g * factor, b * factor);
+	}
+
 	Color::~Color()
 	{}
+
+	Color Color::Lerp(const Color& a, const Color& b, float factor)
+	{
+		return a + (b - a) * factor;
+	}
 
 	void Color::Clip(float& field)
 	{

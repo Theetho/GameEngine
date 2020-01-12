@@ -1,7 +1,7 @@
 #include "EnginePch.h"
 #include "Shader.h"
 #include "Rendering/Renderer.h"
-#include "Core/Log.h"
+#include "Rendering/RendererAPI.h"
 #include "API/OpenGL/OpenGLShader.h"
 
 namespace Engine
@@ -24,7 +24,7 @@ namespace Engine
 		case Engine::API::None:
 			ENGINE_ASSERT(false, "Api not supported");
 		case Engine::API::OpenGL:
-			return std::make_shared<OpenGLShader>(file_path, name, use_folder_path);
+			return CreateRef<OpenGLShader>(file_path, name, use_folder_path);
 		}
 
 		return nullptr;

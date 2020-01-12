@@ -4,23 +4,17 @@
     <Filter Include="Noise">
       <UniqueIdentifier>{6323C10D-CF37-E9BE-98B9-8C1E048DE5EF}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Noise\core">
-      <UniqueIdentifier>{BB69685D-A721-AAAA-1029-8306FCFF449B}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Noise\threadpp">
-      <UniqueIdentifier>{EA316BE0-D6FF-5EE6-BF93-CF0CAB003B4B}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Noise\utils">
-      <UniqueIdentifier>{23F3BD0B-8FA8-3601-189D-30D884512D05}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Physics">
       <UniqueIdentifier>{888B590D-F46A-D8A8-FD82-637F69E13E0A}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SAP">
-      <UniqueIdentifier>{A91C880B-1526-887C-9EA1-9E7C0AAA937C}</UniqueIdentifier>
+    <Filter Include="UILib">
+      <UniqueIdentifier>{DA7B2A0E-4690-52BF-0F12-F61E7BE54EF0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Noise\FastNoise.h">
+      <Filter>Noise</Filter>
+    </ClInclude>
     <ClInclude Include="Noise\stb_image.h">
       <Filter>Noise</Filter>
     </ClInclude>
@@ -57,15 +51,32 @@
     <ClInclude Include="Physics\CSphereCollider.h">
       <Filter>Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Physics\CWindow.h">
-      <Filter>Physics</Filter>
+    <ClInclude Include="UILib\Button.h">
+      <Filter>UILib</Filter>
     </ClInclude>
-    <ClInclude Include="SAP\CSAP.h">
-      <Filter>SAP</Filter>
+    <ClInclude Include="UILib\Input.h">
+      <Filter>UILib</Filter>
     </ClInclude>
-    <ClInclude Include="Noise\FastNoise.h" />
+    <ClInclude Include="UILib\Slider.h">
+      <Filter>UILib</Filter>
+    </ClInclude>
+    <ClInclude Include="UILib\Table.h">
+      <Filter>UILib</Filter>
+    </ClInclude>
+    <ClInclude Include="UILib\UIElement.h">
+      <Filter>UILib</Filter>
+    </ClInclude>
+    <ClInclude Include="UILib\UILib.h">
+      <Filter>UILib</Filter>
+    </ClInclude>
+    <ClInclude Include="UILib\Window.h">
+      <Filter>UILib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Noise\FastNoise.cpp">
+      <Filter>Noise</Filter>
+    </ClCompile>
     <ClCompile Include="Noise\Main.cpp">
       <Filter>Noise</Filter>
     </ClCompile>
@@ -102,12 +113,11 @@
     <ClCompile Include="Physics\CSphereCollider.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
-    <ClCompile Include="Physics\CWindow.cpp">
-      <Filter>Physics</Filter>
+    <ClCompile Include="UILib\UIElement.cpp">
+      <Filter>UILib</Filter>
     </ClCompile>
-    <ClCompile Include="SAP\CSAP.cpp">
-      <Filter>SAP</Filter>
+    <ClCompile Include="UILib\Window.cpp">
+      <Filter>UILib</Filter>
     </ClCompile>
-    <ClCompile Include="Noise\FastNoise.cpp" />
   </ItemGroup>
 </Project>

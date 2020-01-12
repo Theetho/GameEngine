@@ -27,8 +27,8 @@ void BombermanLayer::OnAttach()
 	mPlayer.SetScale(0.05f);
 
 	mLights.push_back(
-		std::make_shared<DirectionalLight>(Vec3(0.5f, -0.4f, 0.0f))
-		//std::make_shared<PointLight>(Vec3(100, 10, 100))
+		CreateRef<DirectionalLight>(Vec3(0.4f, -0.5f, 0.0f))
+		//CreateRef<PointLight>(Vec3(100, 10, 100))
 	);
 	
 	Ref<Shader> shader		   = AssetManager::GetShaderLibrary().Load("lights_materials.glsl", "scene");

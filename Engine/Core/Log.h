@@ -4,7 +4,6 @@
 
 namespace Engine
 {
-
 	class Log
 	{
 	public:

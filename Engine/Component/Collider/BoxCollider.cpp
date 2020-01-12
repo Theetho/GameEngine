@@ -1,9 +1,12 @@
 #include "EnginePch.h"
 #include "BoxCollider.h"
-#include "GameObject/Transform.h"
+#include "Include/GameObject.h"
 #include "System/CollisionSystem.h"
 #include "Core/AssetManager.h"
 #include "API/OpenGL/OpenGLShader.h"
+#include "Renderer/Rendering/RenderCommand.h"
+#include "Renderer/Rendering/RendererAPI.h"
+#include "Include/Model.h"
 
 namespace Engine
 {

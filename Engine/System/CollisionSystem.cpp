@@ -1,8 +1,8 @@
 #include "EnginePch.h"
 #include "CollisionSystem.h"
 #include "GameObject/GameObject.h"
-#include "Component/PhysicsComponent.h"
-#include "Util/Benchmark.h"
+#include "Include/Component.h"
+
 
 namespace Engine
 {
@@ -57,7 +57,7 @@ namespace Engine
 
 	Ref<CollisionSystem> CollisionSystem::Create()
 	{
-		return std::make_shared<CollisionSystem>();
+		return CreateRef<CollisionSystem>();
 	}
 
 	Ref<CollisionSystem> CollisionSystem::Get()
@@ -103,14 +103,17 @@ namespace Engine
 			for (auto terrain : mTerrains)
 			{
 				auto height = terrain->GetGroundLevel(collider->GetGameObject());
-				
+
+				if (collider->GetGameObject().GetTransform().GetPosition().y < height)
+					collider->GetGameObject().OnCollision(Collision(true, height, collider, terrain));
+
 				/*auto physics = collider->GetGameObject().GetComponent<PhysicsComponent>();
 				if (physics)
 					physics->SetGroundLevel(height);*/
 
 				//if (collider->GetGameObject().GetTransform().GetPosition().y < height)
-				auto rigid_body = collider->GetRigidBody();
-				rigid_body->SetGroundLevel(terrain->GetGroundLevel(collider->GetGameObject()));
+				//auto rigid_body = collider->GetRigidBody();
+				//rigid_body->SetGroundLevel(terrain->GetGroundLevel(collider->GetGameObject()));
 			}
 		}
 	}
