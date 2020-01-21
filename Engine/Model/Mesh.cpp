@@ -18,9 +18,9 @@ namespace Engine
 		auto vertex_buffer = VertexBuffer::Create(vertices.data(), vertices.size());
 
 		vertex_buffer->SetLayout({
-			{Engine::ShaderDataType::Float3, "in_position"},
-			{Engine::ShaderDataType::Float2, "in_textureCoords"},
-			{Engine::ShaderDataType::Float3, "in_normal"}
+			{Engine::ShaderDataType::Float3, "inPosition"},
+			{Engine::ShaderDataType::Float2, "inTextureCoords"},
+			{Engine::ShaderDataType::Float3, "inNormal"}
 		});
 
 		mVertexArray->AddVertexBuffer(vertex_buffer);

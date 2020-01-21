@@ -3,7 +3,6 @@
 #include "GameObject/GameObject.h"
 #include "Include/Component.h"
 
-
 namespace Engine
 {
 	Ref<CollisionSystem> CollisionSystem::sInstance = CollisionSystem::Create();
@@ -18,7 +17,7 @@ namespace Engine
 
 	void CollisionSystem::OnUpdate(const double& delta)
 	{
-		CheckForMovingObjectsCollisions();
+		CheckForMovingObjectsCollisions(delta);
 	}
 
 	void CollisionSystem::AddTerrain(TerrainCollider* collider)
@@ -65,15 +64,19 @@ namespace Engine
 		return sInstance;
 	}
 		
-	void CollisionSystem::CheckForMovingObjectsCollisions()
+	void CollisionSystem::CheckForMovingObjectsCollisions(const double& delta)
 	{
 		// Only Check the collisions for moveable objects
 		for (auto iterator : mMoveableColliders)
 		{
 			Collider* collider = iterator.first;
 
+			// Apply gravity
 			if (collider->GetRigidBody()->IsUsingGravity())
-				collider->GetRigidBody()->GetVelocity().y -= 9.81f;
+			{
+				float gravity = GRAVITY_ACCELERATION * delta;
+				collider->GetRigidBody()->mVelocity.regular.y += gravity;
+			}
 
 			collider->GetGameObject().SetIsColliding(false);
 			// Check for collisions with the other moveable colliders
@@ -83,7 +86,7 @@ namespace Engine
 				Collider* moveable_collider = moveable_iterator->first;
 
 				Collision collision = Collide(iterator, *moveable_iterator);
-				if (collision.IsColliding())
+				if (collision.IsColliding)
 				{
 					collider->GetGameObject().OnCollision(collision);
 				}
@@ -94,26 +97,25 @@ namespace Engine
 				Collider* staticCollider = static_iterator.first;
 				
 				Collision collision = Collide(iterator, static_iterator);
-				if (collision.IsColliding())
+				if (collision.IsColliding)
 				{
 					collider->GetGameObject().OnCollision(collision);
 				}
 			}
 			// Then we check if the game object is not below the terrain
-			for (auto terrain : mTerrains)
+			auto terrain = mTerrains.begin();
+			// Find the terrain on which it moves
+			while (terrain != mTerrains.end() && !(*terrain)->Contains(collider->GetCenter()))
 			{
-				auto height = terrain->GetGroundLevel(collider->GetGameObject());
+				++terrain;
+			}
+			if (terrain != mTerrains.end())
+			{
+				// Then we get the height at the object's position
+				float height = (*terrain)->GetGroundLevel(collider->GetCenter());
 
-				if (collider->GetGameObject().GetTransform().GetPosition().y < height)
-					collider->GetGameObject().OnCollision(Collision(true, height, collider, terrain));
-
-				/*auto physics = collider->GetGameObject().GetComponent<PhysicsComponent>();
-				if (physics)
-					physics->SetGroundLevel(height);*/
-
-				//if (collider->GetGameObject().GetTransform().GetPosition().y < height)
-				//auto rigid_body = collider->GetRigidBody();
-				//rigid_body->SetGroundLevel(terrain->GetGroundLevel(collider->GetGameObject()));
+				float size_y = collider->GetCenter().y - collider->GetMin().y;
+				collider->GetRigidBody()->SetGroundLevel(height + size_y);
 			}
 		}
 	}
@@ -148,7 +150,7 @@ namespace Engine
 		else
 		{
 			std::cout << "This collider is not handled by the system" << std::endl;
-			return Collision(false, 0.0f, first.first, second.first);
+			return Collision(false, 0.0f, 0.0f, 0.0f);
 		}
 	}
 
@@ -160,17 +162,22 @@ namespace Engine
 					&& first->GetMax().y >= second->GetMin().y
 					&& first->GetMin().z <= second->GetMax().z 
 					&& first->GetMax().z >= second->GetMin().z;
-		float distance_up_axis = std::min(std::abs(first->GetMin().y - second->GetMax().y), std::abs(first->GetMax().y - second->GetMin().y));
+		float x = std::min(std::abs(first->GetMin().x - second->GetMax().x), std::abs(first->GetMax().x - second->GetMin().x));
+		float y = std::min(std::abs(first->GetMin().y - second->GetMax().y), std::abs(first->GetMax().y - second->GetMin().y));
+		float z = std::min(std::abs(first->GetMin().z - second->GetMax().z), std::abs(first->GetMax().z - second->GetMin().z));
 		
-		return Collision(collide, distance_up_axis, first, second);
+		return Collision(collide, x, y, z);
 	}
 
 	Collision CollisionSystem::Collide(const SphereCollider* first, const SphereCollider* second)
 	{
 		float distance = glm::distance(first->GetCenter(), second->GetCenter());
 		bool collide   = distance <= (first->GetRadius() + second->GetRadius());
+		float x = std::abs(first->GetCenter().x - second->GetCenter().x);
+		float y = std::abs(first->GetCenter().y - second->GetCenter().y);
+		float z = std::abs(first->GetCenter().z - second->GetCenter().z);
 		
-		return Collision(collide, distance, first, second);
+		return Collision(collide, x, y, z);
 	}
 
 	Collision CollisionSystem::Collide(const BoxCollider* box_collider, const SphereCollider* sphere_collider)
@@ -185,8 +192,10 @@ namespace Engine
 						 (z - sphere_collider->GetCenter().z) * (z - sphere_collider->GetCenter().z);
 
 		bool collide = distance < (sphere_collider->GetRadius() * sphere_collider->GetRadius());
-		float distance_up_axis = y - sphere_collider->GetCenter().y + sphere_collider->GetRadius();
+		x -= sphere_collider->GetCenter().x + sphere_collider->GetRadius();
+		y -= sphere_collider->GetCenter().y + sphere_collider->GetRadius();
+		z -= sphere_collider->GetCenter().z + sphere_collider->GetRadius();
 
-		return Collision(collide, distance_up_axis, box_collider, sphere_collider);
+		return Collision(collide, x, y, z);
 	}
 };

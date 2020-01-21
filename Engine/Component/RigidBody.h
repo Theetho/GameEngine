@@ -5,6 +5,7 @@
 namespace Engine
 {
 	class Transform;
+	class CollisionSystem;
 
 	class RigidBody : public Component
 	{
@@ -15,21 +16,30 @@ namespace Engine
 		
 		void OnUpdate(const double& delta) override;
 
-		bool		IsUsingGravity() const;
-		Vec3&		GetVelocity();
-		const Vec3& GetVelocity() const;
-		float		GetGroundLevel() const;
+		bool			  IsUsingGravity() const;
+		Vec3&			  GetVelocity();
+		const Vec3&		  GetVelocity() const;
+		Vec3&			  GetAngularVelocity();
+		const Vec3&		  GetAngularVelocity() const;
+		Transform&		  GetTransform();
+		const Transform&  GetTransform() const;
+		float			  GetGroundLevel() const;
 		
 		void SetUseGravity(bool use);
-		void SetGroundLevel(float value);
+		void SetGroundLevel(float level);
 	private:
+		friend class Engine::CollisionSystem;
 		bool	   mUseGravity  = true;
 		bool	   mIsKinematic = false;
 		float	   mMass        = 1.0f;
-		float	   mGroundLevel = 0.0f;
-		Vec3	   mVelocity;
+		float	   mGroundLevel = -1000.0f;
+		struct Velocity
+		{
+			Vec3 regular;
+			Vec3 angular;
+		};
+		Velocity mVelocity;
 		Transform& mTransform;
-
 	};
 }
 

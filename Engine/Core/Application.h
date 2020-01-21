@@ -30,8 +30,17 @@ namespace Engine
 		Ref<CollisionSystem>   mCollisionSystem;
 		bool				   mRunning = true;
 		LayerStack			   mLayerStack;
-		double				   mTime = 0.0, mDeltaTime = 0.0;
+		struct TimeManager
+		{
+			double mTime = 0.0;
+			double mDeltaTime = 0.03;
+			double mTimeSpent = 0.0;
+			unsigned int mFrames = 0.0;
+		};
+		TimeManager			   mTimeManager;
 		double				   mFpsCap = 1.0 / 60.0;
+
+		void ManageTime();
 	};
 
 	// Has to be define by the game

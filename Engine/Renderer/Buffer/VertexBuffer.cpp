@@ -10,19 +10,25 @@ namespace Engine
 	VertexBuffer::~VertexBuffer()
 	{}
 
-	Ref<VertexBuffer> VertexBuffer::Create(float* vertices, unsigned int size)
+	Ref<VertexBuffer> VertexBuffer::Create(float* vertices, unsigned int vertex_count)
 	{
 		switch (Renderer::GetAPI())
 		{
 		case Engine::API::None:
 			ENGINE_ASSERT(false, "Api not supported");
 		case Engine::API::OpenGL:
-			return CreateRef<OpenGLVertexBuffer>(vertices, size);
+			return CreateRef<OpenGLVertexBuffer>(vertices, vertex_count);
 		}
 	}
 
-	VertexBuffer::VertexBuffer()
+	unsigned int VertexBuffer::GetCount() const
+	{
+		return mCount;
+	}
+
+	VertexBuffer::VertexBuffer(unsigned int vertex_count)
 		: mLayout({})
+		, mCount(vertex_count)
 	{
 	}
 }

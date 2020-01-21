@@ -30,7 +30,7 @@ namespace Engine
 		{
 			Vec2 position;
 			Vec2 previous;
-			Vec2 movement;
+			Vec2 movement = Vec2(1, 1);
 		};
 		Mouse mMouse;
 		Vec2 mPreviousMousePosition;

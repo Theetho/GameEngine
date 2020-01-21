@@ -6,25 +6,34 @@
 
 namespace Engine
 {
-/// Camera3D
+	/// Camera3D
 
 	Camera3D::Camera3D(const Vec3& position)
-		: GameObject(Transform(position))
-		, mPosition(position)
+		: GameObject(Transform(position, Vec3(20.0f, 40.0f, 0.0f), Vec3(1.0f)))
+		, mAngles(mTransform.GetRotation().x, mTransform.GetRotation().y, mTransform.GetRotation().z)
 		, mView()
 		, mProjection(Matrix::Projection())
 	{
-		mAngles.pitch = 52.0f;
-		mAngles.yaw   = 0.0f;
-		mAngles.roll  = 0.0f;
+		AddComponent<RigidBody>(CreateRef<RigidBody>(*this));
+		GetComponent<RigidBody>()->SetUseGravity(false);
+		AddComponent<BoxCollider>(CreateRef<BoxCollider>(*this, position, Vec3(1.0, 1.5, 1.0)));
+
 		UpdateViewProjection();
+		std::cout << "View "	   << mView			  << std::endl;
+		std::cout << "Projection " << mProjection	  << std::endl;
+		std::cout << "VP "		   << mViewProjection << std::endl;
 	}
 
 	Camera3D::~Camera3D()
-	{}
+	{
+	}
 
 	void Camera3D::OnUpdate(const double& delta)
 	{
+		GameObject::OnUpdate(delta);
+
+		UpdatePitch();
+		ClampAngles();
 		UpdateViewProjection();
 	}
 
@@ -34,6 +43,14 @@ namespace Engine
 		{
 			mProjection = Matrix::Projection(70.0f, static_cast<double>(event.mSizeEvent.width) / static_cast<double>(event.mSizeEvent.height));
 		}
+	}
+
+	void Camera3D::ReverseOnUpAxis(const Vec3& position)
+	{
+		float distance = mTransform.GetPosition().y - position.y;
+		mTransform.SetPosition('y', mTransform.GetPosition().y - 2.0f * distance);
+		mAngles.pitch *= -1.0f;
+		UpdateViewProjection();
 	}
 
 	float Camera3D::GetPitch() const
@@ -53,7 +70,7 @@ namespace Engine
 
 	const Vec3& Camera3D::GetPosition() const
 	{
-		return mPosition;
+		return mTransform.GetPosition();
 	}
 
 	const Mat4& Camera3D::GetView() const
@@ -71,13 +88,18 @@ namespace Engine
 		return mViewProjection;
 	}
 
+	void Camera3D::SetPosition(const Vec3& position)
+	{
+		mTransform.SetPosition(position);
+	}
+
 	void Camera3D::UpdateViewProjection()
 	{
-		mView			= Matrix::View(*this);
+		mView = Matrix::View(*this);
 		mViewProjection = mProjection * mView;
 	}
 
-	void Camera3D::CalculatePitch()
+	void Camera3D::UpdatePitch()
 	{
 		if (Input::IsMouseButtonPressed(ENGINE_MOUSE_BUTTON_RIGHT))
 		{
@@ -99,90 +121,6 @@ namespace Engine
 		else if (mAngles.yaw > 360.0f)
 		{
 			mAngles.yaw -= 360.f;
-		}
-		if (mAngles.pitch < -89.0f)
-		{
-			mAngles.pitch = -89.0f;
-		}
-		else if (mAngles.pitch > 89.0f)
-		{
-			mAngles.pitch = 89.0f;
-		}
-	}
-
-/// Camera3DLocked 
-
-	Camera3DLocked::Camera3DLocked(const GameObject& target, float distance)
-		: Camera3D(Vec3())
-		, mTarget(target)
-		, mDistance(distance)
-		, mAngleAroundTarget(0.0f)
-	{}
-
-	Camera3DLocked::~Camera3DLocked()
-	{
-	}
-
-	void Camera3DLocked::OnUpdate(const double& delta)
-	{
-		Camera3D::OnUpdate(delta);
-
-		CalculateZoom();
-		CalculatePitch();
-		CalculateAngleAroundPlayer();
-		CalculateCameraPosition();
-		mAngles.yaw = 180 - (mTarget.GetTransform().GetRotation().y + mAngleAroundTarget);
-	}
-
-	void Camera3DLocked::OnEvent(Event& event)
-	{
-		Camera3D::OnEvent(event);
-
-		if (event.mType == Event::Type::MouseScrolled)
-		{
-			mDistance -= event.mMouseScrolledEvent.y;
-		}
-	}
-
-	float Camera3DLocked::CalculateHorizontalDistance()
-	{
-		return mDistance * cos(glm::radians(mAngles.pitch));
-	}
-	
-	float Camera3DLocked::CalculateVerticalDistance()
-	{
-		return mDistance * sin(glm::radians(mAngles.pitch));
-	}
-	
-	void Camera3DLocked::CalculateCameraPosition()
-	{
-		auto& playerPosition = mTarget.GetTransform().GetPosition();
-		float horizontal = CalculateHorizontalDistance();
-		
-		float theta = mTarget.GetTransform().GetRotation().y + mAngleAroundTarget;
-		
-		mPosition.x = playerPosition.x - horizontal * sin(glm::radians(theta));
-		mPosition.z = playerPosition.z - horizontal * cos(glm::radians(theta));
-		
-		float vertical = CalculateVerticalDistance();
-		mPosition.y = playerPosition.y + vertical;
-	}
-
-	void Camera3DLocked::CalculateZoom()
-	{
-		if (mDistance < 0.5)
-			mDistance = 0.5;
-	}
-
-	void Camera3DLocked::CalculateAngleAroundPlayer()
-	{
-		if (Input::IsMouseButtonPressed(ENGINE_MOUSE_BUTTON_LEFT))
-		{
-			mAngleAroundTarget += Input::GetMouseOffset().x * 0.05f;
-		}
-		if (mAngleAroundTarget != 0 && Input::IsKeyPressed(ENGINE_KEY_E) || Input::IsKeyPressed(ENGINE_KEY_Q))
-		{
-			mAngleAroundTarget = 0;
 		}
 	}
 }

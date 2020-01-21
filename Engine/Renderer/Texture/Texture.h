@@ -16,6 +16,9 @@ namespace Engine
 		static void  SetFolder(const std::string& folder);
 		virtual void SetName(const std::string& name);
 	protected:
+		// Used for internal texture, that are not stored in any library
+		Texture();
+
 		static std::string sFolder;
 		std::string mName;
 	};

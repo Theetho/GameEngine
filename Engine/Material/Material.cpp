@@ -20,7 +20,7 @@ namespace Engine
 	void Material::LoadGLUniforms(Ref<OpenGLShader> shader)
 	{
 		shader->Bind();
-		shader->UploadUniform("u_material.id", this->GetID());
+		shader->UploadUniform("uMaterial.id", this->GetID());
 	}
 
 

@@ -11,10 +11,13 @@ namespace Engine
 		~OpenGLRenderer();
 
 		void Clear() override;
-		void DrawIndexed(const VertexArray& vertex_array) override;
+		void Draw(const VertexArray& vertex_array) override;
 
+		void SetDrawMode(DrawMode draw_mode) override;
 		void SetViewport(unsigned int width, unsigned int height) override;
 		void SetClearColor(const Color& color) override;
+	private:
+		unsigned int TranslateDrawMode() override;
 	};
 }
 

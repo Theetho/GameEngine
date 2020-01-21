@@ -42,9 +42,9 @@ namespace Engine
 	{
 		Light::LoadGLUniforms(shader, index);
 
-		shader->UploadUniform("u_lights[" + std::to_string(index) + "].position",  mPosition);
-		shader->UploadUniform("u_lights[" + std::to_string(index) + "].constant",  mAttenuation.constant);
-		shader->UploadUniform("u_lights[" + std::to_string(index) + "].linear",	   mAttenuation.linear);
-		shader->UploadUniform("u_lights[" + std::to_string(index) + "].quadratic", mAttenuation.quadratic);
+		shader->UploadUniform("uLights[" + std::to_string(index) + "].position",  mPosition);
+		shader->UploadUniform("uLights[" + std::to_string(index) + "].constant",  mAttenuation.constant);
+		shader->UploadUniform("uLights[" + std::to_string(index) + "].linear",	   mAttenuation.linear);
+		shader->UploadUniform("uLights[" + std::to_string(index) + "].quadratic", mAttenuation.quadratic);
 	}
 }

@@ -37,4 +37,9 @@ namespace Engine
 	{
 		mName = name;
 	}
+
+	// Used for internal texture, that are not stored in any library
+	Texture::Texture()
+		: mName("")
+	{}
 }

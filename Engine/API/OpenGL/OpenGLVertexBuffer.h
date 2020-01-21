@@ -7,7 +7,7 @@ namespace Engine
 	class OpenGLVertexBuffer : public VertexBuffer
 	{
 	public:
-		OpenGLVertexBuffer(float* vertices, unsigned int count);
+		OpenGLVertexBuffer(float* vertices, unsigned int vertex_count);
 		~OpenGLVertexBuffer();
 
 		void Bind() const override;

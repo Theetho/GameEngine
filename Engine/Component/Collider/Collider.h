@@ -5,7 +5,6 @@
 
 namespace Engine
 {
-	class Collision;
 	class RigidBody;
 	
 	class Collider : public Component, public Renderable
@@ -31,23 +30,5 @@ namespace Engine
 		Ref<RigidBody> mRigidBody = nullptr;
 
 		virtual void UpdateCollisionSystem() = 0;
-	};
-
-	// Class that stores data of a collision
-	class Collision
-	{
-	public:
-		Collision(bool collide, float distance_up_axis, const Collider* first, const Collider* second);
-
-		bool  IsColliding() const;
-		float GetDistanceUpAxis() const;
-		const std::pair<const Collider*, const Collider*>& GetColliders() const;
-	private:
-		// The two colliders that are supposedly colliding
-		const std::pair<const Collider*, const Collider*> mColliders;
-		// Boolean to tell whether the two colliders are colliding
-		const bool  mIsColliding;
-		// The distance beetween the two colliders on the up axis
-		const float mDistanceUpAxis;
 	};
 }

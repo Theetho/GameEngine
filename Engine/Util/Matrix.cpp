@@ -19,9 +19,10 @@ namespace Engine
 	Mat4 Matrix::View(const Camera3D& camera)
 	{
 		Mat4 matrix(1.f);
+		auto angles = camera.GetTransform().GetRotation();
 		matrix = glm::rotate(matrix, glm::radians(camera.GetPitch()), { 1, 0, 0 });
-		matrix = glm::rotate(matrix, glm::radians(camera.GetYaw()),   { 0, 1, 0 });
-		matrix = glm::rotate(matrix, glm::radians(camera.GetRoll()),  { 0, 0, 1 });
+		matrix = glm::rotate(matrix, glm::radians(camera.GetYaw()  ), { 0, 1, 0 });
+		matrix = glm::rotate(matrix, glm::radians(camera.GetRoll() ), { 0, 0, 1 });
 		matrix = glm::translate(matrix, - camera.GetPosition());
 		
 		return matrix;

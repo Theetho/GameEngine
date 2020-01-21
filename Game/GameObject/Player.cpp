@@ -4,14 +4,17 @@
 
 using namespace Engine;
 
-Player::Player(Ref<Model> model, const Transform& transform
-)
+Player::Player(Ref<Model> model, const Transform& transform)
 	: GameObject(transform)
 {
-	AddComponent<Movement>(CreateRef<Movement>(*this));
 	AddComponent<RigidBody>(CreateRef<RigidBody>(*this));
+	GetComponent<RigidBody>()->GetTransform().SetRotation('y', 1.0f);
+	AddComponent<Movement>(CreateRef<Movement>(*this));
 
 	this->SetModel(model);
+	std::cout << "Player : " << mTransform.GetPosition();
+	std::cout << " " << mTransform.GetRotation();
+	std::cout << " " << mTransform.GetScale() << std::endl;
 }
 
 Player::~Player()
@@ -20,13 +23,6 @@ Player::~Player()
 void Player::OnUpdate(const double& delta)
 {
 	GameObject::OnUpdate(delta);
-	float& height = mTransform.GetPosition().y;
-	float ground_level = GetComponent<RigidBody>()->GetGroundLevel();
-	
-	if (height - mModel->GetSize().y * mTransform.GetScale().y < ground_level)
-		height = ground_level + mModel->GetSize().y * mTransform.GetScale().y;
-
-	mTransform.UpdateModel();
 }
 
 void Player::OnEvent(Engine::Event& event)
@@ -46,43 +42,24 @@ void Player::OnEvent(Engine::Event& event)
 				bomb->GetTransform().GetPosition().z
 			});
 
-
 			mBombs.push_back(std::move(bomb));
 		}
-		// TEMPORARY
-		if (event.mKeyEvent.code == ENGINE_KEY_Q)
-		{
-			mBombPower += 1.0;
-			std::cout << "Player's bombs power : " << mBombPower << std::endl;
-		}
+		//// TEMPORARY
+		//if (event.mKeyEvent.code == ENGINE_KEY_Q)
+		//{
+		//	mBombPower += 1.0;
+		//	std::cout << "Player's bombs power : " << mBombPower << std::endl;
+		//}
 	}
 }
 
 void Player::OnCollision(const Engine::Collision& collision)
 {
-	const float epsilon = 0.05f;
-
-	const auto& colliders = collision.GetColliders();
-
-	const Collider* myCollider = &collision.GetColliders().first->GetGameObject() == this
-		? colliders.first : colliders.second;
-	const Collider* otherCollider = &collision.GetColliders().first->GetGameObject() == this
-		? colliders.second : colliders.first;
-
-	// If they are close enough on the up axis, then
-	// myCollider is on top of the other (collision
-	// with the floor)
-	//if (collision.GetDistanceUpAxis() < epsilon)
-	//{
-	//	auto physics = GetComponent<PhysicsComponent>();
-	//
-	//	if (physics)
-	//		physics->SetGroundLevel(otherCollider->GetMax().y + myCollider->GetCenter().y - myCollider->GetMin().y);
-	//}
-
-	// Else, it is a true collision
-	//else
-	//	mIsColliding = true;
+	if (collision.IsColliding)
+	{
+		auto rigid_body = GetComponent<RigidBody>();
+		rigid_body->GetTransform().SetPosition('y', collision.PenetrationDistance.y);
+	}
 }
 
 const Engine::Ref<Engine::Model> Player::GetModel() const

@@ -9,7 +9,6 @@ namespace Engine
 	RigidBody::RigidBody(GameObject& game_object)
 		: Component(game_object)
 		, mTransform(game_object.GetTransform())
-		, mVelocity(0.0f)
 	{
 		auto box    = std::dynamic_pointer_cast<Collider>(game_object.GetComponent<BoxCollider>());
 		auto sphere = std::dynamic_pointer_cast<Collider>(game_object.GetComponent<SphereCollider>());
@@ -27,9 +26,9 @@ namespace Engine
 		mUseGravity = use;
 	}
 
-	void RigidBody::SetGroundLevel(float value)
+	void RigidBody::SetGroundLevel(float level)
 	{
-		mGroundLevel = value;
+		mGroundLevel = level;
 	}
 
 	bool RigidBody::IsUsingGravity() const
@@ -39,7 +38,27 @@ namespace Engine
 
 	const Vec3& RigidBody::GetVelocity() const
 	{
-		return mVelocity;
+		return mVelocity.regular;
+	}
+
+	Vec3& RigidBody::GetAngularVelocity()
+	{
+		return mVelocity.angular;
+	}
+
+	const Vec3& RigidBody::GetAngularVelocity() const
+	{
+		return mVelocity.angular;
+	}
+
+	Transform& RigidBody::GetTransform()
+	{
+		return mTransform;
+	}
+
+	const Transform& RigidBody::GetTransform() const
+	{
+		return mTransform;
 	}
 
 	float RigidBody::GetGroundLevel() const
@@ -49,13 +68,19 @@ namespace Engine
 
 	Vec3& RigidBody::GetVelocity()
 	{
-		return mVelocity;
+		return mVelocity.regular;
 	}
 
 	void RigidBody::OnUpdate(const double& delta)
 	{
 		Vec3& position = mTransform.GetPosition();
-		position += mVelocity;
+		position += mVelocity.regular;
+		
+		if (position.y < mGroundLevel)
+			position.y = mGroundLevel;
+		
+		Vec3& rotation = mTransform.GetRotation();
+		rotation += mVelocity.angular;
 		
 		mTransform.UpdateModel();
 	}

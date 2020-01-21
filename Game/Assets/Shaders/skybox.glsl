@@ -1,29 +1,30 @@
 #type vertex
 #version 450 core
 
-layout(location = 0) in vec3 in_position;
-layout(location = 1) in vec2 in_textureCoords;
-layout(location = 2) in vec3 in_normal;
+layout(location = 0) in vec3 inPosition;
+layout(location = 1) in vec2 inTextureCoords;
+layout(location = 2) in vec3 inNormal;
 
-out vec3 v_textureCoords;
+out vec3 vTextureCoords;
 
-uniform mat4 u_view_projection;
+uniform mat4 uViewProjection;
 
 void main()
 {
-	v_textureCoords = in_position;
-	gl_Position = (u_view_projection * vec4(in_position, 0.0)).xyww;
+	vTextureCoords = inPosition;
+	gl_ClipDistance[0] = 10000;
+	gl_Position = (uViewProjection * vec4(inPosition, 0.0)).xyww;
 }
 #type fragment
 #version 450 core
 
-layout(location = 0) out vec4 out_color;
+layout(location = 0) out vec4 outColor;
 
-uniform samplerCube u_skybox;
+uniform samplerCube uSkybox;
 
-in vec3 v_textureCoords;
+in vec3 vTextureCoords;
 
 void main()
 {
-	out_color = texture(u_skybox, v_textureCoords);
+	outColor = texture(uSkybox, vTextureCoords);
 }

@@ -1,14 +1,23 @@
 #pragma once
 
-class CameraLocked : public Engine::Camera3DLocked
+class CameraLocked : public Engine::Camera3D
 {
 public:
 	CameraLocked(const Engine::GameObject& target, float distance);
 	~CameraLocked();
 
-	void OnUpdate( const double& delta) override;
-	void CalculateAngleAroundPlayer() override;
+	void OnUpdate(const double& delta) override;
+	void OnEvent(Engine::Event& event) override;
 private:
-	void UpdateTargetAxis();
+	const Engine::GameObject& mTarget;
+	float mAngleAroundTarget;
+	float mDistance;
+
+	void  UpdatePosition();
+	void  UpdateAngleAroundPlayer();
+	void  ClampZoom();
+	float GetHorizontalDistance();
+	float GetVerticalDistance();
+	//void  UpdateTargetAxis();
 };
 

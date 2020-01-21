@@ -1,28 +1,32 @@
 #type vertex
 #version 330 core
 
-layout(location = 0) in vec3 in_position;
-layout(location = 1) in vec2 in_textureCoords;
-layout(location = 2) in vec3 in_normal;
+layout(location = 0) in vec3 inPosition;
+layout(location = 1) in vec2 inTextureCoords;
+layout(location = 2) in vec3 inNormal;
 
-out vec2 v_textureCoords;
-out vec3 v_normal;
-out vec3 v_fragmentPosition;
+out vec2 vTextureCoords;
+out vec3 vNormal;
+out vec3 vFragmentPosition;
 
-uniform mat4 u_view_projection;
-uniform mat4 u_model;
+uniform mat4 uViewProjection;
+uniform mat4 uModel;
+uniform vec4 uClipingPlane;
 
 void main()
 {
-	v_textureCoords = in_textureCoords;
-	v_normal = (u_model * vec4(in_normal, 0.0)).xyz;
-	v_fragmentPosition = vec3(u_model * vec4(in_position, 1.0));
-	gl_Position = u_view_projection * u_model * vec4(in_position, 1.0);
+	vTextureCoords = inTextureCoords;
+	vNormal = (uModel * vec4(inNormal, 0.0)).xyz;
+	vFragmentPosition = vec3(uModel * vec4(inPosition, 1.0));
+	vec4 world_position = uModel * vec4(inPosition, 1.0);
+
+	gl_ClipDistance[0] = dot(world_position, uClipingPlane);
+	gl_Position = uViewProjection * world_position;
 }
 #type fragment
 #version 330 core
 
-layout(location = 0) out vec4 out_color;
+layout(location = 0) out vec4 outColor;
 
 #define MAX_NUMBER_OF_LIGHT	8
 
@@ -50,29 +54,29 @@ struct Material
 	float shininess;
 };
 
-uniform vec3 u_cameraPosition;
-uniform Light u_lights[MAX_NUMBER_OF_LIGHT];
-uniform Material u_material;
+uniform vec3 uCameraPosition;
+uniform Light uLights[MAX_NUMBER_OF_LIGHT];
+uniform Material uMaterial;
 
-in vec2 v_textureCoords;
-in vec3 v_normal;
-in vec3 v_fragmentPosition;
+in vec2 vTextureCoords;
+in vec3 vNormal;
+in vec3 vFragmentPosition;
 
 vec4 CalculateDirectionalLight(Light light)
 {	
 	
-	vec3 ambientColor = light.color * u_material.ambient;
+	vec3 ambientColor = light.color * uMaterial.ambient;
 
-	vec3 normal = normalize(v_normal);
+	vec3 normal = normalize(vNormal);
 	vec3 lightDirection = normalize(- light.direction);
 	float diffuseFactor = max(dot(normal, lightDirection), 0.0);
-	vec3 diffuseColor = diffuseFactor * light.color * u_material.diffuse;
+	vec3 diffuseColor = diffuseFactor * light.color * uMaterial.diffuse;
 
-	vec3 toCameraVector = normalize(u_cameraPosition - v_fragmentPosition);
+	vec3 toCameraVector = normalize(uCameraPosition - vFragmentPosition);
 	vec3 reflection = reflect(- lightDirection, normal);
 
-	float specularFactor = pow(max(dot(toCameraVector, reflection), 0.0), u_material.shininess);
-	vec3 specularColor = specularFactor * light.color * u_material.specular;
+	float specularFactor = pow(max(dot(toCameraVector, reflection), 0.0), uMaterial.shininess);
+	vec3 specularColor = specularFactor * light.color * uMaterial.specular;
 	
 	return vec4(specularColor + diffuseColor + ambientColor, 1.0);
 }
@@ -81,22 +85,22 @@ vec4 CalculateDirectionalLight(Light light)
 
 vec4 CalculatePointLight(Light light)
 {
-	vec3 normal = normalize(v_normal);
-	vec3 lightDirection = normalize(light.position - v_fragmentPosition);
+	vec3 normal = normalize(vNormal);
+	vec3 lightDirection = normalize(light.position - vFragmentPosition);
 	
-	vec3 ambientColor = light.color * u_material.ambient;
+	vec3 ambientColor = light.color * uMaterial.ambient;
 
 	float d = length(lightDirection);
 	float attenuation = 1.0 / (light.constant + light.linear * d + light.quadratic * pow(d, 2));
 
 	float diffuseFactor = max(dot(normal, lightDirection), 0.0);
-	vec3 diffuseColor = diffuseFactor * attenuation * light.color * u_material.diffuse;
+	vec3 diffuseColor = diffuseFactor * attenuation * light.color * uMaterial.diffuse;
 
-	vec3 toCameraVector = normalize(u_cameraPosition - v_fragmentPosition);
+	vec3 toCameraVector = normalize(uCameraPosition - vFragmentPosition);
 	vec3 reflection = reflect(-lightDirection, normal);
 
-	float specularFactor = pow(max(dot(toCameraVector, reflection), 0.0), u_material.shininess);
-	vec3 specularColor = specularFactor * attenuation * light.color * u_material.specular;
+	float specularFactor = pow(max(dot(toCameraVector, reflection), 0.0), uMaterial.shininess);
+	vec3 specularColor = specularFactor * attenuation * light.color * uMaterial.specular;
 
 	return vec4(specularColor + diffuseColor + ambientColor, 1.0);
 }
@@ -105,12 +109,12 @@ vec4 CalculatePointLight(Light light)
 
 vec4 CalculateSpotLight(Light light)
 {
-	vec3 normal = normalize(v_normal);
-	vec3 lightDirection = normalize(light.position - v_fragmentPosition);
+	vec3 normal = normalize(vNormal);
+	vec3 lightDirection = normalize(light.position - vFragmentPosition);
 	
 	float theta = dot(lightDirection, normalize(- light.direction));
 
-	vec3 ambientColor = light.color * u_material.ambient;
+	vec3 ambientColor = light.color * uMaterial.ambient;
 	
 	if (theta > light.cutOff)
 	{
@@ -118,13 +122,13 @@ vec4 CalculateSpotLight(Light light)
 		float attenuation = 1.0 / (light.constant + light.linear * d + light.quadratic * pow(d, 2));		
 
 		float diffuseFactor = max(dot(normal, lightDirection), 0.0);
-		vec3 diffuseColor = diffuseFactor * attenuation * light.color * u_material.diffuse;
+		vec3 diffuseColor = diffuseFactor * attenuation * light.color * uMaterial.diffuse;
 		
-		vec3 toCameraVector = normalize(u_cameraPosition - v_fragmentPosition);
+		vec3 toCameraVector = normalize(uCameraPosition - vFragmentPosition);
 		vec3 reflection = reflect(- lightDirection, normal);
 		
-		float specularFactor = pow(max(dot(toCameraVector, reflection), 0.0), u_material.shininess);
-		vec3 specularColor = specularFactor * attenuation * light.color * u_material.specular;
+		float specularFactor = pow(max(dot(toCameraVector, reflection), 0.0), uMaterial.shininess);
+		vec3 specularColor = specularFactor * attenuation * light.color * uMaterial.specular;
 	
 		return vec4(specularColor + diffuseColor + ambientColor, 1.0);
 	}
@@ -138,23 +142,23 @@ vec4 CalculateSpotLight(Light light)
 
 void main()
 {
-	vec4 finalLightColor = vec4(0.0, 0.0, 0.0, 1.0);
+	vec4 final_light_color = vec4(0.0, 0.0, 0.0, 1.0);
 
 	for (int i = 0; i < MAX_NUMBER_OF_LIGHT; ++i)
 	{
-		if (u_lights[i].id == 1)
+		if (uLights[i].id == 1)
 		{
-			finalLightColor += CalculateDirectionalLight(u_lights[i]);
+			final_light_color += CalculateDirectionalLight(uLights[i]);
 		}
-		else if (u_lights[i].id == 2)
+		else if (uLights[i].id == 2)
 		{
-			finalLightColor += CalculatePointLight(u_lights[i]);
+			final_light_color += CalculatePointLight(uLights[i]);
 		}
-		else if (u_lights[i].id == 3)
+		else if (uLights[i].id == 3)
 		{
-			finalLightColor += CalculateSpotLight(u_lights[i]);
+			final_light_color += CalculateSpotLight(uLights[i]);
 		}
 	}
 
-	out_color = finalLightColor;
+	outColor = final_light_color;
 }

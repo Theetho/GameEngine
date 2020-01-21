@@ -40,22 +40,22 @@ namespace Engine
 		for (int i = 0; i < mAmbient.size(); ++i)
 		{
 			mAmbient[i]->Bind(texture_unit);
-			shader->UploadUniform("u_material.texture_am"/* + std::to_string(i)*/, texture_unit++);
+			shader->UploadUniform("uMaterial.texture_am"/* + std::to_string(i)*/, texture_unit++);
 		}
 		for (int i = 0; i < mDiffuse.size(); ++i)
 		{
 			mDiffuse[i]->Bind(texture_unit);
-			shader->UploadUniform("u_material.texture_df"/* + std::to_string(i)*/, texture_unit++);
+			shader->UploadUniform("uMaterial.texture_df"/* + std::to_string(i)*/, texture_unit++);
 		}
 		for (int i = 0; i < mSpecular.size(); ++i)
 		{
 			mSpecular[i]->Bind(texture_unit);
-			shader->UploadUniform("u_material.texture_sp"/* + std::to_string(i)*/, texture_unit++);
+			shader->UploadUniform("uMaterial.texture_sp"/* + std::to_string(i)*/, texture_unit++);
 		}
 		for (int i = 0; i < mNormal.size(); ++i)
 		{
 			mNormal[i]->Bind(texture_unit);
-			shader->UploadUniform("u_material.texture_nl"/* + std::to_string(i)*/, texture_unit++);
+			shader->UploadUniform("uMaterial.texture_nl"/* + std::to_string(i)*/, texture_unit++);
 		}
 	}
 }

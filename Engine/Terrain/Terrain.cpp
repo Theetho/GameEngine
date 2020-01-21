@@ -11,18 +11,17 @@
 namespace Engine
 {
 	const const std::map<const char*, Terrain::Biome> Terrain::sBiome{
-		{ "Deep_water", Biome(0.30f, 8.0f, Color(10 , 75 , 120))},
-		{ "Water",		Biome(0.45f, 9.0f, Color(15 , 100, 190))},
+		//{ "Deep_Water", Biome(0.30f, 4.00f, Color(10 , 75 , 120))},
+		//{ "Water",		Biome(0.45f, 5.00f, Color(15 , 100, 190))},
+		{ "Deep_Water", Biome(0.30f, 4.00f, Color(170, 125, 50 ))},
+		{ "Water",		Biome(0.45f, 5.00f, Color(200 ,160, 80 ))},
 		{ "Sand",		Biome(0.50f, 10.0f, Color(250, 245, 170))},
 		{ "Grass_1",	Biome(0.65f, 12.0f, Color(100, 200, 0  ))},
 		{ "Grass_2",	Biome(1.00f, 14.0f, Color(75 , 150, 0  ))},
-		//{ "Rock_1",	Biome(0.85f, 13.0f, Color(90 , 60 , 20 ))},
-		//{ "Rock_2",	Biome(0.90f, 14.0f, Color(60 , 40 , 10 ))},
-		//{ "Snow",		Biome(1.00f, 15.0f, Color(Color::White ))}
 	};
 
 	Terrain::Terrain(const Vec2& grid_position, const char* height_map_path, const Vec2& dimension)
-		: GameObject(Transform(Vec3(grid_position.x * dimension.x, 0.f, grid_position.y * dimension.y)))
+		: GameObject(Transform(Vec3(grid_position.x * dimension.x, 0.f, grid_position.y * dimension.y), Vec3(0.0f), Vec3(1.0f)))
 		, mDimension(dimension)
 		, mResolution(100.0f, 100.0f)
 	{
@@ -48,6 +47,8 @@ namespace Engine
 
 	float Terrain::GetHeight(unsigned int x, unsigned int y) const
 	{
+		if (x < 0 || y < 0 || x > mResolution.x - 1 || y > mResolution.y - 1)
+			return -1000.0f;
 		return mHeights[x][y];
 	}
 
@@ -123,10 +124,10 @@ namespace Engine
 		auto vertex_buffer = VertexBuffer::Create(vertices.data(), vertices.size());
 
 		vertex_buffer->SetLayout({
-			{Engine::ShaderDataType::Float3, "in_position"},
-			{Engine::ShaderDataType::Float2, "in_textureCoords"},
-			{Engine::ShaderDataType::Float3, "in_normal"},
-			{Engine::ShaderDataType::Float3, "in_color"}
+			BufferElement(ShaderDataType::Float3, "inPosition"),
+			BufferElement(ShaderDataType::Float2, "inTextureCoords"),
+			BufferElement(ShaderDataType::Float3, "inNormal"),
+			BufferElement(ShaderDataType::Float3, "inColor")
 		});
 
 		mVertexArray->AddVertexBuffer(vertex_buffer);
@@ -204,10 +205,6 @@ namespace Engine
 			previous_multiplier = biome.multiplier; 
 			++it;
 		}
-
-		// Set all the water to be flat
-		if (height < sBiome.at("Water").height)
-			height = sBiome.at("Water").height;
 
 		return multiplier;
 	}

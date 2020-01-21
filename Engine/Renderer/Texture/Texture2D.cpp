@@ -28,6 +28,12 @@ namespace Engine
 		}
 	}
 
+	Texture2D::Texture2D(unsigned int width, unsigned int height)
+		: Texture()
+		, mWidth(width)
+		, mHeight(height)
+	{}
+
 	Texture2D::~Texture2D()
 	{
 		stbi_image_free(mData);
@@ -41,6 +47,17 @@ namespace Engine
 			ENGINE_ASSERT(false, "Api not supported");
 		case Engine::API::OpenGL:
 			return CreateRef<OpenGLTexture2D>(file_path, name, use_folder_path);
+		}
+	}
+
+	Ref<Texture2D> Texture2D::Create(unsigned int width, unsigned int height)
+	{
+		switch (Renderer::GetAPI())
+		{
+			case Engine::API::None:
+				ENGINE_ASSERT(false, "Api not supported");
+			case Engine::API::OpenGL:
+				return CreateRef<OpenGLTexture2D>(width, height);
 		}
 	}
 

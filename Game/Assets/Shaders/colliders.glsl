@@ -1,23 +1,23 @@
 #type vertex
 #version 330 core
 
-layout(location = 0) in vec3 in_position;
-layout(location = 1) in vec2 in_textureCoords;
-layout(location = 2) in vec3 in_normal;
+layout(location = 0) in vec3 inPosition;
+layout(location = 1) in vec2 inTextureCoords;
+layout(location = 2) in vec3 inNormal;
 
-uniform mat4 u_view_projection;
-uniform mat4 u_model;
+uniform mat4 uViewProjection;
+uniform mat4 uModel;
 
 void main()
 {
-	gl_Position = u_view_projection * u_model * vec4(in_position, 1.0);
+	gl_Position = uViewProjection * uModel * vec4(inPosition, 1.0);
 }
 #type fragment
 #version 330 core
 
-layout(location = 0) out vec4 out_color;
+layout(location = 0) out vec4 outColor;
 
 void main()
 {
-	out_color = vec4(0.0, 1.0, 0.0, 1.0);
+	outColor = vec4(0.0, 1.0, 0.0, 1.0);
 }

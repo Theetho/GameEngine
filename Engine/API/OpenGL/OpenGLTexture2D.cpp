@@ -30,6 +30,11 @@ namespace Engine
 		glTextureSubImage2D(mId, 0, 0, 0, mWidth, mHeight, dataFormat, GL_UNSIGNED_BYTE, mData);
 	}
 
+	OpenGLTexture2D::OpenGLTexture2D(unsigned int width, unsigned int height, unsigned int id)
+		: Texture2D(width, height)
+		, mId(id)
+	{}
+
 	OpenGLTexture2D::~OpenGLTexture2D()
 	{
 		glDeleteTextures(1, &mId);

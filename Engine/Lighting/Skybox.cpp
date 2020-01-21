@@ -40,7 +40,7 @@ namespace Engine
 	void Skybox::LoadOpenGL(Ref<OpenGLShader> shader)
 	{
 		shader->Bind();
-		shader->UploadUniform("u_skybox", 0);
+		shader->UploadUniform("uSkybox", 0);
 	}
 
 	void Skybox::Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const

@@ -6,7 +6,18 @@ namespace Engine
 	class TerrainCollider;
 	class BoxCollider;
 	class SphereCollider;
-	class Collision;
+	
+	// Struct that stores data of a collision
+	struct Collision
+	{
+		Collision(bool collide, float distance_x, float distance_y, float distance_z)
+			: IsColliding(collide), PenetrationDistance(distance_x, distance_y, distance_z)
+		{}
+		// Boolean to tell whether their is collision
+		const bool IsColliding;
+		// The distance beetween the two colliders on each axis
+		const Vec3 PenetrationDistance;
+	};
 
 	class CollisionSystem
 	{
@@ -41,11 +52,13 @@ namespace Engine
 		static Ref<CollisionSystem> Create();
 		static Ref<CollisionSystem> sInstance;
 
+		const float GRAVITY_ACCELERATION = -9.81f;
+
 		std::unordered_map<Collider*, std::type_index> mMoveableColliders;
 		std::unordered_map<Collider*, std::type_index> mStaticColliders;
 		std::vector<TerrainCollider*>				   mTerrains;
 
-		void CheckForMovingObjectsCollisions();
+		void CheckForMovingObjectsCollisions(const double& delta);
 
 		Collision Collide(const std::pair<Collider*, std::type_index>& first, const std::pair<Collider*, std::type_index>& second);
 		Collision Collide(const BoxCollider* first, const BoxCollider* second);

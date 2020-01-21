@@ -9,19 +9,27 @@ namespace Engine
 		None,
 		OpenGL
 	};
-
+	enum class DrawMode
+	{
+		TRIANGLE, TRIANGLE_STRIP
+	};
 	class RendererAPI
 	{
 	public:
 		virtual ~RendererAPI();
 
 		virtual void Clear() = 0;
-		virtual void DrawIndexed(const VertexArray& vertex_array) = 0;
+		virtual void Draw(const VertexArray& vertex_array) = 0;
 
+		virtual void SetDrawMode(DrawMode draw_mode) = 0;
 		virtual void SetViewport(unsigned int width, unsigned int height) = 0;
 		virtual void SetClearColor(const Color& color) = 0;
 
 		static API sApi;
+	protected:
+		DrawMode mDrawMode;
+
+		virtual unsigned int TranslateDrawMode() = 0;
 	};
 }
 

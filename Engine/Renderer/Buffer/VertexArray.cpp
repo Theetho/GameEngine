@@ -36,6 +36,6 @@ namespace Engine
 	void VertexArray::Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const
 	{
 		Bind();
-		render_command->DrawIndexed(*this);
+		render_command->Draw(*this);
 	}
 }

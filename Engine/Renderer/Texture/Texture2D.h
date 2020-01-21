@@ -8,6 +8,7 @@ namespace Engine
 	{
 	public:
 		Texture2D(const std::string& file_path, const std::string& name, bool use_folder_path);
+		Texture2D(unsigned int width, unsigned int height);
 		virtual ~Texture2D();
 
 		virtual unsigned int GetWidth() const;
@@ -16,6 +17,7 @@ namespace Engine
 		virtual Color		 GetPixel(const Vec2& pixel) const;
 
 		static Ref<Texture2D> Create(const std::string& file_path, const std::string& name = "", bool use_folder_path = true);
+		static Ref<Texture2D> Create(unsigned int width, unsigned int height);
 	protected:
 		unsigned char* mData;
 		int mWidth, mHeight, mChannels;

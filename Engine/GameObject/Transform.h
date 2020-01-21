@@ -5,7 +5,8 @@ namespace Engine
 	class Transform
 	{
 	public:
-		explicit Transform(const Vec3& position = Vec3(0.0f), const Vec3& rotation = Vec3(0.0f), const Vec3& scale = Vec3(1.0f));
+		Transform();
+		Transform(const Vec3& position, const Vec3& rotation, const Vec3& scale);
 		Transform(const Transform& transform);
 		Transform(const Transform&& transform) noexcept;
 		Transform& operator=(const Transform& transform);
@@ -25,8 +26,11 @@ namespace Engine
 		const Vec3& GetScale() const;
 
 		void SetPosition(const Vec3& position);
+		void SetPosition(char axis, float value);
 		void SetRotation(const Vec3& rotation);
+		void SetRotation(char axis, float value);
 		void SetScale(const Vec3& scale);
+		void SetScale(char axis, float value);
 		void SetScale(float scale);
 	private:
 		Vec3 mPosition;

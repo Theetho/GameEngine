@@ -1409,6 +1409,13 @@
     <ClInclude Include="Renderer\Buffer.h" />
     <ClInclude Include="Renderer\Rendering.h" />
     <ClInclude Include="Renderer\Texture.h" />
+    <ClInclude Include="Terrain\Water.h">
+      <Filter>Renderer\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Buffer\FrameBuffer.h" />
+    <ClInclude Include="API\OpenGL\OpenGLFrameBuffer.h" />
+    <ClInclude Include="GUI\GUIElement.h" />
+    <ClInclude Include="Include\GUI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API\OpenGL\OpenGLContext.cpp">
@@ -1578,5 +1585,11 @@
       <Filter>Vendor\stb</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Rendering\Renderable.cpp" />
+    <ClCompile Include="Terrain\Water.cpp">
+      <Filter>Renderer\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Buffer\FrameBuffer.cpp" />
+    <ClCompile Include="API\OpenGL\OpenGLFrameBuffer.cpp" />
+    <ClCompile Include="GUI\GUIElement.cpp" />
   </ItemGroup>
 </Project>

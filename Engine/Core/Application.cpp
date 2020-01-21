@@ -18,8 +18,9 @@ namespace Engine
 
 	Application::Application()
 		: mLayerStack()
-		, mTime(GetEngineTime)
 	{
+		mTimeManager.mTime = GetEngineTime;
+
 		ENGINE_ASSERT(!sInstance, "Application already created");
 		sInstance = this;
 
@@ -38,25 +39,27 @@ namespace Engine
 	
 	void Application::Run()
 	{
+		Input::UpdateMouse();
 		while (mRunning)
 		{
-			mTime = GetEngineTime;
+			mTimeManager.mTime = GetEngineTime;
 
 			Input::UpdateMouse();
-
-			mCollisionSystem->OnUpdate(mDeltaTime);
-			
+	
 			// --- Updates ---
 			for (Layer* layer : mLayerStack)
 			{
-				layer->OnUpdate(mDeltaTime);
+				layer->OnUpdate(mTimeManager.mDeltaTime);
 			}
 			// ---------------
 			
-			mWindow->OnUpdate(mDeltaTime);
-
-			mDeltaTime = GetEngineTime - mTime;
+			mCollisionSystem->OnUpdate(mTimeManager.mDeltaTime);
 			
+			mWindow->OnUpdate(mTimeManager.mDeltaTime);
+
+			mTimeManager.mDeltaTime = GetEngineTime - mTimeManager.mTime;
+			
+			this->ManageTime();
 			// ---------------------------
 		}
 	}
@@ -99,5 +102,18 @@ namespace Engine
 	Window& Application::GetWindow()
 	{
 		return *mWindow;
+	}
+
+	void Application::ManageTime()
+	{
+		mTimeManager.mTimeSpent += mTimeManager.mDeltaTime;
+		++mTimeManager.mFrames;
+
+		if (mTimeManager.mTimeSpent >= 1.0)
+		{
+			ENGINE_LOG_INFO("Average time for frames : {0} ms / Average fps : {1} ", (mTimeManager.mTimeSpent / (double)mTimeManager.mFrames) * 1000.0, mTimeManager.mFrames);
+			mTimeManager.mTimeSpent -= 1.0;
+			mTimeManager.mFrames = 0.0;
+		}
 	}
 }

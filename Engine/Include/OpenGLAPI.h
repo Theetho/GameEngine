@@ -2,6 +2,7 @@
 
 #include "API/OpenGL/OpenGLContext.h"
 #include "API/OpenGL/OpenGLCubeMap.h"
+#include "API/OpenGL/OpenGLFrameBuffer.h"
 #include "API/OpenGL/OpenGLIndexBuffer.h"
 #include "API/OpenGL/OpenGLRenderer.h"
 #include "API/OpenGL/OpenGLShader.h"

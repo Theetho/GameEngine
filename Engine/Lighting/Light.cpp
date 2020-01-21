@@ -38,7 +38,7 @@ namespace Engine
 	void Light::LoadGLUniforms(Ref<OpenGLShader> shader, unsigned int index)
 	{
 		shader->Bind();
-		shader->UploadUniform("u_lights[" + std::to_string(index) + "].id",	   this->GetID());
-		shader->UploadUniform("u_lights[" + std::to_string(index) + "].color", Vec3(mColor));
+		shader->UploadUniform("uLights[" + std::to_string(index) + "].id",	   this->GetID());
+		shader->UploadUniform("uLights[" + std::to_string(index) + "].color", Vec3(mColor));
 	}
 }

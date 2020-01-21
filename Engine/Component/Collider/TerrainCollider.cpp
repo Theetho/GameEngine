@@ -48,14 +48,11 @@ namespace Engine
 	}
 
 	// Adaptation of the code in the video of ThinMatrix about terrain collision detection
-	float TerrainCollider::GetGroundLevel(const GameObject& game_object) const
+	float TerrainCollider::GetGroundLevel(const Vec3& position) const
 	{
 		Vec2 terrain_position = Vec2(mTerrain->GetTransform().GetPosition().x, mTerrain->GetTransform().GetPosition().z);
-		Vec2 object_position  = Vec2(game_object.GetTransform().GetPosition().x, game_object.GetTransform().GetPosition().z);
+		Vec2 object_position  = Vec2(position.x, position.z);
 		Vec2 object_position_on_terrain = object_position - terrain_position;
-		
-		if (object_position_on_terrain.x < 0.0f || object_position_on_terrain.y < 0.0f || object_position_on_terrain.x > mTerrain->GetDimensions().x || object_position_on_terrain.y > mTerrain->GetDimensions().y)
-			return -1000.0f;
 		
 		Vec2 terrain_grid_size = mTerrain->GetDimensions() / (mTerrain->GetResolution() - 1.0f);
 		Vec2 object_grid_on_terrain = glm::floor(object_position_on_terrain / terrain_grid_size);
@@ -85,6 +82,17 @@ namespace Engine
 				Vec2(object_position_on_grid_x, object_position_on_grid_z)
 			);
 		}
+	}
+
+	bool TerrainCollider::Contains(const Vec3& position) const
+	{
+		float top    = mTerrain->GetTransform().GetPosition().y;
+		float left   = mTerrain->GetTransform().GetPosition().x;
+		float bottom = top + mTerrain->GetDimensions().y;
+		float right  = left + mTerrain->GetDimensions().x;
+
+
+		return position.x >= left && position.y >= top && position.x <= right && position.y <= bottom;
 	}
 
 	void TerrainCollider::UpdateCollisionSystem()

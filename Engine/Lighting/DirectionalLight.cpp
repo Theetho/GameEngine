@@ -31,6 +31,6 @@ namespace Engine
 	{
 		Light::LoadGLUniforms(shader, index);
 
-		shader->UploadUniform("u_lights[" + std::to_string(index) + "].direction", mDirection);
+		shader->UploadUniform("uLights[" + std::to_string(index) + "].direction", mDirection);
 	}
 }

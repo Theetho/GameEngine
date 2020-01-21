@@ -2,6 +2,7 @@
 #include "Renderer/Rendering.h"
 #include "Core/Camera3D.h"
 #include "API/OpenGL/OpenGLShader.h"
+#include "Terrain/Water.h"
 
 
 namespace Engine
@@ -18,6 +19,11 @@ namespace Engine
 		return sRenderCommand->GetAPI();
 	}
 
+	void Renderer::SetDrawMode(DrawMode draw_mode)
+	{
+		sRenderCommand->SetDrawMode(draw_mode);
+	}
+
 	void Renderer::SetViewport(unsigned int width, unsigned int height)
 	{
 		sRenderCommand->SetViewport(width, height);
@@ -28,6 +34,11 @@ namespace Engine
 		sBatch[shader].push_back(&renderable);
 	}
 
+	void Renderer::PrepareWater(Camera3D& camera, Water& water)
+	{
+		water.Prepare(camera);
+	}
+
 	void Renderer::BeginScene(Camera3D& camera)
 	{
 		sSceneData.view			   = &camera.GetView();
@@ -36,15 +47,31 @@ namespace Engine
 		sSceneData.view_projection = &camera.GetViewProjection();
 	}
 
-	void Renderer::PrepareShader(Ref<Shader> shader)
+	void Renderer::PrepareShader(Ref<Shader> shader, bool clip)
 	{
 		shader->Bind();
 
 		if (sRenderCommand->GetAPI() == API::OpenGL)
 		{
 			auto& open_gl_shader = std::dynamic_pointer_cast<Engine::OpenGLShader>(shader);
-			open_gl_shader->UploadUniform("u_cameraPosition", (*sSceneData.camera_position));
-			open_gl_shader->UploadUniform("u_view_projection", (*sSceneData.view_projection));
+			open_gl_shader->UploadUniform("uCameraPosition", (*sSceneData.camera_position));
+			open_gl_shader->UploadUniform("uViewProjection", (*sSceneData.view_projection));
+			if (clip)
+				open_gl_shader->UploadUniform("uClipingPlane", (sSceneData.cliping_plane));
+		}
+	}
+
+	void Renderer::Render(bool clip)
+	{
+		for (auto iterator : sBatch)
+		{
+			sShader = iterator.first;
+			PrepareShader(sShader, clip);
+
+			for (auto renderable : iterator.second)
+			{
+				renderable->Render(sRenderCommand, sShader);
+			}
 		}
 	}
 
@@ -65,5 +92,10 @@ namespace Engine
 	void Renderer::EndScene()
 	{
 		sBatch.clear();
+		sSceneData.view			   = nullptr;
+		sSceneData.projection	   = nullptr;
+		sSceneData.camera_position = nullptr;
+		sSceneData.view_projection = nullptr;
+		sSceneData.cliping_plane   = Vec4();
 	}
 }

@@ -3,14 +3,14 @@
 
 namespace Engine
 {
-	OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, unsigned int count)
-		: VertexBuffer()
+	OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, unsigned int vertex_count)
+		: VertexBuffer(vertex_count)
 		, mId(0)
 	{
 		glCreateBuffers(1, &mId);
 
 		glBindBuffer(GL_ARRAY_BUFFER, mId);
-		glBufferData(GL_ARRAY_BUFFER, count * sizeof(float), vertices, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, vertex_count * sizeof(float), vertices, GL_STATIC_DRAW);
 	}
 	
 	OpenGLVertexBuffer::~OpenGLVertexBuffer()

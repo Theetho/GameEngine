@@ -101,7 +101,7 @@ namespace Engine
 	{
 		auto window = static_cast<GLFWwindow*>(
 			Application::Get().GetWindow().GetOSWindow()
-			);
+		);
 		double x, y;
 		glfwGetCursorPos(window, &x, &y);
 

@@ -6,6 +6,11 @@ namespace Engine
 {
 	RendererAPI* RenderCommand::sRenderer = new OpenGLRenderer();
 
+	void RenderCommand::SetDrawMode(DrawMode draw_mode)
+	{
+		sRenderer->SetDrawMode(draw_mode);
+	}
+
 	API RenderCommand::GetAPI()
 	{
 		return RendererAPI::sApi;
@@ -26,13 +31,13 @@ namespace Engine
 		sRenderer->Clear();
 	}
 	
-	void RenderCommand::DrawIndexed(const VertexArray& vertex_array)
+	void RenderCommand::Draw(const VertexArray& vertex_array)
 	{
-		sRenderer->DrawIndexed(vertex_array);
+		sRenderer->Draw(vertex_array);
 	}
 
-	void RenderCommand::DrawIndexed(Ref<VertexArray> vertex_array)
+	void RenderCommand::Draw(Ref<VertexArray> vertex_array)
 	{
-		sRenderer->DrawIndexed(*vertex_array);
+		sRenderer->Draw(*vertex_array);
 	}
 }

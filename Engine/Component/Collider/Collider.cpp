@@ -83,27 +83,4 @@ namespace Engine
 	{
 		return mRigidBody;
 	}
-	
-	// Collision class
-	
-	Collision::Collision(bool collide, float distance_up_axis, const Collider* first, const Collider* second)
-		: mIsColliding(collide)
-		, mDistanceUpAxis(distance_up_axis)
-		, mColliders({ first, second })
-	{}
-
-	bool Collision::IsColliding() const
-	{
-		return mIsColliding;
-	}
-
-	float Collision::GetDistanceUpAxis() const
-	{
-		return mDistanceUpAxis;
-	}
-
-	const std::pair<const Collider*, const Collider*>& Collision::GetColliders() const
-	{
-		return mColliders;
-	}
 }

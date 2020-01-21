@@ -38,7 +38,7 @@ namespace Engine
 	{
 		PointLight::LoadGLUniforms(shader, index);
 
-		shader->UploadUniform("u_lights[" + std::to_string(index) + "].cutOff"   , glm::cos(glm::radians(mCutOff)));
-		shader->UploadUniform("u_lights[" + std::to_string(index) + "].direction", mDirection);
+		shader->UploadUniform("uLights[" + std::to_string(index) + "].cutOff"   , glm::cos(glm::radians(mCutOff)));
+		shader->UploadUniform("uLights[" + std::to_string(index) + "].direction", mDirection);
 	}
 }

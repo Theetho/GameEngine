@@ -7,10 +7,14 @@ public:
 	~CameraFree();
 
 	void OnUpdate(const double& delta) override;
-	void OnEvent(Engine::Event& event) override;
 	void OnCollision(const Engine::Collision& collision) override;
 private:
-	const float  mSpeed = 20.0f;
-	Engine::Vec3 mVelocity;
+	struct Speed
+	{
+		float current;
+		const float max = 20.0f;
+		const float min = 1.0f;
+	};
+	Speed mSpeed;
 };
 

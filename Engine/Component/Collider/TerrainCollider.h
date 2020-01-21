@@ -17,7 +17,8 @@ namespace Engine
 		TerrainCollider& operator=(const TerrainCollider&& terrain_collider) noexcept;
 		~TerrainCollider();
 
-		float GetGroundLevel(const GameObject& game_object) const;
+		float GetGroundLevel(const Vec3& position) const;
+		bool  Contains(const Vec3& position) const;
 	private:
 		Terrain* mTerrain;
 

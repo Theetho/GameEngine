@@ -54,9 +54,9 @@ namespace Engine
 	{
 		Material::LoadGLUniforms(shader);
 
-		shader->UploadUniform("u_material.shininess", mShininess);
-		shader->UploadUniform("u_material.ambient",   Vec3(mAmbient));
-		shader->UploadUniform("u_material.diffuse",   Vec3(mDiffuse));
-		shader->UploadUniform("u_material.specular",  Vec3(mSpecular));
+		shader->UploadUniform("uMaterial.shininess", mShininess);
+		shader->UploadUniform("uMaterial.ambient",   Vec3(mAmbient));
+		shader->UploadUniform("uMaterial.diffuse",   Vec3(mDiffuse));
+		shader->UploadUniform("uMaterial.specular",  Vec3(mSpecular));
 	}
 }

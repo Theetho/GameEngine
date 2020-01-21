@@ -92,7 +92,7 @@ namespace Engine
 
 			auto& open_gl_shader = std::dynamic_pointer_cast<Engine::OpenGLShader>(shader);
 
-			open_gl_shader->UploadUniform("u_model", transform.GetModel());
+			open_gl_shader->UploadUniform("uModel", transform.GetModel());
 		}
 
 		for (auto& mesh : AssetManager::GetModelLibrary().Get("bomb")->GetMeshes())

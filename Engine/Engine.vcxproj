@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="API\OpenGL\OpenGLContext.h" />
     <ClInclude Include="API\OpenGL\OpenGLCubeMap.h" />
+    <ClInclude Include="API\OpenGL\OpenGLFrameBuffer.h" />
     <ClInclude Include="API\OpenGL\OpenGLIndexBuffer.h" />
     <ClInclude Include="API\OpenGL\OpenGLRenderer.h" />
     <ClInclude Include="API\OpenGL\OpenGLShader.h" />
@@ -174,9 +175,11 @@
     <ClInclude Include="EnginePch.h" />
     <ClInclude Include="GameObject\GameObject.h" />
     <ClInclude Include="GameObject\Transform.h" />
+    <ClInclude Include="GUI\GUIElement.h" />
     <ClInclude Include="Include\Component.h" />
     <ClInclude Include="Include\Core.h" />
     <ClInclude Include="Include\GameObject.h" />
+    <ClInclude Include="Include\GUI.h" />
     <ClInclude Include="Include\Lighting.h" />
     <ClInclude Include="Include\Material.h" />
     <ClInclude Include="Include\Maths.h" />
@@ -198,6 +201,7 @@
     <ClInclude Include="Model\Model.h" />
     <ClInclude Include="Renderer\Buffer.h" />
     <ClInclude Include="Renderer\Buffer\BufferLayout.h" />
+    <ClInclude Include="Renderer\Buffer\FrameBuffer.h" />
     <ClInclude Include="Renderer\Buffer\IndexBuffer.h" />
     <ClInclude Include="Renderer\Buffer\UniformBuffer.h" />
     <ClInclude Include="Renderer\Buffer\VertexArray.h" />
@@ -216,6 +220,7 @@
     <ClInclude Include="Renderer\Texture\Texture2D.h" />
     <ClInclude Include="System\CollisionSystem.h" />
     <ClInclude Include="Terrain\Terrain.h" />
+    <ClInclude Include="Terrain\Water.h" />
     <ClInclude Include="Util\Benchmark.h" />
     <ClInclude Include="Util\Color.h" />
     <ClInclude Include="Util\ConfigFile.h" />
@@ -594,6 +599,7 @@
   <ItemGroup>
     <ClCompile Include="API\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="API\OpenGL\OpenGLCubeMap.cpp" />
+    <ClCompile Include="API\OpenGL\OpenGLFrameBuffer.cpp" />
     <ClCompile Include="API\OpenGL\OpenGLIndexBuffer.cpp" />
     <ClCompile Include="API\OpenGL\OpenGLRenderer.cpp" />
     <ClCompile Include="API\OpenGL\OpenGLShader.cpp" />
@@ -620,6 +626,7 @@
     </ClCompile>
     <ClCompile Include="GameObject\GameObject.cpp" />
     <ClCompile Include="GameObject\Transform.cpp" />
+    <ClCompile Include="GUI\GUIElement.cpp" />
     <ClCompile Include="Lighting\DirectionalLight.cpp" />
     <ClCompile Include="Lighting\Light.cpp" />
     <ClCompile Include="Lighting\PointLight.cpp" />
@@ -631,6 +638,7 @@
     <ClCompile Include="Model\Mesh.cpp" />
     <ClCompile Include="Model\Model.cpp" />
     <ClCompile Include="Renderer\Buffer\BufferLayout.cpp" />
+    <ClCompile Include="Renderer\Buffer\FrameBuffer.cpp" />
     <ClCompile Include="Renderer\Buffer\IndexBuffer.cpp" />
     <ClCompile Include="Renderer\Buffer\UniformBuffer.cpp" />
     <ClCompile Include="Renderer\Buffer\VertexArray.cpp" />
@@ -645,6 +653,7 @@
     <ClCompile Include="Renderer\Texture\Texture2D.cpp" />
     <ClCompile Include="System\CollisionSystem.cpp" />
     <ClCompile Include="Terrain\Terrain.cpp" />
+    <ClCompile Include="Terrain\Water.cpp" />
     <ClCompile Include="Util\Benchmark.cpp" />
     <ClCompile Include="Util\Color.cpp" />
     <ClCompile Include="Util\ConfigFile.cpp" />

@@ -17,11 +17,19 @@ namespace Engine
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 	
-	void OpenGLRenderer::DrawIndexed(const VertexArray& vertex_array)
+	void OpenGLRenderer::Draw(const VertexArray& vertex_array)
 	{
-		glDrawElements(GL_TRIANGLES, vertex_array.GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+		if (vertex_array.IsIndexed())
+			glDrawElements(TranslateDrawMode(), vertex_array.GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+		else
+			glDrawArrays(TranslateDrawMode(), 0, vertex_array.GetVertexBuffers()[0]->GetCount());
 	}
 	
+	void OpenGLRenderer::SetDrawMode(DrawMode draw_mode)
+	{
+		mDrawMode = draw_mode;
+	}
+
 	void OpenGLRenderer::SetViewport(unsigned int width, unsigned int height)
 	{
 		glViewport(0, 0, width, height);
@@ -30,5 +38,18 @@ namespace Engine
 	void OpenGLRenderer::SetClearColor(const Color& color)
 	{
 		glClearColor(color.r, color.g, color.b, color.a);
+	}
+	
+	unsigned int OpenGLRenderer::TranslateDrawMode()
+	{
+		switch (mDrawMode)
+		{
+			case Engine::DrawMode::TRIANGLE:
+				return GL_TRIANGLES; break;
+			case Engine::DrawMode::TRIANGLE_STRIP:
+				return GL_TRIANGLE_STRIP; break;
+			default:
+				return GL_TRIANGLES; break;
+		}
 	}
 }
