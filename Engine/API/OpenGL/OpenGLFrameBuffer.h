@@ -16,14 +16,14 @@ namespace Engine
 		Ref<Texture2D> GetTextureAttachment(unsigned int slot) const override;
 		Ref<Texture2D> GetDepthAttachment(unsigned int slot) const override;
 	
-		Ref<Texture2D> CreateDepthAttachment() override;
+
+		void CreateTextureAttachment() override;
+		void CreateRenderBuffer() override;
+		void CreateDepthAttachment() override;
 	private:
 		unsigned int mId, mWidth, mHeight;
 		unsigned int mRenderBuffer;
 		Ref<Texture2D> mTextureAttachment;
 		Ref<Texture2D> mDepthAttachment;
-
-		void CreateTextureAttachment(unsigned int width, unsigned int height);
-		void CreateRenderBuffer(unsigned int width, unsigned int height);
 	};
 }

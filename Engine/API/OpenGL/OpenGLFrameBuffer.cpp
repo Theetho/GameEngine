@@ -19,9 +19,6 @@ namespace Engine
 		glBindFramebuffer(GL_FRAMEBUFFER, mId);
 		glDrawBuffer(GL_COLOR_ATTACHMENT0);
 
-		this->CreateTextureAttachment(width, height);
-		this->CreateRenderBuffer(width, height);
-
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
@@ -54,7 +51,7 @@ namespace Engine
 		return mDepthAttachment;
 	}
 
-	Ref<Texture2D> OpenGLFrameBuffer::CreateDepthAttachment()
+	void OpenGLFrameBuffer::CreateDepthAttachment()
 	{
 		this->Bind();
 
@@ -72,34 +69,40 @@ namespace Engine
 		mDepthAttachment = CreateRef<OpenGLTexture2D>(mWidth, mHeight, texture);
 
 		this->Unbind();
-
-		return mDepthAttachment;
 	}
 
-	void OpenGLFrameBuffer::CreateTextureAttachment(unsigned int width, unsigned int height)
+	void OpenGLFrameBuffer::CreateTextureAttachment()
 	{
+		this->Bind();
+
 		unsigned int texture;
 		glGenTextures(1, &texture);
 		glBindTexture(GL_TEXTURE_2D, texture);
 		
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, mWidth, mHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
 		
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
 
-		mTextureAttachment = CreateRef<OpenGLTexture2D>(width, height, texture);
+		mTextureAttachment = CreateRef<OpenGLTexture2D>(mWidth, mHeight, texture);
+	
+		this->Unbind();
 	}
 	
-	void OpenGLFrameBuffer::CreateRenderBuffer(unsigned int width, unsigned int height)
+	void OpenGLFrameBuffer::CreateRenderBuffer()
 	{
+		this->Bind();
+
 		glGenRenderbuffers(1, &mRenderBuffer);
 		
 		glBindRenderbuffer(GL_RENDERBUFFER, mRenderBuffer);
 		
-		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, mWidth, mHeight);
 		
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, mRenderBuffer);
+	
+		this->Unbind();
 	}
 }

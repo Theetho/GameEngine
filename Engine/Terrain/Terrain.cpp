@@ -11,10 +11,10 @@
 namespace Engine
 {
 	const const std::map<const char*, Terrain::Biome> Terrain::sBiome{
-		//{ "Deep_Water", Biome(0.30f, 4.00f, Color(10 , 75 , 120))},
-		//{ "Water",		Biome(0.45f, 5.00f, Color(15 , 100, 190))},
-		{ "Deep_Water", Biome(0.30f, 4.00f, Color(170, 125, 50 ))},
-		{ "Water",		Biome(0.45f, 5.00f, Color(200 ,160, 80 ))},
+		{ "Deep_Water", Biome(0.30f, 4.00f, Color(10 , 75 , 120))},
+		{ "Water",		Biome(0.45f, 5.00f, Color(15 , 100, 190))},
+		//{ "Deep_Water", Biome(0.30f, 4.00f, Color(170, 125, 50 ))},
+		//{ "Water",		Biome(0.45f, 5.00f, Color(200 ,160, 80 ))},
 		{ "Sand",		Biome(0.50f, 10.0f, Color(250, 245, 170))},
 		{ "Grass_1",	Biome(0.65f, 12.0f, Color(100, 200, 0  ))},
 		{ "Grass_2",	Biome(1.00f, 14.0f, Color(75 , 150, 0  ))},

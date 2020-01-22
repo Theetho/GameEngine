@@ -23,10 +23,15 @@ namespace Engine
 	{
 		this->CreateTile();
 		mRefraction = FrameBuffer::Create(REFRACTION_WIDTH, REFRACTION_HEIGHT);
+		mRefraction->CreateTextureAttachment();
+		mRefraction->CreateDepthAttachment();
+		
 		mReflection = FrameBuffer::Create(REFLECTION_WIDTH, REFLECTION_HEIGHT);
+		mReflection->CreateTextureAttachment();
+		mReflection->CreateRenderBuffer();
+		
 		mDUDVMap	= Texture2D::Create("Water/dudvmap.png", "water_dudv");
 		mNormalMap	= Texture2D::Create("Water/normalmap.png", "water_normal");
-		(void)mRefraction->CreateDepthAttachment();
 	}
 	
 	Water::~Water()

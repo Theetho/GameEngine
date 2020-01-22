@@ -37,8 +37,11 @@ namespace Engine
 			render_command->SetDrawMode(DrawMode::TRIANGLE_STRIP);
 			auto ogl_shader = std::dynamic_pointer_cast<OpenGLShader>(shader);
 			ogl_shader->UploadUniform("uModel", mTransform.GetModel());
-			ogl_shader->UploadUniform("uTexture", 0);
-			mTexture->Bind();
+			if (mTexture)
+			{
+				ogl_shader->UploadUniform("uTexture", 0);
+				mTexture->Bind();
+			}
 		}
 
 		Renderable::Render(sVertexArray, render_command, shader);

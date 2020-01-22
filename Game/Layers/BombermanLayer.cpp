@@ -10,9 +10,7 @@ BombermanLayer::BombermanLayer()
 	, mCamera(Vec3(100.0f, 20.0f, 100.0f))
 	, mSkybox("Skyboxes/Day")
 	, mTerrain(Vec2(0, 0), "Heightmaps/generated_height_map.png", Vec2(200))
-	, mLake(Vec3(0.0f, 0.45f * 5.0f + 1.0f, 0.0f), Vec2(200))
-	, mRefraction(Vec2(-0.5, 0.5), Vec2(0.25, 0.25), mLake.GetRefractionBuffer()->GetTextureAttachment())
-	, mReflection(Vec2(0.5,  0.5), Vec2(0.25, 0.25), mLake.GetReflectionBuffer()->GetTextureAttachment())
+	, mLake(Vec3(0.0f, 0.45f * 5.0f + 2.0f, 0.0f), Vec2(200))
 {
 }
 
@@ -26,9 +24,9 @@ void BombermanLayer::OnAttach()
 	mPlayer.SetPosition(Vec3(100, 100, 100));
 	mPlayer.SetScale(0.05f);
 
-	mLights.push_back(
-		CreateRef<DirectionalLight>(Vec3(0.4f, -0.5f, 0.0f))
-	);
+	mLights = {
+		CreateRef<DirectionalLight>(Vec3( 0.4, -0.5f, 0.0f))
+	};
 	
 	Ref<Shader> shader		   = AssetManager::GetShaderLibrary().Load("lights_materials.glsl", "scene");
 	Ref<Shader> shader_pbr	   = AssetManager::GetShaderLibrary().Load("lights_PBR.glsl", "player");
@@ -36,6 +34,7 @@ void BombermanLayer::OnAttach()
 	(void)AssetManager::GetShaderLibrary().Load("skybox.glsl");
 	(void)AssetManager::GetShaderLibrary().Load("colliders.glsl");
 	(void)AssetManager::GetShaderLibrary().Load("gui.glsl");
+	(void)AssetManager::GetShaderLibrary().Load("Skybox_Colored.glsl");
 	Ref<OpenGLShader> shader_water = std::dynamic_pointer_cast<OpenGLShader>(AssetManager::GetShaderLibrary().Load("water.glsl"));
 
 	for (int i = 0; i < mLights.size(); ++i)
@@ -62,25 +61,24 @@ void BombermanLayer::OnUpdate(const double& delta)
 	mCamera.OnUpdate(delta);
 	mLake  .OnUpdate(delta);
 	
-	Ref<Shader> shader			= AssetManager::GetShaderLibrary().Get("scene");
-	Ref<Shader> shader_pbr		= AssetManager::GetShaderLibrary().Get("player");
-	Ref<Shader> shader_terrain	= AssetManager::GetShaderLibrary().Get("terrain");
-	Ref<Shader> shader_skybox   = AssetManager::GetShaderLibrary().Get("skybox");
-	Ref<Shader> shader_collider = AssetManager::GetShaderLibrary().Get("colliders");
-	Ref<Shader> shader_water    = AssetManager::GetShaderLibrary().Get("water");
-	Ref<Shader> shader_gui      = AssetManager::GetShaderLibrary().Get("gui");
+	Ref<Shader> shader				  = AssetManager::GetShaderLibrary().Get("scene");
+	Ref<Shader> shader_pbr			  = AssetManager::GetShaderLibrary().Get("player");
+	Ref<Shader> shader_terrain		  = AssetManager::GetShaderLibrary().Get("terrain");
+	Ref<Shader> shader_skybox		  = AssetManager::GetShaderLibrary().Get("skybox");
+	Ref<Shader> shader_skybox_colored = AssetManager::GetShaderLibrary().Get("Skybox_Colored");
+	Ref<Shader> shader_collider		  = AssetManager::GetShaderLibrary().Get("colliders");
+	Ref<Shader> shader_water		  = AssetManager::GetShaderLibrary().Get("water");
+	Ref<Shader> shader_gui			  = AssetManager::GetShaderLibrary().Get("gui");
 	
 	Renderer::BeginScene(mCamera);
 	RenderCommand::Clear();
 
 	Renderer::Submit(shader_terrain, mTerrain);
-	Renderer::Submit(shader_pbr,     mPlayer);
-	Renderer::Submit(shader_skybox,  mSkybox);
+	//Renderer::Submit(shader_pbr,     mPlayer);
+	Renderer::Submit(shader_skybox, mSkybox);
 	
 	Renderer::PrepareWater(mCamera, mLake);
 	
-	//Renderer::Submit(shader_gui, mRefraction);
-	//Renderer::Submit(shader_gui, mReflection);
 	Renderer::Submit(shader_water, mLake);
 	Renderer::Render();
 	Renderer::EndScene();
@@ -119,4 +117,4 @@ void BombermanLayer::OnEvent(Engine::Event & event)
 	//	mBombs[i]->OnUpdate(delta);
 	//	Renderer::Submit(shader, *mBombs[i]);
 	//	++i; ++bomb;
-	//}	
+	//}

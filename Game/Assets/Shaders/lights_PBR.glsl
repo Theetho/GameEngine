@@ -77,7 +77,7 @@ vec4 CalculateDirectionalLight(Light light)
 	float specularFactor = pow(max(dot(toCameraVector, reflection), 0.0), 64);
 	vec3 specularColor = light.color * specularFactor * texture(uMaterial.texture_sp, vTextureCoords).rgb;
 	
-	return vec4(specularColor + diffuseColor + ambientColor, 1.0);
+	return vec4(specularColor + diffuseColor + ambientColor, 0.0);
 }
 
 // -----------------------------------------------------------------------------
@@ -101,7 +101,7 @@ vec4 CalculatePointLight(Light light)
 	float specularFactor = pow(max(dot(toCameraVector, reflection), 0.0), 64);
 	vec3 specularColor = light.color * specularFactor * attenuation * texture(uMaterial.texture_sp, vTextureCoords).rgb;
 
-	return vec4(specularColor + diffuseColor + ambientColor, 1.0);
+	return vec4(specularColor + diffuseColor + ambientColor, 0.0);
 }
 
 // -----------------------------------------------------------------------------
@@ -129,11 +129,11 @@ vec4 CalculateSpotLight(Light light)
 		float specularFactor = pow(max(dot(toCameraVector, reflection), 0.0), 64);
 		vec3 specularColor = light.color * specularFactor * attenuation * texture(uMaterial.texture_sp, vTextureCoords).rgb;
 	
-		return vec4(specularColor + diffuseColor + ambientColor, 1.0);
+		return vec4(specularColor + diffuseColor + ambientColor, 0.0);
 	}
 	else
 	{
-		return vec4(ambientColor, 1.0);
+		return vec4(ambientColor, 0.0);
 	}
 }
 

@@ -63,7 +63,7 @@ vec4 CalculateDirectionalLight(Light light)
 	float diffuseFactor = max(dot(normal, lightDirection), 0.0);
 	vec3 diffuseColor = diffuseFactor * light.color * vColor;
 	
-	return vec4(diffuseColor, 1.0);
+	return vec4(diffuseColor, 0.0);
 }
 
 // -----------------------------------------------------------------------------
@@ -79,7 +79,7 @@ vec4 CalculatePointLight(Light light)
 	float diffuseFactor = max(dot(normal, lightDirection), 0.0);
 	vec3 diffuseColor = diffuseFactor * attenuation * light.color * vColor;
 
-	return vec4(diffuseColor, 1.0);
+	return vec4(diffuseColor, 0.0);
 }
 
 // -----------------------------------------------------------------------------
@@ -101,11 +101,11 @@ vec4 CalculateSpotLight(Light light)
 		float diffuseFactor = max(dot(normal, lightDirection), 0.0);
 		vec3 diffuseColor = diffuseFactor * attenuation * light.color * vColor;
 		
-		return vec4(diffuseColor, 1.0);
+		return vec4(diffuseColor, 0.0);
 	}
 	else
 	{
-		return vec4(ambientColor, 1.0);
+		return vec4(ambientColor, 0.0);
 	}
 }
 

@@ -11,7 +11,7 @@ namespace Engine
 	class GUIElement : public Renderable
 	{
 	public:
-		GUIElement(const Vec2& position, const Vec2& scale, Ref<Texture2D> texture);
+		GUIElement(const Vec2& position, const Vec2& scale, Ref<Texture2D> texture = nullptr);
 		~GUIElement();
 	private:
 		Transform	   mTransform;
