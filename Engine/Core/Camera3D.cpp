@@ -8,20 +8,19 @@ namespace Engine
 {
 	/// Camera3D
 
+	const float Camera3D::Near = 0.1f, Camera3D::Far = 1000.0f;
+
 	Camera3D::Camera3D(const Vec3& position)
 		: GameObject(Transform(position, Vec3(20.0f, 40.0f, 0.0f), Vec3(1.0f)))
 		, mAngles(mTransform.GetRotation().x, mTransform.GetRotation().y, mTransform.GetRotation().z)
 		, mView()
-		, mProjection(Matrix::Projection())
+		, mProjection(Matrix::Projection(90, 16.0f/9.0f, Near, Far))
 	{
 		AddComponent<RigidBody>(CreateRef<RigidBody>(*this));
 		GetComponent<RigidBody>()->SetUseGravity(false);
 		AddComponent<BoxCollider>(CreateRef<BoxCollider>(*this, position, Vec3(1.0, 1.5, 1.0)));
 
 		UpdateViewProjection();
-		std::cout << "View "	   << mView			  << std::endl;
-		std::cout << "Projection " << mProjection	  << std::endl;
-		std::cout << "VP "		   << mViewProjection << std::endl;
 	}
 
 	Camera3D::~Camera3D()
@@ -47,7 +46,8 @@ namespace Engine
 
 	void Camera3D::ReverseOnUpAxis(const Vec3& position)
 	{
-		float distance = mTransform.GetPosition().y - position.y;
+		float position_y = mTransform.GetPosition().y;
+		float distance   = position_y - position.y;
 		mTransform.SetPosition('y', mTransform.GetPosition().y - 2.0f * distance);
 		mAngles.pitch *= -1.0f;
 		UpdateViewProjection();

@@ -10,7 +10,7 @@ out vec3 vFragmentPosition;
 uniform mat4 uViewProjection;
 uniform mat4 uModel;
 
-const float cTiling = 6.0;
+const float cTiling = 4.0;
 
 void main()
 {
@@ -53,11 +53,14 @@ uniform sampler2D uRefraction;
 uniform sampler2D uReflection;
 uniform sampler2D uDUDVMap;
 uniform sampler2D uNormalMap;
+uniform sampler2D uDepthMap;
 uniform float	  uWaveMovement;
+uniform float	  uNear;
+uniform float	  uFar;
 
-const float cWaveStrength = 0.01;
-const float cShininess	  = 256.0;
-const float cReflectivity = 0.3;
+const float cWaveStrength = 0.04;
+const float cShininess	  = 20.0;
+const float cReflectivity = 0.5;
 
 // -----------------------------------------------------------------------------
 
@@ -106,9 +109,16 @@ void main()
 	vec2 refract_texture_coords = normalized_device_space;
 	vec2 reflect_texture_coords = vec2(normalized_device_space.x, - normalized_device_space.y);
 
+	float depth = texture(uDepthMap, refract_texture_coords).r;
+	float floor_distance = 2.0 * uNear * uFar / (uFar + uNear - (2.0 * depth - 1.0) * (uFar - uNear));
+
+	depth = gl_FragCoord.z;
+	float water_distance = 2.0 * uNear * uFar / (uFar + uNear - (2.0 * depth - 1.0) * (uFar - uNear));
+	float water_depth = floor_distance - water_distance;
+
 	vec2 distorted_texture_coords = texture(uDUDVMap, vec2(vTextureCoords.x + uWaveMovement, vTextureCoords.y)).rg * 0.1;
 	distorted_texture_coords      = vTextureCoords + vec2(distorted_texture_coords.x, distorted_texture_coords.y + uWaveMovement);
-	vec2 distorsion				  = (texture(uDUDVMap, distorted_texture_coords).rg * 2.0 - 1.0) * cWaveStrength;
+	vec2 distorsion				  = (texture(uDUDVMap, distorted_texture_coords).rg * 2.0 - 1.0) * cWaveStrength * clamp(water_depth / 20.f, 0.0, 1.0);
 
 	refract_texture_coords += distorsion;
 	refract_texture_coords = clamp(refract_texture_coords, 0.001, 0.999);
@@ -124,7 +134,7 @@ void main()
 	vec3 normal = normalize(vec3(normal_map_color.r * 2.0 - 1.0, normal_map_color.b, normal_map_color.g * 2.0 - 1.0));
 	
 	vec3 to_camera_vector = normalize(uCameraPosition - vFragmentPosition);
-	float fresnel = pow(dot(normal, normalize(to_camera_vector)), 1.0);
+	float fresnel = pow(dot(normal, normalize(to_camera_vector)), 3.0);
 
 	vec4 specular = vec4(0.0, 0.0, 0.0, 0.0);
 	for (int i = 0; i < MAX_NUMBER_OF_LIGHT; ++i)
@@ -145,4 +155,5 @@ void main()
 
 	outColor = mix(reflection, refraction, fresnel);
 	outColor += specular;
+	outColor.a = clamp(water_depth / 1.5f, 0.0, 1.0);
 }

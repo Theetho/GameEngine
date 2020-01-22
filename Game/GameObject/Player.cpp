@@ -12,9 +12,6 @@ Player::Player(Ref<Model> model, const Transform& transform)
 	AddComponent<Movement>(CreateRef<Movement>(*this));
 
 	this->SetModel(model);
-	std::cout << "Player : " << mTransform.GetPosition();
-	std::cout << " " << mTransform.GetRotation();
-	std::cout << " " << mTransform.GetScale() << std::endl;
 }
 
 Player::~Player()

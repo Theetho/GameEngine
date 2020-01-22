@@ -11,8 +11,8 @@
 
 #define REFLECTION_WIDTH  640
 #define REFLECTION_HEIGHT 360
-#define REFRACTION_WIDTH  1280
-#define REFRACTION_HEIGHT 720
+#define REFRACTION_WIDTH  640
+#define REFRACTION_HEIGHT 360
 #define WAVE_SPEED 0.03
 
 namespace Engine
@@ -26,6 +26,7 @@ namespace Engine
 		mReflection = FrameBuffer::Create(REFLECTION_WIDTH, REFLECTION_HEIGHT);
 		mDUDVMap	= Texture2D::Create("Water/dudvmap.png", "water_dudv");
 		mNormalMap	= Texture2D::Create("Water/normalmap.png", "water_normal");
+		(void)mRefraction->CreateDepthAttachment();
 	}
 	
 	Water::~Water()
@@ -76,9 +77,8 @@ namespace Engine
 			glEnable(GL_CLIP_DISTANCE0);
 		}
 
-
 		// Refraction
-		Renderer::sSceneData.cliping_plane = Vec4(0, -1, 0, mTransform.GetPosition().y);
+		Renderer::sSceneData.cliping_plane = Vec4(0, -1, 0, mTransform.GetPosition().y + 1);
 		mRefraction->Bind();
 		RenderCommand::Clear();
 		Renderer::Render(true);
@@ -107,19 +107,27 @@ namespace Engine
 
 		if (render_command->GetAPI() == API::OpenGL)
 		{
+			glEnable(GL_BLEND);
 			auto ogl_shader = std::dynamic_pointer_cast<OpenGLShader>(shader);
 			ogl_shader->UploadUniform("uReflection", 0);
 			ogl_shader->UploadUniform("uRefraction", 1);
 			ogl_shader->UploadUniform("uDUDVMap"   , 2);
 			ogl_shader->UploadUniform("uNormalMap" , 3);
+			ogl_shader->UploadUniform("uDepthMap"  , 4);
 			ogl_shader->UploadUniform("uWaveMovement", mWaveMovement);
 			mReflection->GetTextureAttachment()->Bind(0);
 			mRefraction->GetTextureAttachment()->Bind(1);
-			mDUDVMap  ->Bind(2);
-			mNormalMap->Bind(3);
+			mDUDVMap   ->Bind(2);
+			mNormalMap ->Bind(3);
+			mRefraction->GetDepthAttachment()->Bind(4);
 		}
 
 		Renderable::Render(mVertexArray, render_command, shader);
+		
+		if (render_command->GetAPI() == API::OpenGL)
+		{
+			glDisable(GL_BLEND);
+		}
 	}
 
 }

@@ -6,8 +6,8 @@ using namespace Engine;
 
 BombermanLayer::BombermanLayer()
 	: mPlayer(AssetManager::GetModelLibrary().Load("varyasuit/DolBarriersuit.obj", "player"))
-	, mCamera(mPlayer, 8.0f)
-	//, mCamera(Vec3(100.0f, 20.0f, 100.0f))
+	//, mCamera(mPlayer, 8.0f)
+	, mCamera(Vec3(100.0f, 20.0f, 100.0f))
 	, mSkybox("Skyboxes/Day")
 	, mTerrain(Vec2(0, 0), "Heightmaps/generated_height_map.png", Vec2(200))
 	, mLake(Vec3(0.0f, 0.45f * 5.0f + 1.0f, 0.0f), Vec2(200))
@@ -33,10 +33,10 @@ void BombermanLayer::OnAttach()
 	Ref<Shader> shader		   = AssetManager::GetShaderLibrary().Load("lights_materials.glsl", "scene");
 	Ref<Shader> shader_pbr	   = AssetManager::GetShaderLibrary().Load("lights_PBR.glsl", "player");
 	Ref<Shader> shader_terrain = AssetManager::GetShaderLibrary().Load("terrain.glsl");
-	Ref<Shader> shader_water   = AssetManager::GetShaderLibrary().Load("water.glsl");
 	(void)AssetManager::GetShaderLibrary().Load("skybox.glsl");
 	(void)AssetManager::GetShaderLibrary().Load("colliders.glsl");
 	(void)AssetManager::GetShaderLibrary().Load("gui.glsl");
+	Ref<OpenGLShader> shader_water = std::dynamic_pointer_cast<OpenGLShader>(AssetManager::GetShaderLibrary().Load("water.glsl"));
 
 	for (int i = 0; i < mLights.size(); ++i)
 	{
@@ -45,6 +45,9 @@ void BombermanLayer::OnAttach()
 		mLights[i]->Load(shader_terrain, i);
 		mLights[i]->Load(shader_water, i);
 	}
+
+	shader_water->UploadUniform("uNear", mCamera.Near);
+	shader_water->UploadUniform("uFar" , mCamera.Far);
 
 	RenderCommand::SetClearColor(Color(0, 200, 255));
 	Input::ToggleCursor();
@@ -55,7 +58,7 @@ void BombermanLayer::OnDetach()
 
 void BombermanLayer::OnUpdate(const double& delta)
 {
-	mPlayer.OnUpdate(delta);
+	//mPlayer.OnUpdate(delta);
 	mCamera.OnUpdate(delta);
 	mLake  .OnUpdate(delta);
 	

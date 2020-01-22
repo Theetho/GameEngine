@@ -17,8 +17,8 @@ public:
 	void OnUpdate(const double& delta) override;
 	void OnEvent(Engine::Event& event) override;
 private:
-	CameraLocked							mCamera;
-	//CameraFree								mCamera;
+	//CameraLocked							mCamera;
+	CameraFree								mCamera;
 	Player									mPlayer;
 	Engine::Terrain							mTerrain;
 	Engine::Water							mLake;

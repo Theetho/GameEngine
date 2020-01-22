@@ -15,6 +15,9 @@ namespace Engine
 		virtual void Unbind() const = 0;
 		
 		virtual Ref<Texture2D> GetTextureAttachment(unsigned int slot = 0) const = 0;
+		virtual Ref<Texture2D> GetDepthAttachment(unsigned int slot = 0) const = 0;
+	
+		virtual Ref<Texture2D> CreateDepthAttachment() = 0;
 	};
 }
 

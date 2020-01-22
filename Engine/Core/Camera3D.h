@@ -26,6 +26,8 @@ namespace Engine
 		const Mat4& GetViewProjection() const;
 
 		void SetPosition(const Vec3& position);
+
+		static const float Near, Far;
 	protected:
 		Mat4 mView;
 		Mat4 mProjection;

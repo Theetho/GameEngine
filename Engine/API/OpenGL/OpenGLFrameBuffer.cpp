@@ -49,7 +49,33 @@ namespace Engine
 		return mTextureAttachment;
 	}
 
-	
+	Ref<Texture2D> OpenGLFrameBuffer::GetDepthAttachment(unsigned int slot) const
+	{
+		return mDepthAttachment;
+	}
+
+	Ref<Texture2D> OpenGLFrameBuffer::CreateDepthAttachment()
+	{
+		this->Bind();
+
+		unsigned int texture;
+		glGenTextures(1, &texture);
+		glBindTexture(GL_TEXTURE_2D, texture);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, mWidth, mHeight, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+		glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, texture, 0);
+
+		mDepthAttachment = CreateRef<OpenGLTexture2D>(mWidth, mHeight, texture);
+
+		this->Unbind();
+
+		return mDepthAttachment;
+	}
+
 	void OpenGLFrameBuffer::CreateTextureAttachment(unsigned int width, unsigned int height)
 	{
 		unsigned int texture;
