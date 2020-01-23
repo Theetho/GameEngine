@@ -11,7 +11,7 @@ namespace Engine
 	};
 	enum class DrawMode
 	{
-		TRIANGLE, TRIANGLE_STRIP
+		DEFAULT, TRIANGLE, TRIANGLE_STRIP, PATCHES
 	};
 	class RendererAPI
 	{

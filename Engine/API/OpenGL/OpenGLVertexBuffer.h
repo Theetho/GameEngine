@@ -12,10 +12,6 @@ namespace Engine
 
 		void Bind() const override;
 		void Unbind() const override;
-
-		const BufferLayout& GetLayout() const override;
-
-		void SetLayout(const BufferLayout& layout) override;
 	private:
 		unsigned int mId;
 	};

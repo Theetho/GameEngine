@@ -27,14 +27,4 @@ namespace Engine
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
-
-	const BufferLayout& OpenGLVertexBuffer::GetLayout() const
-	{
-		return mLayout;
-	}
-
-	void OpenGLVertexBuffer::SetLayout(const BufferLayout& layout)
-	{
-		mLayout = layout;
-	}
 }

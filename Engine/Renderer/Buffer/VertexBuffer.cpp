@@ -31,4 +31,14 @@ namespace Engine
 		, mCount(vertex_count)
 	{
 	}
+
+	const BufferLayout& VertexBuffer::GetLayout() const
+	{
+		return mLayout;
+	}
+
+	void VertexBuffer::SetLayout(const BufferLayout& layout)
+	{
+		mLayout = layout;
+	}
 }

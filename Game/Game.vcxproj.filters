@@ -61,6 +61,14 @@
       <Filter>Util</Filter>
     </ClInclude>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Layers\TerrainLayer.h" />
+    <ClInclude Include="Terrain\Terrain.h" />
+    <ClInclude Include="Terrain\TerrainNode.h" />
+    <ClInclude Include="Terrain\TerrainQuadTree.h" />
+    <ClInclude Include="Terrain\TerrainShader.h" />
+    <ClInclude Include="Terrain\TerrainConfiguration.h" />
+    <ClInclude Include="Util\Node.h" />
+    <ClInclude Include="PatchVertexArray.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\Movement.cpp">
@@ -103,5 +111,13 @@
       <Filter>Util</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Layers\TerrainLayer.cpp" />
+    <ClCompile Include="Terrain\Terrain.cpp" />
+    <ClCompile Include="Terrain\TerrainNode.cpp" />
+    <ClCompile Include="Terrain\TerrainQuadTree.cpp" />
+    <ClCompile Include="Terrain\TerrainShader.cpp" />
+    <ClCompile Include="Terrain\TerrainConfiguration.cpp" />
+    <ClCompile Include="Util\Node.cpp" />
+    <ClCompile Include="PatchVertexArray.cpp" />
   </ItemGroup>
 </Project>

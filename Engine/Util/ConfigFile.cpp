@@ -23,30 +23,22 @@ namespace Engine
 		unsigned int index = 0;
 		std::string key = "";
 		std::string value = "";
+		std::string line = "";
+		std::stringstream file_to_string;
+		std::ifstream file(config_file, std::ios::in, std::ios::binary);
 		PARSING state = PARSING::KEY;
-		for (auto& iterator : config_file)
+		while (std::getline(file, line))
 		{
-			if (iterator == ':')
-			{
-				state = PARSING::VALUE;
-			}
-			else if (iterator == '\n')
-			{
-				state = PARSING::KEY;
-				mFields[key] = value;
-				mIndex[index++] = key;
-				key = "";
-				value = "";
-			}
-			else if (iterator != ' ')
-			{
-				switch (state)
-				{
-				case PARSING::KEY:		key += iterator;	break;
-				case PARSING::VALUE:	value += iterator;	break;
-				default:									break;
-				}
-			}
+			if (line.size() == 0)
+				continue;
+
+			auto double_dot = line.find_first_of(':');
+			line = line.erase(double_dot);
+
+			file_to_string << line;
+			file_to_string >> key >> value;
+			mFields[key]    = value;
+			mIndex[index++] = value;
 		}
 	}
 

@@ -30,6 +30,26 @@ namespace Engine
 		~ConfigFile();
 
 		void Parse(const std::string& config_file);
+		template<class T>
+		T GetValueAt(const std::string& field)
+		{
+			std::stringstream caster(mFields.at(field));
+			T result();
+
+			caster >> result;
+			
+			return result;
+		}
+		template<class T>
+		T GetValueAt(unsigned int index)
+		{
+			std::stringstream caster(mIndex.at(index));
+			T result();
+
+			caster >> result;
+
+			return result;
+		}
 		// Access the value directly through the key
 		int			GetInt(const std::string& field) const;
 		char		GetChar(const std::string& field) const;

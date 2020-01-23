@@ -6,7 +6,7 @@
 
 namespace Engine
 {
-	class Collision;
+	struct Collision;
 	class Event;
 
 	class GameObject : public Renderable

@@ -13,9 +13,9 @@ namespace Engine
 		void Bind() const override;
 		void Unbind() const override;
 
-		void AddVertexBuffer(Ref<VertexBuffer> vertex_buffer) override;
-		void AddIndexBuffer(Ref<IndexBuffer> index_buffer) override;
-	private:
+		virtual void AddVertexBuffer(Ref<VertexBuffer> vertex_buffer) override;
+		virtual void AddIndexBuffer(Ref<IndexBuffer> index_buffer) override;
+	protected:
 		unsigned int mId;
 		unsigned int mIndex = 0;
 	};

@@ -14,10 +14,10 @@ namespace Engine
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
 	
-		virtual const BufferLayout& GetLayout() const = 0;
-		virtual unsigned int	    GetCount() const;
+		const BufferLayout& GetLayout() const;
+		unsigned int	    GetCount() const;
 
-		virtual void SetLayout(const BufferLayout& layout) = 0;
+		void SetLayout(const BufferLayout& layout);
 	protected:
 		unsigned int mCount;
 		VertexBuffer(unsigned int vertex_count);

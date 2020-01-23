@@ -35,7 +35,7 @@ namespace Engine
 			double mTime = 0.0;
 			double mDeltaTime = 0.03;
 			double mTimeSpent = 0.0;
-			unsigned int mFrames = 0.0;
+			unsigned int mFrames = 0;
 		};
 		TimeManager			   mTimeManager;
 		double				   mFpsCap = 1.0 / 60.0;

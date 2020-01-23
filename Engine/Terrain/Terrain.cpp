@@ -1,3 +1,4 @@
+#include "..\..\Game\Terrain\Terrain.h"
 #include "EnginePch.h"
 #include "Terrain.h"
 #include "Component/Collider/TerrainCollider.h"

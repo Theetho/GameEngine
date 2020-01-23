@@ -44,10 +44,14 @@ namespace Engine
 	{
 		switch (mDrawMode)
 		{
+			case Engine::DrawMode::DEFAULT:
+				return GL_TRIANGLES; break;
 			case Engine::DrawMode::TRIANGLE:
 				return GL_TRIANGLES; break;
 			case Engine::DrawMode::TRIANGLE_STRIP:
 				return GL_TRIANGLE_STRIP; break;
+			case Engine::DrawMode::PATCHES:
+				return GL_PATCHES; break;
 			default:
 				return GL_TRIANGLES; break;
 		}
