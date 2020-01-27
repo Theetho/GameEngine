@@ -3,7 +3,7 @@
 #include "Include/GameObject.h"
 #include "Include/Model.h"
 #include "System/CollisionSystem.h"
-#include "API/OpenGL/OpenGLShader.h"
+#include "API/OpenGL/Shader.h"
 #include "Core/AssetManager.h"
 #include "Renderer/Rendering/RendererAPI.h"
 #include "Renderer/Rendering/RenderCommand.h"
@@ -90,7 +90,7 @@ namespace Engine
 		{
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-			auto& open_gl_shader = std::dynamic_pointer_cast<Engine::OpenGLShader>(shader);
+			auto& open_gl_shader = std::dynamic_pointer_cast<Engine::OpenGL::Shader>(shader);
 
 			open_gl_shader->UploadUniform("uModel", transform.GetModel());
 		}

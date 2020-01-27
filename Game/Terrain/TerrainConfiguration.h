@@ -8,6 +8,7 @@ public:
 
 	float GetScaleXZ() const;
 	float GetScaleY() const;
+	std::array<unsigned int, 8> GetLodRange() const;
 private:
 	float mScaleY;
 	float mScaleXZ;

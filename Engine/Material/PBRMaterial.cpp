@@ -1,6 +1,6 @@
 #include "EnginePch.h"
 #include "PBRMaterial.h"
-#include "API/OpenGL/OpenGLShader.h"
+#include "API/OpenGL/Shader.h"
 #include "Renderer/Texture/Texture2D.h"
 
 namespace Engine
@@ -32,7 +32,7 @@ namespace Engine
 		return static_cast<int>(MaterialID::PBR);
 	}
 
-	void PBRMaterial::LoadGLUniforms(Ref<OpenGLShader> shader)
+	void PBRMaterial::LoadGLUniforms(Ref<OpenGL::Shader> shader)
 	{
 		Material::LoadGLUniforms(shader);
 

@@ -4,7 +4,7 @@
 #include "Renderer/Texture/Texture2D.h"
 #include "Renderer/Rendering/RenderCommand.h"
 #include "Renderer/Rendering/RendererAPI.h"
-#include "API/OpenGL/OpenGLShader.h"
+#include "API/OpenGL/Shader.h"
 
 namespace Engine
 {
@@ -35,7 +35,7 @@ namespace Engine
 		if (render_command->GetAPI() == API::OpenGL)
 		{
 			render_command->SetDrawMode(DrawMode::TRIANGLE_STRIP);
-			auto ogl_shader = std::dynamic_pointer_cast<OpenGLShader>(shader);
+			auto ogl_shader = std::dynamic_pointer_cast<OpenGL::Shader>(shader);
 			ogl_shader->UploadUniform("uModel", mTransform.GetModel());
 			if (mTexture)
 			{

@@ -5,9 +5,9 @@
 #include "Core/Camera3D.h"
 #include "Renderer/Buffer.h"
 #include "Renderer/Rendering.h"
-#include "API/OpenGL/OpenGLShader.h"
-#include "API/OpenGL/OpenGLFrameBuffer.h"
-#include "API/OpenGL/OpenGLTexture2D.h"
+#include "API/OpenGL/Shader.h"
+#include "API/OpenGL/FrameBuffer.h"
+#include "API/OpenGL/Texture2D.h"
 
 #define REFLECTION_WIDTH  640
 #define REFLECTION_HEIGHT 360
@@ -65,7 +65,6 @@ namespace Engine
 		
 		std::vector<float> vertices = { -1, -1, -1, 1, 1, -1, 1, -1, -1, 1, 1, 1 };
 
-
 		auto vertex_buffer = VertexBuffer::Create(vertices.data(), vertices.size());
 
 		vertex_buffer->SetLayout(BufferLayout({
@@ -113,7 +112,7 @@ namespace Engine
 		if (render_command->GetAPI() == API::OpenGL)
 		{
 			glEnable(GL_BLEND);
-			auto ogl_shader = std::dynamic_pointer_cast<OpenGLShader>(shader);
+			auto ogl_shader = std::dynamic_pointer_cast<OpenGL::Shader>(shader);
 			ogl_shader->UploadUniform("uReflection", 0);
 			ogl_shader->UploadUniform("uRefraction", 1);
 			ogl_shader->UploadUniform("uDUDVMap"   , 2);

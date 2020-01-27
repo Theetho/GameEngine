@@ -4,7 +4,10 @@ namespace Engine
 {
 	class Color;
 	class Shader;
-	class OpenGLShader;
+	namespace OpenGL
+	{
+		class Shader;
+	}
 
 	class Light
 	{
@@ -29,6 +32,6 @@ namespace Engine
 			Spot
 		};
 
-		virtual void LoadGLUniforms(Ref<OpenGLShader> shader, unsigned int index);
+		virtual void LoadGLUniforms(Ref<OpenGL::Shader> shader, unsigned int index);
 	};
 }

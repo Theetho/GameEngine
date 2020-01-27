@@ -1,6 +1,6 @@
 #include "EnginePch.h"
 #include "SpotLight.h"
-#include "API/OpenGL/OpenGLShader.h"
+#include "API/OpenGL/Shader.h"
 
 namespace Engine
 {
@@ -34,7 +34,7 @@ namespace Engine
 		return static_cast<int>(LightID::Spot);
 	}
 
-	void SpotLight::LoadGLUniforms(Ref<OpenGLShader> shader, unsigned int index)
+	void SpotLight::LoadGLUniforms(Ref<OpenGL::Shader> shader, unsigned int index)
 	{
 		PointLight::LoadGLUniforms(shader, index);
 

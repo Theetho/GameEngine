@@ -21,7 +21,7 @@ namespace Engine
 		static std::string sFolderPath;
 		std::string mName;
 		
-		virtual void ReadFile(const std::string& file_path) = 0;
+		virtual std::unordered_map<unsigned int, std::string> ReadFile(const std::string& file_path) = 0;
 	};
 }
 

@@ -5,7 +5,6 @@
 namespace Engine
 {
 	class Texture2D;
-	class OpenGLShader;
 
 	class PBRMaterial : public Material
 	{
@@ -27,6 +26,6 @@ namespace Engine
 
 		int GetID() const override;
 
-		void LoadGLUniforms(Ref<OpenGLShader> shader) override;
+		void LoadGLUniforms(Ref<OpenGL::Shader> shader) override;
 	};
 }

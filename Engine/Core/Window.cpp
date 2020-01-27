@@ -4,7 +4,7 @@
 #define EVENT_CPP
 #include "Event.h"
 #undef EVENT_CPP
-#include "API/OpenGL/OpenGLContext.h"
+#include "API/OpenGL/Context.h"
 
 namespace Engine
 {
@@ -109,7 +109,7 @@ namespace Engine
 
 		mWindow = glfwCreateWindow(mData.width, mData.height, mData.title.c_str(), nullptr, nullptr);
 
-		mContext = new OpenGLContext(mWindow);
+		mContext = new OpenGL::Context(mWindow);
 		mContext->Initialize();
 
 		glfwSetWindowUserPointer(mWindow, &mData);

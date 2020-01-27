@@ -16,7 +16,7 @@ TerrainConfiguration::TerrainConfiguration(const std::string& path)
 	
 	for (unsigned int i = 0; i < mLodRange.size(); i++)
 	{
-		mLodRange[i]		= cf.GetValueAt<unsigned int>("LodRange" + std::to_string(i));
+		mLodRange[i]		= cf.GetValueAt<unsigned int>("LodRange" + std::to_string(i + 1));
 		mLodMorphingArea[i] = mLodRange[i] - CalculateMorphingArea(mLodRange[i] + 1);
 	}
 }
@@ -33,6 +33,11 @@ float TerrainConfiguration::GetScaleXZ() const
 float TerrainConfiguration::GetScaleY() const
 {
 	return mScaleY;
+}
+
+std::array<unsigned int, 8> TerrainConfiguration::GetLodRange() const
+{
+	return mLodRange;
 }
 
 unsigned int TerrainConfiguration::CalculateMorphingArea(unsigned int lod) const

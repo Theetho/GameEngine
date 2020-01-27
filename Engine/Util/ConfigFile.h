@@ -33,8 +33,8 @@ namespace Engine
 		template<class T>
 		T GetValueAt(const std::string& field)
 		{
-			std::stringstream caster(mFields.at(field));
-			T result();
+			std::istringstream caster(mFields.at(field));
+			T result;
 
 			caster >> result;
 			
@@ -43,8 +43,8 @@ namespace Engine
 		template<class T>
 		T GetValueAt(unsigned int index)
 		{
-			std::stringstream caster(mIndex.at(index));
-			T result();
+			std::istringstream caster(mIndex.at(index));
+			T result;
 
 			caster >> result;
 

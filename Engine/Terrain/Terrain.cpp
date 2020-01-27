@@ -7,7 +7,7 @@
 #include "Renderer/Buffer.h"
 #include "Renderer/Rendering/RenderCommand.h"
 #include "Renderer/Rendering/RendererAPI.h"
-#include "API/OpenGL/OpenGLShader.h"
+#include "API/OpenGL/Shader.h"
 
 namespace Engine
 {
@@ -213,10 +213,6 @@ namespace Engine
 	void Terrain::Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const
 	{
 		GameObject::Render(render_command, shader);
-		if (render_command->GetAPI() == API::OpenGL)
-		{
-			std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniform("u_terrain", 0);
-		}
 		Renderable::Render(mVertexArray, render_command, shader);
 	}
 

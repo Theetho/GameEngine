@@ -16,6 +16,9 @@
     <Filter Include="Core">
       <UniqueIdentifier>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{2AEC870B-96F5-877C-1F71-9E7C8B79937C}</UniqueIdentifier>
+    </Filter>
     <Filter Include="GameObject">
       <UniqueIdentifier>{D652F52D-C20A-377B-2B12-10D717E9D16B}</UniqueIdentifier>
     </Filter>
@@ -78,31 +81,34 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="API\OpenGL\OpenGLContext.h">
+    <ClInclude Include="API\OpenGL\Context.h">
       <Filter>API\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="API\OpenGL\OpenGLCubeMap.h">
+    <ClInclude Include="API\OpenGL\CubeMap.h">
       <Filter>API\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="API\OpenGL\OpenGLIndexBuffer.h">
+    <ClInclude Include="API\OpenGL\FrameBuffer.h">
       <Filter>API\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="API\OpenGL\OpenGLRenderer.h">
+    <ClInclude Include="API\OpenGL\IndexBuffer.h">
       <Filter>API\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="API\OpenGL\OpenGLShader.h">
+    <ClInclude Include="API\OpenGL\Renderer.h">
       <Filter>API\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="API\OpenGL\OpenGLTexture2D.h">
+    <ClInclude Include="API\OpenGL\Shader.h">
       <Filter>API\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="API\OpenGL\OpenGLUniformBuffer.h">
+    <ClInclude Include="API\OpenGL\Texture2D.h">
       <Filter>API\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="API\OpenGL\OpenGLVertexArray.h">
+    <ClInclude Include="API\OpenGL\UniformBuffer.h">
       <Filter>API\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="API\OpenGL\OpenGLVertexBuffer.h">
+    <ClInclude Include="API\OpenGL\VertexArray.h">
+      <Filter>API\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="API\OpenGL\VertexBuffer.h">
       <Filter>API\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="Component\Collider.h">
@@ -121,6 +127,9 @@
       <Filter>Component\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Component\Component.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\PhysicsComponent.h">
       <Filter>Component</Filter>
     </ClInclude>
     <ClInclude Include="Component\RigidBody.h">
@@ -161,6 +170,9 @@
     </ClInclude>
     <ClInclude Include="Engine.h" />
     <ClInclude Include="EnginePch.h" />
+    <ClInclude Include="GUI\GUIElement.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
     <ClInclude Include="GameObject\GameObject.h">
       <Filter>GameObject</Filter>
     </ClInclude>
@@ -171,6 +183,9 @@
       <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="Include\Core.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\GUI.h">
       <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="Include\GameObject.h">
@@ -233,7 +248,13 @@
     <ClInclude Include="Model\Model.h">
       <Filter>Model</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\Buffer.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="Renderer\Buffer\BufferLayout.h">
+      <Filter>Renderer\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Buffer\FrameBuffer.h">
       <Filter>Renderer\Buffer</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Buffer\IndexBuffer.h">
@@ -254,6 +275,9 @@
     <ClInclude Include="Renderer\Library.h">
       <Filter>Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\Rendering.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="Renderer\Rendering\RenderCommand.h">
       <Filter>Renderer\Rendering</Filter>
     </ClInclude>
@@ -269,6 +293,9 @@
     <ClInclude Include="Renderer\Shader.h">
       <Filter>Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\Texture.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="Renderer\Texture\CubeMap.h">
       <Filter>Renderer\Texture</Filter>
     </ClInclude>
@@ -282,6 +309,9 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="Terrain\Terrain.h">
+      <Filter>Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain\Water.h">
       <Filter>Terrain</Filter>
     </ClInclude>
     <ClInclude Include="Util\Benchmark.h">
@@ -1406,43 +1436,36 @@
     <ClInclude Include="Vendor\stb\stb_image.h">
       <Filter>Vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\Buffer.h" />
-    <ClInclude Include="Renderer\Rendering.h" />
-    <ClInclude Include="Renderer\Texture.h" />
-    <ClInclude Include="Terrain\Water.h">
-      <Filter>Renderer\Buffer</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\Buffer\FrameBuffer.h" />
-    <ClInclude Include="API\OpenGL\OpenGLFrameBuffer.h" />
-    <ClInclude Include="GUI\GUIElement.h" />
-    <ClInclude Include="Include\GUI.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="API\OpenGL\OpenGLContext.cpp">
+    <ClCompile Include="API\OpenGL\Context.cpp">
       <Filter>API\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="API\OpenGL\OpenGLCubeMap.cpp">
+    <ClCompile Include="API\OpenGL\CubeMap.cpp">
       <Filter>API\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="API\OpenGL\OpenGLIndexBuffer.cpp">
+    <ClCompile Include="API\OpenGL\FrameBuffer.cpp">
       <Filter>API\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="API\OpenGL\OpenGLRenderer.cpp">
+    <ClCompile Include="API\OpenGL\IndexBuffer.cpp">
       <Filter>API\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="API\OpenGL\OpenGLShader.cpp">
+    <ClCompile Include="API\OpenGL\Renderer.cpp">
       <Filter>API\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="API\OpenGL\OpenGLTexture2D.cpp">
+    <ClCompile Include="API\OpenGL\Shader.cpp">
       <Filter>API\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="API\OpenGL\OpenGLUniformBuffer.cpp">
+    <ClCompile Include="API\OpenGL\Texture2D.cpp">
       <Filter>API\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="API\OpenGL\OpenGLVertexArray.cpp">
+    <ClCompile Include="API\OpenGL\UniformBuffer.cpp">
       <Filter>API\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="API\OpenGL\OpenGLVertexBuffer.cpp">
+    <ClCompile Include="API\OpenGL\VertexArray.cpp">
+      <Filter>API\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="API\OpenGL\VertexBuffer.cpp">
       <Filter>API\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="Component\Collider\BoxCollider.cpp">
@@ -1458,6 +1481,9 @@
       <Filter>Component\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Component\Component.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\PhysicsComponent.cpp">
       <Filter>Component</Filter>
     </ClCompile>
     <ClCompile Include="Component\RigidBody.cpp">
@@ -1488,6 +1514,9 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="EnginePch.cpp" />
+    <ClCompile Include="GUI\GUIElement.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
     <ClCompile Include="GameObject\GameObject.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
@@ -1527,6 +1556,9 @@
     <ClCompile Include="Renderer\Buffer\BufferLayout.cpp">
       <Filter>Renderer\Buffer</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\Buffer\FrameBuffer.cpp">
+      <Filter>Renderer\Buffer</Filter>
+    </ClCompile>
     <ClCompile Include="Renderer\Buffer\IndexBuffer.cpp">
       <Filter>Renderer\Buffer</Filter>
     </ClCompile>
@@ -1540,6 +1572,9 @@
       <Filter>Renderer\Buffer</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Rendering\RenderCommand.cpp">
+      <Filter>Renderer\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Rendering\Renderable.cpp">
       <Filter>Renderer\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Rendering\Renderer.cpp">
@@ -1566,6 +1601,9 @@
     <ClCompile Include="Terrain\Terrain.cpp">
       <Filter>Terrain</Filter>
     </ClCompile>
+    <ClCompile Include="Terrain\Water.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
     <ClCompile Include="Util\Benchmark.cpp">
       <Filter>Util</Filter>
     </ClCompile>
@@ -1584,12 +1622,5 @@
     <ClCompile Include="Vendor\stb\stb_image.cpp">
       <Filter>Vendor\stb</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer\Rendering\Renderable.cpp" />
-    <ClCompile Include="Terrain\Water.cpp">
-      <Filter>Renderer\Buffer</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer\Buffer\FrameBuffer.cpp" />
-    <ClCompile Include="API\OpenGL\OpenGLFrameBuffer.cpp" />
-    <ClCompile Include="GUI\GUIElement.cpp" />
   </ItemGroup>
 </Project>

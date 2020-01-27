@@ -143,22 +143,23 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="API\OpenGL\OpenGLContext.h" />
-    <ClInclude Include="API\OpenGL\OpenGLCubeMap.h" />
-    <ClInclude Include="API\OpenGL\OpenGLFrameBuffer.h" />
-    <ClInclude Include="API\OpenGL\OpenGLIndexBuffer.h" />
-    <ClInclude Include="API\OpenGL\OpenGLRenderer.h" />
-    <ClInclude Include="API\OpenGL\OpenGLShader.h" />
-    <ClInclude Include="API\OpenGL\OpenGLTexture2D.h" />
-    <ClInclude Include="API\OpenGL\OpenGLUniformBuffer.h" />
-    <ClInclude Include="API\OpenGL\OpenGLVertexArray.h" />
-    <ClInclude Include="API\OpenGL\OpenGLVertexBuffer.h" />
+    <ClInclude Include="API\OpenGL\Context.h" />
+    <ClInclude Include="API\OpenGL\CubeMap.h" />
+    <ClInclude Include="API\OpenGL\FrameBuffer.h" />
+    <ClInclude Include="API\OpenGL\IndexBuffer.h" />
+    <ClInclude Include="API\OpenGL\Renderer.h" />
+    <ClInclude Include="API\OpenGL\Shader.h" />
+    <ClInclude Include="API\OpenGL\Texture2D.h" />
+    <ClInclude Include="API\OpenGL\UniformBuffer.h" />
+    <ClInclude Include="API\OpenGL\VertexArray.h" />
+    <ClInclude Include="API\OpenGL\VertexBuffer.h" />
     <ClInclude Include="Component\Collider.h" />
     <ClInclude Include="Component\Collider\BoxCollider.h" />
     <ClInclude Include="Component\Collider\Collider.h" />
     <ClInclude Include="Component\Collider\SphereCollider.h" />
     <ClInclude Include="Component\Collider\TerrainCollider.h" />
     <ClInclude Include="Component\Component.h" />
+    <ClInclude Include="Component\PhysicsComponent.h" />
     <ClInclude Include="Component\RigidBody.h" />
     <ClInclude Include="Core\Application.h" />
     <ClInclude Include="Core\AssetManager.h" />
@@ -173,13 +174,13 @@
     <ClInclude Include="Core\Window.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="EnginePch.h" />
+    <ClInclude Include="GUI\GUIElement.h" />
     <ClInclude Include="GameObject\GameObject.h" />
     <ClInclude Include="GameObject\Transform.h" />
-    <ClInclude Include="GUI\GUIElement.h" />
     <ClInclude Include="Include\Component.h" />
     <ClInclude Include="Include\Core.h" />
-    <ClInclude Include="Include\GameObject.h" />
     <ClInclude Include="Include\GUI.h" />
+    <ClInclude Include="Include\GameObject.h" />
     <ClInclude Include="Include\Lighting.h" />
     <ClInclude Include="Include\Material.h" />
     <ClInclude Include="Include\Maths.h" />
@@ -597,21 +598,22 @@
     <ClInclude Include="Vendor\stb\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="API\OpenGL\OpenGLContext.cpp" />
-    <ClCompile Include="API\OpenGL\OpenGLCubeMap.cpp" />
-    <ClCompile Include="API\OpenGL\OpenGLFrameBuffer.cpp" />
-    <ClCompile Include="API\OpenGL\OpenGLIndexBuffer.cpp" />
-    <ClCompile Include="API\OpenGL\OpenGLRenderer.cpp" />
-    <ClCompile Include="API\OpenGL\OpenGLShader.cpp" />
-    <ClCompile Include="API\OpenGL\OpenGLTexture2D.cpp" />
-    <ClCompile Include="API\OpenGL\OpenGLUniformBuffer.cpp" />
-    <ClCompile Include="API\OpenGL\OpenGLVertexArray.cpp" />
-    <ClCompile Include="API\OpenGL\OpenGLVertexBuffer.cpp" />
+    <ClCompile Include="API\OpenGL\Context.cpp" />
+    <ClCompile Include="API\OpenGL\CubeMap.cpp" />
+    <ClCompile Include="API\OpenGL\FrameBuffer.cpp" />
+    <ClCompile Include="API\OpenGL\IndexBuffer.cpp" />
+    <ClCompile Include="API\OpenGL\Renderer.cpp" />
+    <ClCompile Include="API\OpenGL\Shader.cpp" />
+    <ClCompile Include="API\OpenGL\Texture2D.cpp" />
+    <ClCompile Include="API\OpenGL\UniformBuffer.cpp" />
+    <ClCompile Include="API\OpenGL\VertexArray.cpp" />
+    <ClCompile Include="API\OpenGL\VertexBuffer.cpp" />
     <ClCompile Include="Component\Collider\BoxCollider.cpp" />
     <ClCompile Include="Component\Collider\Collider.cpp" />
     <ClCompile Include="Component\Collider\SphereCollider.cpp" />
     <ClCompile Include="Component\Collider\TerrainCollider.cpp" />
     <ClCompile Include="Component\Component.cpp" />
+    <ClCompile Include="Component\PhysicsComponent.cpp" />
     <ClCompile Include="Component\RigidBody.cpp" />
     <ClCompile Include="Core\Application.cpp" />
     <ClCompile Include="Core\AssetManager.cpp" />
@@ -624,9 +626,9 @@
     <ClCompile Include="EnginePch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="GUI\GUIElement.cpp" />
     <ClCompile Include="GameObject\GameObject.cpp" />
     <ClCompile Include="GameObject\Transform.cpp" />
-    <ClCompile Include="GUI\GUIElement.cpp" />
     <ClCompile Include="Lighting\DirectionalLight.cpp" />
     <ClCompile Include="Lighting\Light.cpp" />
     <ClCompile Include="Lighting\PointLight.cpp" />
@@ -638,19 +640,37 @@
     <ClCompile Include="Model\Mesh.cpp" />
     <ClCompile Include="Model\Model.cpp" />
     <ClCompile Include="Renderer\Buffer\BufferLayout.cpp" />
-    <ClCompile Include="Renderer\Buffer\FrameBuffer.cpp" />
-    <ClCompile Include="Renderer\Buffer\IndexBuffer.cpp" />
-    <ClCompile Include="Renderer\Buffer\UniformBuffer.cpp" />
-    <ClCompile Include="Renderer\Buffer\VertexArray.cpp" />
-    <ClCompile Include="Renderer\Buffer\VertexBuffer.cpp" />
-    <ClCompile Include="Renderer\Rendering\Renderable.cpp" />
+    <ClCompile Include="Renderer\Buffer\FrameBuffer.cpp">
+      <ObjectFileName>$(IntDir)\FrameBuffer1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="Renderer\Buffer\IndexBuffer.cpp">
+      <ObjectFileName>$(IntDir)\IndexBuffer1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="Renderer\Buffer\UniformBuffer.cpp">
+      <ObjectFileName>$(IntDir)\UniformBuffer1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="Renderer\Buffer\VertexArray.cpp">
+      <ObjectFileName>$(IntDir)\VertexArray1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="Renderer\Buffer\VertexBuffer.cpp">
+      <ObjectFileName>$(IntDir)\VertexBuffer1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="Renderer\Rendering\RenderCommand.cpp" />
-    <ClCompile Include="Renderer\Rendering\Renderer.cpp" />
+    <ClCompile Include="Renderer\Rendering\Renderable.cpp" />
+    <ClCompile Include="Renderer\Rendering\Renderer.cpp">
+      <ObjectFileName>$(IntDir)\Renderer1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="Renderer\Rendering\RendererAPI.cpp" />
-    <ClCompile Include="Renderer\Shader.cpp" />
-    <ClCompile Include="Renderer\Texture\CubeMap.cpp" />
+    <ClCompile Include="Renderer\Shader.cpp">
+      <ObjectFileName>$(IntDir)\Shader1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="Renderer\Texture\CubeMap.cpp">
+      <ObjectFileName>$(IntDir)\CubeMap1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="Renderer\Texture\Texture.cpp" />
-    <ClCompile Include="Renderer\Texture\Texture2D.cpp" />
+    <ClCompile Include="Renderer\Texture\Texture2D.cpp">
+      <ObjectFileName>$(IntDir)\Texture2D1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="System\CollisionSystem.cpp" />
     <ClCompile Include="Terrain\Terrain.cpp" />
     <ClCompile Include="Terrain\Water.cpp" />

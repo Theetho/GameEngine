@@ -3,7 +3,7 @@
 #include <filesystem>
 #include "Renderer/Rendering/Renderer.h"
 #include "Renderer/Rendering/RendererAPI.h"
-#include "API/OpenGL/OpenGLCubeMap.h"
+#include "API/OpenGL/CubeMap.h"
 
 namespace Engine
 {
@@ -21,7 +21,7 @@ namespace Engine
 		case Engine::API::None:
 			ENGINE_ASSERT(false, "Api not supported");
 		case Engine::API::OpenGL:
-			return CreateRef<OpenGLCubeMap>(file_path, name, use_folder_path);
+			return CreateRef<OpenGL::CubeMap>(file_path, name, use_folder_path);
 		}
 	}
 }

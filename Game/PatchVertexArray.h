@@ -1,15 +1,14 @@
 #pragma once
 
-class PatchVertexArray : public Engine::OpenGLVertexArray
+class PatchVertexArray : public Engine::OpenGL::VertexArray
 {
 public:
 	PatchVertexArray();
 	~PatchVertexArray();
 
-	void AddVertexBuffer(Engine::Ref<Engine::VertexBuffer> vertex_buffer) override;
-	void AddIndexBuffer(Engine::Ref<Engine::IndexBuffer> index_buffer) override;
-
+	void AddPatch(const std::vector<float>& vertices, unsigned int patch_size);
 private:
+	unsigned int mVbo, mSize;
 	void Render(Engine::Ref<Engine::RenderCommand> render_command, Engine::Ref<Engine::Shader> shader) const override;
 };
 

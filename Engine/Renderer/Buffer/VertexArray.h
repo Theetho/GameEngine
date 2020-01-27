@@ -22,10 +22,7 @@ namespace Engine
 
 		virtual const std::vector<Ref<VertexBuffer>>& GetVertexBuffers() const;
 		virtual const Ref<IndexBuffer> GetIndexBuffer() const;
-		virtual bool IsIndexed() const
-		{
-			return (bool)mIndexBuffer;
-		}
+		virtual bool IsIndexed() const;
 	protected:
 		std::vector<Ref<VertexBuffer>> mVertexBuffers;
 		Ref<IndexBuffer>			   mIndexBuffer;

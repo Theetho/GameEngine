@@ -1,6 +1,6 @@
 #include "EnginePch.h"
 #include "DirectionalLight.h"
-#include "API/OpenGL/OpenGLShader.h"
+#include "API/OpenGL/Shader.h"
 
 namespace Engine
 {
@@ -27,7 +27,7 @@ namespace Engine
 		mDirection = direction;
 	}
 
-	void DirectionalLight::LoadGLUniforms(Ref<OpenGLShader> shader, unsigned int index)
+	void DirectionalLight::LoadGLUniforms(Ref<OpenGL::Shader> shader, unsigned int index)
 	{
 		Light::LoadGLUniforms(shader, index);
 

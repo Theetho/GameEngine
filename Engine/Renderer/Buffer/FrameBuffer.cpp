@@ -1,6 +1,6 @@
 #include "EnginePch.h"
 #include "FrameBuffer.h"
-#include "API/OpenGL/OpenGLFrameBuffer.h"
+#include "API/OpenGL/FrameBuffer.h"
 #include "Renderer/Rendering/Renderer.h"
 #include "Renderer/Rendering/RendererAPI.h"
 
@@ -16,9 +16,14 @@ namespace Engine
 			case API::None:
 				ENGINE_ASSERT(false, "Api not supported");
 			case API::OpenGL:
-				return CreateRef<OpenGLFrameBuffer>(width, height);
+				return CreateRef<OpenGL::FrameBuffer>(width, height);
 		}
 
 		return nullptr;
 	}
+
+	FrameBuffer::FrameBuffer(unsigned int width, unsigned int height)
+		: mWidth(width)
+		, mHeight(height)
+	{}
 }

@@ -3,7 +3,7 @@
 #include "Renderer/Rendering.h"
 #include "Core/AssetManager.h"
 #include "Renderer/Texture/CubeMap.h"
-#include "API/OpenGL/OpenGLShader.h"
+#include "API/OpenGL/Shader.h"
 #include "Model/Model.h"
 
 namespace Engine
@@ -23,7 +23,7 @@ namespace Engine
 		case Engine::API::None:
 			ENGINE_ASSERT(false, "Api not supported");
 		case Engine::API::OpenGL:
-			LoadOpenGL(std::dynamic_pointer_cast<OpenGLShader>(shader));
+			LoadOpenGL(std::dynamic_pointer_cast<OpenGL::Shader>(shader));
 		}
 	}
 
@@ -37,7 +37,7 @@ namespace Engine
 		return mModel;
 	}
 
-	void Skybox::LoadOpenGL(Ref<OpenGLShader> shader)
+	void Skybox::LoadOpenGL(Ref<OpenGL::Shader> shader)
 	{
 		shader->Bind();
 		shader->UploadUniform("uSkybox", 0);

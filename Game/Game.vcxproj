@@ -158,10 +158,9 @@
     <ClInclude Include="Terrain\TerrainConfiguration.h" />
     <ClInclude Include="Terrain\TerrainNode.h" />
     <ClInclude Include="Terrain\TerrainQuadTree.h" />
-    <ClInclude Include="Terrain\TerrainShader.h" />
     <ClInclude Include="Util\FileLoader.h" />
-    <ClInclude Include="pch.h" />
     <ClInclude Include="Util\Node.h" />
+    <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\Movement.cpp" />
@@ -182,12 +181,11 @@
     <ClCompile Include="Terrain\TerrainConfiguration.cpp" />
     <ClCompile Include="Terrain\TerrainNode.cpp" />
     <ClCompile Include="Terrain\TerrainQuadTree.cpp" />
-    <ClCompile Include="Terrain\TerrainShader.cpp" />
     <ClCompile Include="Util\FileLoader.cpp" />
+    <ClCompile Include="Util\Node.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Util\Node.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine.vcxproj">

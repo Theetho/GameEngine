@@ -1,7 +1,7 @@
 #include "EnginePch.h"
 #include "Renderer/Rendering.h"
 #include "Core/Camera3D.h"
-#include "API/OpenGL/OpenGLShader.h"
+#include "API/OpenGL/Shader.h"
 #include "Terrain/Water.h"
 
 
@@ -53,7 +53,7 @@ namespace Engine
 
 		if (sRenderCommand->GetAPI() == API::OpenGL)
 		{
-			auto& open_gl_shader = std::dynamic_pointer_cast<Engine::OpenGLShader>(shader);
+			auto& open_gl_shader = std::dynamic_pointer_cast<Engine::OpenGL::Shader>(shader);
 			open_gl_shader->UploadUniform("uCameraPosition", (*sSceneData.camera_position));
 			open_gl_shader->UploadUniform("uViewProjection", (*sSceneData.view_projection));
 			if (clip)

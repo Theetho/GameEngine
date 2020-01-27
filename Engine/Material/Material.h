@@ -3,7 +3,10 @@
 namespace Engine
 {
 	class Shader;
-	class OpenGLShader;
+	namespace OpenGL
+	{
+		class Shader;
+	}
 
 	class Material
 	{
@@ -19,6 +22,6 @@ namespace Engine
 
 		virtual int  GetID() const = 0;
 		
-		virtual void LoadGLUniforms(Ref<OpenGLShader> shader);
+		virtual void LoadGLUniforms(Ref<OpenGL::Shader> shader);
 	};
 }

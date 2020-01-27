@@ -20,6 +20,10 @@ namespace Engine
 		virtual void CreateTextureAttachment() = 0;
 		virtual void CreateRenderBuffer() = 0;
 		virtual void CreateDepthAttachment() = 0;
+	protected:
+		unsigned int mWidth, mHeight;
+
+		FrameBuffer(unsigned int width, unsigned int height);
 	};
 }
 

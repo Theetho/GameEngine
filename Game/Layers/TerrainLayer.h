@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/CameraFree.h"
+#include "Terrain/Terrain.h"
 
 class TerrainLayer : public Engine::Layer
 {
@@ -15,6 +16,6 @@ public:
 private:
 	CameraFree								mCamera;
 	std::vector<Engine::Ref<Engine::Light>> mLights;
-	Engine::Skybox							mSkybox;
+	::Terrain								mTerrain;
 };
 

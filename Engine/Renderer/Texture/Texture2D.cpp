@@ -3,7 +3,7 @@
 #include <filesystem>
 #include "Renderer/Rendering/Renderer.h"
 #include "Renderer/Rendering/RendererAPI.h"
-#include "API/OpenGL/OpenGLTexture2D.h"
+#include "API/OpenGL/Texture2D.h"
 
 
 namespace Engine
@@ -46,7 +46,7 @@ namespace Engine
 		case Engine::API::None:
 			ENGINE_ASSERT(false, "Api not supported");
 		case Engine::API::OpenGL:
-			return CreateRef<OpenGLTexture2D>(file_path, name, use_folder_path);
+			return CreateRef<OpenGL::Texture2D>(file_path, name, use_folder_path);
 		}
 	}
 
@@ -57,7 +57,7 @@ namespace Engine
 			case Engine::API::None:
 				ENGINE_ASSERT(false, "Api not supported");
 			case Engine::API::OpenGL:
-				return CreateRef<OpenGLTexture2D>(width, height);
+				return CreateRef<OpenGL::Texture2D>(width, height);
 		}
 	}
 

@@ -3,26 +3,24 @@
 class Node : public Engine::Renderable
 {
 public:
-	Node(Node* parent = nullptr);
-	~Node();
+	Node();
+	Node(Node* parent);
+	Node(Node* parent, std::vector<Node*>& children);
+	virtual ~Node();
 
 	virtual void OnUpdate(const double& delta);
 
-	void AddChildren(std::vector<Node*>& children);
-	void AddChild(Node* child);
+	virtual void AddChildren(std::vector<Node*>& children);
+	virtual void AddChild(Node* child);
 
 	const std::vector<Node*>& GetChildren() const;
-	Node*					  GetParent();
-	const Engine::Transform&  GetGlobalTransform() const;
-	const Engine::Transform&  GetLocalTransform() const;
+	const Node*				  GetParent() const;
 
 	void SetParent(Node* parent);
 protected:
 	Node*			   mParent;
 	std::vector<Node*> mChildren;
-	Engine::Transform  mGlobalTransform;
-	Engine::Transform  mLocalTransform;
 
-	virtual void Render(Engine::Ref<Engine::RenderCommand> render_command, Engine::Ref<Engine::Shader> shader) const = 0;
+	virtual void Render(Engine::Ref<Engine::RenderCommand> render_command, Engine::Ref<Engine::Shader> shader) const;
 };
 

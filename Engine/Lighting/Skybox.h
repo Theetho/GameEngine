@@ -5,7 +5,10 @@
 namespace Engine
 {
 	class Shader;
-	class OpenGLShader;
+	namespace OpenGL
+	{
+		class Shader;
+	}
 	class Model;
 	class CubeMap;
 
@@ -23,7 +26,7 @@ namespace Engine
 		Ref<CubeMap> mCubeMap;
 		Ref<Model>	 mModel;
 
-		void LoadOpenGL(Ref<OpenGLShader> shader);
+		void LoadOpenGL(Ref<OpenGL::Shader> shader);
 
 		void Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const override;
 	};

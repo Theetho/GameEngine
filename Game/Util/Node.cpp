@@ -1,11 +1,19 @@
 #include "pch.h"
 #include "Node.h"
 
+Node::Node()
+	: mParent(nullptr)
+	, mChildren()
+{}
+
 Node::Node(Node* parent)
 	: mParent(parent)
 	, mChildren()
-	, mGlobalTransform()
-	, mLocalTransform()
+{}
+
+Node::Node(Node * parent, std::vector<Node*> & children)
+	: mParent(parent)
+	, mChildren(std::move(children))
 {}
 
 Node::~Node()
@@ -13,7 +21,7 @@ Node::~Node()
 
 void Node::OnUpdate(const double& delta)
 {
-	for (auto child : mChildren)
+	for (auto& child : mChildren)
 	{
 		child->OnUpdate(delta);
 	}
@@ -21,10 +29,7 @@ void Node::OnUpdate(const double& delta)
 
 void Node::AddChildren(std::vector<Node*>& children)
 {
-	for (auto child : children)
-	{
-		this->AddChild(child);
-	}
+	mChildren.insert(mChildren.end(), children.begin(), children.end());
 }
 
 void Node::AddChild(Node* child)
@@ -38,19 +43,9 @@ const std::vector<Node*>& Node::GetChildren() const
 	return mChildren;
 }
 
-Node* Node::GetParent()
+const Node* Node::GetParent() const
 {
 	return mParent;
-}
-
-const Engine::Transform& Node::GetGlobalTransform() const
-{
-	return mGlobalTransform;
-}
-
-const Engine::Transform& Node::GetLocalTransform() const
-{
-	return mLocalTransform;
 }
 
 void Node::SetParent(Node* parent)
@@ -59,4 +54,9 @@ void Node::SetParent(Node* parent)
 }
 
 void Node::Render(Engine::Ref<Engine::RenderCommand> render_command, Engine::Ref<Engine::Shader> shader) const
-{}
+{
+	for (auto& child : mChildren)
+	{
+		child->Render(render_command, shader);
+	}
+}

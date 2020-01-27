@@ -13,8 +13,8 @@ namespace Engine
 	typedef glm::mat3 Mat3;
 	typedef glm::mat4 Mat4;
 }
-#include <iostream>
 
+#include <iostream>
 static std::ostream& operator<<(std::ostream& os, const Engine::Vec2& v)
 {
 	os << "[ " << v.x << " " << v.y << " ]";

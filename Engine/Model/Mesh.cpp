@@ -3,7 +3,7 @@
 #include "Mesh.h"
 #include "Renderer/Rendering/Renderer.h"
 #include "Renderer/Buffer.h"
-#include "API/OpenGL/OpenGLShader.h"
+#include "API/OpenGL/Shader.h"
 #include "Material/Material.h"
 
 namespace Engine

@@ -2,7 +2,7 @@
 #include "Light.h"
 #include "Renderer/Rendering/Renderer.h"
 #include "Renderer/Rendering/RendererAPI.h"
-#include "API/OpenGL/OpenGLShader.h"
+#include "API/OpenGL/Shader.h"
 
 
 namespace Engine
@@ -19,7 +19,7 @@ namespace Engine
 		switch (Renderer::GetAPI())
 		{
 		case API::OpenGL:
-			LoadGLUniforms(std::dynamic_pointer_cast<OpenGLShader>(shader), index);
+			LoadGLUniforms(std::dynamic_pointer_cast<OpenGL::Shader>(shader), index);
 		default:
 			break;
 		}
@@ -35,10 +35,10 @@ namespace Engine
 		mColor = color;
 	}
 
-	void Light::LoadGLUniforms(Ref<OpenGLShader> shader, unsigned int index)
+	void Light::LoadGLUniforms(Ref<OpenGL::Shader> shader, unsigned int index)
 	{
 		shader->Bind();
-		shader->UploadUniform("uLights[" + std::to_string(index) + "].id",	   this->GetID());
+		shader->UploadUniform("uLights[" + std::to_string(index) + "].id"   , this->GetID());
 		shader->UploadUniform("uLights[" + std::to_string(index) + "].color", Vec3(mColor));
 	}
 }

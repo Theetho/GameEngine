@@ -52,6 +52,6 @@ namespace Engine
 		Vec3		mPosition;
 		Attenuation mAttenuation;
 	protected:
-		void LoadGLUniforms(Ref<OpenGLShader> shader, unsigned int index) override;
+		void LoadGLUniforms(Ref<OpenGL::Shader> shader, unsigned int index) override;
 	};
 }

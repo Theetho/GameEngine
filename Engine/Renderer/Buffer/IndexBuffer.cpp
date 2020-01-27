@@ -2,7 +2,7 @@
 #include "IndexBuffer.h"
 #include "Renderer/Rendering/Renderer.h"
 #include "Renderer/Rendering/RendererAPI.h"
-#include "API/OpenGL/OpenGLIndexBuffer.h"
+#include "API/OpenGL/IndexBuffer.h"
 
 namespace Engine
 {
@@ -16,7 +16,7 @@ namespace Engine
 			case Engine::API::None:
 				ENGINE_ASSERT(false, "Api not supported");
 			case Engine::API::OpenGL:
-				return CreateRef<OpenGLIndexBuffer>(indices, count);
+				return CreateRef<OpenGL::IndexBuffer>(indices, count);
 		}
 	}
 }

@@ -1,6 +1,6 @@
 #include "EnginePch.h"
 #include "PointLight.h"
-#include "API/OpenGL/OpenGLShader.h"
+#include "API/OpenGL/Shader.h"
 
 namespace Engine
 {
@@ -38,7 +38,7 @@ namespace Engine
 		mPosition = position;
 	}
 
-	void PointLight::LoadGLUniforms(Ref<OpenGLShader> shader, unsigned int index)
+	void PointLight::LoadGLUniforms(Ref<OpenGL::Shader> shader, unsigned int index)
 	{
 		Light::LoadGLUniforms(shader, index);
 

@@ -1,0 +1,10 @@
+ScaleY: 0
+ScaleXZ: 6000
+LodRange1: 1750
+LodRange2: 874
+LodRange3: 386
+LodRange4: 192
+LodRange5: 100
+LodRange6: 50
+LodRange7: 0
+LodRange8: 0

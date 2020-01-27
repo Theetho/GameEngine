@@ -1,7 +1,7 @@
 #include "EnginePch.h"
 #include "GameObject.h"
 #include "Include/Component.h"
-#include "API/OpenGL/OpenGLShader.h"
+#include "API/OpenGL/Shader.h"
 #include "Renderer/Rendering/RendererAPI.h"
 #include "Renderer/Rendering/RenderCommand.h"
 
@@ -140,7 +140,7 @@ namespace Engine
 	{
 		if (render_command->GetAPI() == API::OpenGL)
 		{
-			auto& open_gl_shader = std::dynamic_pointer_cast<Engine::OpenGLShader>(shader);
+			auto& open_gl_shader = std::dynamic_pointer_cast<Engine::OpenGL::Shader>(shader);
 
 			open_gl_shader->UploadUniform("uModel", mTransform.GetModel());
 		}

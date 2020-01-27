@@ -17,6 +17,6 @@ namespace Engine
 	private:
 		Vec3 mDirection;
 
-		void LoadGLUniforms(Ref<OpenGLShader> shader, unsigned int index) override;
+		void LoadGLUniforms(Ref<OpenGL::Shader> shader, unsigned int index) override;
 	};
 }

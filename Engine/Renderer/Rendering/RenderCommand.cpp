@@ -1,10 +1,10 @@
 #include "EnginePch.h"
 #include "RenderCommand.h"
-#include "API/OpenGL/OpenGLRenderer.h"
+#include "API/OpenGL/Renderer.h"
 
 namespace Engine
 {
-	RendererAPI* RenderCommand::sRenderer = new OpenGLRenderer();
+	RendererAPI* RenderCommand::sRenderer = new OpenGL::Renderer();
 
 	void RenderCommand::SetDrawMode(DrawMode draw_mode)
 	{

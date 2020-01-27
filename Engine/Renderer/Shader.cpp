@@ -2,7 +2,7 @@
 #include "Shader.h"
 #include "Rendering/Renderer.h"
 #include "Rendering/RendererAPI.h"
-#include "API/OpenGL/OpenGLShader.h"
+#include "API/OpenGL/Shader.h"
 
 namespace Engine
 {
@@ -24,7 +24,7 @@ namespace Engine
 		case Engine::API::None:
 			ENGINE_ASSERT(false, "Api not supported");
 		case Engine::API::OpenGL:
-			return CreateRef<OpenGLShader>(file_path, name, use_folder_path);
+			return CreateRef<OpenGL::Shader>(file_path, name, use_folder_path);
 		}
 
 		return nullptr;

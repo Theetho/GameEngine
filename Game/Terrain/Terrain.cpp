@@ -4,14 +4,19 @@
 
 Terrain::Terrain(const std::string& config_file)
 	: mTerrainConfiguration(config_file)
+	, mTerrainQuadTree(mTerrainConfiguration, Engine::Vec3(0))
 {
-	this->AddChild(new TerrainQuadTree());
 }
 
 Terrain::~Terrain()
 {}
 
-void Terrain::OnUpdate(const double& delta)
+void Terrain::OnUpdate(const double& delta, Engine::Camera3D& camera)
 {
-	Node::OnUpdate(delta);
+	mTerrainQuadTree.OnUpdate(delta, camera);
+}
+
+void Terrain::Render(Engine::Ref<Engine::RenderCommand> render_command, Engine::Ref<Engine::Shader> shader) const
+{
+	Engine::Renderable::Render(&mTerrainQuadTree, render_command, shader);
 }

@@ -4,49 +4,36 @@
 using namespace Engine;
 
 PatchVertexArray::PatchVertexArray()
-	: OpenGLVertexArray()
+	: OpenGL::VertexArray()
+	, mSize(0)
 {
+	glGenBuffers(1, &mVbo);
 }
 
 PatchVertexArray::~PatchVertexArray()
-{}
-
-void PatchVertexArray::AddVertexBuffer(Engine::Ref<Engine::VertexBuffer> vertex_buffer)
 {
-	glBindVertexArray(mId);
-	vertex_buffer->Bind();
-
-	ENGINE_ASSERT(vertex_buffer->GetLayout().GetElements().size(), "Vbo has no layout");
-
-	unsigned int index = 0;
-
-	const auto& layout = vertex_buffer->GetLayout();
-
-	for (const auto& element : layout)
-	{
-		glEnableVertexAttribArray(index);
-		glVertexAttribPointer(
-			index++,
-			element.GetElementCount(),
-			ShaderDataTypeToGLType(element.type),
-			element.normalized ? GL_TRUE : GL_FALSE,
-			layout.GetStride(),
-			(const void*)element.offset
-		);
-	}
-
-	glPatchParameteri(GL_PATCH_VERTICES, vertex_buffer->GetCount());
-
-	mVertexBuffers.push_back(vertex_buffer);
+	glDeleteBuffers(1, &mVbo);
 }
 
-// Override on purpose
-void PatchVertexArray::AddIndexBuffer(Engine::Ref<Engine::IndexBuffer> index_buffer)
-{}
+void PatchVertexArray::AddPatch(const std::vector<float>& vertices, unsigned int patch_size)
+{
+	mSize = vertices.size();
+
+	glBindVertexArray(mId);
+	glBindBuffer(GL_ARRAY_BUFFER, mVbo);
+
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), vertices.data(), GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, false, sizeof(float) * 2, 0);
+	glPatchParameteri(GL_PATCH_VERTICES, patch_size);
+
+	glBindVertexArray(0);
+}
 
 void PatchVertexArray::Render(Engine::Ref<Engine::RenderCommand> render_command, Engine::Ref<Engine::Shader> shader) const
 {
-	Renderer::SetDrawMode(DrawMode::PATCHES);
-	VertexArray::Render(render_command, shader);
-	Renderer::SetDrawMode(DrawMode::DEFAULT);
+	glBindVertexArray(mId);
+	glEnableVertexAttribArray(0);
+
+	glDrawArrays(GL_PATCHES, 0, mSize);
 }

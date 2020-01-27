@@ -35,7 +35,7 @@ void BombermanLayer::OnAttach()
 	(void)AssetManager::GetShaderLibrary().Load("colliders.glsl");
 	(void)AssetManager::GetShaderLibrary().Load("gui.glsl");
 	(void)AssetManager::GetShaderLibrary().Load("Skybox_Colored.glsl");
-	Ref<OpenGLShader> shader_water = std::dynamic_pointer_cast<OpenGLShader>(AssetManager::GetShaderLibrary().Load("water.glsl"));
+	Ref<OpenGL::Shader> shader_water = std::dynamic_pointer_cast<OpenGL::Shader>(AssetManager::GetShaderLibrary().Load("water.glsl"));
 
 	for (int i = 0; i < mLights.size(); ++i)
 	{

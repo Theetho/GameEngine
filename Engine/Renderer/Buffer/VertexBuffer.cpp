@@ -3,7 +3,7 @@
 #include "BufferLayout.h"
 #include "Renderer/Rendering/Renderer.h"
 #include "Renderer/Rendering/RendererAPI.h"
-#include "API/OpenGL/OpenGLVertexBuffer.h"
+#include "API/OpenGL/VertexBuffer.h"
 
 namespace Engine
 {
@@ -17,7 +17,7 @@ namespace Engine
 		case Engine::API::None:
 			ENGINE_ASSERT(false, "Api not supported");
 		case Engine::API::OpenGL:
-			return CreateRef<OpenGLVertexBuffer>(vertices, vertex_count);
+			return CreateRef<OpenGL::VertexBuffer>(vertices, vertex_count);
 		}
 	}
 

@@ -3,12 +3,6 @@
 
 namespace Engine
 {
-	enum class PARSING 
-	{
-		KEY,
-		VALUE 
-	};
-
 	ConfigFile::ConfigFile(const std::string& config_file)
 		: mFields()
 	{
@@ -21,21 +15,18 @@ namespace Engine
 	void ConfigFile::Parse(const std::string& config_file)
 	{
 		unsigned int index = 0;
-		std::string key = "";
-		std::string value = "";
 		std::string line = "";
-		std::stringstream file_to_string;
 		std::ifstream file(config_file, std::ios::in, std::ios::binary);
-		PARSING state = PARSING::KEY;
 		while (std::getline(file, line))
 		{
-			if (line.size() == 0)
-				continue;
+			std::string key = "";
+			std::string value = "";
 
 			auto double_dot = line.find_first_of(':');
-			line = line.erase(double_dot);
+			line = line.erase(double_dot, 1);
 
-			file_to_string << line;
+			std::istringstream file_to_string(line);
+
 			file_to_string >> key >> value;
 			mFields[key]    = value;
 			mIndex[index++] = value;
