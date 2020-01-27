@@ -8,7 +8,7 @@ namespace Engine
 {
 	/// Camera3D
 
-	const float Camera3D::Near = 0.1f, Camera3D::Far = 1000.0f;
+	const float Camera3D::Near = 0.1f, Camera3D::Far = 10000.0f;
 
 	Camera3D::Camera3D(const Vec3& position)
 		: GameObject(Transform(position, Vec3(20.0f, 40.0f, 0.0f), Vec3(1.0f)))

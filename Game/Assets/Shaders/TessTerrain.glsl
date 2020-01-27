@@ -3,44 +3,265 @@
 
 layout (location = 0) in vec2 inPosition;
 
-uniform mat4 uGlobal;
-uniform mat4 uLocal;
+out vec2 vMapCoord;
+
+uniform mat4      uGlobal;
+uniform mat4      uLocal;
+uniform vec3      uCameraPosition;
+uniform vec2      uIndex;
+uniform vec2      uLocation;
+uniform float     uGap;
+uniform float     uScaleY;
+uniform int       uLod;
+uniform int       uLodMorphingArea[8];
+uniform sampler2D uHeightMap;
+
+//float MorphLatitude(vec2 position)
+//{
+//	vec2 frac = position - uLocation;
+//	
+//	float morph = (uIndex.x == 0 ? frac.x : - frac.x) + (uIndex.y == 0 ? - frac.y : frac.y);
+//	if (uIndex.x == 0)
+//		morph -= uGap;
+//	if (uIndex.y == 0)
+//		morph += uGap;
+//	if (morph > 0)
+//	{
+//		if (uIndex.y == 0)
+//		{
+//			return morph;
+//		}
+//		else
+//		{
+//			return -morph;
+//		}
+//	}	
+//	return 0;
+//}
+//
+//float MorphLongitude(vec2 position)
+//{
+//	vec2 frac = position - uLocation;
+//	
+//	float morph = (uIndex.x == 0 ? - frac.x : frac.x) + (uIndex.y == 0 ? frac.y : - frac.y);
+//	if (uIndex.x == 0)
+//		morph += uGap;
+//	if (uIndex.y == 0)
+//		morph -= uGap;
+//	if (morph > 0)
+//	{
+//		if (uIndex.x == 0)
+//		{
+//			return -morph;
+//		}
+//		else
+//		{
+//			return morph;
+//		}
+//	}	
+//	return 0;
+//}
+//
+//vec2 Morph(vec2 local_position, int morphing_area)
+//{
+//	vec2 morph = vec2(0);
+//	
+//	vec2 fix_point_latitude = vec2(
+//		(uIndex.x == 0 ? uGap : 0)
+//	  , (uIndex.y == 0 ? 0    : uGap)
+//	);
+//	vec2 fix_point_longitude = vec2(
+//		(uIndex.x == 0 ? 0    : uGap)
+//	  , (uIndex.y == 0 ? uGap : 0)
+//	);
+//	
+//	float planar_factor = 0;
+//	planar_factor = (uCameraPosition.y > abs(uScaleY) ?  1 : uCameraPosition.y / abs(uScaleY));
+//	
+//	float distance_latitude  = length(uCameraPosition - (uGlobal * vec4(fix_point_latitude.x , planar_factor, fix_point_latitude.y , 1)).xyz);
+//	float distance_longitude = length(uCameraPosition - (uGlobal * vec4(fix_point_longitude.x, planar_factor, fix_point_longitude.y, 1)).xyz);
+//	
+//	if (distance_latitude < morphing_area)
+//		morph.x = MorphLatitude(local_position);
+//	if (distance_longitude < morphing_area)
+//		morph.y = MorphLongitude(local_position);
+//
+//	return morph;
+//}
+
+float MorphLatitude(vec2 position) {
+	
+	vec2 frac = position - uLocation;
+	
+	if (uIndex == vec2(0,0)){
+		float morph = frac.x - frac.y;
+		if (morph > 0)
+			return morph;
+	}
+	if (uIndex == vec2(1,0)){
+		float morph = uGap - frac.x - frac.y;
+		if (morph > 0)
+			return morph;
+	}
+	if (uIndex == vec2(0,1)){
+		float morph = frac.x + frac.y - uGap;
+		if (morph > 0)
+			return -morph;
+	}
+	if (uIndex == vec2(1,1)){
+		float morph = frac.y - frac.x;
+		if (morph > 0)
+			return -morph;
+	}
+	return 0;
+}
+
+float MorphLongitude(vec2 position) {
+	
+	vec2 frac = position - uLocation;
+	
+	if (uIndex == vec2(0,0)){
+		float morph = frac.y - frac.x;
+		if (morph > 0)
+			return -morph;
+	}
+	if (uIndex == vec2(1,0)){
+		float morph = frac.y - (uGap - frac.x);
+		if (morph > 0)
+			return morph;
+	}
+	if (uIndex == vec2(0,1)){
+		float morph = uGap - frac.y - frac.x;
+		if (morph > 0)
+			return -morph;
+	}
+	if (uIndex == vec2(1,1)){
+		float morph = frac.x - frac.y;
+		if (morph > 0)
+			return morph;
+	}
+	return 0;
+}
+
+vec2 Morph(vec2 local_position, int morph_area){
+	
+	vec2 morphing = vec2(0,0);
+	
+	vec2 fixPointLatitude = vec2(0,0);
+	vec2 fixPointLongitude = vec2(0,0);
+	float distLatitude;
+	float distLongitude;
+	
+	if (uIndex == vec2(0,0)) {
+		fixPointLatitude = uLocation + vec2(uGap,0);
+		fixPointLongitude = uLocation + vec2(0,uGap);
+	}
+	else if (uIndex == vec2(1,0)) {
+		fixPointLatitude = uLocation;
+		fixPointLongitude = uLocation + vec2(uGap,uGap);
+	}
+	else if (uIndex == vec2(0,1)) {
+		fixPointLatitude = uLocation + vec2(uGap,uGap);
+		fixPointLongitude = uLocation;
+	}
+	else if (uIndex == vec2(1,1)) {
+		fixPointLatitude = uLocation + vec2(0,uGap);
+		fixPointLongitude = uLocation + vec2(uGap,0);
+	}
+	
+	float planarFactor = 0;
+	if (uCameraPosition.y > abs(uScaleY))
+		planarFactor = 1;
+	else
+		planarFactor = uCameraPosition.y/ abs(uScaleY);
+		
+	distLatitude = length(uCameraPosition - (uGlobal * 
+					vec4(fixPointLatitude.x,planarFactor,fixPointLatitude.y,1)).xyz);
+	distLongitude = length(uCameraPosition - (uGlobal * 
+					vec4(fixPointLongitude.x,planarFactor,fixPointLongitude.y,1)).xyz);
+					
+	if (distLatitude > morph_area)
+		morphing.x = MorphLatitude(local_position.xy);
+	if (distLongitude > morph_area)
+		morphing.y = MorphLongitude(local_position.xy);
+		
+	return morphing;
+}
 
 void main()
 {				
 	vec2 local_position = (uLocal * vec4(inPosition.x, 0, inPosition.y, 1)).xz;
+	
+	if (uLod > 0)
+		local_position += Morph(local_position, uLodMorphingArea[uLod - 1]); 
 					
-	gl_Position = uGlobal * vec4(local_position.x, 0, local_position.y, 1);
+	float height = texture(uHeightMap, local_position).r;
+
+	vMapCoord	= local_position;
+	gl_Position = uGlobal * vec4(local_position.x, height, local_position.y, 1);
 }
 #type tesselation control
 #version 430
 
 layout(vertices = 16) out;
 
+in vec2 vMapCoord[];
+
+out vec2 tcMapCoord[];
+
 const int AB = 2;
 const int BC = 3;
 const int CD = 0;
 const int DA = 1;
+
+uniform int   uTesselationFactor;
+uniform float uTesselationSlope;
+uniform float uTesselationShift;
+uniform vec3  uCameraPosition;
 	
+float LodFactor(float distance)
+{
+	return max(0.0, uTesselationFactor / pow(distance, uTesselationSlope) + uTesselationShift);
+}
+
 void main()
 {
 	if(gl_InvocationID == 0)
 	{
-			gl_TessLevelOuter[AB] = 1;
-			gl_TessLevelOuter[BC] = 1;
-			gl_TessLevelOuter[CD] = 1;
-			gl_TessLevelOuter[DA] = 1;
+			vec3 abMid = vec3(gl_in[0].gl_Position  + gl_in[3].gl_Position ) / 2.0;		
+			vec3 bcMid = vec3(gl_in[3].gl_Position  + gl_in[15].gl_Position) / 2.0;		
+			vec3 cdMid = vec3(gl_in[15].gl_Position + gl_in[12].gl_Position) / 2.0;		
+			vec3 daMid = vec3(gl_in[12].gl_Position + gl_in[0].gl_Position ) / 2.0;		
+
+			float distanceAB = distance(abMid, uCameraPosition);
+			float distanceBC = distance(bcMid, uCameraPosition);
+			float distanceCD = distance(cdMid, uCameraPosition);
+			float distanceDA = distance(daMid, uCameraPosition);
+
+			gl_TessLevelOuter[AB] = mix(1, gl_MaxTessGenLevel, LodFactor(distanceAB));
+			gl_TessLevelOuter[BC] = mix(1, gl_MaxTessGenLevel, LodFactor(distanceBC));
+			gl_TessLevelOuter[CD] = mix(1, gl_MaxTessGenLevel, LodFactor(distanceCD));
+			gl_TessLevelOuter[DA] = mix(1, gl_MaxTessGenLevel, LodFactor(distanceDA));
 	
-			gl_TessLevelInner[0] = 1;
-			gl_TessLevelInner[1] = 1;	
+			gl_TessLevelInner[0] = (gl_TessLevelOuter[BC] + gl_TessLevelOuter[DA]) / 4;
+			gl_TessLevelInner[1] = (gl_TessLevelOuter[AB] + gl_TessLevelOuter[CD]) / 4;
 	}
 	
+	tcMapCoord[gl_InvocationID] = vMapCoord[gl_InvocationID];
+
 	gl_out[gl_InvocationID].gl_Position = gl_in[gl_InvocationID].gl_Position;
 }
 #type tesselation evalution
 #version 430
 
 layout(quads, fractional_odd_spacing, cw) in;
+
+in vec2 tcMapCoord[];
+
+out vec2 teMapCoord;
+
+uniform sampler2D uHeightMap;
+uniform float     uScaleY;
 
 void main(){
 
@@ -54,13 +275,25 @@ void main(){
 	u * v * gl_in[3].gl_Position +
 	(1 - u) * v * gl_in[15].gl_Position);
 	
+	teMapCoord = 	
+	((1 - u) * (1 - v) * tcMapCoord[12] +
+	u * (1 - v)		   * tcMapCoord[0]  +
+	u * v			   * tcMapCoord[3]  +
+	(1 - u) * v		   * tcMapCoord[15]);
+
+	position.y = texture(uHeightMap, teMapCoord).r * uScaleY;
+
 	gl_Position = position;
 }
 #type geometry
 #version 430
 
 layout(triangles) in;
-layout(line_strip, max_vertices = 4) out;
+layout(triangle_strip, max_vertices = 3) out;
+
+in vec2 teMapCoord[];
+
+out vec2 gMapCoord;
 
 uniform mat4 uViewProjection;
 
@@ -70,21 +303,38 @@ void main() {
 	{
 		vec4 position = gl_in[i].gl_Position;
 		gl_Position = uViewProjection * position;
+		gMapCoord = teMapCoord[i];
 		EmitVertex();
 	}
 	
-	vec4 position = gl_in[0].gl_Position;
-	gl_Position = uViewProjection * position;
-    EmitVertex();
-	
 	EndPrimitive();
+
 }
 #type fragment
 #version 430
 
 layout(location = 0) out vec4 outColor;
 
+in vec2 gMapCoord;
+
+uniform sampler2D uNormalMap;
+
+// TEMPORARY
+const vec3  cLightDirection = vec3(0.1, -1.0, 0.1);
+const float cIntensity = 1.2;
+
+float diffuse(vec3 direction, vec3 normal, float intensity)
+{
+	return max(0.01, dot(normal, -direction) * intensity);
+}
+
 void main()
 {
-	outColor = vec4(0.01, 1, 0.01, 1.0);
+	vec3 normal = texture(uNormalMap, gMapCoord).rgb;
+
+	float diffuse = diffuse(cLightDirection, normal, cIntensity);
+
+	vec3 final_color = vec3(0.01, 1, 0.01) * diffuse;
+
+	outColor = vec4(final_color, 1.0);
 }

@@ -25,6 +25,7 @@ namespace Shared
 	int _channels = 4;
 	std::vector<unsigned char> _height_map;
 	std::vector<unsigned char> _height_map_colored;
+	std::vector<unsigned char> _normal_map;
 	Font _font;
 	Vector2f _mouse_position;
 	Vector2f _previous_mouse_position;
@@ -52,6 +53,38 @@ static sf::Color ApplyColor(float grey_scale)
 			return color->second;
 		}
 		++color;
+	}
+}
+
+static void GenerateNormalMap()
+{
+	auto& i = Shared::_height_map;
+
+	for (int row = 1; row < Shared::_height - 1; ++row)
+	{
+		for (int column = 1; column < Shared::_width - 1; ++column)
+		{
+			/*
+			 * z1  z2  z3 
+			 *
+			 * z4  px  z5
+			 *
+			 * z6  z7  z8
+			 */
+
+			int z1;
+			int z2;
+			int z3;
+			int z4;
+			int z5;
+			int z6;
+			int z7;
+			int z8;
+
+			unsigned char red   = -(i[2] - i[0] + 2 * (i[5] - i[3]) + i[8] - i[6]);
+			unsigned char green = -(i[6] - i[0] + 2 * (i[7] - i[1]) + i[8] - i[2]);
+			unsigned char blue  = 1.0;
+		}
 	}
 }
 

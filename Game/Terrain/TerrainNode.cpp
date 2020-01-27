@@ -98,8 +98,20 @@ void TerrainNode::Render(Ref<RenderCommand> render_command, Ref<Shader> shader) 
 		if (render_command->GetAPI() == Engine::API::OpenGL)
 		{
 			auto ogl_shader = std::dynamic_pointer_cast<Engine::OpenGL::Shader>(shader);
-			ogl_shader->UploadUniform("uGlobal", mGlobalTransform.GetModel());
-			ogl_shader->UploadUniform("uLocal" , mLocalTransform.GetModel());
+			ogl_shader->UploadUniform("uGlobal"   , mGlobalTransform.GetModel());
+			ogl_shader->UploadUniform("uLocal"    , mLocalTransform.GetModel());
+			ogl_shader->UploadUniform("uScaleY"   , mTerrainConfiguration.GetScaleY());
+			ogl_shader->UploadUniform("uLod"      , (int)mLod);
+			ogl_shader->UploadUniform("uIndex"    , mIndex);
+			ogl_shader->UploadUniform("uLocation" , mLocation);
+			ogl_shader->UploadUniform("uGap"      , mGap);
+			ogl_shader->UploadUniform("uTesselationSlope" , mTerrainConfiguration.GetTesselationSlope());
+			ogl_shader->UploadUniform("uTesselationShift" , mTerrainConfiguration.GetTesselationShift());
+			ogl_shader->UploadUniform("uTesselationFactor", mTerrainConfiguration.GetTesselationFactor());
+			mTerrainConfiguration.GetHeightMap()->Bind();
+			ogl_shader->UploadUniform("uHeightMap", 0);
+			mTerrainConfiguration.GetNormalMap()->Bind(1);
+			ogl_shader->UploadUniform("uNormalMap", 1);
 		}
 		Renderable::Render(&mVertexArray, render_command, shader);
 	}

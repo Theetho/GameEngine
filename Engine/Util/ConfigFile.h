@@ -7,7 +7,7 @@
  *		height: 720\n
  *		title: GameEngine\n
  *		...
- *		attibute: value\n
+ *		attribute: value\n
  *
  */
 
@@ -15,13 +15,10 @@ namespace Engine
 {
 
 	/* 
-	 *  The value for each field is store as a string.
+	 *  The value for each field is stored as a string.
 	 *  To retrieve the correct data type, the user has 
-	 *  to know the real type of data.
-	 *  For example, to retrieve the width of the window,
-	 *  you have to call GetInt("width"). If you call
-	 *  GetInt() on a string, like GetInt("title"), it
-	 *  will not work.
+	 *  to know it in advance and call the method GetValueAt
+	 *  with the right template parameter.
 	 */
 	 class ConfigFile
 	{
@@ -50,18 +47,6 @@ namespace Engine
 
 			return result;
 		}
-		// Access the value directly through the key
-		int			GetInt(const std::string& field) const;
-		char		GetChar(const std::string& field) const;
-		float		GetFloat(const std::string& field) const;
-		double		GetDouble(const std::string& field) const;
-		std::string GetString(const std::string& field) const;
-		// Access the value through the index of the key in the original string ("config_file") 
-		int			GetInt(unsigned int field_index) const;
-		char		GetChar(unsigned int field_index) const;
-		float		GetFloat(unsigned int field_index) const;
-		double		GetDouble(unsigned int field_index) const;
-		std::string GetString(unsigned int field_index) const;
 	private:
 		std::map<std::string, std::string> mFields;
 		std::map<unsigned int, std::string> mIndex;

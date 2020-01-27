@@ -12,9 +12,9 @@ public:
 
 	void OnUpdate(const double& delta, Engine::Camera3D& camera);
 
-	static unsigned int GetRootNodesCount();
+	static int GetRootNodesCount();
 private:
-	static constexpr unsigned int sRootNodes = 8;
+	static constexpr int sRootNodes = 8;
 	Engine::Transform mGlobalTransform;
 	Engine::Transform mLocalTransform;
 	PatchVertexArray mVertexArray;

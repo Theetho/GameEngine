@@ -11,10 +11,12 @@ public:
 	~Terrain();
 
 	void OnUpdate(const double& delta, Engine::Camera3D& camera);
+	void Load(Engine::Ref<Engine::Shader> shader);
 private:
 	TerrainConfiguration mTerrainConfiguration;
 	TerrainQuadTree		 mTerrainQuadTree;
 
 	void Render(Engine::Ref<Engine::RenderCommand> render_command, Engine::Ref<Engine::Shader> shader) const override;
+	void LoadGLUniforms(Engine::Ref<Engine::OpenGL::Shader> shader);
 };
 

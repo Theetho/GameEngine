@@ -19,10 +19,17 @@ namespace Engine
 		std::ifstream file(config_file, std::ios::in, std::ios::binary);
 		while (std::getline(file, line))
 		{
+			if (line.size() == 0 || (line[0] == '/' && line[1] == '/'))
+				continue;
+
 			std::string key = "";
 			std::string value = "";
 
 			auto double_dot = line.find_first_of(':');
+			
+			if (double_dot == std::string::npos)
+				continue; 
+				
 			line = line.erase(double_dot, 1);
 
 			std::istringstream file_to_string(line);
@@ -31,55 +38,5 @@ namespace Engine
 			mFields[key]    = value;
 			mIndex[index++] = value;
 		}
-	}
-
-	int ConfigFile::GetInt(const std::string& field) const
-	{
-		return std::atoi(this->mFields.at(field).c_str());
-	}
-
-	char ConfigFile::GetChar(const std::string& field) const
-	{
-		return this->mFields.at(field)[0];
-	}
-
-	float ConfigFile::GetFloat(const std::string& field) const
-	{
-		return static_cast<float>(this->GetDouble(field));
-	}
-
-	double ConfigFile::GetDouble(const std::string& field) const
-	{
-		return std::atof(this->mFields.at(field).c_str());
-	}
-	
-	std::string ConfigFile::GetString(const std::string& field) const
-	{
-		return this->mFields.at(field);
-	}
-	
-	int ConfigFile::GetInt(unsigned int field_index) const
-	{
-		return std::atoi(this->mFields.at(mIndex.at(field_index)).c_str());
-	}
-
-	char ConfigFile::GetChar(unsigned int field_index) const
-	{
-		return this->mFields.at(mIndex.at(field_index))[0];
-	}
-	
-	float ConfigFile::GetFloat(unsigned int field_index) const
-	{
-		return static_cast<float>(this->GetDouble(mIndex.at(field_index)));
-	}
-
-	double ConfigFile::GetDouble(unsigned int field_index) const
-	{
-		return std::atof(this->mFields.at(mIndex.at(field_index)).c_str());
-	}
-
-	std::string ConfigFile::GetString(unsigned int field_index) const
-	{
-		return this->mFields.at(mIndex.at(field_index));
 	}
 }

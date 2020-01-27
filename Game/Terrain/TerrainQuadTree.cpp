@@ -31,7 +31,7 @@ void TerrainQuadTree::OnUpdate(const double& delta, Engine::Camera3D& camera)
 	}
 }
 
-unsigned int TerrainQuadTree::GetRootNodesCount()
+int TerrainQuadTree::GetRootNodesCount()
 {
 	return sRootNodes;
 }

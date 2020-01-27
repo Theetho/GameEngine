@@ -15,8 +15,8 @@ private:
 	{
 		float current;
 		float angular = 50.0f;
-		const float max = 20.0f;
-		const float min = 5.0f;
+		const float max = 100.0f;
+		const float min = 25.0f;
 	};
 	Speed mSpeed;
 	// For camera for example;

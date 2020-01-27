@@ -17,10 +17,10 @@ void TerrainLayer::OnAttach()
 		CreateRef<DirectionalLight>(Vec3(0.4, -0.5f, 0.0f))
 	};
 
-	(void)AssetManager::GetShaderLibrary().Load("TessTerrain.glsl");
+	auto terrain_shader = AssetManager::GetShaderLibrary().Load("TessTerrain.glsl");
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	//Renderer::SetDrawMode(DrawMode::PATCHES);
+	mTerrain.Load(terrain_shader);
+
 	RenderCommand::SetClearColor(Color(0, 200, 255));
 	Input::ToggleCursor();
 }
@@ -34,11 +34,11 @@ void TerrainLayer::OnUpdate(const double& delta)
 	mCamera.OnUpdate(delta);
 	mTerrain.OnUpdate(delta, mCamera);
 
-	Ref<Shader> cTerrainShader = AssetManager::GetShaderLibrary().Get("TessTerrain");
+	Ref<Shader> terrain_shader = AssetManager::GetShaderLibrary().Get("TessTerrain");
 
 	RenderCommand::Clear();
 	Renderer::BeginScene(mCamera);
-	Renderer::Submit(cTerrainShader, mTerrain);
+	Renderer::Submit(terrain_shader, mTerrain);
 	Renderer::Render();
 	Renderer::EndScene();
 }

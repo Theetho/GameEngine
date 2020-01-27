@@ -8,13 +8,21 @@ public:
 
 	float GetScaleXZ() const;
 	float GetScaleY() const;
-	std::array<unsigned int, 8> GetLodRange() const;
+	float GetTesselationSlope() const;
+	float GetTesselationShift() const;
+	int   GetTesselationFactor() const;
+	std::array<int, 8> GetLodRange() const;
+	std::array<int, 8> GetLodMorphingArea() const;
+	Engine::Ref<Engine::Texture2D> GetHeightMap() const;
+	Engine::Ref<Engine::Texture2D> GetNormalMap() const;
 private:
-	float mScaleY;
-	float mScaleXZ;
-	std::array<unsigned int, 8> mLodRange;
-	std::array<unsigned int, 8> mLodMorphingArea;
+	float mScaleY, mScaleXZ;
+	float mTesselationSlope, mTesselationShift;
+	int   mTesselationFactor;
+	std::array<int, 8> mLodRange;
+	std::array<int, 8> mLodMorphingArea;
+	Engine::Ref<Engine::Texture2D> mHeightMap, mNormalMap;
 	
-	unsigned int CalculateMorphingArea(unsigned int lod) const;
+	int CalculateMorphingArea(int lod) const;
 };
 
