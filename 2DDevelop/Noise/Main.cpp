@@ -9,6 +9,8 @@
 
 using namespace sf;
 
+enum _Image { HEIGHTMAP, NORMALMAP, COLORED };
+
 struct Data
 {
 	int    seed;
@@ -23,9 +25,11 @@ namespace Shared
 	int _width    = 1024;
 	int _height   = 1024;
 	int _channels = 4;
+	float _normal_scale = 0.5f;
 	std::vector<unsigned char> _height_map;
 	std::vector<unsigned char> _height_map_colored;
 	std::vector<unsigned char> _normal_map;
+	std::vector<float> _height_value;
 	Font _font;
 	Vector2f _mouse_position;
 	Vector2f _previous_mouse_position;
@@ -56,9 +60,17 @@ static sf::Color ApplyColor(float grey_scale)
 	}
 }
 
+static void Normalize(float& r, float& g, float& b)
+{
+	float sum = r + g + b;
+	r /= sum; b /= sum; g /= sum;
+}
+
 static void GenerateNormalMap()
 {
-	auto& i = Shared::_height_map;
+	Shared::_normal_map.clear();
+
+	auto& i = Shared::_height_value;
 
 	for (int row = 1; row < Shared::_height - 1; ++row)
 	{
@@ -72,18 +84,26 @@ static void GenerateNormalMap()
 			 * z6  z7  z8
 			 */
 
-			int z1;
-			int z2;
-			int z3;
-			int z4;
-			int z5;
-			int z6;
-			int z7;
-			int z8;
+			int z1 = (row - 1) * Shared::_width + (column - 1);
+			int z2 = z1 + 1;
+			int z3 = z2 + 1;
+			int z4 = z1 + Shared::_width;
+			int z5 = z4 + 2;
+			int z6 = z4 + Shared::_width;
+			int z7 = z6 + 1;
+			int z8 = z7 + 1;
 
-			unsigned char red   = -(i[2] - i[0] + 2 * (i[5] - i[3]) + i[8] - i[6]);
-			unsigned char green = -(i[6] - i[0] + 2 * (i[7] - i[1]) + i[8] - i[2]);
-			unsigned char blue  = 1.0;
+			// r g b a
+			float r = Shared::_normal_scale -(i[z8] - i[z6] + 2 * (i[z5] - i[z4]) + i[z3] - i[z1]);
+			float g = Shared::_normal_scale -(i[z1] - i[z6] + 2 * (i[z2] - i[z7]) + i[z3] - i[z8]);
+			float b = 1.0f;
+
+			//Normalize(r, g, b);
+
+			Shared::_normal_map.push_back(unsigned char(r * 255));
+			Shared::_normal_map.push_back(unsigned char(g * 255));
+			Shared::_normal_map.push_back(unsigned char(b * 255));
+			Shared::_normal_map.push_back(255);
 		}
 	}
 }
@@ -92,6 +112,7 @@ static void GenerateHeightMap()
 {
 	Shared::_height_map.clear();
 	Shared::_height_map_colored.clear();
+	Shared::_height_value.clear();
 
 	FastNoise noise;
 	noise.SetNoiseType(FastNoise::PerlinFractal);
@@ -116,7 +137,12 @@ static void GenerateHeightMap()
 		for (int column = 0; column < Shared::_width; ++column)
 		{
 			double noise_value = noise.GetNoise((double)row / Shared::_data.scale, (double)column / Shared::_data.scale);
-			unsigned char color = ((noise_value - min) / (max - min)) * 255;
+			float height = ((noise_value - min) / (max - min));
+			
+			Shared::_height_value.push_back(height);
+
+			unsigned char color = height * 255;
+
 			Shared::_height_map.push_back(color);
 			Shared::_height_map.push_back(color);
 			Shared::_height_map.push_back(color);
@@ -154,44 +180,74 @@ int main()
 	Shared::_data.octave = 8;
 	Shared::_data.lacunarity = 2;
 	Shared::_data.persistence = 0.5;
-	Shared::_data.scale = 0.758;
+	Shared::_data.scale = 5;
 
 	GenerateHeightMap();
 
 	UILib::Window window(1280, 720, "HeightMap");
 	bool running = true;
-	bool colored = false;
+	_Image image = HEIGHTMAP;
 
 	// Height map
 	Texture texture;
 	texture.create(Shared::_width, Shared::_height);
 	Sprite map(texture);
 	map.setScale(512.f / (float)Shared::_width, 512.f / (float)Shared::_height);
-	//map.setScale(2, 2);
 	map.setPosition(window.GetWidth() / 2 - map.getGlobalBounds().width / 2, window.GetHeight() / 2 - map.getGlobalBounds().height / 2);
 
 	int& seed = Shared::_data.seed;
 
-	auto save_image = []()
+	auto save_image = [&image]()
 	{
-		std::ostringstream name;
-		name << Shared::_data.seed << "_" <<
-			    Shared::_data.octave << "_" <<
-			    Shared::_data.lacunarity << "_" <<
-			    Shared::_data.persistence << "_" <<
-			    Shared::_data.scale << ".png";
+			std::ostringstream name;
+			name << "Heightmap_" <<
+					Shared::_data.seed << "_" <<
+				    Shared::_data.octave << "_" <<
+				    Shared::_data.lacunarity << "_" <<
+				    Shared::_data.persistence << "_" <<
+				    Shared::_data.scale << ".png";
 
-		stbi_write_png(("../Game/Assets/Textures/Heightmaps/" + name.str()).c_str(), Shared::_width, Shared::_height, Shared::_channels, Shared::_height_map.data(), Shared::_width * Shared::_channels);
-		std::cout << "Image saved " << std::endl;
+			stbi_write_png(("../Game/Assets/Textures/Terrain/" + name.str()).c_str(), Shared::_width, Shared::_height, Shared::_channels, Shared::_height_map.data(), Shared::_width * Shared::_channels);
+			std::cout << "Heightmap saved " << std::endl;
+
+			name.str("");
+
+			name << "Normalmap_" <<
+					Shared::_data.seed << "_" <<
+					Shared::_data.octave << "_" <<
+					Shared::_data.lacunarity << "_" <<
+					Shared::_data.persistence << "_" <<
+					Shared::_data.scale << ".png";
+
+			stbi_write_png(("../Game/Assets/Textures/Terrain/" + name.str()).c_str(), Shared::_width, Shared::_height, Shared::_channels, Shared::_normal_map.data(), Shared::_width * Shared::_channels);
+			std::cout << "Normalmap saved " << std::endl;
+	};
+
+	auto switch_image = [&image]()
+	{
+		if (image == COLORED)
+		{
+			image = HEIGHTMAP;
+			GenerateHeightMap();
+		}
+		else if (image == HEIGHTMAP)
+		{
+			image = NORMALMAP;
+			GenerateNormalMap();
+		}
+		else if (image == NORMALMAP)
+			image = COLORED;
 	};
 
 	window.AddUIElement(new UILib::Button(Vector2f(380, 30), [&seed](){ seed = rand(); GenerateHeightMap(); }, "Generate"));
-	window.AddUIElement(new UILib::Slider<double> (Shared::_data.scale, 0.0, 1.0, 0.01, Vector2f(150, 70), &GenerateHeightMap, "Scale"));
+	window.AddUIElement(new UILib::Slider<double> (Shared::_data.scale, 0.0, 10.0, 0.01, Vector2f(150, 70), &GenerateHeightMap, "Scale"));
 	window.AddUIElement(new UILib::Slider<double> (Shared::_data.lacunarity, 1.0, 10.0, 0.1, Vector2f(150, 110), &GenerateHeightMap, "Lacunarity"));
 	window.AddUIElement(new UILib::Slider<double> (Shared::_data.persistence, 0.0, 1.0, 0.01, Vector2f(150, 150), &GenerateHeightMap, "Persistence"));
 	window.AddUIElement(new UILib::Slider<size_t> (Shared::_data.octave, 1, 8, 1, Vector2f(150, 190), &GenerateHeightMap, "Octave"));
-	window.AddUIElement(new UILib::Button(Vector2f(120, 600),save_image, "Save"));
-	window.AddUIElement(new UILib::Button(Vector2f(120, 560), [&colored](){colored = !colored;}, "Color scale"));
+	window.AddUIElement(new UILib::Slider<float> (Shared::_normal_scale, 0.001f, 1.000f, 0.01f, Vector2f(150, 230), &GenerateNormalMap, "Normal Scale"));
+	window.AddUIElement(new UILib::Button(Vector2f(120, 600), save_image, "Save"));
+	window.AddUIElement(new UILib::Button(Vector2f(120, 560), switch_image, "Switch texture"));
+	window.AddUIElement(new UILib::Button(Vector2f(120, 640), &GenerateNormalMap, "Normals"));
 	window.AddUIElement(new UILib::Input<int>(seed, Vector2f(150, 30), &GenerateHeightMap, "Seed"));
 
 	while (running)
@@ -207,10 +263,12 @@ int main()
 		window.UpdateUI();
 
 		Uint8* pixels;
-		if (colored)
+		if (image == COLORED)
 			pixels = Shared::_height_map_colored.data();
-		else
+		else if (image == HEIGHTMAP)
 			pixels = Shared::_height_map.data();
+		else if (image == NORMALMAP)
+			pixels = Shared::_normal_map.data();
 		texture.update(pixels);
 		
 		window.RenderUI();
