@@ -112,6 +112,14 @@ void TerrainNode::Render(Ref<RenderCommand> render_command, Ref<Shader> shader) 
 			ogl_shader->UploadUniform("uHeightMap", 0);
 			mTerrainConfiguration.GetNormalMap()->Bind(1);
 			ogl_shader->UploadUniform("uNormalMap", 1);
+			ogl_shader->UploadUniform("uTBNRange", mTerrainConfiguration.GetTBNRange());
+			
+			auto& materials = mTerrainConfiguration.GetMaterials();
+			int texture_unit = 2;
+			for (int i = 0; i < materials.size(); ++i)
+			{
+				materials[i].Load(shader, i, texture_unit);
+			}
 		}
 		Renderable::Render(&mVertexArray, render_command, shader);
 	}

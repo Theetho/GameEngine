@@ -46,4 +46,15 @@ void TerrainLayer::OnUpdate(const double& delta)
 void TerrainLayer::OnEvent(Engine::Event& event)
 {
 	mCamera.OnEvent(event);
+	if (event.mType == Event::Type::KeyReleased)
+	{
+		if (event.mKeyEvent.code == ENGINE_KEY_Z)
+		{
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		}
+		else if (event.mKeyEvent.code == ENGINE_KEY_X)
+		{
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		}
+	}
 }

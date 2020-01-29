@@ -138,6 +138,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Noise\FastNoise.h" />
+    <ClInclude Include="Noise\HeightMap.h" />
+    <ClInclude Include="Noise\NormalMap.h" />
     <ClInclude Include="Noise\stb_image.h" />
     <ClInclude Include="Noise\stb_image_write.h" />
     <ClInclude Include="Physics\CBoxCollider.h" />
@@ -160,7 +162,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Noise\FastNoise.cpp" />
+    <ClCompile Include="Noise\HeightMap.cpp" />
     <ClCompile Include="Noise\Main.cpp" />
+    <ClCompile Include="Noise\NormalMap.cpp" />
     <ClCompile Include="Noise\stbi.cpp" />
     <ClCompile Include="Physics\CBoxCollider.cpp" />
     <ClCompile Include="Physics\CCircle.cpp" />

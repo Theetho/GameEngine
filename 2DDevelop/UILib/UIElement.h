@@ -14,6 +14,8 @@
 
 namespace UILib
 {
+	enum class CallbackType { NONE, CLICK, CHANGE };
+
 	class UIElement : public sf::Drawable
 	{
 	public:
@@ -32,6 +34,7 @@ namespace UILib
 		virtual bool Contains(const sf::Vector2f& vector) const;
 	
 		virtual void SetPosition(const sf::Vector2f& position);
+		virtual void SetCallbackType(CallbackType callback_type);
 	protected:
 		static sf::Font* sFont;
 		static std::unordered_map<const char*, sf::Color> sColor;
@@ -45,6 +48,7 @@ namespace UILib
 		sf::RectangleShape mShape;
 		sf::Text mLabel;
 		std::function<void()> mCallback;
+		CallbackType mCallbackType;
 
 		UIElement(const sf::Vector2f& position, std::function<void()> callback, const std::string& label);
 		void CenterText(sf::Text& text);

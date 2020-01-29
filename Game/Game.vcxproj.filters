@@ -75,6 +75,7 @@
     <ClInclude Include="Terrain\TerrainNode.h" />
     <ClInclude Include="Terrain\TerrainConfiguration.h" />
     <ClInclude Include="Terrain\Terrain.h" />
+    <ClInclude Include="Terrain\TerrainMaterial.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\Movement.cpp">
@@ -128,5 +129,6 @@
     <ClCompile Include="Terrain\TerrainNode.cpp" />
     <ClCompile Include="Terrain\TerrainConfiguration.cpp" />
     <ClCompile Include="Terrain\Terrain.cpp" />
+    <ClCompile Include="Terrain\TerrainMaterial.cpp" />
   </ItemGroup>
 </Project>

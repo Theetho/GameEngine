@@ -119,7 +119,7 @@ namespace Engine
 				glDeleteShader(shader);
 
 				// Use the info_log as you see fit.
-				ENGINE_LOG_ERROR("Shader : {0}", info_log.data());
+				ENGINE_LOG_ERROR("{0}\n\n In shader : {1}", info_log.data(), source);
 				ENGINE_ASSERT(false, "Shader compilation failure");
 
 				// In this simple program, we'll just leave

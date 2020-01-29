@@ -16,7 +16,10 @@ namespace UILib
 			, mValueText("", *sFont)
 			, mValueStep(step)
 			, mCursorTranslation(0.0)
+			, mIsChanging(false)
 		{
+			mCallbackType = CallbackType::CHANGE;
+
 			mShape.setFillColor(sf::Color::Transparent);
 
 			mLine.setSize(sf::Vector2f(mShape.getSize().x * 0.5f, mShape.getSize().y * 0.25f));
@@ -42,6 +45,8 @@ namespace UILib
 		{
 			if (this->Contains(sMouse.position) && Mouse::isButtonPressed(Mouse::Button::Left))
 			{
+				mIsChanging = true;
+
 				mCursorTranslation += sMouse.movement.x;
 
 				if (std::abs(mCursorTranslation) > mCursorStep)
@@ -60,6 +65,13 @@ namespace UILib
 				DisplayValue(mValue, mValueText);
 
 				mCursor.setPosition(sf::Vector2f(std::max(std::min(max_x, cursor_x), min_x), mCursor.getPosition().y));
+			
+				if (mCallback && mCallbackType == CallbackType::CLICK)
+					mCallback();
+			}
+			else if (mIsChanging && mCallbackType == CallbackType::CHANGE)
+			{
+				mIsChanging = false;
 				if (mCallback)
 					mCallback();
 			}
@@ -75,6 +87,7 @@ namespace UILib
 		T  mValueStep;
 		double mCursorTranslation;
 		double mCursorStep;
+		bool   mIsChanging;
 		sf::Text		   mValueText;
 		sf::RectangleShape mLine;
 		sf::CircleShape    mCursor;

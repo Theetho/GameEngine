@@ -21,6 +21,7 @@ namespace UILib
 		: mShape(Vector2f(200.f, 20.f))
 		, mCallback(std::move(callback))
 		, mLabel(label, *sFont)
+		, mCallbackType(CallbackType::NONE)
 	{
 		if (!sFont)
 		{
@@ -118,6 +119,11 @@ namespace UILib
 	{
 		mShape.setPosition(position);
 		CenterText(mLabel);
+	}
+
+	void UIElement::SetCallbackType(CallbackType callback_type)
+	{
+		mCallbackType = callback_type;
 	}
 
 	void UIElement::CenterText(sf::Text& text)

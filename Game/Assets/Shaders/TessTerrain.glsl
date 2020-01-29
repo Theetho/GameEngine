@@ -291,19 +291,105 @@ void main(){
 layout(triangles) in;
 layout(triangle_strip, max_vertices = 3) out;
 
+struct Material
+{
+	sampler2D diffuse;
+	sampler2D normal;
+	sampler2D displacement;
+	vec2 scale;
+};
+
 in vec2 teMapCoord[];
 
 out vec2 gMapCoord;
+out vec3 gPosition;
+out vec3 gTangent;
 
 uniform mat4 uViewProjection;
+uniform sampler2D uNormalMap;
+uniform vec3 uCameraPosition;
+uniform Material uMaterials[2];
+uniform int uTBNRange;
 
-void main() {
-	
+vec3 tangent;
+vec3 displacement[3];
+
+void CalculateTangent()
+{
+	vec3 v0 = gl_in[0].gl_Position.xyz; 
+	vec3 v1 = gl_in[1].gl_Position.xyz; 
+	vec3 v2 = gl_in[2].gl_Position.xyz; 
+
+	vec3 e1 = v1 - v0;
+	vec3 e2 = v2 - v0;
+
+	vec2 uv0 = teMapCoord[0];
+	vec2 uv1 = teMapCoord[1];
+	vec2 uv2 = teMapCoord[2];
+
+	vec2 deltaUV1 = uv1 - uv0;
+	vec2 deltaUV2 = uv2 - uv0;
+
+	float r = 1.0 / (deltaUV1.x * deltaUV2.y - deltaUV1.y * deltaUV2.x);
+
+	tangent = normalize((e1 * deltaUV2.y - e2 * deltaUV1.y) * r);
+}
+
+
+void main()
+{
+	for (int i = 0; i < 3; ++i)
+	{
+		displacement[i] = vec3(0);
+	}
+
+	float distance = (distance(gl_in[0].gl_Position.xyz, uCameraPosition)
+					+ distance(gl_in[1].gl_Position.xyz, uCameraPosition)
+					+ distance(gl_in[2].gl_Position.xyz, uCameraPosition)) / 3;
+	if (distance < uTBNRange)
+	{
+		CalculateTangent();
+
+		for (int i = 0; i < gl_in.length(); ++i)
+		{
+			displacement[i].y = 1;
+
+			float height = gl_in[i].gl_Position.y;
+			vec3 normal  = normalize(texture(uNormalMap, teMapCoord[i]).rgb);
+			
+			float[2] material_alpha = float[](0,0);
+
+			if (normal.y > 0.5)
+			{
+				material_alpha[1] = 1;
+			}
+			else
+			{
+				material_alpha[0] = 1;
+			}
+
+			float scale = 0;
+			for (int j = 0; j < 2; ++j)
+			{
+				scale += texture(uMaterials[j].displacement, teMapCoord[i] * uMaterials[j].scale.x).r
+						 * uMaterials[j].scale.y
+						 * material_alpha[j];
+			}
+
+			float attenuation = clamp(- distance(gl_in[i].gl_Position.xyz, uCameraPosition) / (uTBNRange - 50) + 1, 0.0, 1.0);
+			scale *= attenuation;
+
+			displacement[i] *= scale;
+		}
+	}
+
 	for (int i = 0; i < gl_in.length(); ++i)
 	{
-		vec4 position = gl_in[i].gl_Position;
-		gl_Position = uViewProjection * position;
+		vec4 world_position = gl_in[i].gl_Position + vec4(displacement[i], 0.0);
+		gl_Position = uViewProjection * world_position;
 		gMapCoord = teMapCoord[i];
+		gPosition = world_position.xyz;
+		gTangent  = tangent;
 		EmitVertex();
 	}
 	
@@ -315,9 +401,22 @@ void main() {
 
 layout(location = 0) out vec4 outColor;
 
+struct Material
+{
+	sampler2D diffuse;
+	sampler2D normal;
+	sampler2D displacement;
+	vec2 scale;
+};
+
 in vec2 gMapCoord;
+in vec3 gPosition;
+in vec3 gTangent;
 
 uniform sampler2D uNormalMap;
+uniform Material uMaterials[2];
+uniform int uTBNRange;
+uniform vec3 uCameraPosition;
 
 // TEMPORARY
 const vec3  cLightDirection = vec3(0.1, -1.0, 0.1);
@@ -325,16 +424,55 @@ const float cIntensity = 1.2;
 
 float diffuse(vec3 direction, vec3 normal, float intensity)
 {
-	return max(0.01, dot(normal, -direction) * intensity);
+	return max(0.04, dot(normal, -direction) * intensity);
 }
 
 void main()
 {
-	vec3 normal = texture(uNormalMap, gMapCoord).rgb;
+	float distance = length(uCameraPosition - gPosition);
+	float height   = gPosition.y;
+
+	vec3 normal = normalize(texture(uNormalMap, gMapCoord).rgb);
+
+	vec3 material_color_0 = texture(uMaterials[0].diffuse, gMapCoord * uMaterials[0].scale.x).rgb;
+	vec3 material_color_1 = texture(uMaterials[1].diffuse, gMapCoord * uMaterials[1].scale.x).rgb;
+
+	float[2] material_alpha = float[](0,0);
+
+	if (normal.y > 0.5)
+	{
+		material_alpha[1] = 1;
+	}
+	else
+	{
+		material_alpha[0] = 1;
+	}
+
+	if (distance < uTBNRange - 50)
+	{
+		float attenuation = clamp(- distance / (uTBNRange - 50) + 1.0, 0.0, 1.0);
+	
+		vec3 bitangent = normalize(cross(gTangent, normal));
+		mat3 TBN = mat3(bitangent, normal, gTangent);
+
+		vec3 bump_normal = vec3(0);
+		for (int i = 0; i < 2; ++i)
+		{
+			bump_normal += (2 * (texture(uMaterials[i].normal, gMapCoord * uMaterials[i].scale.x).rgb - 1) * material_alpha[i]);
+		}
+
+		bump_normal = normalize(bump_normal);
+
+		bump_normal.xz *= attenuation;
+
+		normal = normalize(TBN * bump_normal);
+	}
+
+	vec3 fragment_color = material_color_0 * material_alpha[0] + material_color_1 * material_alpha[1];
 
 	float diffuse = diffuse(cLightDirection, normal, cIntensity);
 
-	vec3 final_color = vec3(0.01, 1, 0.01) * diffuse;
+	fragment_color *= diffuse;
 
-	outColor = vec4(final_color, 1.0);
+	outColor = vec4(fragment_color, 1.0);
 }

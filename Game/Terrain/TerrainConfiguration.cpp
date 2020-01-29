@@ -16,7 +16,19 @@ TerrainConfiguration::TerrainConfiguration(const std::string& path)
 	mTesselationSlope  = cf.GetValueAt<float>("TesselationSlope");
 	mTesselationShift  = cf.GetValueAt<float>("TesselationShift");
 	mTesselationFactor = cf.GetValueAt<int>("TesselationFactor");
-	
+	mTBNRange		   = cf.GetValueAt<int>("TBNRange");
+
+	for (int i = 1; i < cf.GetValueAt<int>("Materials") + 1; ++i)
+	{
+		mMaterials.push_back(TerrainMaterial(
+			cf.GetValueAt<std::string>("Material" + std::to_string(i) + "DIF"),
+			cf.GetValueAt<std::string>("Material" + std::to_string(i) + "NRM"),
+			cf.GetValueAt<std::string>("Material" + std::to_string(i) + "DSP"),
+			cf.GetValueAt<float>	  ("Material" + std::to_string(i) + "HorizontalScaling"),
+			cf.GetValueAt<float>	  ("Material" + std::to_string(i) + "VerticalScaling")
+		));
+	}
+
 	for (int i = 0; i < mLodRange.size(); i++)
 	{
 		mLodRange[i] = cf.GetValueAt<int>("LodRange" + std::to_string(i + 1));
@@ -63,14 +75,24 @@ int TerrainConfiguration::GetTesselationFactor() const
 	return mTesselationFactor;
 }
 
-std::array<int, 8> TerrainConfiguration::GetLodRange() const
+int TerrainConfiguration::GetTBNRange() const
+{
+	return mTBNRange;
+}
+
+const std::array<int, 8>& TerrainConfiguration::GetLodRange() const
 {
 	return mLodRange;
 }
 
-std::array<int, 8> TerrainConfiguration::GetLodMorphingArea() const
+const std::array<int, 8>& TerrainConfiguration::GetLodMorphingArea() const
 {
 	return mLodMorphingArea;
+}
+
+const std::vector<TerrainMaterial>& TerrainConfiguration::GetMaterials() const
+{
+	return mMaterials;
 }
 
 Engine::Ref<Engine::Texture2D> TerrainConfiguration::GetHeightMap() const

@@ -7,6 +7,7 @@ NormalMap: Terrain/nm0.png
 TesselationFactor: 600
 TesselationSlope: 1.8
 TesselationShift: 0.1
+TBNRange: 200
 
 LodRange1: 1750
 LodRange2: 874
@@ -16,3 +17,17 @@ LodRange5: 100
 LodRange6: 50
 LodRange7: 0
 LodRange8: 0
+
+Materials: 2
+
+Material1DIF: Terrain/Materials/Ground_11_DIF.jpg
+Material1NRM: Terrain/Materials/Ground_11_NRM.jpg
+Material1DSP: Terrain/Materials/Ground_11_DSP.jpg
+Material1VerticalScaling: 0.4
+Material1HorizontalScaling: 400
+
+Material2DIF: Terrain/Materials/Ground_17_DIF.jpg
+Material2NRM: Terrain/Materials/Ground_17_NRM.jpg
+Material2DSP: Terrain/Materials/Ground_17_DSP.jpg
+Material2VerticalScaling: 1.2
+Material2HorizontalScaling: 200

@@ -72,6 +72,8 @@
     <ClInclude Include="UILib\Window.h">
       <Filter>UILib</Filter>
     </ClInclude>
+    <ClInclude Include="Noise\HeightMap.h" />
+    <ClInclude Include="Noise\NormalMap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Noise\FastNoise.cpp">
@@ -119,5 +121,7 @@
     <ClCompile Include="UILib\Window.cpp">
       <Filter>UILib</Filter>
     </ClCompile>
+    <ClCompile Include="Noise\HeightMap.cpp" />
+    <ClCompile Include="Noise\NormalMap.cpp" />
   </ItemGroup>
 </Project>
