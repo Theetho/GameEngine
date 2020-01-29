@@ -17,5 +17,6 @@ private:
 	CameraFree								mCamera;
 	std::vector<Engine::Ref<Engine::Light>> mLights;
 	::Terrain								mTerrain;
+	Engine::Skybox							mSkybox;
 };
 
