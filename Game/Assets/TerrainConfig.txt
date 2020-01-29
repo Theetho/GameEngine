@@ -1,8 +1,8 @@
 ScaleY: 600
 ScaleXZ: 6000
 
-HeightMap: Terrain/hm0.png
-NormalMap: Terrain/nm0.png
+HeightMap: Terrain/hm0.bmp
+NormalMap: Terrain/nm1.png
 
 TesselationFactor: 600
 TesselationSlope: 1.8
@@ -24,10 +24,10 @@ Material1DIF: Terrain/Materials/Ground_11_DIF.jpg
 Material1NRM: Terrain/Materials/Ground_11_NRM.jpg
 Material1DSP: Terrain/Materials/Ground_11_DSP.jpg
 Material1VerticalScaling: 0.4
-Material1HorizontalScaling: 400
+Material1HorizontalScaling: 200
 
 Material2DIF: Terrain/Materials/Ground_17_DIF.jpg
 Material2NRM: Terrain/Materials/Ground_17_NRM.jpg
 Material2DSP: Terrain/Materials/Ground_17_DSP.jpg
 Material2VerticalScaling: 1.2
-Material2HorizontalScaling: 200
+Material2HorizontalScaling: 100

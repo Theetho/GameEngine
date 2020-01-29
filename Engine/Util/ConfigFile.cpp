@@ -38,5 +38,10 @@ namespace Engine
 			mFields[key]    = value;
 			mIndex[index++] = value;
 		}
+
+		#ifdef DEBUG
+		for (auto it : mFields)
+			std::cout << it.first << " " << it.second << std::endl;
+		#endif // DEBUG
 	}
 }

@@ -17,7 +17,7 @@ namespace Engine
 
 		ENGINE_ASSERT(sFolder != "", "No folder for the textures files");
 
-		stbi_set_flip_vertically_on_load(true);
+		//stbi_set_flip_vertically_on_load(true);
 
 		mData = stbi_load(path.c_str(), &mWidth, &mHeight, &mChannels, 0);
 

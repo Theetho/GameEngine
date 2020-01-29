@@ -219,9 +219,9 @@ uniform float uTesselationSlope;
 uniform float uTesselationShift;
 uniform vec3  uCameraPosition;
 	
-float LodFactor(float distance)
+float LodFactor(float dist)
 {
-	return max(0.0, uTesselationFactor / pow(distance, uTesselationSlope) + uTesselationShift);
+	return max(0.0, uTesselationFactor / pow(dist, uTesselationSlope) + uTesselationShift);
 }
 
 void main()
@@ -343,10 +343,10 @@ void main()
 		displacement[i] = vec3(0);
 	}
 
-	float distance = (distance(gl_in[0].gl_Position.xyz, uCameraPosition)
-					+ distance(gl_in[1].gl_Position.xyz, uCameraPosition)
-					+ distance(gl_in[2].gl_Position.xyz, uCameraPosition)) / 3;
-	if (distance < uTBNRange)
+	float dist = (distance(gl_in[0].gl_Position.xyz, uCameraPosition)
+				+ distance(gl_in[1].gl_Position.xyz, uCameraPosition)
+				+ distance(gl_in[2].gl_Position.xyz, uCameraPosition)) / 3;
+	if (dist < uTBNRange)
 	{
 		CalculateTangent();
 
@@ -429,8 +429,8 @@ float diffuse(vec3 direction, vec3 normal, float intensity)
 
 void main()
 {
-	float distance = length(uCameraPosition - gPosition);
-	float height   = gPosition.y;
+	float dist   = distance(uCameraPosition, gPosition);
+	float height = gPosition.y;
 
 	vec3 normal = normalize(texture(uNormalMap, gMapCoord).rgb);
 
@@ -448,17 +448,18 @@ void main()
 		material_alpha[0] = 1;
 	}
 
-	if (distance < uTBNRange - 50)
+	if (dist < uTBNRange - 50)
 	{
-		float attenuation = clamp(- distance / (uTBNRange - 50) + 1.0, 0.0, 1.0);
+		float attenuation = clamp(- dist / (uTBNRange - 50) + 1.0, 0.0, 1.0);
 	
-		vec3 bitangent = normalize(cross(gTangent, normal));
-		mat3 TBN = mat3(bitangent, normal, gTangent);
+		vec3 tangent = normalize(gTangent);
+		vec3 bitangent = normalize(cross(tangent, normal));
+		mat3 TBN = mat3(bitangent, normal, tangent);
 
 		vec3 bump_normal = vec3(0);
 		for (int i = 0; i < 2; ++i)
 		{
-			bump_normal += (2 * (texture(uMaterials[i].normal, gMapCoord * uMaterials[i].scale.x).rgb - 1) * material_alpha[i]);
+			bump_normal += (2 * (texture(uMaterials[i].normal, gMapCoord * uMaterials[i].scale.x).rbg) - 1) * material_alpha[i];
 		}
 
 		bump_normal = normalize(bump_normal);

@@ -4,7 +4,7 @@
 using namespace Engine;
 
 TerrainLayer::TerrainLayer()
-	: mCamera(Vec3(100.0f, 20.0f, 100.0f))
+	: mCamera(Vec3(100.0f, 500.0f, 100.0f))
 	, mTerrain("./Assets/TerrainConfig.txt")
 {}
 

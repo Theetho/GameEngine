@@ -6,9 +6,12 @@ using namespace Engine;
 TerrainMaterial::TerrainMaterial(const std::string& diffuse_path, const std::string& normal_path, const std::string& displacement_path, float scale_x, float scale_y)
 	: mScale(scale_x, scale_y)
 {
-	mDiffuse =		Texture2D::Create(diffuse_path);
-	mNormal  =		Texture2D::Create(normal_path);
+	mDiffuse	  =	Texture2D::Create(diffuse_path);
+	mDiffuse	 ->TrilinearFilter();
+	mNormal		  =	Texture2D::Create(normal_path);
+	mNormal		 ->TrilinearFilter();
 	mDisplacement = Texture2D::Create(displacement_path);
+	mDisplacement->TrilinearFilter();
 }
 
 void TerrainMaterial::Load(Engine::Ref<Engine::Shader> shader, int index, int& texture_unit) const
