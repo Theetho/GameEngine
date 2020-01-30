@@ -18,7 +18,7 @@ LodRange6: 50
 LodRange7: 0
 LodRange8: 0
 
-Materials: 2
+Materials: 3
 
 Material1DIF: Terrain/Materials/Ground_11_DIF.jpg
 Material1NRM: Terrain/Materials/Ground_11_NRM.jpg
@@ -31,3 +31,9 @@ Material2NRM: Terrain/Materials/Ground_17_NRM.jpg
 Material2DSP: Terrain/Materials/Ground_17_DSP.jpg
 Material2VerticalScaling: 1.2
 Material2HorizontalScaling: 100
+
+Material3DIF: Terrain/Materials/Ground_21_DIF.jpg
+Material3NRM: Terrain/Materials/Ground_21_NRM.jpg
+Material3DSP: Terrain/Materials/Ground_21_DSP.jpg
+Material3VerticalScaling: 0.8
+Material3HorizontalScaling: 200

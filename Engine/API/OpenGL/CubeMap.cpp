@@ -69,5 +69,14 @@ namespace Engine
 		{
 			glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 		}
+
+		void CubeMap::NoFilter() const
+		{}
+
+		void CubeMap::BilinearFilter() const
+		{}
+
+		void CubeMap::TrilinearFilter() const
+		{}
 	}
 }

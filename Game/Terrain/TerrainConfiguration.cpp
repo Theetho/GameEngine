@@ -43,7 +43,45 @@ TerrainConfiguration::TerrainConfiguration(const std::string& path)
 	}
 
 	mHeightMap = Texture2D::Create(cf.GetValueAt<std::string>("HeightMap"));
-	mNormalMap = Texture2D::Create(cf.GetValueAt<std::string>("NormalMap"));
+	
+	int N = mHeightMap->GetWidth();
+
+	// Normal Map
+	unsigned int id;
+	glGenTextures(1, &id);
+	mNormalMap = CreateRef<OpenGL::Texture2D>(N, N, id);
+	mNormalMap->Bind();
+	mNormalMap->BilinearFilter();
+	glTexStorage2D(GL_TEXTURE_2D, (int)(log(N) / log(2)), GL_RGBA32F, N, N);
+	auto compute_shader = AssetManager::GetShaderLibrary().Load("ComputeNormalMap.glsl");
+	compute_shader->Bind();
+	compute_shader->UploadUniform("uHeightMap", 1);
+	mHeightMap->Bind(1);
+	compute_shader->UploadUniform("uStrength", 60.0f);
+	compute_shader->UploadUniform("uResolution", N);
+	glBindImageTexture(0, id, 0, false, 0, GL_WRITE_ONLY, GL_RGBA32F);
+	glDispatchCompute(N / 16, N / 16, 1);
+	glFinish();
+	mNormalMap->Bind();
+	mNormalMap->BilinearFilter();
+
+	// Splat Map
+	glGenTextures(1, &id);
+	mSplatMap = CreateRef<OpenGL::Texture2D>(N, N, id);
+	mSplatMap->Bind();
+	mSplatMap->BilinearFilter();
+	glTexStorage2D(GL_TEXTURE_2D, (int)(log(N) / log(2)), GL_RGBA16F, N, N);
+	compute_shader.reset();
+	compute_shader = AssetManager::GetShaderLibrary().Load("ComputeSplatMap.glsl");
+	compute_shader->Bind();
+	compute_shader->UploadUniform("uNormalMap", 1);
+	mNormalMap->Bind(1);
+	compute_shader->UploadUniform("uResolution", N);
+	glBindImageTexture(0, id, 0, false, 0, GL_WRITE_ONLY, GL_RGBA16F);
+	glDispatchCompute(N / 16, N / 16, 1);
+	glFinish();
+	mSplatMap->Bind();
+	mSplatMap->BilinearFilter();
 }
 
 TerrainConfiguration::~TerrainConfiguration()
@@ -103,6 +141,11 @@ Engine::Ref<Engine::Texture2D> TerrainConfiguration::GetHeightMap() const
 Engine::Ref<Engine::Texture2D> TerrainConfiguration::GetNormalMap() const
 {
 	return mNormalMap;
+}
+
+Engine::Ref<Engine::Texture2D> TerrainConfiguration::GetSplatMap() const
+{
+	return mSplatMap;
 }
 
 int TerrainConfiguration::CalculateMorphingArea(int lod) const

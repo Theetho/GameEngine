@@ -19,6 +19,7 @@ public:
 	const std::vector<TerrainMaterial>& GetMaterials() const;
 	Engine::Ref<Engine::Texture2D> GetHeightMap() const;
 	Engine::Ref<Engine::Texture2D> GetNormalMap() const;
+	Engine::Ref<Engine::Texture2D> GetSplatMap() const;
 
 private:
 	float mScaleY, mScaleXZ;
@@ -26,7 +27,7 @@ private:
 	int   mTesselationFactor, mTBNRange;
 	std::array<int, 8> mLodRange;
 	std::array<int, 8> mLodMorphingArea;
-	Engine::Ref<Engine::Texture2D> mHeightMap, mNormalMap;
+	Engine::Ref<Engine::Texture2D> mHeightMap, mNormalMap, mSplatMap;
 	std::vector<TerrainMaterial> mMaterials;
 	int CalculateMorphingArea(int lod) const;
 };

@@ -17,6 +17,14 @@ namespace Engine
 
 		static void SetFolder(const std::string& folder_path);
 		virtual void SetName(const std::string& name);
+
+		virtual void UploadUniform(const std::string& uniform_name, int value) = 0;
+		virtual void UploadUniform(const std::string& uniform_name, float value) = 0;
+		virtual void UploadUniform(const std::string& uniform_name, const Vec2& vector) = 0;
+		virtual void UploadUniform(const std::string& uniform_name, const Vec3& vector) = 0;
+		virtual void UploadUniform(const std::string& uniform_name, const Vec4& vector) = 0;
+		virtual void UploadUniform(const std::string& uniform_name, const Mat3& matrix) = 0;
+		virtual void UploadUniform(const std::string& uniform_name, const Mat4& matrix) = 0;
 	protected:
 		static std::string sFolderPath;
 		std::string mName;

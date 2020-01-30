@@ -16,7 +16,11 @@ namespace Engine
 			void Bind(unsigned int slot = 0) const override;
 			void Unbind() const override;
 
+			void NoFilter() const override;
+			void BilinearFilter() const override;
 			void TrilinearFilter() const override;
+
+			unsigned int GetId() const;
 		private:
 			unsigned int mId;
 		};

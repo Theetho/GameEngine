@@ -15,13 +15,13 @@ namespace Engine
 			void Bind() const;
 			void Unbind() const;
 
-			void UploadUniform(const std::string& uniform_name, int value);
-			void UploadUniform(const std::string& uniform_name, float value);
-			void UploadUniform(const std::string& uniform_name, const Vec2& vector);
-			void UploadUniform(const std::string& uniform_name, const Vec3& vector);
-			void UploadUniform(const std::string& uniform_name, const Vec4& vector);
-			void UploadUniform(const std::string& uniform_name, const Mat3& matrix);
-			void UploadUniform(const std::string& uniform_name, const Mat4& matrix);
+			void UploadUniform(const std::string& uniform_name, int value) override;
+			void UploadUniform(const std::string& uniform_name, float value) override;
+			void UploadUniform(const std::string& uniform_name, const Vec2& vector) override;
+			void UploadUniform(const std::string& uniform_name, const Vec3& vector) override;
+			void UploadUniform(const std::string& uniform_name, const Vec4& vector) override;
+			void UploadUniform(const std::string& uniform_name, const Mat3& matrix) override;
+			void UploadUniform(const std::string& uniform_name, const Mat4& matrix) override;
 		protected:
 			unsigned int mId;
 			std::unordered_map<std::string, int> mUniformLocations;

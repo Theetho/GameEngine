@@ -33,6 +33,7 @@ namespace Engine
 			: Engine::Texture2D(width, height)
 			, mId(id)
 		{
+			glBindTexture(GL_TEXTURE_2D, mId);
 		}
 
 		Texture2D::~Texture2D()
@@ -50,12 +51,31 @@ namespace Engine
 			glBindTexture(GL_TEXTURE_2D, 0);
 		}
 
+		void Texture2D::NoFilter() const
+		{
+			glBindTexture(GL_TEXTURE_2D, mId);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		}
+
+		void Texture2D::BilinearFilter() const
+		{
+			glBindTexture(GL_TEXTURE_2D, mId);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		}
+
 		void Texture2D::TrilinearFilter() const
 		{
 			glBindTexture(GL_TEXTURE_2D, mId);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 			glGenerateTextureMipmap(GL_TEXTURE_2D);
+		}
+
+		unsigned int Texture2D::GetId() const
+		{
+			return mId;
 		}
 	}
 }

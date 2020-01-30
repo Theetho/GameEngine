@@ -23,6 +23,7 @@ void TerrainLayer::OnAttach()
 
 	mTerrain.Load(terrain_shader);
 
+	glEnable(GL_BLEND);
 	RenderCommand::SetClearColor(Color(0, 200, 255));
 	Input::ToggleCursor();
 }
@@ -42,7 +43,7 @@ void TerrainLayer::OnUpdate(const double& delta)
 	RenderCommand::Clear();
 	Renderer::BeginScene(mCamera);
 	Renderer::Submit(terrain_shader, mTerrain);
-	Renderer::Submit(skybox_shader , mSkybox);
+//	Renderer::Submit(skybox_shader , mSkybox);
 	Renderer::Render();
 	Renderer::EndScene();
 }

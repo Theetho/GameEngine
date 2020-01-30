@@ -15,6 +15,10 @@ namespace Engine
 	
 		static void  SetFolder(const std::string& folder);
 		virtual void SetName(const std::string& name);
+
+		virtual void NoFilter() const = 0;
+		virtual void BilinearFilter() const = 0;
+		virtual void TrilinearFilter() const = 0;
 	protected:
 		// Used for internal texture, that are not stored in any library
 		Texture();

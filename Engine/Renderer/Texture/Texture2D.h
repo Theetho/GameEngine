@@ -4,6 +4,8 @@
 
 namespace Engine
 {
+	class Shader;
+
 	class Texture2D : public Texture
 	{
 	public:
@@ -19,7 +21,6 @@ namespace Engine
 		static Ref<Texture2D> Create(const std::string& file_path, const std::string& name = "", bool use_folder_path = true);
 		static Ref<Texture2D> Create(unsigned int width, unsigned int height);
 
-		virtual void TrilinearFilter() const = 0;
 	protected:
 		unsigned char* mData;
 		int mWidth, mHeight, mChannels;

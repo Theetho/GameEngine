@@ -251,7 +251,7 @@ void main()
 
 	gl_out[gl_InvocationID].gl_Position = gl_in[gl_InvocationID].gl_Position;
 }
-#type tesselation evalution
+#type tesselation evaluation
 #version 430
 
 layout(quads, fractional_odd_spacing, cw) in;
@@ -307,8 +307,9 @@ out vec3 gTangent;
 
 uniform mat4 uViewProjection;
 uniform sampler2D uNormalMap;
+uniform sampler2D uSplatMap;
 uniform vec3 uCameraPosition;
-uniform Material uMaterials[2];
+uniform Material uMaterials[3];
 uniform int uTBNRange;
 
 vec3 tangent;
@@ -355,21 +356,14 @@ void main()
 			displacement[i].y = 1;
 
 			float height = gl_in[i].gl_Position.y;
-			vec3 normal  = normalize(texture(uNormalMap, teMapCoord[i]).rgb);
+			vec3 normal  = normalize(texture(uNormalMap, teMapCoord[i]).rbg);
 			
-			float[2] material_alpha = float[](0,0);
+			vec4 blend_value = texture(uSplatMap, teMapCoord[i]);
 
-			if (normal.y > 0.5)
-			{
-				material_alpha[1] = 1;
-			}
-			else
-			{
-				material_alpha[0] = 1;
-			}
+			float[4] material_alpha = float[](blend_value.r, blend_value.g, blend_value.b, blend_value.a);
 
 			float scale = 0;
-			for (int j = 0; j < 2; ++j)
+			for (int j = 0; j < 3; ++j)
 			{
 				scale += texture(uMaterials[j].displacement, teMapCoord[i] * uMaterials[j].scale.x).r
 						 * uMaterials[j].scale.y
@@ -414,7 +408,8 @@ in vec3 gPosition;
 in vec3 gTangent;
 
 uniform sampler2D uNormalMap;
-uniform Material uMaterials[2];
+uniform sampler2D uSplatMap;
+uniform Material uMaterials[3];
 uniform int uTBNRange;
 uniform vec3 uCameraPosition;
 
@@ -432,32 +427,21 @@ void main()
 	float dist   = distance(uCameraPosition, gPosition);
 	float height = gPosition.y;
 
-	vec3 normal = normalize(texture(uNormalMap, gMapCoord).rgb);
+	vec3 normal = normalize(texture(uNormalMap, gMapCoord).rbg);
 
-	vec3 material_color_0 = texture(uMaterials[0].diffuse, gMapCoord * uMaterials[0].scale.x).rgb;
-	vec3 material_color_1 = texture(uMaterials[1].diffuse, gMapCoord * uMaterials[1].scale.x).rgb;
+	vec4 blend_value = texture(uSplatMap, gMapCoord);
 
-	float[2] material_alpha = float[](0,0);
-
-	if (normal.y > 0.5)
-	{
-		material_alpha[1] = 1;
-	}
-	else
-	{
-		material_alpha[0] = 1;
-	}
+	float[4] material_alpha = float[](blend_value.r, blend_value.g, blend_value.b, blend_value.a);
 
 	if (dist < uTBNRange - 50)
 	{
 		float attenuation = clamp(- dist / (uTBNRange - 50) + 1.0, 0.0, 1.0);
 	
-		vec3 tangent = normalize(gTangent);
-		vec3 bitangent = normalize(cross(tangent, normal));
-		mat3 TBN = mat3(bitangent, normal, tangent);
+		vec3 bitangent = normalize(cross(gTangent, normal));
+		mat3 TBN = mat3(gTangent, normal, bitangent);
 
 		vec3 bump_normal = vec3(0);
-		for (int i = 0; i < 2; ++i)
+		for (int i = 0; i < 3; ++i)
 		{
 			bump_normal += (2 * (texture(uMaterials[i].normal, gMapCoord * uMaterials[i].scale.x).rbg) - 1) * material_alpha[i];
 		}
@@ -469,7 +453,12 @@ void main()
 		normal = normalize(TBN * bump_normal);
 	}
 
-	vec3 fragment_color = material_color_0 * material_alpha[0] + material_color_1 * material_alpha[1];
+	vec3 fragment_color = vec3(0);
+
+	for (int i = 0; i < 3; ++i)
+	{
+		fragment_color += texture(uMaterials[i].diffuse, gMapCoord * uMaterials[i].scale.x).rgb * material_alpha[i];
+	}
 
 	float diffuse = diffuse(cLightDirection, normal, cIntensity);
 

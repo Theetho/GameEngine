@@ -245,7 +245,7 @@ namespace Engine
 						}
 						type = GL_TESS_CONTROL_SHADER;
 					}
-					else if (line == "#type tesselation evalution")
+					else if (line == "#type tesselation evaluation")
 					{
 						if (type && source != "")
 						{
@@ -253,6 +253,15 @@ namespace Engine
 							source = "";
 						}
 						type = GL_TESS_EVALUATION_SHADER;
+					}
+					else if (line == "#type compute")
+					{
+						if (type && source != "")
+						{
+							shader_sources[type] = source;
+							source = "";
+						}
+						type = GL_COMPUTE_SHADER;
 					}
 					else
 					{
