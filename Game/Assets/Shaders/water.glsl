@@ -10,7 +10,7 @@ out vec3 vFragmentPosition;
 uniform mat4 uViewProjection;
 uniform mat4 uModel;
 
-const float cTiling = 10.0;
+const float cTiling = 3.0;
 
 void main()
 {

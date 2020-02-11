@@ -9,8 +9,8 @@ GameApplication::GameApplication()
 	Engine::Shader::SetFolder("./Assets/Shaders/");
 	Engine::Texture::SetFolder("./Assets/Textures/");
 	Engine::Model::SetFolder("./Assets/Models/");
-	//this->PushLayer(new BombermanLayer());
-	this->PushLayer(new TerrainLayer());
+	this->PushLayer(new BombermanLayer());
+	//this->PushLayer(new TerrainLayer());
 
 	//this->GetWindow().SetFullscreen(true);
 }

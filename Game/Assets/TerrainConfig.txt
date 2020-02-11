@@ -26,14 +26,14 @@ Material1DSP: Terrain/Materials/Ground_11_DSP.jpg
 Material1VerticalScaling: 0.4
 Material1HorizontalScaling: 200
 
-Material2DIF: Terrain/Materials/Ground_17_DIF.jpg
-Material2NRM: Terrain/Materials/Ground_17_NRM.jpg
-Material2DSP: Terrain/Materials/Ground_17_DSP.jpg
+Material2DIF: Terrain/Materials/Grass_0_DIF.png
+Material2NRM: Terrain/Materials/Grass_0_NRM.png
+Material2DSP: Terrain/Materials/Grass_0_DSP.png
 Material2VerticalScaling: 1.2
 Material2HorizontalScaling: 100
 
-Material3DIF: Terrain/Materials/Ground_21_DIF.jpg
-Material3NRM: Terrain/Materials/Ground_21_NRM.jpg
-Material3DSP: Terrain/Materials/Ground_21_DSP.jpg
+Material3DIF: Terrain/Materials/Grass_1_DIF.png
+Material3NRM: Terrain/Materials/Grass_1_NRM.png
+Material3DSP: Terrain/Materials/Grass_1_DSP.png
 Material3VerticalScaling: 0.8
 Material3HorizontalScaling: 200

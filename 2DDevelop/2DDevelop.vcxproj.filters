@@ -15,6 +15,12 @@
     <ClInclude Include="Noise\FastNoise.h">
       <Filter>Noise</Filter>
     </ClInclude>
+    <ClInclude Include="Noise\HeightMap.h">
+      <Filter>Noise</Filter>
+    </ClInclude>
+    <ClInclude Include="Noise\NormalMap.h">
+      <Filter>Noise</Filter>
+    </ClInclude>
     <ClInclude Include="Noise\stb_image.h">
       <Filter>Noise</Filter>
     </ClInclude>
@@ -72,14 +78,18 @@
     <ClInclude Include="UILib\Window.h">
       <Filter>UILib</Filter>
     </ClInclude>
-    <ClInclude Include="Noise\HeightMap.h" />
-    <ClInclude Include="Noise\NormalMap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Noise\FastNoise.cpp">
       <Filter>Noise</Filter>
     </ClCompile>
+    <ClCompile Include="Noise\HeightMap.cpp">
+      <Filter>Noise</Filter>
+    </ClCompile>
     <ClCompile Include="Noise\Main.cpp">
+      <Filter>Noise</Filter>
+    </ClCompile>
+    <ClCompile Include="Noise\NormalMap.cpp">
       <Filter>Noise</Filter>
     </ClCompile>
     <ClCompile Include="Noise\stbi.cpp">
@@ -121,7 +131,5 @@
     <ClCompile Include="UILib\Window.cpp">
       <Filter>UILib</Filter>
     </ClCompile>
-    <ClCompile Include="Noise\HeightMap.cpp" />
-    <ClCompile Include="Noise\NormalMap.cpp" />
   </ItemGroup>
 </Project>

@@ -63,6 +63,22 @@
     <ClInclude Include="Map\Wall.h">
       <Filter>Map</Filter>
     </ClInclude>
+    <ClInclude Include="PatchVertexArray.h" />
+    <ClInclude Include="Terrain\Terrain.h">
+      <Filter>Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain\TerrainConfiguration.h">
+      <Filter>Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain\TerrainMaterial.h">
+      <Filter>Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain\TerrainNode.h">
+      <Filter>Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain\TerrainQuadTree.h">
+      <Filter>Terrain</Filter>
+    </ClInclude>
     <ClInclude Include="Util\FileLoader.h">
       <Filter>Util</Filter>
     </ClInclude>
@@ -70,12 +86,6 @@
       <Filter>Util</Filter>
     </ClInclude>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="PatchVertexArray.h" />
-    <ClInclude Include="Terrain\TerrainQuadTree.h" />
-    <ClInclude Include="Terrain\TerrainNode.h" />
-    <ClInclude Include="Terrain\TerrainConfiguration.h" />
-    <ClInclude Include="Terrain\Terrain.h" />
-    <ClInclude Include="Terrain\TerrainMaterial.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\Movement.cpp">
@@ -117,6 +127,22 @@
     <ClCompile Include="Map\Wall.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="PatchVertexArray.cpp" />
+    <ClCompile Include="Terrain\Terrain.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain\TerrainConfiguration.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain\TerrainMaterial.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain\TerrainNode.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain\TerrainQuadTree.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
     <ClCompile Include="Util\FileLoader.cpp">
       <Filter>Util</Filter>
     </ClCompile>
@@ -124,15 +150,5 @@
       <Filter>Util</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="PatchVertexArray.cpp" />
-    <ClCompile Include="Terrain\TerrainQuadTree.cpp" />
-    <ClCompile Include="Terrain\TerrainNode.cpp" />
-    <ClCompile Include="Terrain\TerrainConfiguration.cpp" />
-    <ClCompile Include="Terrain\Terrain.cpp" />
-    <ClCompile Include="Terrain\TerrainMaterial.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Assets\Shaders\ComputeNormalMap.glsl" />
-    <None Include="Assets\Shaders\ComputeSplatMap.glsl" />
   </ItemGroup>
 </Project>

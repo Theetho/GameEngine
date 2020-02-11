@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "BombermanLayer.h"
 #include "Util/FileLoader.h"
+#include "Engine/TextRendering/Font.h"
 
 using namespace Engine;
 
@@ -12,6 +13,7 @@ BombermanLayer::BombermanLayer()
 	, mTerrain(Vec2(0, 0), "Heightmaps/generated_height_map.png", Vec2(200))
 	, mLake(Vec3(0.0f, 0.45f * 5.0f + 2.0f, 0.0f), Vec2(200))
 {
+	Engine::Font f("Assets/Font/consola.ttf", 48);
 }
 
 BombermanLayer::~BombermanLayer()
@@ -74,7 +76,7 @@ void BombermanLayer::OnUpdate(const double& delta)
 	RenderCommand::Clear();
 
 	Renderer::Submit(shader_terrain, mTerrain);
-	//Renderer::Submit(shader_pbr,     mPlayer);
+	Renderer::Submit(shader_pbr,     mPlayer);
 	Renderer::Submit(shader_skybox, mSkybox);
 	
 	Renderer::PrepareWater(mCamera, mLake);

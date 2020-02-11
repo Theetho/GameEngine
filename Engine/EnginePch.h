@@ -13,6 +13,8 @@
 #include <typeindex>
 #include <typeinfo>
 #include <stb_image.h>
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 #ifdef ENGINE_WINDOWS
 	#include "glad/glad.h"

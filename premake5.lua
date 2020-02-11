@@ -34,6 +34,7 @@ project "Engine"
 		"%{prj.name}/Vendor/stb/*",
 		"%{prj.name}/Vendor/glm/glm/**.hpp",
 		"%{prj.name}/Vendor/glm/glm/**.inl",
+		"%{prj.name}/Vendor/freetype-gl/*",
 	}
 
 	includedirs
@@ -42,6 +43,7 @@ project "Engine"
 		"%{prj.name}/Vendor/glm",
 		"%{prj.name}/Vendor/stb",
 		"%{prj.name}/Vendor/assimp-5.0.0/include",
+		"%{prj.name}/Vendor/freetype-2.10.0/include",
 		"%{prj.name}"
 	}
 
@@ -58,7 +60,8 @@ project "Engine"
 			"GLFW",
 			"GLAD",
 			"opengl32.lib",
-			"assimp-vc142-mt.lib"
+			"assimp-vc142-mt.lib",
+			"freetype.lib"
 		}
 
 		defines
@@ -113,6 +116,7 @@ project "Game"
 		"Engine",
 		"opengl32.lib",
 		"assimp-vc142-mt.lib",
+	    "freetype.lib"
 	}	
 	
 	libdirs
@@ -148,7 +152,7 @@ project "2DDevelop"
 	cppdialect "C++17"
 	staticruntime "on"
 	
-	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	targetdir ("/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 	
 	files

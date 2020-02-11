@@ -52,11 +52,17 @@
     <Filter Include="Terrain">
       <UniqueIdentifier>{7AABC339-E68A-42D5-EFA2-CDAB5B01A936}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TextRendering">
+      <UniqueIdentifier>{682870AA-D4E8-EBE0-9D23-355E09A330BD}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Util">
       <UniqueIdentifier>{23A78D7C-0FDE-8E0D-B8CA-7410A4E00A0F}</UniqueIdentifier>
     </Filter>
     <Filter Include="Vendor">
       <UniqueIdentifier>{935FDCD7-7F01-07AE-68BC-1A0254FD8DFE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendor\freetype-gl">
+      <UniqueIdentifier>{06872075-F26A-E1CA-5BCB-DB1D47CECB4C}</UniqueIdentifier>
     </Filter>
     <Filter Include="Vendor\glm">
       <UniqueIdentifier>{627B7327-4E33-B574-B73A-8ED0A3115065}</UniqueIdentifier>
@@ -314,6 +320,9 @@
     <ClInclude Include="Terrain\Water.h">
       <Filter>Terrain</Filter>
     </ClInclude>
+    <ClInclude Include="TextRendering\Font.h">
+      <Filter>TextRendering</Filter>
+    </ClInclude>
     <ClInclude Include="Util\Benchmark.h">
       <Filter>Util</Filter>
     </ClInclude>
@@ -328,6 +337,27 @@
     </ClInclude>
     <ClInclude Include="Util\Matrix.h">
       <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Vendor\freetype-gl\freetype-gl.h">
+      <Filter>Vendor\freetype-gl</Filter>
+    </ClInclude>
+    <ClInclude Include="Vendor\freetype-gl\opengl.h">
+      <Filter>Vendor\freetype-gl</Filter>
+    </ClInclude>
+    <ClInclude Include="Vendor\freetype-gl\platform.h">
+      <Filter>Vendor\freetype-gl</Filter>
+    </ClInclude>
+    <ClInclude Include="Vendor\freetype-gl\texture-atlas.h">
+      <Filter>Vendor\freetype-gl</Filter>
+    </ClInclude>
+    <ClInclude Include="Vendor\freetype-gl\texture-font.h">
+      <Filter>Vendor\freetype-gl</Filter>
+    </ClInclude>
+    <ClInclude Include="Vendor\freetype-gl\vec234.h">
+      <Filter>Vendor\freetype-gl</Filter>
+    </ClInclude>
+    <ClInclude Include="Vendor\freetype-gl\vector.h">
+      <Filter>Vendor\freetype-gl</Filter>
     </ClInclude>
     <ClInclude Include="Vendor\glm\glm\common.hpp">
       <Filter>Vendor\glm\glm</Filter>
@@ -1436,6 +1466,9 @@
     <ClInclude Include="Vendor\stb\stb_image.h">
       <Filter>Vendor\stb</Filter>
     </ClInclude>
+    <ClInclude Include="Vendor\freetype-gl\distance-field.h" />
+    <ClInclude Include="Vendor\freetype-gl\utf8-utils.h" />
+    <ClInclude Include="Vendor\freetype-gl\edtaa3func.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API\OpenGL\Context.cpp">
@@ -1604,6 +1637,9 @@
     <ClCompile Include="Terrain\Water.cpp">
       <Filter>Terrain</Filter>
     </ClCompile>
+    <ClCompile Include="TextRendering\Font.cpp">
+      <Filter>TextRendering</Filter>
+    </ClCompile>
     <ClCompile Include="Util\Benchmark.cpp">
       <Filter>Util</Filter>
     </ClCompile>
@@ -1619,8 +1655,23 @@
     <ClCompile Include="Util\Matrix.cpp">
       <Filter>Util</Filter>
     </ClCompile>
+    <ClCompile Include="Vendor\freetype-gl\platform.c">
+      <Filter>Vendor\freetype-gl</Filter>
+    </ClCompile>
+    <ClCompile Include="Vendor\freetype-gl\texture-atlas.c">
+      <Filter>Vendor\freetype-gl</Filter>
+    </ClCompile>
+    <ClCompile Include="Vendor\freetype-gl\texture-font.c">
+      <Filter>Vendor\freetype-gl</Filter>
+    </ClCompile>
+    <ClCompile Include="Vendor\freetype-gl\vector.c">
+      <Filter>Vendor\freetype-gl</Filter>
+    </ClCompile>
     <ClCompile Include="Vendor\stb\stb_image.cpp">
       <Filter>Vendor\stb</Filter>
     </ClCompile>
+    <ClCompile Include="Vendor\freetype-gl\distance-field.c" />
+    <ClCompile Include="Vendor\freetype-gl\utf8-utils.c" />
+    <ClCompile Include="Vendor\freetype-gl\edtaa3func.c" />
   </ItemGroup>
 </Project>
