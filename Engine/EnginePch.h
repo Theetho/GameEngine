@@ -15,6 +15,7 @@
 #include <stb_image.h>
 #include <ft2build.h>
 #include FT_FREETYPE_H
+#include <freetype-gl.h>
 
 #ifdef ENGINE_WINDOWS
 	#include "glad/glad.h"

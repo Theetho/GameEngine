@@ -77,7 +77,7 @@
       <PrecompiledHeaderFile>EnginePch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>ENGINE_FILES;ENGINE_WINDOWS;ENGINE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Vendor\glad\include;Vendor\GLFW\include;Vendor\spdlog\include;Vendor\glm;Vendor\stb;Vendor\assimp-5.0.0\include;Vendor\freetype-2.10.0\include;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Vendor\glad\include;Vendor\GLFW\include;Vendor\spdlog\include;Vendor\glm;Vendor\stb;Vendor\assimp-5.0.0\include;Vendor\freetype-2.10.0\include;Vendor\freetype-gl;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -98,7 +98,7 @@
       <PrecompiledHeaderFile>EnginePch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>ENGINE_FILES;ENGINE_WINDOWS;ENGINE_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Vendor\glad\include;Vendor\GLFW\include;Vendor\spdlog\include;Vendor\glm;Vendor\stb;Vendor\assimp-5.0.0\include;Vendor\freetype-2.10.0\include;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Vendor\glad\include;Vendor\GLFW\include;Vendor\spdlog\include;Vendor\glm;Vendor\stb;Vendor\assimp-5.0.0\include;Vendor\freetype-2.10.0\include;Vendor\freetype-gl;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -123,7 +123,7 @@
       <PrecompiledHeaderFile>EnginePch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>ENGINE_FILES;ENGINE_WINDOWS;ENGINE_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Vendor\glad\include;Vendor\GLFW\include;Vendor\spdlog\include;Vendor\glm;Vendor\stb;Vendor\assimp-5.0.0\include;Vendor\freetype-2.10.0\include;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Vendor\glad\include;Vendor\GLFW\include;Vendor\spdlog\include;Vendor\glm;Vendor\stb;Vendor\assimp-5.0.0\include;Vendor\freetype-2.10.0\include;Vendor\freetype-gl;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -223,6 +223,7 @@
     <ClInclude Include="Terrain\Terrain.h" />
     <ClInclude Include="Terrain\Water.h" />
     <ClInclude Include="TextRendering\Font.h" />
+    <ClInclude Include="TextRendering\Text.h" />
     <ClInclude Include="Util\Benchmark.h" />
     <ClInclude Include="Util\Color.h" />
     <ClInclude Include="Util\ConfigFile.h" />
@@ -686,32 +687,19 @@
     <ClCompile Include="Terrain\Terrain.cpp" />
     <ClCompile Include="Terrain\Water.cpp" />
     <ClCompile Include="TextRendering\Font.cpp" />
+    <ClCompile Include="TextRendering\Text.cpp" />
     <ClCompile Include="Util\Benchmark.cpp" />
     <ClCompile Include="Util\Color.cpp" />
     <ClCompile Include="Util\ConfigFile.cpp" />
     <ClCompile Include="Util\MathsFunctions.cpp" />
     <ClCompile Include="Util\Matrix.cpp" />
-    <ClCompile Include="Vendor\freetype-gl\distance-field.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Vendor\freetype-gl\edtaa3func.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Vendor\freetype-gl\platform.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Vendor\freetype-gl\texture-atlas.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Vendor\freetype-gl\texture-font.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Vendor\freetype-gl\utf8-utils.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Vendor\freetype-gl\vector.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="Vendor\freetype-gl\distance-field.c" />
+    <ClCompile Include="Vendor\freetype-gl\edtaa3func.c" />
+    <ClCompile Include="Vendor\freetype-gl\platform.c" />
+    <ClCompile Include="Vendor\freetype-gl\texture-atlas.c" />
+    <ClCompile Include="Vendor\freetype-gl\texture-font.c" />
+    <ClCompile Include="Vendor\freetype-gl\utf8-utils.c" />
+    <ClCompile Include="Vendor\freetype-gl\vector.c" />
     <ClCompile Include="Vendor\stb\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
