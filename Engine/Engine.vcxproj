@@ -232,7 +232,6 @@
     <ClInclude Include="Vendor\freetype-gl\distance-field.h" />
     <ClInclude Include="Vendor\freetype-gl\edtaa3func.h" />
     <ClInclude Include="Vendor\freetype-gl\freetype-gl.h" />
-    <ClInclude Include="Vendor\freetype-gl\opengl.h" />
     <ClInclude Include="Vendor\freetype-gl\platform.h" />
     <ClInclude Include="Vendor\freetype-gl\texture-atlas.h" />
     <ClInclude Include="Vendor\freetype-gl\texture-font.h" />
@@ -693,13 +692,27 @@
     <ClCompile Include="Util\ConfigFile.cpp" />
     <ClCompile Include="Util\MathsFunctions.cpp" />
     <ClCompile Include="Util\Matrix.cpp" />
-    <ClCompile Include="Vendor\freetype-gl\distance-field.c" />
-    <ClCompile Include="Vendor\freetype-gl\edtaa3func.c" />
-    <ClCompile Include="Vendor\freetype-gl\platform.c" />
-    <ClCompile Include="Vendor\freetype-gl\texture-atlas.c" />
-    <ClCompile Include="Vendor\freetype-gl\texture-font.c" />
-    <ClCompile Include="Vendor\freetype-gl\utf8-utils.c" />
-    <ClCompile Include="Vendor\freetype-gl\vector.c" />
+    <ClCompile Include="Vendor\freetype-gl\distance-field.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Vendor\freetype-gl\edtaa3func.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Vendor\freetype-gl\platform.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Vendor\freetype-gl\texture-atlas.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Vendor\freetype-gl\texture-font.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Vendor\freetype-gl\utf8-utils.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Vendor\freetype-gl\vector.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Vendor\stb\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>

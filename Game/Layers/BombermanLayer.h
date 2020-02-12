@@ -5,6 +5,8 @@
 #include "GameObject/Bomb.h"
 #include "Core/CameraLocked.h"
 #include "Core/CameraFree.h"
+#include "Engine/TextRendering/Font.h"
+
 
 class BombermanLayer : public Engine::Layer
 {
@@ -26,5 +28,7 @@ private:
 	std::vector<Engine::Ref<Engine::Light>> mLights;
 	std::vector<Engine::Ref<Bomb>>			mBombs;
 	Engine::Skybox							mSkybox;
+	Engine::GUIElement						mGui;
+	Engine::Font							mFont;
 };
 

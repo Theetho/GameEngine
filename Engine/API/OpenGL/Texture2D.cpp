@@ -18,15 +18,7 @@ namespace Engine
 			ENGINE_ASSERT(dataFormat, "Format not supported!");
 
 			glGenTextures(1, &mId);
-			glBindTexture(GL_TEXTURE_2D, mId);
-			
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			
-			glTexImage2D(GL_TEXTURE_2D, 0, dataFormat, mWidth, mHeight, 0, dataFormat, GL_UNSIGNED_BYTE, mData);
-			glGenerateMipmap(GL_TEXTURE_2D);
-			
-			glBindTexture(GL_TEXTURE_2D, 0);
+			this->SetData(mData, dataFormat);
 		}
 
 		Texture2D::Texture2D(unsigned int width, unsigned int height, unsigned int id)
@@ -39,6 +31,20 @@ namespace Engine
 		Texture2D::~Texture2D()
 		{
 			glDeleteTextures(1, &mId);
+		}
+
+		void Texture2D::SetData(unsigned char* data, unsigned int format)
+		{
+			mData = data;
+			glBindTexture(GL_TEXTURE_2D, mId);
+
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+			glTexImage2D(GL_TEXTURE_2D, 0, format, mWidth, mHeight, 0, format, GL_UNSIGNED_BYTE, data);
+			glGenerateMipmap(GL_TEXTURE_2D);
+
+			glBindTexture(GL_TEXTURE_2D, 0);
 		}
 
 		void Texture2D::Bind(unsigned int slot) const
@@ -71,6 +77,11 @@ namespace Engine
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 			glGenerateTextureMipmap(GL_TEXTURE_2D);
+		}
+
+		void Texture2D::SetId(unsigned int id)
+		{
+			mId = id;
 		}
 
 		unsigned int Texture2D::GetId() const

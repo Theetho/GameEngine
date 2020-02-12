@@ -13,6 +13,7 @@ namespace Engine
 			Texture2D(unsigned int width, unsigned int height, unsigned int id = 0);
 			~Texture2D();
 
+			void SetData(unsigned char* data, unsigned int format) override;
 			void Bind(unsigned int slot = 0) const override;
 			void Unbind() const override;
 
@@ -20,6 +21,7 @@ namespace Engine
 			void BilinearFilter() const override;
 			void TrilinearFilter() const override;
 
+			void SetId(unsigned int id);
 			unsigned int GetId() const;
 		private:
 			unsigned int mId;

@@ -350,9 +350,6 @@
     <ClInclude Include="Vendor\freetype-gl\freetype-gl.h">
       <Filter>Vendor\freetype-gl</Filter>
     </ClInclude>
-    <ClInclude Include="Vendor\freetype-gl\opengl.h">
-      <Filter>Vendor\freetype-gl</Filter>
-    </ClInclude>
     <ClInclude Include="Vendor\freetype-gl\platform.h">
       <Filter>Vendor\freetype-gl</Filter>
     </ClInclude>
