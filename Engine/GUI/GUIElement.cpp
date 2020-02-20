@@ -8,6 +8,13 @@
 
 namespace Engine
 {
+	/* Position : with scale of 0.5
+		  0.5
+	-0.5	   0.5
+		 -0.5
+	*/
+
+
 	Ref<VertexArray> GUIElement::sVertexArray = nullptr;
 
 	GUIElement::GUIElement(const Vec2& position, const Vec2& scale, Ref<Texture2D> texture)
@@ -28,6 +35,11 @@ namespace Engine
 	
 	GUIElement::~GUIElement()
 	{
+	}
+
+	void GUIElement::SetTexture(Ref<Texture2D> texture)
+	{
+		mTexture = texture;
 	}
 
 	void GUIElement::Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const

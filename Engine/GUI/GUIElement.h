@@ -13,6 +13,8 @@ namespace Engine
 	public:
 		GUIElement(const Vec2& position, const Vec2& scale, Ref<Texture2D> texture = nullptr);
 		~GUIElement();
+
+		void SetTexture(Ref<Texture2D> texture);
 	private:
 		Transform	   mTransform;
 		Ref<Texture2D> mTexture;

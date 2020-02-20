@@ -9,16 +9,22 @@ namespace Engine
 			: Engine::Texture2D(file_path, name, use_folder_path)
 			, mId(0)
 		{
-			GLenum dataFormat = 0;
+			GLenum internal_format = 0, format = 0;
 			if (mChannels == 4)
-				dataFormat = GL_RGBA;
+			{
+				internal_format = GL_RGBA;
+				format = GL_RGBA;
+			}
 			else if (mChannels == 3)
-				dataFormat = GL_RGB;
+			{
+				format = GL_RGB;
+				internal_format = GL_RGB;
+			}
 
 			ENGINE_ASSERT(dataFormat, "Format not supported!");
 
 			glGenTextures(1, &mId);
-			this->SetData(mData, dataFormat);
+			this->SetData(mData, format, internal_format);
 		}
 
 		Texture2D::Texture2D(unsigned int width, unsigned int height, unsigned int id)
@@ -33,15 +39,18 @@ namespace Engine
 			glDeleteTextures(1, &mId);
 		}
 
-		void Texture2D::SetData(unsigned char* data, unsigned int format)
+		void Texture2D::SetData(unsigned char* data, unsigned int format, unsigned int internal_format)
 		{
+			if (!mId)
+				glGenTextures(1, &mId);
+
 			mData = data;
 			glBindTexture(GL_TEXTURE_2D, mId);
 
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-			glTexImage2D(GL_TEXTURE_2D, 0, format, mWidth, mHeight, 0, format, GL_UNSIGNED_BYTE, data);
+			glTexImage2D(GL_TEXTURE_2D, 0, format, mWidth, mHeight, 0, internal_format, GL_UNSIGNED_BYTE, data);
 			glGenerateMipmap(GL_TEXTURE_2D);
 
 			glBindTexture(GL_TEXTURE_2D, 0);

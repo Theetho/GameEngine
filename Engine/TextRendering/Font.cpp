@@ -13,12 +13,11 @@ namespace Engine
 	{
 		mAtlas = texture_atlas_new(512, 512, 1);
 		mFont = texture_font_new_from_file(mAtlas, size, path);
-
-		ftgl::texture_font_load_glyph(mFont, "A");
-		std::cout << mAtlas->data << std::endl;
+		texture_font_load_glyphs(mFont, " !\"#$%&'()*+,-./0123456789:;<=>?");
+		texture_font_load_glyphs(mFont, "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_");
+		texture_font_load_glyphs(mFont, "`abcdefghijklmnopqrstuvwxyz{ |}~");
 		mAtlasTexture = CreateRef<OpenGL::Texture2D>(512, 512);
-		std::dynamic_pointer_cast<OpenGL::Texture2D>(mAtlasTexture)->SetId(mAtlas->id);
-		mAtlasTexture->SetData(mAtlas->data, GL_RGBA);
+		mAtlasTexture->SetData(mAtlas->data, GL_RGB, GL_RED);
 	}
 
 	Ref<Texture2D> Font::GetTextureAtlas() const

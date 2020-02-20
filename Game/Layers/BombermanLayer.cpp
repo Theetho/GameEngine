@@ -11,10 +11,9 @@ BombermanLayer::BombermanLayer()
 	, mSkybox("Skyboxes/Day")
 	, mTerrain(Vec2(0, 0), "Heightmaps/generated_height_map.png", Vec2(200))
 	, mLake(Vec3(0.0f, 0.45f * 5.0f + 2.0f, 0.0f), Vec2(200))
-	, mFont("Assets/Font/consola.ttf", 48)
-	, mGui(Vec2(-1, -1), Vec2(1, 1))
+	, mFont("./Assets/Fonts/consola.ttf", 48)
+	, mGui(Vec2(0, 0), Vec2(0.5, 0.5))
 {
-	mGui = Engine::GUIElement(Vec2(-1, -1), Vec2(1, 1), mFont.GetTextureAtlas());
 }
 
 BombermanLayer::~BombermanLayer()
@@ -31,6 +30,8 @@ void BombermanLayer::OnAttach()
 		CreateRef<DirectionalLight>(Vec3( 0.4, -0.5f, 0.0f))
 	};
 	
+	mGui.SetTexture(mFont.GetTextureAtlas());
+
 	Ref<Shader> shader		   = AssetManager::GetShaderLibrary().Load("lights_materials.glsl", "scene");
 	Ref<Shader> shader_pbr	   = AssetManager::GetShaderLibrary().Load("lights_PBR.glsl", "player");
 	Ref<Shader> shader_terrain = AssetManager::GetShaderLibrary().Load("terrain.glsl");
