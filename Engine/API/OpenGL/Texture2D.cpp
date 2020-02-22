@@ -23,7 +23,6 @@ namespace Engine
 
 			ENGINE_ASSERT(dataFormat, "Format not supported!");
 
-			glGenTextures(1, &mId);
 			this->SetData(mData, format, internal_format);
 		}
 
@@ -31,7 +30,6 @@ namespace Engine
 			: Engine::Texture2D(width, height)
 			, mId(id)
 		{
-			glBindTexture(GL_TEXTURE_2D, mId);
 		}
 
 		Texture2D::~Texture2D()
@@ -96,6 +94,15 @@ namespace Engine
 		unsigned int Texture2D::GetId() const
 		{
 			return mId;
+		}
+
+		Ref<Texture2D> Texture2D::CreateWhiteTexture()
+		{
+			auto texture = CreateRef<OpenGL::Texture2D>(1, 1);
+			unsigned char color[4] = { 0xff, 0xff, 0xff, 0xff };
+			texture->SetData(color, GL_RGBA8, GL_RGBA);
+
+			return texture;
 		}
 	}
 }

@@ -25,6 +25,9 @@ namespace Engine
 			unsigned int GetId() const;
 		private:
 			unsigned int mId;
+
+			friend class Engine::Texture2D;
+			static Ref<Texture2D> CreateWhiteTexture();
 		};
 	}
 }

@@ -27,7 +27,7 @@ namespace Engine
 			float vertices[] = { -1.f, 1.f, -1.f, -1.f, 1.f, 1.f, 1.f, -1.f };
 			auto vbo = VertexBuffer::Create(vertices, 8);
 			vbo->SetLayout({
-				BufferElement(ShaderDataType::Float2, "in_position")
+				BufferElement(ShaderDataType::Float2, "inPosition")
 			});
 			sVertexArray->AddVertexBuffer(vbo);
 		}

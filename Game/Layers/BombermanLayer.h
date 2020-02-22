@@ -6,6 +6,7 @@
 #include "Core/CameraLocked.h"
 #include "Core/CameraFree.h"
 #include "Engine/TextRendering/Font.h"
+#include "Engine/TextRendering/Text.h"
 
 
 class BombermanLayer : public Engine::Layer
@@ -30,5 +31,6 @@ private:
 	Engine::Skybox							mSkybox;
 	Engine::GUIElement						mGui;
 	Engine::Font							mFont;
+	Engine::Text							mText;
 };
 

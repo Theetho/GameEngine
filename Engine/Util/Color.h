@@ -2,6 +2,9 @@
 
 namespace Engine
 {
+	// Color are always returned with fields between
+	// 0.0 and 1.0 (But can be created with int between
+	// 0 and 255)
 	class Color : public Vec4
 	{
 	public:

@@ -61,6 +61,17 @@ namespace Engine
 		}
 	}
 
+	Ref<Texture2D> Texture2D::GetWhiteTexture()
+	{
+		switch (Renderer::GetAPI())
+		{
+			case Engine::API::None:
+				ENGINE_ASSERT(false, "Api not supported");
+			case Engine::API::OpenGL:
+				return OpenGL::Texture2D::CreateWhiteTexture();
+		}
+	}
+
 	unsigned int Texture2D::GetWidth() const
 	{
 		return mWidth;

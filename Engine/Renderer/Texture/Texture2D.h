@@ -20,6 +20,7 @@ namespace Engine
 
 		static Ref<Texture2D> Create(const std::string& file_path, const std::string& name = "", bool use_folder_path = true);
 		static Ref<Texture2D> Create(unsigned int width, unsigned int height);
+		static Ref<Texture2D> GetWhiteTexture();
 
 		virtual void SetData(unsigned char* data, unsigned int format, unsigned int internal_format) = 0;
 	protected:

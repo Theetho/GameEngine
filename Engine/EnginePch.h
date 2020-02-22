@@ -53,6 +53,16 @@ namespace Engine
 
 	template<typename T>
 	using Weak = std::weak_ptr<T>;
+
+	template<typename T>
+	void Debug(std::initializer_list<T> args)
+	{
+		for (auto& arg : args)
+		{
+			std::cout << arg << " ";
+		}
+		std::cout << std::endl;
+	}
 }
 
 #include "Include/Maths.h"

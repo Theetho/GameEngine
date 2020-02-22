@@ -30,7 +30,11 @@ void BombermanLayer::OnAttach()
 		CreateRef<DirectionalLight>(Vec3( 0.4, -0.5f, 0.0f))
 	};
 	
-	mGui.SetTexture(mFont.GetTextureAtlas());
+	//mGui.SetTexture(mFont.GetTextureAtlas());
+	mGui.SetTexture(Texture2D::GetWhiteTexture());
+
+	Text::SetGlobalFont(&mFont);
+	mText = Text("Ceci est une chaine test", { -1.0, 0.0 }, Color::Brown);
 
 	Ref<Shader> shader		   = AssetManager::GetShaderLibrary().Load("lights_materials.glsl", "scene");
 	Ref<Shader> shader_pbr	   = AssetManager::GetShaderLibrary().Load("lights_PBR.glsl", "player");
@@ -38,6 +42,7 @@ void BombermanLayer::OnAttach()
 	(void)AssetManager::GetShaderLibrary().Load("skybox.glsl");
 	(void)AssetManager::GetShaderLibrary().Load("colliders.glsl");
 	(void)AssetManager::GetShaderLibrary().Load("gui.glsl");
+	(void)AssetManager::GetShaderLibrary().Load("text.glsl");
 	(void)AssetManager::GetShaderLibrary().Load("Skybox_Colored.glsl");
 	Ref<OpenGL::Shader> shader_water = std::dynamic_pointer_cast<OpenGL::Shader>(AssetManager::GetShaderLibrary().Load("water.glsl"));
 
@@ -73,6 +78,7 @@ void BombermanLayer::OnUpdate(const double& delta)
 	Ref<Shader> shader_collider		  = AssetManager::GetShaderLibrary().Get("colliders");
 	Ref<Shader> shader_water		  = AssetManager::GetShaderLibrary().Get("water");
 	Ref<Shader> shader_gui			  = AssetManager::GetShaderLibrary().Get("gui");
+	Ref<Shader> shader_text			  = AssetManager::GetShaderLibrary().Get("text");
 	
 	Renderer::BeginScene(mCamera);
 	RenderCommand::Clear();
@@ -85,6 +91,7 @@ void BombermanLayer::OnUpdate(const double& delta)
 	
 	Renderer::Submit(shader_water, mLake);
 	Renderer::Submit(shader_gui, mGui);
+	//Renderer::Submit(shader_text, mText);
 	Renderer::Render();
 	Renderer::EndScene();
 }
