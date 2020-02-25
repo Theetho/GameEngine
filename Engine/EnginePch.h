@@ -63,6 +63,8 @@ namespace Engine
 		}
 		std::cout << std::endl;
 	}
+
+	using uint = unsigned int;
 }
 
 #include "Include/Maths.h"

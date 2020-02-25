@@ -22,6 +22,7 @@ namespace Engine
 		static Ref<Texture2D> Create(unsigned int width, unsigned int height);
 		static Ref<Texture2D> GetWhiteTexture();
 
+		virtual uint GetId() const = 0;
 		virtual void SetData(unsigned char* data, unsigned int format, unsigned int internal_format) = 0;
 	protected:
 		unsigned char* mData;

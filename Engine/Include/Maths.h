@@ -7,6 +7,8 @@
 
 namespace Engine
 {
+	template<int L>
+	using Vec = glm::vec<L, float, glm::packed_highp>;
 	typedef glm::vec2 Vec2;
 	typedef glm::vec3 Vec3;
 	typedef glm::vec4 Vec4;

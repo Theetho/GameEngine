@@ -5,3 +5,4 @@
 #include "Util/ConfigFile.h"
 #include "Util/MathsFunctions.h"
 #include "Util/Matrix.h"
+#include "Util/Singleton.h"

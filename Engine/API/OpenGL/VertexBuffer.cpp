@@ -5,29 +5,24 @@ namespace Engine
 {
 	namespace OpenGL
 	{
-		VertexBuffer::VertexBuffer(float* vertices, unsigned int vertex_count)
+		VertexBuffer::VertexBuffer(float* vertices, uint vertex_count, BufferUsage buffer_usage)
 			: Engine::VertexBuffer(vertex_count)
-			, mId(0)
-		{
-			glCreateBuffers(1, &mId);
-
-			glBindBuffer(GL_ARRAY_BUFFER, mId);
-			glBufferData(GL_ARRAY_BUFFER, vertex_count * sizeof(float), vertices, GL_STATIC_DRAW);
-		}
-
-		VertexBuffer::~VertexBuffer()
-		{
-			glDeleteBuffers(1, &mId);
-		}
+			, Buffer(vertices, vertex_count, buffer_usage)
+		{}
 
 		void VertexBuffer::Bind() const
 		{
-			glBindBuffer(GL_ARRAY_BUFFER, mId);
+			GLBind();
 		}
 
 		void VertexBuffer::Unbind() const
 		{
-			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			GLUnbind();
+		}
+
+		void VertexBuffer::SetData(float* data)
+		{
+			GLSetData(data);
 		}
 	}
 }

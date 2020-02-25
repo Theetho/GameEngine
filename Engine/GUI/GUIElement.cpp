@@ -60,7 +60,7 @@ namespace Engine
 
 		if (render_command->GetAPI() == API::OpenGL)
 		{
-			render_command->SetDrawMode(DrawMode::TRIANGLE);
+			render_command->SetDrawMode(DrawMode::TRIANGLES);
 		}
 	}
 }

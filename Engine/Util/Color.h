@@ -8,10 +8,10 @@ namespace Engine
 	class Color : public Vec4
 	{
 	public:
+		Color(float rgb = 0.0);
 		explicit Color(float r, float g, float b, float a = 1.0);
 		explicit Color(int r, int g, int b, int a = 255);
-		explicit Color(float rgb = 0.0);
-		explicit Color(int rgb = 0);
+		explicit Color(int rgb);
 		Color(const Color& color);
 		Color(const Color&& color) noexcept;
 		Color& operator=(const Color& color);

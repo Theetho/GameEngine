@@ -22,7 +22,7 @@ namespace Engine
 			void TrilinearFilter() const override;
 
 			void SetId(unsigned int id);
-			unsigned int GetId() const;
+			uint GetId() const override;
 		private:
 			unsigned int mId;
 

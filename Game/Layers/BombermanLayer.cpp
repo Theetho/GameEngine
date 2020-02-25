@@ -13,8 +13,7 @@ BombermanLayer::BombermanLayer()
 	, mLake(Vec3(0.0f, 0.45f * 5.0f + 2.0f, 0.0f), Vec2(200))
 	, mFont("./Assets/Fonts/consola.ttf", 48)
 	, mGui(Vec2(0, 0), Vec2(0.5, 0.5))
-{
-}
+{}
 
 BombermanLayer::~BombermanLayer()
 {}
@@ -30,9 +29,6 @@ void BombermanLayer::OnAttach()
 		CreateRef<DirectionalLight>(Vec3( 0.4, -0.5f, 0.0f))
 	};
 	
-	//mGui.SetTexture(mFont.GetTextureAtlas());
-	mGui.SetTexture(Texture2D::GetWhiteTexture());
-
 	Text::SetGlobalFont(&mFont);
 	mText = Text("Ceci est une chaine test", { -1.0, 0.0 }, Color::Brown);
 
@@ -90,8 +86,8 @@ void BombermanLayer::OnUpdate(const double& delta)
 	Renderer::PrepareWater(mCamera, mLake);
 	
 	Renderer::Submit(shader_water, mLake);
-	Renderer::Submit(shader_gui, mGui);
-	//Renderer::Submit(shader_text, mText);
+	//Renderer::Submit(shader_gui, mGui);
+	Renderer::Submit(shader_text, mText);
 	Renderer::Render();
 	Renderer::EndScene();
 }

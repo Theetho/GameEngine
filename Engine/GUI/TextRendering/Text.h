@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Renderer/Rendering/Renderable.h"
+#include "Renderer/Rendering/Renderable.h"
 
 namespace Engine
 {

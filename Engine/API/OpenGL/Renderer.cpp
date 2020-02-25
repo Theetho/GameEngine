@@ -50,7 +50,7 @@ namespace Engine
 			{
 				case Engine::DrawMode::DEFAULT:
 					return GL_TRIANGLES; break;
-				case Engine::DrawMode::TRIANGLE:
+				case Engine::DrawMode::TRIANGLES:
 					return GL_TRIANGLES; break;
 				case Engine::DrawMode::TRIANGLE_STRIP:
 					return GL_TRIANGLE_STRIP; break;

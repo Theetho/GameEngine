@@ -23,6 +23,10 @@ namespace Engine
 	Color Color::Sand(253, 241, 184);
 	Color Color::Wood(167, 103, 38);
 
+	Color::Color(float rgb)
+		: Color(rgb, rgb, rgb)
+	{}
+
 	Color::Color(float r, float g, float b, float a)
 		: glm::vec4(r, g, b, a)
 	{
@@ -34,10 +38,6 @@ namespace Engine
 	{
 		Clip(r, x);	Clip(g, y);	Clip(b, z); Clip(a, w);
 	}
-
-	Color::Color(float rgb)
-		: Color(rgb, rgb, rgb)
-	{}
 
 	Color::Color(int rgb)
 		: Color(rgb, rgb, rgb)

@@ -1,23 +1,20 @@
 #pragma once
 
 #include "Renderer/Buffer/IndexBuffer.h"
+#include "Buffer.h"
 
 namespace Engine
 {
 	namespace OpenGL
 	{
-		class IndexBuffer : public Engine::IndexBuffer
+		class IndexBuffer : public Engine::IndexBuffer, private Buffer<GL_ELEMENT_ARRAY_BUFFER, uint>
 		{
 		public:
-			IndexBuffer(unsigned int* indices, unsigned int count);
-			~IndexBuffer();
+			IndexBuffer(uint* indices, uint indices_count, BufferUsage buffer_usage = BufferUsage::STATIC);
 
 			void Bind() const override;
 			void Unbind() const override;
-			unsigned int GetCount() const override;
-		private:
-			unsigned int mId;
-			unsigned int mCount;
+			void SetData(uint* data) override;
 		};
 	}
 }

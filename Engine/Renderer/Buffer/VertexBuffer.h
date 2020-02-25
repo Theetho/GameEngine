@@ -1,6 +1,7 @@
 #pragma once
 
 #include "BufferLayout.h"
+#include "BufferUtil.h"
 
 namespace Engine
 {
@@ -9,11 +10,12 @@ namespace Engine
 	public:
 		virtual ~VertexBuffer();
 
-		static Ref<VertexBuffer> Create(float* vertices, unsigned int vertex_count);
+		static Ref<VertexBuffer> Create(float* vertices, uint vertex_count, BufferUsage buffer_usage = BufferUsage::STATIC);
 		
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
-	
+		virtual void SetData(float* data) = 0;
+		
 		const BufferLayout& GetLayout() const;
 		unsigned int	    GetCount() const;
 

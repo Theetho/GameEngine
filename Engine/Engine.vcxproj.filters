@@ -87,36 +87,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="API\OpenGL\Context.h">
-      <Filter>API\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="API\OpenGL\CubeMap.h">
-      <Filter>API\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="API\OpenGL\FrameBuffer.h">
-      <Filter>API\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="API\OpenGL\IndexBuffer.h">
-      <Filter>API\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="API\OpenGL\Renderer.h">
-      <Filter>API\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="API\OpenGL\Shader.h">
-      <Filter>API\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="API\OpenGL\Texture2D.h">
-      <Filter>API\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="API\OpenGL\UniformBuffer.h">
-      <Filter>API\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="API\OpenGL\VertexArray.h">
-      <Filter>API\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="API\OpenGL\VertexBuffer.h">
-      <Filter>API\OpenGL</Filter>
-    </ClInclude>
     <ClInclude Include="Component\Collider.h">
       <Filter>Component</Filter>
     </ClInclude>
@@ -176,9 +146,6 @@
     </ClInclude>
     <ClInclude Include="Engine.h" />
     <ClInclude Include="EnginePch.h" />
-    <ClInclude Include="GUI\GUIElement.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject\GameObject.h">
       <Filter>GameObject</Filter>
     </ClInclude>
@@ -319,12 +286,6 @@
     </ClInclude>
     <ClInclude Include="Terrain\Water.h">
       <Filter>Terrain</Filter>
-    </ClInclude>
-    <ClInclude Include="TextRendering\Font.h">
-      <Filter>TextRendering</Filter>
-    </ClInclude>
-    <ClInclude Include="TextRendering\Text.h">
-      <Filter>TextRendering</Filter>
     </ClInclude>
     <ClInclude Include="Util\Benchmark.h">
       <Filter>Util</Filter>
@@ -1475,38 +1436,50 @@
     <ClInclude Include="Vendor\stb\stb_image.h">
       <Filter>Vendor\stb</Filter>
     </ClInclude>
+    <ClInclude Include="API\OpenGL\Context.h">
+      <Filter>API\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="API\OpenGL\CubeMap.h">
+      <Filter>API\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="API\OpenGL\FrameBuffer.h">
+      <Filter>API\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="API\OpenGL\IndexBuffer.h">
+      <Filter>API\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="API\OpenGL\Renderer.h">
+      <Filter>API\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="API\OpenGL\Shader.h">
+      <Filter>API\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="API\OpenGL\Texture2D.h">
+      <Filter>API\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="API\OpenGL\UniformBuffer.h">
+      <Filter>API\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="API\OpenGL\VertexArray.h">
+      <Filter>API\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="API\OpenGL\VertexBuffer.h">
+      <Filter>API\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\TextRendering\Font.h" />
+    <ClInclude Include="GUI\TextRendering\Text.h" />
+    <ClInclude Include="GUI\GUIElement.h" />
+    <ClInclude Include="GUI\TextRendering.h" />
+    <ClInclude Include="RenderingEngine\RenderingPipeline.h" />
+    <ClInclude Include="RenderingEngine\RendererAPI\OpenGL.h" />
+    <ClInclude Include="RenderingEngine\RendererAPI\RendererAPI.h" />
+    <ClInclude Include="RenderingEngine\Renderable\Renderable.h" />
+    <ClInclude Include="RenderingEngine\Renderer\Renderer.h" />
+    <ClInclude Include="Util\Singleton.h" />
+    <ClInclude Include="Renderer\Buffer\BufferUtil.h" />
+    <ClInclude Include="API\OpenGL\Buffer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="API\OpenGL\Context.cpp">
-      <Filter>API\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="API\OpenGL\CubeMap.cpp">
-      <Filter>API\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="API\OpenGL\FrameBuffer.cpp">
-      <Filter>API\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="API\OpenGL\IndexBuffer.cpp">
-      <Filter>API\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="API\OpenGL\Renderer.cpp">
-      <Filter>API\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="API\OpenGL\Shader.cpp">
-      <Filter>API\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="API\OpenGL\Texture2D.cpp">
-      <Filter>API\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="API\OpenGL\UniformBuffer.cpp">
-      <Filter>API\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="API\OpenGL\VertexArray.cpp">
-      <Filter>API\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="API\OpenGL\VertexBuffer.cpp">
-      <Filter>API\OpenGL</Filter>
-    </ClCompile>
     <ClCompile Include="Component\Collider\BoxCollider.cpp">
       <Filter>Component\Collider</Filter>
     </ClCompile>
@@ -1553,9 +1526,6 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="EnginePch.cpp" />
-    <ClCompile Include="GUI\GUIElement.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject\GameObject.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
@@ -1643,12 +1613,6 @@
     <ClCompile Include="Terrain\Water.cpp">
       <Filter>Terrain</Filter>
     </ClCompile>
-    <ClCompile Include="TextRendering\Font.cpp">
-      <Filter>TextRendering</Filter>
-    </ClCompile>
-    <ClCompile Include="TextRendering\Text.cpp">
-      <Filter>TextRendering</Filter>
-    </ClCompile>
     <ClCompile Include="Util\Benchmark.cpp">
       <Filter>Util</Filter>
     </ClCompile>
@@ -1688,5 +1652,41 @@
     <ClCompile Include="Vendor\stb\stb_image.cpp">
       <Filter>Vendor\stb</Filter>
     </ClCompile>
+    <ClCompile Include="API\OpenGL\Context.cpp">
+      <Filter>API\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="API\OpenGL\CubeMap.cpp">
+      <Filter>API\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="API\OpenGL\FrameBuffer.cpp">
+      <Filter>API\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="API\OpenGL\IndexBuffer.cpp">
+      <Filter>API\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="API\OpenGL\Renderer.cpp">
+      <Filter>API\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="API\OpenGL\Shader.cpp">
+      <Filter>API\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="API\OpenGL\Texture2D.cpp">
+      <Filter>API\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="API\OpenGL\UniformBuffer.cpp">
+      <Filter>API\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="API\OpenGL\VertexArray.cpp">
+      <Filter>API\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="API\OpenGL\VertexBuffer.cpp">
+      <Filter>API\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\TextRendering\Font.cpp" />
+    <ClCompile Include="GUI\TextRendering\Text.cpp" />
+    <ClCompile Include="GUI\GUIElement.cpp" />
+    <ClCompile Include="RenderingEngine\RenderingPipeline.cpp" />
+    <ClCompile Include="RenderingEngine\RendererAPI\OpenGL.cpp" />
+    <ClCompile Include="RenderingEngine\RendererAPI\RendererAPI.cpp" />
   </ItemGroup>
 </Project>
