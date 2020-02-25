@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Renderer/Buffer/IndexBuffer.h"
-#include "Buffer.h"
+#include "GLBuffer.h"
 
 namespace Engine
 {

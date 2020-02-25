@@ -2,23 +2,26 @@
 
 #include <memory.h>
 
-template<class T>
-class Singleton
+namespace Engine
 {
-public:
-	static std::shared_ptr<T> Get();
-protected:
-	static std::shared_ptr<T> sInstance;
-	Singleton()  = default;
-	~Singleton() = default;
-};
+	template<class T>
+	class Singleton
+	{
+	public:
+		static T* Get();
+	protected:
+		static T* sInstance;
+		Singleton() = default;
+		~Singleton() = default;
+	};
 
-template<class T>
-std::shared_ptr<T> Singleton<T>::sInstance = std::make_shared<T>();
+	template<class T>
+	T* Singleton<T>::sInstance = new T();
 
-template<class T>
-inline std::shared_ptr<T> Singleton<T>::Get()
-{
-	return sInstance;
+	template<class T>
+	inline T* Singleton<T>::Get()
+	{
+		return sInstance;
+	}
+
 }
-

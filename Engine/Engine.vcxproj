@@ -77,7 +77,7 @@
       <PrecompiledHeaderFile>EnginePch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>ENGINE_FILES;ENGINE_WINDOWS;ENGINE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Vendor\glad\include;Vendor\GLFW\include;Vendor\spdlog\include;Vendor\glm;Vendor\stb;Vendor\assimp-5.0.0\include;Vendor\freetype-2.10.0\include;Vendor\freetype-gl;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Vendor\assimp-5.0.0\include;Vendor\freetype-2.10.0\include;Vendor\glad\include;Vendor\GLFW\include;Vendor\spdlog\include;Vendor\glm;Vendor\stb;Vendor\freetype-gl;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -98,7 +98,7 @@
       <PrecompiledHeaderFile>EnginePch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>ENGINE_FILES;ENGINE_WINDOWS;ENGINE_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Vendor\glad\include;Vendor\GLFW\include;Vendor\spdlog\include;Vendor\glm;Vendor\stb;Vendor\assimp-5.0.0\include;Vendor\freetype-2.10.0\include;Vendor\freetype-gl;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Vendor\assimp-5.0.0\include;Vendor\freetype-2.10.0\include;Vendor\glad\include;Vendor\GLFW\include;Vendor\spdlog\include;Vendor\glm;Vendor\stb;Vendor\freetype-gl;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -123,7 +123,7 @@
       <PrecompiledHeaderFile>EnginePch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>ENGINE_FILES;ENGINE_WINDOWS;ENGINE_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Vendor\glad\include;Vendor\GLFW\include;Vendor\spdlog\include;Vendor\glm;Vendor\stb;Vendor\assimp-5.0.0\include;Vendor\freetype-2.10.0\include;Vendor\freetype-gl;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Vendor\assimp-5.0.0\include;Vendor\freetype-2.10.0\include;Vendor\glad\include;Vendor\GLFW\include;Vendor\spdlog\include;Vendor\glm;Vendor\stb;Vendor\freetype-gl;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -143,10 +143,10 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="API\OpenGL\Buffer.h" />
     <ClInclude Include="API\OpenGL\Context.h" />
     <ClInclude Include="API\OpenGL\CubeMap.h" />
     <ClInclude Include="API\OpenGL\FrameBuffer.h" />
+    <ClInclude Include="API\OpenGL\GLBuffer.h" />
     <ClInclude Include="API\OpenGL\IndexBuffer.h" />
     <ClInclude Include="API\OpenGL\Renderer.h" />
     <ClInclude Include="API\OpenGL\Shader.h" />
@@ -175,12 +175,12 @@
     <ClInclude Include="Core\Window.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="EnginePch.h" />
-    <ClInclude Include="GameObject\GameObject.h" />
-    <ClInclude Include="GameObject\Transform.h" />
     <ClInclude Include="GUI\GUIElement.h" />
     <ClInclude Include="GUI\TextRendering.h" />
     <ClInclude Include="GUI\TextRendering\Font.h" />
     <ClInclude Include="GUI\TextRendering\Text.h" />
+    <ClInclude Include="GameObject\GameObject.h" />
+    <ClInclude Include="GameObject\Transform.h" />
     <ClInclude Include="Include\Component.h" />
     <ClInclude Include="Include\Core.h" />
     <ClInclude Include="Include\GUI.h" />
@@ -191,6 +191,7 @@
     <ClInclude Include="Include\Model.h" />
     <ClInclude Include="Include\OpenGLAPI.h" />
     <ClInclude Include="Include\Renderer.h" />
+    <ClInclude Include="Include\RenderingEngine.h" />
     <ClInclude Include="Include\System.h" />
     <ClInclude Include="Include\Terrain.h" />
     <ClInclude Include="Include\Util.h" />
@@ -224,11 +225,11 @@
     <ClInclude Include="Renderer\Texture\CubeMap.h" />
     <ClInclude Include="Renderer\Texture\Texture.h" />
     <ClInclude Include="Renderer\Texture\Texture2D.h" />
-    <ClInclude Include="RenderingEngine\RendererAPI\OpenGL.h" />
-    <ClInclude Include="RenderingEngine\Renderable\Renderable.h" />
-    <ClInclude Include="RenderingEngine\Renderer\Renderer.h" />
-    <ClInclude Include="RenderingEngine\RendererAPI\RendererAPI.h" />
-    <ClInclude Include="RenderingEngine\RenderingPipeline.h" />
+    <ClInclude Include="RenderingEngine\CRenderingPipeline.h" />
+    <ClInclude Include="RenderingEngine\Renderable\CRenderable.h" />
+    <ClInclude Include="RenderingEngine\Renderer\CRenderer.h" />
+    <ClInclude Include="RenderingEngine\RendererAPI\COpenGL.h" />
+    <ClInclude Include="RenderingEngine\RendererAPI\CRendererAPI.h" />
     <ClInclude Include="System\CollisionSystem.h" />
     <ClInclude Include="Terrain\Terrain.h" />
     <ClInclude Include="Terrain\Water.h" />
@@ -238,15 +239,480 @@
     <ClInclude Include="Util\MathsFunctions.h" />
     <ClInclude Include="Util\Matrix.h" />
     <ClInclude Include="Util\Singleton.h" />
+    <ClInclude Include="Vendor\GLFW\deps\getopt.h" />
+    <ClInclude Include="Vendor\GLFW\deps\glad\gl.h" />
+    <ClInclude Include="Vendor\GLFW\deps\glad\khrplatform.h" />
+    <ClInclude Include="Vendor\GLFW\deps\glad\vk_platform.h" />
+    <ClInclude Include="Vendor\GLFW\deps\glad\vulkan.h" />
+    <ClInclude Include="Vendor\GLFW\deps\linmath.h" />
+    <ClInclude Include="Vendor\GLFW\deps\mingw\_mingw_dxhelper.h" />
+    <ClInclude Include="Vendor\GLFW\deps\mingw\dinput.h" />
+    <ClInclude Include="Vendor\GLFW\deps\mingw\xinput.h" />
+    <ClInclude Include="Vendor\GLFW\deps\nuklear.h" />
+    <ClInclude Include="Vendor\GLFW\deps\nuklear_glfw_gl2.h" />
+    <ClInclude Include="Vendor\GLFW\deps\stb_image_write.h" />
+    <ClInclude Include="Vendor\GLFW\deps\tinycthread.h" />
+    <ClInclude Include="Vendor\GLFW\deps\vs2008\stdint.h" />
+    <ClInclude Include="Vendor\GLFW\include\GLFW\glfw3.h" />
+    <ClInclude Include="Vendor\GLFW\include\GLFW\glfw3native.h" />
+    <ClInclude Include="Vendor\GLFW\src\cocoa_joystick.h" />
+    <ClInclude Include="Vendor\GLFW\src\cocoa_platform.h" />
+    <ClInclude Include="Vendor\GLFW\src\egl_context.h" />
+    <ClInclude Include="Vendor\GLFW\src\glx_context.h" />
+    <ClInclude Include="Vendor\GLFW\src\internal.h" />
+    <ClInclude Include="Vendor\GLFW\src\linux_joystick.h" />
+    <ClInclude Include="Vendor\GLFW\src\mappings.h" />
+    <ClInclude Include="Vendor\GLFW\src\nsgl_context.h" />
+    <ClInclude Include="Vendor\GLFW\src\null_joystick.h" />
+    <ClInclude Include="Vendor\GLFW\src\null_platform.h" />
+    <ClInclude Include="Vendor\GLFW\src\osmesa_context.h" />
+    <ClInclude Include="Vendor\GLFW\src\posix_thread.h" />
+    <ClInclude Include="Vendor\GLFW\src\posix_time.h" />
+    <ClInclude Include="Vendor\GLFW\src\wgl_context.h" />
+    <ClInclude Include="Vendor\GLFW\src\win32_joystick.h" />
+    <ClInclude Include="Vendor\GLFW\src\win32_platform.h" />
+    <ClInclude Include="Vendor\GLFW\src\wl_platform.h" />
+    <ClInclude Include="Vendor\GLFW\src\x11_platform.h" />
+    <ClInclude Include="Vendor\GLFW\src\xkb_unicode.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\BaseImporter.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\Bitmap.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\BlobIOSystem.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\ByteSwapper.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\Compiler\poppack1.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\Compiler\pstdint.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\Compiler\pushpack1.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\CreateAnimMesh.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\DefaultIOStream.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\DefaultIOSystem.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\Defines.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\Exceptional.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\GenericProperty.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\Hash.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\IOStreamBuffer.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\LineSplitter.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\LogAux.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\Macros.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\MathFunctions.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\MemoryIOWrapper.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\ParsingUtils.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\Profiler.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\RemoveComments.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\SGSpatialSort.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\SceneCombiner.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\SkeletonMeshBuilder.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\SmoothingGroups.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\SpatialSort.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\StandardShapes.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\StreamReader.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\StreamWriter.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\StringComparison.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\StringUtils.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\Subdivision.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\TinyFormatter.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\Vertex.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\XMLTools.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\ZipArchiveIOSystem.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\aabb.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\ai_assert.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\anim.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\camera.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\cexport.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\cfileio.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\cimport.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\color4.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\config.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\defs.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\fast_atof.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\importerdesc.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\irrXMLWrapper.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\light.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\material.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\matrix3x3.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\matrix4x4.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\mesh.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\metadata.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\pbrmaterial.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\port\AndroidJNI\AndroidJNIIOSystem.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\postprocess.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\qnan.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\quaternion.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\scene.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\texture.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\types.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\vector2.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\vector3.h" />
+    <ClInclude Include="Vendor\assimp-5.0.0\include\assimp\version.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\builds\amiga\include\config\ftconfig.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\builds\amiga\include\config\ftmodule.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\builds\atari\ATARI.H" />
+    <ClInclude Include="Vendor\freetype-2.10.0\builds\vms\ftconfig.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\devel\ft2build.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\devel\ftoption.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\config\ftconfig.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\config\ftheader.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\config\ftmodule.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\config\ftoption.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\config\ftstdlib.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\freetype.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftadvanc.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftbbox.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftbdf.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftbitmap.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftbzip2.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftcache.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftchapters.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftcid.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftcolor.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftdriver.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\fterrdef.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\fterrors.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftfntfmt.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftgasp.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftglyph.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftgxval.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftgzip.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftimage.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftincrem.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftlcdfil.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftlist.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftlzw.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftmac.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftmm.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftmodapi.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftmoderr.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftotval.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftoutln.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftparams.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftpfr.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftrender.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftsizes.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftsnames.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftstroke.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftsynth.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftsystem.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\fttrigon.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\fttypes.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ftwinfnt.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\autohint.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\cffotypes.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\cfftypes.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\ftcalc.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\ftdebug.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\ftdrv.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\ftgloadr.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\fthash.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\ftmemory.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\ftobjs.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\ftpsprop.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\ftrfork.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\ftserv.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\ftstream.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\fttrace.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\ftvalid.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\internal.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\psaux.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\pshints.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\services\svbdf.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\services\svcfftl.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\services\svcid.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\services\svfntfmt.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\services\svgldict.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\services\svgxval.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\services\svkern.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\services\svmetric.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\services\svmm.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\services\svotval.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\services\svpfr.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\services\svpostnm.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\services\svprop.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\services\svpscmap.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\services\svpsinfo.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\services\svsfnt.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\services\svttcmap.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\services\svtteng.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\services\svttglyf.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\services\svwinfnt.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\sfnt.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\t1types.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\internal\tttypes.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\t1tables.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\ttnameid.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\tttables.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\freetype\tttags.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\include\ft2build.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\autofit\afangles.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\autofit\afblue.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\autofit\afcjk.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\autofit\afcover.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\autofit\afdummy.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\autofit\aferrors.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\autofit\afglobal.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\autofit\afhints.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\autofit\afindic.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\autofit\aflatin.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\autofit\aflatin2.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\autofit\afloader.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\autofit\afmodule.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\autofit\afranges.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\autofit\afscript.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\autofit\afshaper.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\autofit\afstyles.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\autofit\aftypes.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\autofit\afwarp.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\autofit\afwrtsys.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\base\ftbase.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\base\md5.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\bdf\bdf.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\bdf\bdfdrivr.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\bdf\bdferror.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\cache\ftccache.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\cache\ftccback.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\cache\ftcerror.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\cache\ftcglyph.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\cache\ftcimage.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\cache\ftcmanag.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\cache\ftcmru.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\cache\ftcsbits.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\cff\cffcmap.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\cff\cffdrivr.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\cff\cfferrs.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\cff\cffgload.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\cff\cffload.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\cff\cffobjs.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\cff\cffparse.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\cff\cfftoken.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\cid\ciderrs.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\cid\cidgload.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\cid\cidload.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\cid\cidobjs.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\cid\cidparse.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\cid\cidriver.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\cid\cidtoken.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\gxvalid\gxvalid.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\gxvalid\gxvcommn.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\gxvalid\gxverror.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\gxvalid\gxvfeat.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\gxvalid\gxvmod.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\gxvalid\gxvmort.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\gxvalid\gxvmorx.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\gzip\ftzconf.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\gzip\infblock.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\gzip\infcodes.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\gzip\inffixed.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\gzip\inftrees.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\gzip\infutil.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\gzip\zlib.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\gzip\zutil.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\lzw\ftzopen.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\otvalid\otvalid.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\otvalid\otvcommn.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\otvalid\otverror.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\otvalid\otvgpos.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\otvalid\otvmod.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\pcf\pcf.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\pcf\pcfdrivr.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\pcf\pcferror.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\pcf\pcfread.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\pcf\pcfutil.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\pfr\pfrcmap.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\pfr\pfrdrivr.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\pfr\pfrerror.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\pfr\pfrgload.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\pfr\pfrload.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\pfr\pfrobjs.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\pfr\pfrsbit.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\pfr\pfrtypes.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\psaux\afmparse.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\psaux\cffdecode.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\psaux\psarrst.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\psaux\psauxerr.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\psaux\psauxmod.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\psaux\psblues.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\psaux\psconv.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\psaux\pserror.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\psaux\psfixed.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\psaux\psfont.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\psaux\psft.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\psaux\psglue.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\psaux\pshints.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\psaux\psintrp.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\psaux\psobjs.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\psaux\psread.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\psaux\psstack.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\psaux\pstypes.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\psaux\t1cmap.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\psaux\t1decode.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\pshinter\pshalgo.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\pshinter\pshglob.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\pshinter\pshmod.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\pshinter\pshnterr.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\pshinter\pshrec.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\psnames\psmodule.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\psnames\psnamerr.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\psnames\pstables.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\raster\ftmisc.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\raster\ftraster.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\raster\ftrend1.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\raster\rasterrs.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\sfnt\pngshim.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\sfnt\sfdriver.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\sfnt\sferrors.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\sfnt\sfobjs.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\sfnt\ttbdf.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\sfnt\ttcmap.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\sfnt\ttcmapc.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\sfnt\ttcolr.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\sfnt\ttcpal.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\sfnt\ttkern.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\sfnt\ttload.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\sfnt\ttmtx.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\sfnt\ttpost.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\sfnt\ttsbit.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\smooth\ftgrays.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\smooth\ftsmerrs.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\smooth\ftsmooth.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\truetype\ttdriver.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\truetype\tterrors.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\truetype\ttgload.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\truetype\ttgxvar.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\truetype\ttinterp.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\truetype\ttobjs.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\truetype\ttpload.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\truetype\ttsubpix.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\type1\t1afm.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\type1\t1driver.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\type1\t1errors.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\type1\t1gload.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\type1\t1load.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\type1\t1objs.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\type1\t1parse.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\type1\t1tokens.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\type42\t42drivr.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\type42\t42error.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\type42\t42objs.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\type42\t42parse.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\type42\t42types.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\winfonts\fnterrs.h" />
+    <ClInclude Include="Vendor\freetype-2.10.0\src\winfonts\winfnt.h" />
+    <ClInclude Include="Vendor\freetype-gl\demos\mat4.h" />
+    <ClInclude Include="Vendor\freetype-gl\demos\screenshot-util.h" />
+    <ClInclude Include="Vendor\freetype-gl\demos\shader.h" />
     <ClInclude Include="Vendor\freetype-gl\distance-field.h" />
+    <ClInclude Include="Vendor\freetype-gl\doc\documentation.h" />
+    <ClInclude Include="Vendor\freetype-gl\doc\screenshots.h" />
+    <ClInclude Include="Vendor\freetype-gl\doc\text-rendering.h" />
     <ClInclude Include="Vendor\freetype-gl\edtaa3func.h" />
+    <ClInclude Include="Vendor\freetype-gl\font-manager.h" />
     <ClInclude Include="Vendor\freetype-gl\freetype-gl.h" />
+    <ClInclude Include="Vendor\freetype-gl\harfbuzz\freetype-gl.h" />
+    <ClInclude Include="Vendor\freetype-gl\harfbuzz\opengl.h" />
+    <ClInclude Include="Vendor\freetype-gl\harfbuzz\platform.h" />
+    <ClInclude Include="Vendor\freetype-gl\harfbuzz\texture-atlas.h" />
+    <ClInclude Include="Vendor\freetype-gl\harfbuzz\texture-font.h" />
+    <ClInclude Include="Vendor\freetype-gl\harfbuzz\vec234.h" />
+    <ClInclude Include="Vendor\freetype-gl\harfbuzz\vector.h" />
+    <ClInclude Include="Vendor\freetype-gl\harfbuzz\vertex-attribute.h" />
+    <ClInclude Include="Vendor\freetype-gl\harfbuzz\vertex-buffer.h" />
+    <ClInclude Include="Vendor\freetype-gl\markup.h" />
     <ClInclude Include="Vendor\freetype-gl\platform.h" />
+    <ClInclude Include="Vendor\freetype-gl\text-buffer.h" />
     <ClInclude Include="Vendor\freetype-gl\texture-atlas.h" />
     <ClInclude Include="Vendor\freetype-gl\texture-font.h" />
     <ClInclude Include="Vendor\freetype-gl\utf8-utils.h" />
     <ClInclude Include="Vendor\freetype-gl\vec234.h" />
     <ClInclude Include="Vendor\freetype-gl\vector.h" />
+    <ClInclude Include="Vendor\freetype-gl\vertex-attribute.h" />
+    <ClInclude Include="Vendor\freetype-gl\vertex-buffer.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\AntTweakBar\include\AntTweakBar.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\config\ftconfig.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\config\ftheader.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\config\ftmodule.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\config\ftoption.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\config\ftstdlib.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\freetype.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftadvanc.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftbbox.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftbdf.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftbitmap.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftbzip2.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftcache.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftchapters.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftcid.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\fterrdef.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\fterrors.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftgasp.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftglyph.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftgxval.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftgzip.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftimage.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftincrem.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftlcdfil.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftlist.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftlzw.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftmac.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftmm.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftmodapi.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftmoderr.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftotval.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftoutln.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftpfr.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftrender.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftsizes.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftsnames.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftstroke.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftsynth.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftsystem.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\fttrigon.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\fttypes.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftwinfnt.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ftxf86.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\autohint.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\ftcalc.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\ftdebug.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\ftdriver.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\ftgloadr.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\ftmemory.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\ftobjs.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\ftpic.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\ftrfork.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\ftserv.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\ftstream.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\fttrace.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\ftvalid.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\internal.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\psaux.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\pshints.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\services\svbdf.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\services\svcid.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\services\svgldict.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\services\svgxval.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\services\svkern.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\services\svmm.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\services\svotval.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\services\svpfr.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\services\svpostnm.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\services\svpscmap.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\services\svpsinfo.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\services\svsfnt.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\services\svttcmap.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\services\svtteng.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\services\svttglyf.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\services\svwinfnt.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\services\svxf86nm.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\sfnt.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\t1types.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\internal\tttypes.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\t1tables.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ttnameid.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\tttables.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\tttags.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\freetype\ttunpat.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\freetype\ft2build.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\glew\include\GL\glew.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\glew\include\GL\glxew.h" />
+    <ClInclude Include="Vendor\freetype-gl\windows\glew\include\GL\wglew.h" />
+    <ClInclude Include="Vendor\glad\include\KHR\khrplatform.h" />
+    <ClInclude Include="Vendor\glad\include\glad\glad.h" />
     <ClInclude Include="Vendor\glm\glm\common.hpp" />
     <ClInclude Include="Vendor\glm\glm\detail\_features.hpp" />
     <ClInclude Include="Vendor\glm\glm\detail\_fixes.hpp" />
@@ -610,17 +1076,107 @@
     <ClInclude Include="Vendor\glm\glm\mat4x4.hpp" />
     <ClInclude Include="Vendor\glm\glm\matrix.hpp" />
     <ClInclude Include="Vendor\glm\glm\packing.hpp" />
+    <ClInclude Include="Vendor\glm\glm\simd\common.h" />
+    <ClInclude Include="Vendor\glm\glm\simd\exponential.h" />
+    <ClInclude Include="Vendor\glm\glm\simd\geometric.h" />
+    <ClInclude Include="Vendor\glm\glm\simd\integer.h" />
+    <ClInclude Include="Vendor\glm\glm\simd\matrix.h" />
+    <ClInclude Include="Vendor\glm\glm\simd\packing.h" />
+    <ClInclude Include="Vendor\glm\glm\simd\platform.h" />
+    <ClInclude Include="Vendor\glm\glm\simd\trigonometric.h" />
+    <ClInclude Include="Vendor\glm\glm\simd\vector_relational.h" />
     <ClInclude Include="Vendor\glm\glm\trigonometric.hpp" />
     <ClInclude Include="Vendor\glm\glm\vec2.hpp" />
     <ClInclude Include="Vendor\glm\glm\vec3.hpp" />
     <ClInclude Include="Vendor\glm\glm\vec4.hpp" />
     <ClInclude Include="Vendor\glm\glm\vector_relational.hpp" />
+    <ClInclude Include="Vendor\spdlog\bench\utils.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\async.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\async_logger-inl.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\async_logger.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\common-inl.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\common.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\details\backtracer-inl.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\details\backtracer.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\details\circular_q.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\details\console_globals.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\details\file_helper-inl.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\details\file_helper.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\details\fmt_helper.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\details\log_msg-inl.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\details\log_msg.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\details\log_msg_buffer-inl.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\details\log_msg_buffer.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\details\mpmc_blocking_q.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\details\null_mutex.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\details\os-inl.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\details\os.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\details\pattern_formatter-inl.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\details\pattern_formatter.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\details\periodic_worker-inl.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\details\periodic_worker.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\details\registry-inl.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\details\registry.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\details\synchronous_factory.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\details\thread_pool-inl.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\details\thread_pool.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\fmt\bin_to_hex.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\fmt\bundled\chrono.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\fmt\bundled\color.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\fmt\bundled\compile.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\fmt\bundled\core.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\fmt\bundled\format-inl.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\fmt\bundled\format.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\fmt\bundled\locale.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\fmt\bundled\ostream.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\fmt\bundled\posix.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\fmt\bundled\printf.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\fmt\bundled\ranges.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\fmt\bundled\safe-duration-cast.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\fmt\fmt.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\fmt\ostr.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\formatter.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\logger-inl.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\logger.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\sinks\android_sink.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\sinks\ansicolor_sink-inl.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\sinks\ansicolor_sink.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\sinks\base_sink-inl.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\sinks\base_sink.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\sinks\basic_file_sink-inl.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\sinks\basic_file_sink.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\sinks\daily_file_sink.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\sinks\dist_sink.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\sinks\dup_filter_sink.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\sinks\msvc_sink.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\sinks\null_sink.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\sinks\ostream_sink.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\sinks\rotating_file_sink-inl.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\sinks\rotating_file_sink.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\sinks\sink-inl.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\sinks\sink.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\sinks\stdout_color_sinks-inl.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\sinks\stdout_color_sinks.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\sinks\stdout_sinks-inl.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\sinks\stdout_sinks.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\sinks\syslog_sink.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\sinks\systemd_sink.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\sinks\wincolor_sink-inl.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\sinks\wincolor_sink.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\spdlog-inl.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\spdlog.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\tweakme.h" />
+    <ClInclude Include="Vendor\spdlog\include\spdlog\version.h" />
+    <ClInclude Include="Vendor\spdlog\tests\includes.h" />
+    <ClInclude Include="Vendor\spdlog\tests\test_sink.h" />
+    <ClInclude Include="Vendor\spdlog\tests\utils.h" />
     <ClInclude Include="Vendor\stb\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API\OpenGL\Context.cpp" />
     <ClCompile Include="API\OpenGL\CubeMap.cpp" />
     <ClCompile Include="API\OpenGL\FrameBuffer.cpp" />
+    <ClCompile Include="API\OpenGL\GLBufferImplementation.cpp" />
     <ClCompile Include="API\OpenGL\IndexBuffer.cpp" />
     <ClCompile Include="API\OpenGL\Renderer.cpp" />
     <ClCompile Include="API\OpenGL\Shader.cpp" />
@@ -646,11 +1202,11 @@
     <ClCompile Include="EnginePch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="GameObject\GameObject.cpp" />
-    <ClCompile Include="GameObject\Transform.cpp" />
     <ClCompile Include="GUI\GUIElement.cpp" />
     <ClCompile Include="GUI\TextRendering\Font.cpp" />
     <ClCompile Include="GUI\TextRendering\Text.cpp" />
+    <ClCompile Include="GameObject\GameObject.cpp" />
+    <ClCompile Include="GameObject\Transform.cpp" />
     <ClCompile Include="Lighting\DirectionalLight.cpp" />
     <ClCompile Include="Lighting\Light.cpp" />
     <ClCompile Include="Lighting\PointLight.cpp" />
@@ -662,6 +1218,7 @@
     <ClCompile Include="Model\Mesh.cpp" />
     <ClCompile Include="Model\Model.cpp" />
     <ClCompile Include="Renderer\Buffer\BufferLayout.cpp" />
+    <ClCompile Include="Renderer\Buffer\BufferUtilImplementation.cpp" />
     <ClCompile Include="Renderer\Buffer\FrameBuffer.cpp">
       <ObjectFileName>$(IntDir)\FrameBuffer1.obj</ObjectFileName>
     </ClCompile>
@@ -693,9 +1250,11 @@
     <ClCompile Include="Renderer\Texture\Texture2D.cpp">
       <ObjectFileName>$(IntDir)\Texture2D1.obj</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="RenderingEngine\RendererAPI\OpenGL.cpp" />
-    <ClCompile Include="RenderingEngine\RendererAPI\RendererAPI.cpp" />
-    <ClCompile Include="RenderingEngine\RenderingPipeline.cpp" />
+    <ClCompile Include="RenderingEngine\CRenderingPipeline.cpp" />
+    <ClCompile Include="RenderingEngine\Renderable\CRenderableImplementation.cpp" />
+    <ClCompile Include="RenderingEngine\Renderer\CRendererImplementation.cpp" />
+    <ClCompile Include="RenderingEngine\RendererAPI\COpenGL.cpp" />
+    <ClCompile Include="RenderingEngine\RendererAPI\CRendererAPI.cpp" />
     <ClCompile Include="System\CollisionSystem.cpp" />
     <ClCompile Include="Terrain\Terrain.cpp" />
     <ClCompile Include="Terrain\Water.cpp" />
@@ -705,27 +1264,53 @@
     <ClCompile Include="Util\MathsFunctions.cpp" />
     <ClCompile Include="Util\Matrix.cpp" />
     <ClCompile Include="Vendor\freetype-gl\distance-field.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Vendor\freetype-gl\edtaa3func.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Vendor\freetype-gl\font-manager.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Vendor\freetype-gl\makefont.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Vendor\freetype-gl\platform.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Vendor\freetype-gl\text-buffer.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Vendor\freetype-gl\texture-atlas.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Vendor\freetype-gl\texture-font.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Vendor\freetype-gl\utf8-utils.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Vendor\freetype-gl\vector.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Vendor\freetype-gl\vertex-attribute.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Vendor\freetype-gl\vertex-buffer.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Vendor\stb\stb_image.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Vendor\freetype-gl\.gitattributes" />
+    <None Include="Vendor\freetype-gl\.gitignore" />
+    <None Include="Vendor\freetype-gl\.travis.yml" />
+    <None Include="Vendor\freetype-gl\CMakeLists.txt" />
+    <None Include="Vendor\freetype-gl\INSTALL.md" />
+    <None Include="Vendor\freetype-gl\LICENSE" />
+    <None Include="Vendor\freetype-gl\README.md" />
+    <None Include="Vendor\freetype-gl\TODO" />
+    <None Include="Vendor\freetype-gl\appveyor.yml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Vendor\GLFW\GLFW.vcxproj">

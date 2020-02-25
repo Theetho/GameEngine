@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Renderer/Buffer/VertexBuffer.h"
-#include "Buffer.h"
+#include "GLBuffer.h"
 
 namespace Engine
 {

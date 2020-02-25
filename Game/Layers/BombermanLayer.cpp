@@ -54,6 +54,7 @@ void BombermanLayer::OnAttach()
 	shader_water->UploadUniform("uFar" , mCamera.Far);
 
 	RenderCommand::SetClearColor(Color(0, 200, 255));
+	RenderingPipeline::_Clear(Color(0, 200, 255));
 	Input::ToggleCursor();
 }
 
@@ -76,20 +77,25 @@ void BombermanLayer::OnUpdate(const double& delta)
 	Ref<Shader> shader_gui			  = AssetManager::GetShaderLibrary().Get("gui");
 	Ref<Shader> shader_text			  = AssetManager::GetShaderLibrary().Get("text");
 	
-	Renderer::BeginScene(mCamera);
-	RenderCommand::Clear();
+	//Renderer::BeginScene(mCamera);
+	//RenderCommand::Clear();
 
-	Renderer::Submit(shader_terrain, mTerrain);
-	Renderer::Submit(shader_pbr,     mPlayer);
-	Renderer::Submit(shader_skybox, mSkybox);
-	
-	Renderer::PrepareWater(mCamera, mLake);
-	
-	Renderer::Submit(shader_water, mLake);
-	//Renderer::Submit(shader_gui, mGui);
-	Renderer::Submit(shader_text, mText);
-	Renderer::Render();
-	Renderer::EndScene();
+	//Renderer::Submit(shader_terrain, mTerrain);
+	//Renderer::Submit(shader_pbr,     mPlayer);
+	//Renderer::Submit(shader_skybox, mSkybox);
+	//
+	//Renderer::PrepareWater(mCamera, mLake);
+	//
+	//Renderer::Submit(shader_water, mLake);
+	////Renderer::Submit(shader_gui, mGui);
+	//Renderer::Submit(shader_text, mText);
+	//Renderer::Render();
+	//Renderer::EndScene();
+
+	RenderingPipeline::_Clear();
+	RenderingPipeline::_BeginScene(&mCamera);
+	RenderingPipeline::_Render();
+	RenderingPipeline::_EndScene();
 }
 
 void BombermanLayer::OnEvent(Engine::Event & event)
