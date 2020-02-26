@@ -31,6 +31,9 @@ void BombermanLayer::OnAttach()
 	
 	Text::SetGlobalFont(&mFont);
 	mText = Text("Ceci est une chaine test", { -1.0, 0.0 }, Color::Brown);
+	
+	Ref<Texture2D> gui_texture = AssetManager::GetTexture2DLibrary().Load("snow.jpg");
+	mGui.SetTexture(gui_texture);
 
 	Ref<Shader> shader		   = AssetManager::GetShaderLibrary().Load("lights_materials.glsl", "scene");
 	Ref<Shader> shader_pbr	   = AssetManager::GetShaderLibrary().Load("lights_PBR.glsl", "player");
@@ -95,6 +98,7 @@ void BombermanLayer::OnUpdate(const double& delta)
 	RenderingPipeline::_Clear();
 	RenderingPipeline::_BeginScene(&mCamera);
 	RenderingPipeline::_Submit(&mText);
+	RenderingPipeline::_Submit(&mGui);
 	RenderingPipeline::_Render();
 	RenderingPipeline::_EndScene();
 }

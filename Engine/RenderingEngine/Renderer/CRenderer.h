@@ -21,6 +21,7 @@ namespace Engine
 		const int float_in_one_vertex = dimension + 7;
 		const int total_float_in_buffer = max_vertex_renderable * float_in_one_vertex;
 		uint max_texture_units = 1;
+		uint max_indice_of_last_renderable = 0;
 	};
 
 	struct CRendererSceneData

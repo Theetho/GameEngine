@@ -12,7 +12,7 @@ namespace Engine
 		Vec<dimension> position;
 		Vec2		   texture_coordinates;
 		Color		   color;
-		uint		   texture_id;
+		uint		   texture_id = 0;
 	};
 
 	using Vertex2D = Vertex<2>;

@@ -65,6 +65,8 @@ namespace Engine
 			for (int i = 0; i < _mData.max_texture_units; ++i)
 				shader->UploadUniform("uTextures["+std::to_string(i)+"]", i);
 		}
+
+		_mTextures.push_back(Texture2D::GetWhiteTexture());
 	}
 
 	template<int dimension>
@@ -160,10 +162,15 @@ namespace Engine
 				_mBuffer.push_back(0.0f);
 		}
 		
-		for (auto& indice : renderable->_GetIndices())
+		uint new_max_indice_of_last_renderable = _mData.max_indice_of_last_renderable;
+		for (uint indice : renderable->_GetIndices())
 		{
+			indice += _mData.max_indice_of_last_renderable;
 			_mIndices.push_back(indice);
+			if (new_max_indice_of_last_renderable < indice)
+				new_max_indice_of_last_renderable = indice;
 		}
+		_mData.max_indice_of_last_renderable = new_max_indice_of_last_renderable + 1;
 	}
 
 	template<int dimension>
@@ -220,6 +227,7 @@ namespace Engine
 	{
 		_mBuffer.clear();
 		///_mBuffer = std::move(std::vector<Vertex<dimension>>(_mData.max_vertex_renderable));
+		_mData.max_indice_of_last_renderable = 0;
 
 		_mIndices.clear();
 		_mTextures.clear();
