@@ -23,6 +23,8 @@ namespace Engine
 		// Make a draw call to the GPU with the data in the vertex array
 		virtual void _Draw(VertexArray* vertex_array) const = 0;
 		virtual void _Draw(Ref<VertexArray> vertex_array) const = 0;
+		virtual void _Draw(VertexArray* vertex_array, uint indices_count) const = 0;
+		virtual void _Draw(Ref<VertexArray> vertex_array, uint indices_count) const = 0;
 		// Set the clear color
 		virtual void _SetClearColor(const Color& color) const = 0;
 		// Set the viewport dimensions

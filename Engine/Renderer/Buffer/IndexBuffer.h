@@ -14,7 +14,7 @@ namespace Engine
 
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
-		virtual void SetData(uint* data) = 0;
+		virtual void SetData(std::vector<uint>& data) = 0;
 
 		uint GetCount() const;
 	protected:

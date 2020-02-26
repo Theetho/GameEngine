@@ -14,7 +14,7 @@ namespace Engine
 		
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
-		virtual void SetData(float* data) = 0;
+		virtual void SetData(std::vector<float>& data) = 0;
 		
 		const BufferLayout& GetLayout() const;
 		unsigned int	    GetCount() const;

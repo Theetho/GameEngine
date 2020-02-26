@@ -94,6 +94,7 @@ void BombermanLayer::OnUpdate(const double& delta)
 
 	RenderingPipeline::_Clear();
 	RenderingPipeline::_BeginScene(&mCamera);
+	RenderingPipeline::_Submit(&mText);
 	RenderingPipeline::_Render();
 	RenderingPipeline::_EndScene();
 }

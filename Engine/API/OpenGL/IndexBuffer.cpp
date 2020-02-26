@@ -20,9 +20,10 @@ namespace Engine
 			GLUnbind();
 		}
 
-		void IndexBuffer::SetData(uint* data)
+		void IndexBuffer::SetData(std::vector<uint>& data)
 		{
 			GLSetData(data);
+			mCount = data.size();
 		}
 	}
 }

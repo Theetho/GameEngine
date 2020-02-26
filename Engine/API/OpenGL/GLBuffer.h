@@ -14,7 +14,7 @@ namespace Engine
 			virtual ~Buffer();
 			void GLBind() const;
 			void GLUnbind() const;
-			void GLSetData(T* data);
+			void GLSetData(std::vector<T> data);
 			unsigned int GetBufferUsage(BufferUsage buffer_usage) const;
 
 			unsigned int mId;

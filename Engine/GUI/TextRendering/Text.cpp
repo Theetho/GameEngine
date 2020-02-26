@@ -28,14 +28,16 @@ namespace Engine
 	}
 
 	Text::Text(const Text& other)
-		: mLabel(other.mLabel)
+		: CRenderable(other)
+		, mLabel(other.mLabel)
 		, mPosition(other.mPosition)
 		, mColor(other.mColor)
 		, mVertexArray(other.mVertexArray)
 	{}
 
 	Text::Text(const Text&& other)
-		: mLabel(other.mLabel)
+		: CRenderable(other)
+		, mLabel(other.mLabel)
 		, mPosition(other.mPosition)
 		, mColor(other.mColor)
 		, mVertexArray(other.mVertexArray)
@@ -43,6 +45,9 @@ namespace Engine
 
 	Text& Text::operator=(const Text & other)
 	{
+		_mVertices = other._mVertices;
+		_mIndices = other._mIndices;
+		_mTextures = other._mTextures;
 		mLabel = other.mLabel;
 		mPosition = other.mPosition;
 		mColor = other.mColor;
@@ -52,6 +57,9 @@ namespace Engine
 
 	Text& Text::operator=(const Text&& other)
 	{
+		_mVertices = other._mVertices;
+		_mIndices = other._mIndices;
+		_mTextures = other._mTextures;
 		mLabel = other.mLabel;
 		mPosition = other.mPosition;
 		mColor = other.mColor;
@@ -73,6 +81,8 @@ namespace Engine
 			mVertexArray = VertexArray::Create();
 		else
 			mVertexArray.reset();
+
+		_mTextures.push_back(sFont->GetTextureAtlas());
 
 		std::vector<float> vertices;
 		const Vec2& scale = sFont->GetScale();
@@ -125,6 +135,13 @@ namespace Engine
 			indices.push_back(2 + i * 4);
 			indices.push_back(3 + i * 4);
 			indices.push_back(0 + i * 4);
+
+			_mIndices.push_back(0 + i * 4);
+			_mIndices.push_back(1 + i * 4);
+			_mIndices.push_back(2 + i * 4);
+			_mIndices.push_back(2 + i * 4);
+			_mIndices.push_back(3 + i * 4);
+			_mIndices.push_back(0 + i * 4);
 		}
 		auto ibo = IndexBuffer::Create(indices.data(), indices.size());
 		mVertexArray->AddIndexBuffer(ibo);
@@ -139,17 +156,16 @@ namespace Engine
 		vertices.push_back(mColor.r);
 		vertices.push_back(mColor.g);
 		vertices.push_back(mColor.b);
+
+		Vertex2D vertex;
+		vertex.position			   = { x, y };
+		vertex.texture_coordinates = { u, v };
+		vertex.color			   = mColor;
+		vertex.texture_id		   = sFont->GetTextureAtlas()->GetId();
+		_mVertices.push_back(vertex);
 	}
 
-	void Text::CheckColor()
-	{
-		if (mColor == Color::Black)
-		{
-			mColor.r = 1.0f / 255.0f;
-		}
-	}
-
-	void Text::Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const
+	/*void Text::Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const
 	{
 		if (!sFont)
 			return;
@@ -170,5 +186,5 @@ namespace Engine
 		{
 			glDisable(GL_BLEND);
 		}
-	}
+	}*/
 }

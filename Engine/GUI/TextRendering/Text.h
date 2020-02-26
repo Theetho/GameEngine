@@ -1,13 +1,14 @@
 #pragma once
 
-#include "Renderer/Rendering/Renderable.h"
+//#include "Renderer/Rendering/Renderable.h"
+#include "RenderingEngine/Renderable/CRenderable.h"
 
 namespace Engine
 {
 	class Font;
 	class VertexArray;
 
-	class Text : public Renderable
+	class Text : public CRenderable2D//public Renderable
 	{
 	public:
 		Text();
@@ -26,10 +27,7 @@ namespace Engine
 
 		void InitializeVertices();
 		void AddVertice(std::vector<float>& vertices, float x, float y, float u, float v);
-		// Change black color to rgb(1, 1, 1),
-		// because rgb(0, 0, 0) is the background
-		void CheckColor();
-		virtual void Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const override;
+	//	virtual void Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const override;
 	};
 }
 

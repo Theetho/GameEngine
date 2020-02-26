@@ -33,9 +33,13 @@ namespace Engine
 		}
 
 		template<unsigned int type, class T>
-		inline void Buffer<type, T>::GLSetData(T* data)
+		inline void Buffer<type, T>::GLSetData(std::vector<T> data)
 		{
-			glBufferSubData(type, 0, sizeof(data), data);
+			glBindBuffer(type, mId);
+			//glMapBuffer(type, GL_WRITE_ONLY);
+			glBufferSubData(type, 0, sizeof(T) * data.size(), data.data());
+			//glUnmapBuffer(type);
+			glBindBuffer(type, 0);
 		}
 
 		template<unsigned int type, class T>

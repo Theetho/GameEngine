@@ -20,9 +20,10 @@ namespace Engine
 			GLUnbind();
 		}
 
-		void VertexBuffer::SetData(float* data)
+		void VertexBuffer::SetData(std::vector<float>& data)
 		{
 			GLSetData(data);
+			mCount = data.size();
 		}
 	}
 }

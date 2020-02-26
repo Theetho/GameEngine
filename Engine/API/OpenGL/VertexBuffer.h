@@ -14,7 +14,7 @@ namespace Engine
 
 			void Bind() const override;
 			void Unbind() const override;
-			void SetData(float* data) override;
+			void SetData(std::vector<float>& data) override;
 		};
 	}
 }

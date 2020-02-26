@@ -18,9 +18,9 @@ namespace Engine
 	{
 		const int max_vertex_renderable = 10000;
 		const int vertex_size = sizeof(Vertex<dimension>);
-		const int total_buffer_size = max_vertex_renderable * vertex_size;
-		unsigned int max_texture_units = 1;
-		unsigned int buffer_index = 0;
+		const int float_in_one_vertex = dimension + 7;
+		const int total_float_in_buffer = max_vertex_renderable * float_in_one_vertex;
+		uint max_texture_units = 1;
 	};
 
 	struct CRendererSceneData
@@ -52,7 +52,8 @@ namespace Engine
 		std::shared_ptr<Shader>		  _mShader;
 		// Copy of the data to be render
 
-		std::vector<Vertex<dimension>> _mBuffer;
+		///std::vector<Vertex<dimension>> _mBuffer;
+		std::vector<float> _mBuffer;
 		std::vector<unsigned int>	   _mIndices;
 		// Textures to send to the shaders (usualy 32 max)
 		std::vector<std::shared_ptr<Texture2D>> _mTextures;

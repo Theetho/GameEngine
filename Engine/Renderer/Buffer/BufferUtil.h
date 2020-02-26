@@ -14,4 +14,7 @@ namespace Engine
 		Color		   color;
 		uint		   texture_id;
 	};
+
+	using Vertex2D = Vertex<2>;
+	using Vertex3D = Vertex<3>;
 }

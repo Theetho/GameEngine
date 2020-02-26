@@ -11,16 +11,28 @@ namespace Engine
 
 	void COpenGLRenderer::_Draw(VertexArray* vertex_array) const
 	{
-		if (vertex_array->IsIndexed())
-			glDrawElements(_GetDrawMode(), vertex_array->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
-		else
-			glDrawArrays(_GetDrawMode(), 0, vertex_array->GetVertexBuffers()[0]->GetCount());
+		_Draw(vertex_array, vertex_array->GetIndexBuffer()->GetCount());
 	}
 
 	void COpenGLRenderer::_Draw(Ref<VertexArray> vertex_array) const
 	{
+		_Draw(vertex_array, vertex_array->GetIndexBuffer()->GetCount());
+	}
+
+	void COpenGLRenderer::_Draw(VertexArray* vertex_array, uint indices_count) const
+	{
 		if (vertex_array->IsIndexed())
-			glDrawElements(_GetDrawMode(), vertex_array->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+			glDrawElements(_GetDrawMode(), indices_count, GL_UNSIGNED_INT, nullptr);
+		else
+			glDrawArrays(_GetDrawMode(), 0, vertex_array->GetVertexBuffers()[0]->GetCount());
+	}
+
+	void COpenGLRenderer::_Draw(Ref<VertexArray> vertex_array, uint indices_count) const
+	{
+		if (vertex_array->IsIndexed())
+		{
+			glDrawElements(_GetDrawMode(), indices_count, GL_UNSIGNED_INT, nullptr);
+		}
 		else
 			glDrawArrays(_GetDrawMode(), 0, vertex_array->GetVertexBuffers()[0]->GetCount());
 	}

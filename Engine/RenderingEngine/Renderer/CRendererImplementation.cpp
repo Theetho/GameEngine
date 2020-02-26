@@ -6,6 +6,7 @@
 #include "Core/AssetManager.h"
 #include "Include/Maths.h"
 #include "../RendererAPI/CRendererAPI.h"
+#include "API/OpenGL/Shader.h"
 
 #include "CRenderer.h"
 
@@ -37,25 +38,33 @@ namespace Engine
 		// Query the maximum texture units
 		_mData.max_texture_units = _sRenderer->_GetMaxTextureUnits();
 
-		_mVertexBuffer = VertexBuffer::Create(nullptr, _mData.max_vertex_renderable, BufferUsage::DYNAMIC);
+		_mVertexArray = VertexArray::Create();
+
+		_mVertexBuffer = VertexBuffer::Create(nullptr, _mData.total_float_in_buffer, BufferUsage::DYNAMIC);
 		_mVertexBuffer->SetLayout(BufferLayout({
 			BufferElement(dimension == 2 ? ShaderDataType::Float2 : ShaderDataType::Float3, "inPosition"),
 			BufferElement(ShaderDataType::Float2, "inTextureCoords"),
 			BufferElement(ShaderDataType::Float4, "inColor"),
 			BufferElement(ShaderDataType::Float,  "inTextureID"),
-			}));
-		_mIndexBuffer = IndexBuffer::Create(nullptr, 6 * _mData.max_vertex_renderable, BufferUsage::DYNAMIC);
-
-		_mVertexArray = VertexArray::Create();
-		_mVertexArray->AddIndexBuffer(_mIndexBuffer);
+		}));
 		_mVertexArray->AddVertexBuffer(_mVertexBuffer);
 
-		_mBuffer = std::move(std::vector<Vertex<dimension>>(_mData.max_vertex_renderable));
+		_mIndexBuffer = IndexBuffer::Create(nullptr, /* (3.f / 2.f) */ _mData.max_vertex_renderable, BufferUsage::DYNAMIC);
+		_mVertexArray->AddIndexBuffer(_mIndexBuffer);
+
+		///_mBuffer = std::move(std::vector<Vertex<dimension>>(_mData.max_vertex_renderable));
 
 		// Loading shader
 		_mShader = AssetManager::GetShaderLibrary().Load(
 			"basic" + std::to_string(dimension) + "D_" + std::to_string(_mData.max_texture_units) + "tex.glsl"
 		);
+		_mShader->Bind();
+		if (CRendererAPI::_GetAPI() == CAPI::OpenGL)
+		{
+			auto shader = std::dynamic_pointer_cast<OpenGL::Shader>(_mShader);
+			for (int i = 0; i < _mData.max_texture_units; ++i)
+				shader->UploadUniform("uTextures["+std::to_string(i)+"]", i);
+		}
 	}
 
 	template<int dimension>
@@ -89,7 +98,7 @@ namespace Engine
 				// We check if it was already in registered
 				for (unsigned int i = 0; i < _mTextures.size(); ++i)
 				{
-					if (_mTextures[i] != new_texture)
+					if (_mTextures[i]->GetId() != new_texture->GetId())
 						continue;
 
 					result[new_texture->GetId()] = i;
@@ -121,23 +130,36 @@ namespace Engine
 			return;
 		}
 
+		auto texture_ids = this->_SubmitTextures(renderable->_GetTextures());
+		
 		for (auto& vertex : renderable->_GetVertices())
 		{
 			// Convert vertices' local texture ids to the texture
 			// id used in the shader
-			auto texture_ids = this->_SubmitTextures(renderable->_GetTextures());
 
-			_mBuffer[_mData.buffer_index].position			  = vertex.position;
-			_mBuffer[_mData.buffer_index].color				  = vertex.color;
-			_mBuffer[_mData.buffer_index].texture_coordinates = vertex.texture_coordinates;
+			///_mBuffer[_mData.buffer_index].position			  = vertex.position;
+			///_mBuffer[_mData.buffer_index].color				  = vertex.color;
+			///_mBuffer[_mData.buffer_index].texture_coordinates = vertex.texture_coordinates;
+			///if (texture_ids.size())
+			///	_mBuffer[_mData.buffer_index].texture_id = texture_ids[vertex.texture_id];
+			///else
+			///	_mBuffer[_mData.buffer_index].texture_id = 0.0f;
+
+			///++_mData.buffer_index;
+			for (uint i = 0; i < dimension; ++i)
+				_mBuffer.push_back(vertex.position[i]);
+			_mBuffer.push_back(vertex.texture_coordinates.x);
+			_mBuffer.push_back(vertex.texture_coordinates.y);
+			_mBuffer.push_back(vertex.color.r);
+			_mBuffer.push_back(vertex.color.g);
+			_mBuffer.push_back(vertex.color.b);
+			_mBuffer.push_back(vertex.color.a);
 			if (texture_ids.size())
-				_mBuffer[_mData.buffer_index].texture_id = texture_ids[vertex.texture_id];
+				_mBuffer.push_back(texture_ids[vertex.texture_id]);
 			else
-				_mBuffer[_mData.buffer_index].texture_id = 0.0f;
-
-			++_mData.buffer_index;
+				_mBuffer.push_back(0.0f);
 		}
-
+		
 		for (auto& indice : renderable->_GetIndices())
 		{
 			_mIndices.push_back(indice);
@@ -147,39 +169,47 @@ namespace Engine
 	template<int dimension>
 	inline void CRenderer<dimension>::_BeginScene(Camera* camera)
 	{
-		_mSceneData.view = &camera->GetView();
-		_mSceneData.projection = &camera->GetProjection();
-		_mSceneData.vp = &camera->GetViewProjection();
+		_mSceneData.view	        = &camera->GetView();
+		_mSceneData.projection		= &camera->GetProjection();
+		_mSceneData.vp				= &camera->GetViewProjection();
 		_mSceneData.camera_position = &camera->GetPosition();
 	}
 
 	template<int dimension>
 	inline void CRenderer<dimension>::_EndScene()
 	{
-		_mSceneData.view = nullptr;
-		_mSceneData.projection = nullptr;
-		_mSceneData.vp = nullptr;
+		_mSceneData.view			= nullptr;
+		_mSceneData.projection		= nullptr;
+		_mSceneData.vp				= nullptr;
 		_mSceneData.camera_position = nullptr;
-		_mSceneData.cliping_plane = Vec4();
+		_mSceneData.cliping_plane	= Vec4();
 	}
 
 	template<int dimension>
 	inline void CRenderer<dimension>::_Begin()
 	{
 		_mShader->Bind();
-		/// Upload uniforms
 
 		for (unsigned int i = 0; i < _mTextures.size(); ++i)
 			_mTextures[i]->Bind(i);
 
 		_mVertexArray->Bind();
-		_mVertexBuffer->SetData(reinterpret_cast<float*>(_mBuffer.data()));
-		_mIndexBuffer->SetData(_mIndices.data());
+		_mVertexBuffer->SetData(_mBuffer);
+		_mIndexBuffer->SetData(_mIndices);
+		_mIndexBuffer->Bind();
 	}
 
 	template<int dimension>
 	inline void CRenderer<dimension>::_Render()
 	{
+		if (!_mVertexBuffer->GetCount() || !_mIndexBuffer->GetCount())
+		{
+			#ifdef DEBUG
+			ENGINE_LOG_DEBUG("Nothing to render");
+			#endif // DEBUG
+			return;
+		}
+
 		_Begin();
 		_sRenderer->_Draw(_mVertexArray);
 		_End();
@@ -189,11 +219,9 @@ namespace Engine
 	inline void CRenderer<dimension>::_End()
 	{
 		_mBuffer.clear();
-		_mBuffer = std::move(std::vector<Vertex<dimension>>(_mData.max_vertex_renderable));
-		_mData.buffer_index = 0;
+		///_mBuffer = std::move(std::vector<Vertex<dimension>>(_mData.max_vertex_renderable));
 
 		_mIndices.clear();
-
 		_mTextures.clear();
 		_mTextures.push_back(Texture2D::GetWhiteTexture());
 	}

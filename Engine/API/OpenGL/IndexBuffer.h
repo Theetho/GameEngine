@@ -14,7 +14,7 @@ namespace Engine
 
 			void Bind() const override;
 			void Unbind() const override;
-			void SetData(uint* data) override;
+			void SetData(std::vector<uint>& data) override;
 		};
 	}
 }
