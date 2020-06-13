@@ -1,13 +1,14 @@
 #pragma once
 
 #include "GameObject/GameObject.h"
+#include "Renderer/Rendering/Renderable.h"
 
 namespace Engine
 {
 	class VertexArray;
 	class Texture2D;
 
-	class Terrain : public GameObject
+	class Terrain : public GameObject3D, public Renderable
 	{
 	public:
 		///////////////////////////

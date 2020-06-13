@@ -3576,7 +3576,7 @@ FT_BEGIN_HEADER
   /*    FT_RoundFix                                                        */
   /*    FT_CeilFix                                                         */
   /*    FT_FloorFix                                                        */
-  /*    FT_Vector_Transform                                                */
+  /*    FT_Vector_Transform3D                                                */
   /*    FT_Matrix_Multiply                                                 */
   /*    FT_Matrix_Invert                                                   */
   /*                                                                       */
@@ -3750,10 +3750,10 @@ FT_BEGIN_HEADER
   /*************************************************************************/
   /*                                                                       */
   /* <Function>                                                            */
-  /*    FT_Vector_Transform                                                */
+  /*    FT_Vector_Transform3D                                                */
   /*                                                                       */
   /* <Description>                                                         */
-  /*    Transform a single vector through a 2x2 matrix.                    */
+  /*    Transform3D a single vector through a 2x2 matrix.                    */
   /*                                                                       */
   /* <InOut>                                                               */
   /*    vector :: The target vector to transform.                          */
@@ -3765,7 +3765,7 @@ FT_BEGIN_HEADER
   /*    The result is undefined if either `vector' or `matrix' is invalid. */
   /*                                                                       */
   FT_EXPORT( void )
-  FT_Vector_Transform( FT_Vector*        vec,
+  FT_Vector_Transform3D( FT_Vector*        vec,
                        const FT_Matrix*  matrix );
 
 

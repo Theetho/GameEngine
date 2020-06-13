@@ -33,4 +33,15 @@ namespace Engine
 
 		shader->UploadUniform("uLights[" + std::to_string(index) + "].direction", mDirection);
 	}
+	void DirectionalLight::OnLeftPanel(SceneObject* caller, std::string label, int number)
+	{
+		SceneObject::OnLeftPanel(this, "Directional light", number);
+	}
+	void DirectionalLight::OnRightPanel()
+	{
+		Light::OnRightPanel();
+		ImGui::Separator();
+		ImGui::Text("Direction");
+		ImGui::DragFloat3("", (float*)&mDirection, 0.1f, -1.0f, 1.0f);
+	}
 }

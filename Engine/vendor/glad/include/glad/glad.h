@@ -3636,11 +3636,11 @@ typedef GLboolean (APIENTRYP PFNGLISENABLEDIPROC)(GLenum target, GLuint index);
 GLAPI PFNGLISENABLEDIPROC glad_glIsEnabledi;
 #define glIsEnabledi glad_glIsEnabledi
 typedef void (APIENTRYP PFNGLBEGINTRANSFORMFEEDBACKPROC)(GLenum primitiveMode);
-GLAPI PFNGLBEGINTRANSFORMFEEDBACKPROC glad_glBeginTransformFeedback;
-#define glBeginTransformFeedback glad_glBeginTransformFeedback
+GLAPI PFNGLBEGINTRANSFORMFEEDBACKPROC glad_glBeginTransform3DFeedback;
+#define glBeginTransform3DFeedback glad_glBeginTransform3DFeedback
 typedef void (APIENTRYP PFNGLENDTRANSFORMFEEDBACKPROC)(void);
-GLAPI PFNGLENDTRANSFORMFEEDBACKPROC glad_glEndTransformFeedback;
-#define glEndTransformFeedback glad_glEndTransformFeedback
+GLAPI PFNGLENDTRANSFORMFEEDBACKPROC glad_glEndTransform3DFeedback;
+#define glEndTransform3DFeedback glad_glEndTransform3DFeedback
 typedef void (APIENTRYP PFNGLBINDBUFFERRANGEPROC)(GLenum target, GLuint index, GLuint buffer, GLintptr offset, GLsizeiptr size);
 GLAPI PFNGLBINDBUFFERRANGEPROC glad_glBindBufferRange;
 #define glBindBufferRange glad_glBindBufferRange
@@ -3648,11 +3648,11 @@ typedef void (APIENTRYP PFNGLBINDBUFFERBASEPROC)(GLenum target, GLuint index, GL
 GLAPI PFNGLBINDBUFFERBASEPROC glad_glBindBufferBase;
 #define glBindBufferBase glad_glBindBufferBase
 typedef void (APIENTRYP PFNGLTRANSFORMFEEDBACKVARYINGSPROC)(GLuint program, GLsizei count, const GLchar *const*varyings, GLenum bufferMode);
-GLAPI PFNGLTRANSFORMFEEDBACKVARYINGSPROC glad_glTransformFeedbackVaryings;
-#define glTransformFeedbackVaryings glad_glTransformFeedbackVaryings
+GLAPI PFNGLTRANSFORMFEEDBACKVARYINGSPROC glad_glTransform3DFeedbackVaryings;
+#define glTransform3DFeedbackVaryings glad_glTransform3DFeedbackVaryings
 typedef void (APIENTRYP PFNGLGETTRANSFORMFEEDBACKVARYINGPROC)(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLsizei *size, GLenum *type, GLchar *name);
-GLAPI PFNGLGETTRANSFORMFEEDBACKVARYINGPROC glad_glGetTransformFeedbackVarying;
-#define glGetTransformFeedbackVarying glad_glGetTransformFeedbackVarying
+GLAPI PFNGLGETTRANSFORMFEEDBACKVARYINGPROC glad_glGetTransform3DFeedbackVarying;
+#define glGetTransform3DFeedbackVarying glad_glGetTransform3DFeedbackVarying
 typedef void (APIENTRYP PFNGLCLAMPCOLORPROC)(GLenum target, GLenum clamp);
 GLAPI PFNGLCLAMPCOLORPROC glad_glClampColor;
 #define glClampColor glad_glClampColor
@@ -4258,29 +4258,29 @@ typedef void (APIENTRYP PFNGLPATCHPARAMETERFVPROC)(GLenum pname, const GLfloat *
 GLAPI PFNGLPATCHPARAMETERFVPROC glad_glPatchParameterfv;
 #define glPatchParameterfv glad_glPatchParameterfv
 typedef void (APIENTRYP PFNGLBINDTRANSFORMFEEDBACKPROC)(GLenum target, GLuint id);
-GLAPI PFNGLBINDTRANSFORMFEEDBACKPROC glad_glBindTransformFeedback;
-#define glBindTransformFeedback glad_glBindTransformFeedback
+GLAPI PFNGLBINDTRANSFORMFEEDBACKPROC glad_glBindTransform3DFeedback;
+#define glBindTransform3DFeedback glad_glBindTransform3DFeedback
 typedef void (APIENTRYP PFNGLDELETETRANSFORMFEEDBACKSPROC)(GLsizei n, const GLuint *ids);
-GLAPI PFNGLDELETETRANSFORMFEEDBACKSPROC glad_glDeleteTransformFeedbacks;
-#define glDeleteTransformFeedbacks glad_glDeleteTransformFeedbacks
+GLAPI PFNGLDELETETRANSFORMFEEDBACKSPROC glad_glDeleteTransform3DFeedbacks;
+#define glDeleteTransform3DFeedbacks glad_glDeleteTransform3DFeedbacks
 typedef void (APIENTRYP PFNGLGENTRANSFORMFEEDBACKSPROC)(GLsizei n, GLuint *ids);
-GLAPI PFNGLGENTRANSFORMFEEDBACKSPROC glad_glGenTransformFeedbacks;
-#define glGenTransformFeedbacks glad_glGenTransformFeedbacks
+GLAPI PFNGLGENTRANSFORMFEEDBACKSPROC glad_glGenTransform3DFeedbacks;
+#define glGenTransform3DFeedbacks glad_glGenTransform3DFeedbacks
 typedef GLboolean (APIENTRYP PFNGLISTRANSFORMFEEDBACKPROC)(GLuint id);
-GLAPI PFNGLISTRANSFORMFEEDBACKPROC glad_glIsTransformFeedback;
-#define glIsTransformFeedback glad_glIsTransformFeedback
+GLAPI PFNGLISTRANSFORMFEEDBACKPROC glad_glIsTransform3DFeedback;
+#define glIsTransform3DFeedback glad_glIsTransform3DFeedback
 typedef void (APIENTRYP PFNGLPAUSETRANSFORMFEEDBACKPROC)(void);
-GLAPI PFNGLPAUSETRANSFORMFEEDBACKPROC glad_glPauseTransformFeedback;
-#define glPauseTransformFeedback glad_glPauseTransformFeedback
+GLAPI PFNGLPAUSETRANSFORMFEEDBACKPROC glad_glPauseTransform3DFeedback;
+#define glPauseTransform3DFeedback glad_glPauseTransform3DFeedback
 typedef void (APIENTRYP PFNGLRESUMETRANSFORMFEEDBACKPROC)(void);
-GLAPI PFNGLRESUMETRANSFORMFEEDBACKPROC glad_glResumeTransformFeedback;
-#define glResumeTransformFeedback glad_glResumeTransformFeedback
+GLAPI PFNGLRESUMETRANSFORMFEEDBACKPROC glad_glResumeTransform3DFeedback;
+#define glResumeTransform3DFeedback glad_glResumeTransform3DFeedback
 typedef void (APIENTRYP PFNGLDRAWTRANSFORMFEEDBACKPROC)(GLenum mode, GLuint id);
-GLAPI PFNGLDRAWTRANSFORMFEEDBACKPROC glad_glDrawTransformFeedback;
-#define glDrawTransformFeedback glad_glDrawTransformFeedback
+GLAPI PFNGLDRAWTRANSFORMFEEDBACKPROC glad_glDrawTransform3DFeedback;
+#define glDrawTransform3DFeedback glad_glDrawTransform3DFeedback
 typedef void (APIENTRYP PFNGLDRAWTRANSFORMFEEDBACKSTREAMPROC)(GLenum mode, GLuint id, GLuint stream);
-GLAPI PFNGLDRAWTRANSFORMFEEDBACKSTREAMPROC glad_glDrawTransformFeedbackStream;
-#define glDrawTransformFeedbackStream glad_glDrawTransformFeedbackStream
+GLAPI PFNGLDRAWTRANSFORMFEEDBACKSTREAMPROC glad_glDrawTransform3DFeedbackStream;
+#define glDrawTransform3DFeedbackStream glad_glDrawTransform3DFeedbackStream
 typedef void (APIENTRYP PFNGLBEGINQUERYINDEXEDPROC)(GLenum target, GLuint index, GLuint id);
 GLAPI PFNGLBEGINQUERYINDEXEDPROC glad_glBeginQueryIndexed;
 #define glBeginQueryIndexed glad_glBeginQueryIndexed
@@ -4593,11 +4593,11 @@ typedef void (APIENTRYP PFNGLTEXSTORAGE3DPROC)(GLenum target, GLsizei levels, GL
 GLAPI PFNGLTEXSTORAGE3DPROC glad_glTexStorage3D;
 #define glTexStorage3D glad_glTexStorage3D
 typedef void (APIENTRYP PFNGLDRAWTRANSFORMFEEDBACKINSTANCEDPROC)(GLenum mode, GLuint id, GLsizei instancecount);
-GLAPI PFNGLDRAWTRANSFORMFEEDBACKINSTANCEDPROC glad_glDrawTransformFeedbackInstanced;
-#define glDrawTransformFeedbackInstanced glad_glDrawTransformFeedbackInstanced
+GLAPI PFNGLDRAWTRANSFORMFEEDBACKINSTANCEDPROC glad_glDrawTransform3DFeedbackInstanced;
+#define glDrawTransform3DFeedbackInstanced glad_glDrawTransform3DFeedbackInstanced
 typedef void (APIENTRYP PFNGLDRAWTRANSFORMFEEDBACKSTREAMINSTANCEDPROC)(GLenum mode, GLuint id, GLuint stream, GLsizei instancecount);
-GLAPI PFNGLDRAWTRANSFORMFEEDBACKSTREAMINSTANCEDPROC glad_glDrawTransformFeedbackStreamInstanced;
-#define glDrawTransformFeedbackStreamInstanced glad_glDrawTransformFeedbackStreamInstanced
+GLAPI PFNGLDRAWTRANSFORMFEEDBACKSTREAMINSTANCEDPROC glad_glDrawTransform3DFeedbackStreamInstanced;
+#define glDrawTransform3DFeedbackStreamInstanced glad_glDrawTransform3DFeedbackStreamInstanced
 #endif
 #ifndef GL_VERSION_4_3
 #define GL_VERSION_4_3 1
@@ -4770,23 +4770,23 @@ typedef void (APIENTRYP PFNGLCLIPCONTROLPROC)(GLenum origin, GLenum depth);
 GLAPI PFNGLCLIPCONTROLPROC glad_glClipControl;
 #define glClipControl glad_glClipControl
 typedef void (APIENTRYP PFNGLCREATETRANSFORMFEEDBACKSPROC)(GLsizei n, GLuint *ids);
-GLAPI PFNGLCREATETRANSFORMFEEDBACKSPROC glad_glCreateTransformFeedbacks;
-#define glCreateTransformFeedbacks glad_glCreateTransformFeedbacks
+GLAPI PFNGLCREATETRANSFORMFEEDBACKSPROC glad_glCreateTransform3DFeedbacks;
+#define glCreateTransform3DFeedbacks glad_glCreateTransform3DFeedbacks
 typedef void (APIENTRYP PFNGLTRANSFORMFEEDBACKBUFFERBASEPROC)(GLuint xfb, GLuint index, GLuint buffer);
-GLAPI PFNGLTRANSFORMFEEDBACKBUFFERBASEPROC glad_glTransformFeedbackBufferBase;
-#define glTransformFeedbackBufferBase glad_glTransformFeedbackBufferBase
+GLAPI PFNGLTRANSFORMFEEDBACKBUFFERBASEPROC glad_glTransform3DFeedbackBufferBase;
+#define glTransform3DFeedbackBufferBase glad_glTransform3DFeedbackBufferBase
 typedef void (APIENTRYP PFNGLTRANSFORMFEEDBACKBUFFERRANGEPROC)(GLuint xfb, GLuint index, GLuint buffer, GLintptr offset, GLsizeiptr size);
-GLAPI PFNGLTRANSFORMFEEDBACKBUFFERRANGEPROC glad_glTransformFeedbackBufferRange;
-#define glTransformFeedbackBufferRange glad_glTransformFeedbackBufferRange
+GLAPI PFNGLTRANSFORMFEEDBACKBUFFERRANGEPROC glad_glTransform3DFeedbackBufferRange;
+#define glTransform3DFeedbackBufferRange glad_glTransform3DFeedbackBufferRange
 typedef void (APIENTRYP PFNGLGETTRANSFORMFEEDBACKIVPROC)(GLuint xfb, GLenum pname, GLint *param);
-GLAPI PFNGLGETTRANSFORMFEEDBACKIVPROC glad_glGetTransformFeedbackiv;
-#define glGetTransformFeedbackiv glad_glGetTransformFeedbackiv
+GLAPI PFNGLGETTRANSFORMFEEDBACKIVPROC glad_glGetTransform3DFeedbackiv;
+#define glGetTransform3DFeedbackiv glad_glGetTransform3DFeedbackiv
 typedef void (APIENTRYP PFNGLGETTRANSFORMFEEDBACKI_VPROC)(GLuint xfb, GLenum pname, GLuint index, GLint *param);
-GLAPI PFNGLGETTRANSFORMFEEDBACKI_VPROC glad_glGetTransformFeedbacki_v;
-#define glGetTransformFeedbacki_v glad_glGetTransformFeedbacki_v
+GLAPI PFNGLGETTRANSFORMFEEDBACKI_VPROC glad_glGetTransform3DFeedbacki_v;
+#define glGetTransform3DFeedbacki_v glad_glGetTransform3DFeedbacki_v
 typedef void (APIENTRYP PFNGLGETTRANSFORMFEEDBACKI64_VPROC)(GLuint xfb, GLenum pname, GLuint index, GLint64 *param);
-GLAPI PFNGLGETTRANSFORMFEEDBACKI64_VPROC glad_glGetTransformFeedbacki64_v;
-#define glGetTransformFeedbacki64_v glad_glGetTransformFeedbacki64_v
+GLAPI PFNGLGETTRANSFORMFEEDBACKI64_VPROC glad_glGetTransform3DFeedbacki64_v;
+#define glGetTransform3DFeedbacki64_v glad_glGetTransform3DFeedbacki64_v
 typedef void (APIENTRYP PFNGLCREATEBUFFERSPROC)(GLsizei n, GLuint *buffers);
 GLAPI PFNGLCREATEBUFFERSPROC glad_glCreateBuffers;
 #define glCreateBuffers glad_glCreateBuffers

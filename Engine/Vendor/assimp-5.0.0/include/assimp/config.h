@@ -211,7 +211,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     "PP_RRM_EXCLUDE_LIST"
 
 // ---------------------------------------------------------------------------
-/** @brief Configures the #aiProcess_PreTransformVertices step to
+/** @brief Configures the #aiProcess_PreTransform3DVertices step to
  *  keep the scene hierarchy. Meshes are moved to worldspace, but
  *  no optimization is performed (read: meshes with equal materials are not
  *  joined. The total number of meshes won't change).
@@ -226,7 +226,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     "PP_PTV_KEEP_HIERARCHY"
 
 // ---------------------------------------------------------------------------
-/** @brief Configures the #aiProcess_PreTransformVertices step to normalize
+/** @brief Configures the #aiProcess_PreTransform3DVertices step to normalize
  *  all vertex components into the [-1,1] range. That is, a bounding box
  *  for the whole scene is computed, the maximum component is taken and all
  *  meshes are scaled appropriately (uniformly of course!).
@@ -236,7 +236,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     "PP_PTV_NORMALIZE"
 
 // ---------------------------------------------------------------------------
-/** @brief Configures the #aiProcess_PreTransformVertices step to use
+/** @brief Configures the #aiProcess_PreTransform3DVertices step to use
  *  a users defined matrix as the scene root node transformation before
  *  transforming vertices.
  *  Property type: bool. Default value: false.
@@ -245,7 +245,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     "PP_PTV_ADD_ROOT_TRANSFORMATION"
 
 // ---------------------------------------------------------------------------
-/** @brief Configures the #aiProcess_PreTransformVertices step to use
+/** @brief Configures the #aiProcess_PreTransform3DVertices step to use
  *  a users defined matrix as the scene root node transformation before
  *  transforming vertices. This property correspond to the 'a1' component
  *  of the transformation matrix.
@@ -506,20 +506,20 @@ enum aiComponent
 #define AI_CONFIG_PP_FID_IGNORE_TEXTURECOORDS        \
     "PP_FID_IGNORE_TEXTURECOORDS"
 
-// TransformUVCoords evaluates UV scalings
+// Transform3DUVCoords evaluates UV scalings
 #define AI_UVTRAFO_SCALING 0x1
 
-// TransformUVCoords evaluates UV rotations
+// Transform3DUVCoords evaluates UV rotations
 #define AI_UVTRAFO_ROTATION 0x2
 
-// TransformUVCoords evaluates UV translation
+// Transform3DUVCoords evaluates UV translation
 #define AI_UVTRAFO_TRANSLATION 0x4
 
 // Everything baked together -> default value
 #define AI_UVTRAFO_ALL (AI_UVTRAFO_SCALING | AI_UVTRAFO_ROTATION | AI_UVTRAFO_TRANSLATION)
 
 // ---------------------------------------------------------------------------
-/** @brief Input parameter to the #aiProcess_TransformUVCoords step:
+/** @brief Input parameter to the #aiProcess_Transform3DUVCoords step:
  *  Specifies which UV transformations are evaluated.
  *
  *  This is a bitwise combination of the AI_UVTRAFO_XXX flags (integer

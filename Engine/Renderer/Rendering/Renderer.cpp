@@ -1,9 +1,8 @@
 #include "EnginePch.h"
 #include "Renderer/Rendering.h"
-#include "Core/Camera3D.h"
 #include "API/OpenGL/Shader.h"
 #include "Terrain/Water.h"
-
+#include "Core/Camera.h"
 
 namespace Engine
 {
@@ -29,6 +28,14 @@ namespace Engine
 		sRenderCommand->SetViewport(width, height);
 	}
 
+	void Renderer::BeginScene(Camera3D& camera)
+	{
+		sSceneData.view = camera.GetViewMatrix();
+		sSceneData.projection = camera.GetProjectionMatrix();
+		sSceneData.camera_position = camera.GetTransform().GetPosition();
+		sSceneData.view_projection = sSceneData.projection * sSceneData.view;
+	}
+
 	void Renderer::Submit(Ref<Shader> shader, const Renderable& renderable)
 	{
 		sBatch[shader].push_back(&renderable);
@@ -39,14 +46,6 @@ namespace Engine
 		water.Prepare(camera);
 	}
 
-	void Renderer::BeginScene(Camera3D& camera)
-	{
-		sSceneData.view			   = &camera.GetView();
-		sSceneData.projection	   = &camera.GetProjection();
-		sSceneData.camera_position = &camera.GetPosition();
-		sSceneData.view_projection = &camera.GetViewProjection();
-	}
-
 	void Renderer::PrepareShader(Ref<Shader> shader, bool clip)
 	{
 		shader->Bind();
@@ -54,8 +53,8 @@ namespace Engine
 		if (sRenderCommand->GetAPI() == API::OpenGL)
 		{
 			auto& open_gl_shader = std::dynamic_pointer_cast<Engine::OpenGL::Shader>(shader);
-			open_gl_shader->UploadUniform("uCameraPosition", (*sSceneData.camera_position));
-			open_gl_shader->UploadUniform("uViewProjection", (*sSceneData.view_projection));
+			open_gl_shader->UploadUniform("uCameraPosition", (sSceneData.camera_position));
+			open_gl_shader->UploadUniform("uViewProjection", (sSceneData.view_projection));
 			if (clip)
 				open_gl_shader->UploadUniform("uClipingPlane", (sSceneData.cliping_plane));
 		}
@@ -92,10 +91,6 @@ namespace Engine
 	void Renderer::EndScene()
 	{
 		sBatch.clear();
-		sSceneData.view			   = nullptr;
-		sSceneData.projection	   = nullptr;
-		sSceneData.camera_position = nullptr;
-		sSceneData.view_projection = nullptr;
-		sSceneData.cliping_plane   = Vec4();
+		sSceneData.cliping_plane = Vec4();
 	}
 }

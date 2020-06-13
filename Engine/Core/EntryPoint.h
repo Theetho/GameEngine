@@ -20,7 +20,6 @@ int main(int argc, char** argv)
 	Engine::Initialize();
 
 	Engine::Application *app = Engine::CreateApplication();
-	Engine::RenderingPipeline::_Initialize();
 	app->Run();
 	delete app;
 	return 0;

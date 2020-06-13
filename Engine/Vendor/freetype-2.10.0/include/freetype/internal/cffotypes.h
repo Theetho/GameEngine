@@ -90,13 +90,13 @@ FT_BEGIN_HEADER
    *
    * Subglyph transformation record.
    */
-  typedef struct  CFF_Transform_
+  typedef struct  CFF_Transform3D_
   {
     FT_Fixed    xx, xy;     /* transformation matrix coefficients */
     FT_Fixed    yx, yy;
     FT_F26Dot6  ox, oy;     /* offsets                            */
 
-  } CFF_Transform;
+  } CFF_Transform3D;
 
 
 FT_END_HEADER

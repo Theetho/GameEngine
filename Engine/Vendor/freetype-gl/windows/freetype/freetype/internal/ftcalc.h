@@ -126,12 +126,12 @@ FT_BEGIN_HEADER
 
 
   /*
-   *  A variant of FT_Vector_Transform.  See comments for
+   *  A variant of FT_Vector_Transform3D.  See comments for
    *  FT_Matrix_Multiply_Scaled.
    */
 
   FT_BASE( void )
-  FT_Vector_Transform_Scaled( FT_Vector*        vector,
+  FT_Vector_Transform3D_Scaled( FT_Vector*        vector,
                               const FT_Matrix*  matrix,
                               FT_Long           scaling );
 

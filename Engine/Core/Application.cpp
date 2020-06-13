@@ -3,8 +3,9 @@
 #include <thread>
 #include <chrono>
 #include "Include/Core.h"
-#include "System/CollisionSystem.h"
 #include "Renderer/Rendering/Renderer.h"
+#include "GUI/GUI.h"
+#include "GUI/EngineGUI.h"
 
 #define BindFunction(x) std::bind(&x, this, std::placeholders::_1)
 
@@ -26,7 +27,11 @@ namespace Engine
 
 		mWindow = Scope<Window>(Window::Create());
 		mWindow->SetEventCallback(BindFunction(Application::OnEvent));
-		mCollisionSystem = CollisionSystem::Get();
+
+		mEngineGUI = CreateScope<EngineGUI>();
+		GUI::Begin();
+		mEngineGUI->Initialize();
+		GUI::End();
 	}
 
 	Application::~Application()
@@ -52,9 +57,18 @@ namespace Engine
 				layer->OnUpdate(mTimeManager.mDeltaTime);
 			}
 			// ---------------
-			
-			mCollisionSystem->OnUpdate(mTimeManager.mDeltaTime);
-			
+
+			if (!mPlaying)
+			{
+				GUI::Begin();
+				mEngineGUI->Render();
+				for (Layer* layer : mLayerStack)
+				{
+					layer->OnEngineGui();
+				}
+				GUI::End();
+			}
+
 			mWindow->OnUpdate(mTimeManager.mDeltaTime);
 
 			mTimeManager.mDeltaTime = GetEngineTime - mTimeManager.mTime;
@@ -66,11 +80,27 @@ namespace Engine
 	
 	void Application::OnEvent(Event& event)
 	{
-		if (event.mType == Event::Type::Closed || Input::IsKeyPressed(GLFW_KEY_ESCAPE))
+		if (event.mType == Event::Type::Closed)
 		{
 			mRunning = false;
 			event.SetIsHandled(true);
 		}
+
+		else if (event.mType == Event::Type::KeyPressed)
+		{
+			if (event.mKeyEvent.code == ENGINE_KEY_ESCAPE)
+			{
+				mRunning = false;
+				event.SetIsHandled(true);
+			}
+			else if (event.mKeyEvent.code == ENGINE_KEY_F1)
+			{
+				mPlaying = !mPlaying;
+				Input::ToggleCursor();
+				event.SetIsHandled(true);
+			}
+		}
+
 
 		else if (event.mType == Event::Type::Resized)
 		{
@@ -104,6 +134,11 @@ namespace Engine
 		return *mWindow;
 	}
 
+	EngineGUI& Application::GetEngineGUI()
+	{
+		return *mEngineGUI;
+	}
+
 	void Application::ManageTime()
 	{
 		mTimeManager.mTimeSpent += mTimeManager.mDeltaTime;
@@ -115,5 +150,64 @@ namespace Engine
 			mTimeManager.mTimeSpent -= 1.0;
 			mTimeManager.mFrames = 0.0;
 		}
+	}
+
+	void Application::OnEngineGUIRender()
+	{
+		ImGuiStyle& style = ImGui::GetStyle();
+		style.WindowRounding = 0;
+
+		auto panel_flags =
+			ImGuiWindowFlags_NoCollapse |
+			ImGuiWindowFlags_NoMove |
+			ImGuiWindowFlags_NoResize |
+			ImGuiWindowFlags_NoTitleBar |
+			ImGuiWindowFlags_NoBringToFrontOnFocus;
+		float main_menu_height = 0.f;
+		if (ImGui::BeginMainMenuBar())
+		{
+			if (ImGui::BeginMenu("File"))
+			{
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("Edit"))
+			{
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("Example"))
+			{
+				ImGui::EndMenu();
+			}
+			main_menu_height = ImGui::GetWindowHeight();
+			ImGui::EndMainMenuBar();
+		}
+
+		float panel_height = (float)mWindow->GetHeight() * 0.90f - main_menu_height;
+
+		// Left panel
+		ImGui::Begin("Engine-Left-Panel", nullptr, panel_flags);
+		ImGui::SetWindowPos({ 0.f, main_menu_height });
+		ImGui::SetWindowSize({ mWindow->GetWidth() * 0.15f, panel_height });
+		ImGui::End();
+
+		// Playing panel
+		ImGui::Begin("Engine-Playing-Panel", nullptr, panel_flags | ImGuiWindowFlags_NoBackground);
+		ImGui::SetWindowPos({ mWindow->GetWidth() * 0.15f, main_menu_height });
+		ImGui::SetWindowSize({ mWindow->GetWidth() * 0.70f, panel_height });
+		ImGui::End();
+
+		// Right panel
+		ImGui::Begin("Engine-Right-Panel", nullptr, panel_flags);
+		ImGui::SetWindowPos({ mWindow->GetWidth() * 0.85f, main_menu_height });
+		ImGui::SetWindowSize({ mWindow->GetWidth() * 0.15f, panel_height });
+		ImGui::End();
+
+		// Bottom panel
+		ImGui::Begin("Engine-Bottom-Panel", nullptr, panel_flags);
+		ImGui::SetWindowPos({ 0.f, main_menu_height + panel_height });
+		ImGui::SetWindowSize({ (float)mWindow->GetWidth(), mWindow->GetHeight() - (main_menu_height + panel_height) });
+		ImGui::End();
+
+		style.WindowRounding = 7;
 	}
 }

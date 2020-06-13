@@ -173,13 +173,13 @@ FT_BEGIN_HEADER
    *
    * Subglyph transformation record.
    */
-  typedef struct  TT_Transform_
+  typedef struct  TT_Transform3D_
   {
     FT_Fixed    xx, xy;     /* transformation matrix coefficients */
     FT_Fixed    yx, yy;
     FT_F26Dot6  ox, oy;     /* offsets                            */
 
-  } TT_Transform;
+  } TT_Transform3D;
 
 
   /**************************************************************************

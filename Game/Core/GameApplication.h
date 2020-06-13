@@ -6,4 +6,3 @@ public:
 	GameApplication();
 	~GameApplication();
 };
-

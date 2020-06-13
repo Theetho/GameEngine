@@ -15,6 +15,7 @@ namespace Engine
 		static Vec2 GetMousePosition();
 		static Vec2 GetMouseOffset();
 		static void ToggleCursor();
+		static bool IsCursorVisible();
 	protected:
 		virtual bool IsKeyPressedImplementation(int keycode) const = 0;
 		virtual bool IsMouseButtonPressedImplementation(int button) const = 0;

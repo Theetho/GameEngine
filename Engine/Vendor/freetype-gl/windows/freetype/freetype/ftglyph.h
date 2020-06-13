@@ -263,10 +263,10 @@ FT_BEGIN_HEADER
   /*************************************************************************/
   /*                                                                       */
   /* <Function>                                                            */
-  /*    FT_Glyph_Transform                                                 */
+  /*    FT_Glyph_Transform3D                                                 */
   /*                                                                       */
   /* <Description>                                                         */
-  /*    Transform a glyph image if its format is scalable.                 */
+  /*    Transform3D a glyph image if its format is scalable.                 */
   /*                                                                       */
   /* <InOut>                                                               */
   /*    glyph  :: A handle to the target glyph object.                     */
@@ -285,7 +285,7 @@ FT_BEGIN_HEADER
   /*    advance vector.                                                    */
   /*                                                                       */
   FT_EXPORT( FT_Error )
-  FT_Glyph_Transform( FT_Glyph    glyph,
+  FT_Glyph_Transform3D( FT_Glyph    glyph,
                       FT_Matrix*  matrix,
                       FT_Vector*  delta );
 

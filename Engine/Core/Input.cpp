@@ -49,6 +49,11 @@ namespace Engine
 		sInstance->ToggleCursorImplementation();
 	}
 
+	bool Input::IsCursorVisible()
+	{
+		return sInstance->mCursor;
+	}
+
 	void Input::UpdateMouse()
 	{
 		sInstance->UpdateMouseImplementation();

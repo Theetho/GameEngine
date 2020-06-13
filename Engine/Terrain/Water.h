@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameObject/GameObject.h"
+#include "Renderer/Rendering/Renderable.h"
 
 namespace Engine
 {
@@ -9,7 +10,7 @@ namespace Engine
 	class Renderer;
 	class Texture2D;
 
-	class Water : public GameObject
+	class Water : public GameObject3D, public Renderable
 	{
 	public:
 		Water(const Vec3& position, const Vec2& dimensions);

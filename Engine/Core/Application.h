@@ -8,6 +8,7 @@ namespace Engine
 	class Layer;
 	class Window;
 	class CollisionSystem;
+	class EngineGUI;
 
 	class Application
 	{
@@ -21,14 +22,21 @@ namespace Engine
 		void OnEvent(Event& event);
 		void PushLayer(Layer* layer);
 		void PopLayer();
+		inline bool IsPlaying() const
+		{
+			return mPlaying;
+		}
 		
 		Window& GetWindow();
+		EngineGUI& GetEngineGUI();
 	private:
 		static Application*	   sInstance;
 		
 		Scope<Window>		   mWindow;
 		Ref<CollisionSystem>   mCollisionSystem;
+		Scope<EngineGUI>	   mEngineGUI;
 		bool				   mRunning = true;
+		bool				   mPlaying = false;
 		LayerStack			   mLayerStack;
 		struct TimeManager
 		{
@@ -41,6 +49,8 @@ namespace Engine
 		double				   mFpsCap = 1.0 / 60.0;
 
 		void ManageTime();
+	protected:
+		void OnEngineGUIRender();
 	};
 
 	// Has to be define by the game

@@ -14,8 +14,12 @@ namespace Engine
 		explicit Color(int rgb);
 		Color(const Color& color);
 		Color(const Color&& color) noexcept;
+		Color(const ImVec4& imgui_color);
+		Color(const ImVec4&& imgui_color) noexcept;
 		Color& operator=(const Color& color);
 		Color& operator=(const Color&& color) noexcept;
+		Color& operator=(const ImVec4& imgui_color);
+		Color& operator=(const ImVec4&& imgui_color) noexcept;
 		Color operator+(const Color& color) const;
 		Color operator-(const Color& color) const;
 		Color operator/(const Color& color) const;

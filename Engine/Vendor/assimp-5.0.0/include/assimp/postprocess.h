@@ -285,7 +285,7 @@ enum aiPostProcessSteps
     /** <hr>Searches for redundant/unreferenced materials and removes them.
      *
      * This is especially useful in combination with the
-     * #aiProcess_PreTransformVertices and #aiProcess_OptimizeMeshes flags.
+     * #aiProcess_PreTransform3DVertices and #aiProcess_OptimizeMeshes flags.
      * Both join small meshes with equal characteristics, but they can't do
      * their work if two meshes have different materials. Because several
      * material settings are lost during Assimp's import filters,
@@ -609,7 +609,7 @@ enum aiPostProcessSteps
  *
  * If you're using DirectX, don't forget to combine this value with
  * the #aiProcess_ConvertToLeftHanded step. If you don't support UV transformations
- * in your application apply the #aiProcess_TransformUVCoords step, too.
+ * in your application apply the #aiProcess_Transform3DUVCoords step, too.
  *  @note Please take the time to read the docs for the steps enabled by this preset.
  *  Some of them offer further configurable properties, while some of them might not be of
  *  use for you so it might be better to not specify them.
@@ -634,7 +634,7 @@ enum aiPostProcessSteps
   *
   *  If you're using DirectX, don't forget to combine this value with
   *  the #aiProcess_ConvertToLeftHanded step. If you don't support UV transformations
-  *  in your application apply the #aiProcess_TransformUVCoords step, too.
+  *  in your application apply the #aiProcess_Transform3DUVCoords step, too.
   *  @note Please take the time to read the docs for the steps enabled by this preset.
   *  Some of them offer further configurable properties, while some of them might not be
   *  of use for you so it might be better to not specify them.
@@ -664,7 +664,7 @@ enum aiPostProcessSteps
   *
   *  If you're using DirectX, don't forget to combine this value with
   *  the #aiProcess_ConvertToLeftHanded step. If you don't support UV transformations
-  *  in your application, apply the #aiProcess_TransformUVCoords step, too.
+  *  in your application, apply the #aiProcess_Transform3DUVCoords step, too.
   *  @note Please take the time to read the docs for the steps enabled by this preset.
   *  Some of them offer further configurable properties, while some of them might not be
   *  of use for you so it might be better to not specify them.

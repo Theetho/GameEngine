@@ -28,11 +28,11 @@ namespace Engine
 
 			static inline unsigned int GetDefaultWidth()
 			{
-				return 1280;
+				return 1920;
 			}
 			static inline unsigned int GetDefaultHeight()
 			{
-				return 720;
+				return 1080;
 			}
 		};
 
@@ -50,7 +50,9 @@ namespace Engine
 		virtual const std::string& GetTitle() const;
 		
 		virtual void SetFullscreen(bool fullscreen) = 0;
+		virtual void SetSize(const Vec2& size) = 0;
 		virtual void SetEventCallback(const EventCallbackFunction& event_callback);
+		virtual void Maximise() = 0;
 	protected:
 		WindowData	mData;
 	};
@@ -66,7 +68,9 @@ namespace Engine
 		void OnUpdate(const double& delta) override;
 		void Resize(unsigned int width, unsigned int height);
 
-		void SetFullscreen(bool set);
+		void SetFullscreen(bool set) override;
+		void SetSize(const Vec2& size) override;
+		void Maximise() override;
 
 		void* GetOSWindow();
 	private:

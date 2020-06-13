@@ -313,10 +313,10 @@ FT_BEGIN_HEADER
   /**************************************************************************
    *
    * @function:
-   *   FT_Glyph_Transform
+   *   FT_Glyph_Transform3D
    *
    * @description:
-   *   Transform a glyph image if its format is scalable.
+   *   Transform3D a glyph image if its format is scalable.
    *
    * @inout:
    *   glyph ::
@@ -338,7 +338,7 @@ FT_BEGIN_HEADER
    *   vector.
    */
   FT_EXPORT( FT_Error )
-  FT_Glyph_Transform( FT_Glyph    glyph,
+  FT_Glyph_Transform3D( FT_Glyph    glyph,
                       FT_Matrix*  matrix,
                       FT_Vector*  delta );
 

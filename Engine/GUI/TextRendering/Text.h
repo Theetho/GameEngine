@@ -1,14 +1,13 @@
 #pragma once
 
-//#include "Renderer/Rendering/Renderable.h"
-#include "RenderingEngine/Renderable/CRenderable.h"
+#include "Renderer/Rendering/Renderable.h"
 
 namespace Engine
 {
 	class Font;
 	class VertexArray;
 
-	class Text : public CRenderable2D//public Renderable
+	class Text : public Renderable
 	{
 	public:
 		Text();
@@ -27,7 +26,7 @@ namespace Engine
 
 		void InitializeVertices();
 		void AddVertice(std::vector<float>& vertices, float x, float y, float u, float v);
-	//	virtual void Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const override;
+		virtual void Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const override;
 	};
 }
 

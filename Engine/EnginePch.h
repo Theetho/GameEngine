@@ -16,10 +16,13 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include <freetype-gl.h>
+#include "imgui.h"
 
 #ifdef ENGINE_WINDOWS
 	#include "glad/glad.h"
 	#include "GLFW/glfw3.h"
+	#include "imgui_impl_glfw.h"
+	#include "imgui_impl_opengl3.h"
 #endif // ENGINE_WINDOWS
 
 #ifdef ENGINE_ENABLE_ASSERTS

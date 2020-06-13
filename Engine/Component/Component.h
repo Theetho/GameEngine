@@ -1,26 +1,58 @@
 #pragma once
 
+#include "Core/SceneObject.h"
+
 namespace Engine
 {
+	template<int dimension>
 	class GameObject;
 
 	/// Abstract base class
 
-	class Component
+	template<int dimension>
+	class Component : public SceneObject
 	{
 	public:
-		Component(GameObject& game_object);
-		Component(const Component& component);
-		Component(const Component&& component) noexcept;
-		virtual ~Component();
-
+		Component(GameObject<dimension>& game_object)
+			: mGameObject(game_object)
+		{}
+		Component(const Component& component)
+			: mGameObject(component.mGameObject)
+		{}
+		Component(const Component&& component) noexcept
+			: mGameObject(component.mGameObject)
+		{}
+		Component& operator=(const Component& component)
+		{
+			mGameObject = component.mGameObject;
+			return *this;
+		}
+		Component& operator=(const Component&& component) noexcept
+		{
+			mGameObject = component.mGameObject;
+			return *this;
+		}
+		
+		~Component() {}
+		
 		virtual void OnUpdate(const double& delta) = 0;
-
-		virtual GameObject&		  GetGameObject();
-		virtual const GameObject& GetGameObject() const;
-
+		
+		inline GameObject<dimension>& GetGameObject()
+		{
+			return mGameObject;
+		}
+		inline const GameObject<dimension>& GetGameObject() const
+		{
+			return mGameObject;
+		}
 	protected:
-		GameObject& mGameObject;
+		GameObject<dimension>& mGameObject;
 	};
+
+	template class Component<3>;
+	template class Component<2>;
+
+	using Component3D = Component<3>;
+	using Component2D = Component<2>;
 }
 

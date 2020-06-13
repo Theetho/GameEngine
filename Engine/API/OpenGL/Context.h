@@ -18,6 +18,7 @@ namespace Engine
 
 			void Initialize() override;
 			void SwapBuffers() override;
+			std::string GetAPIVersion() const override;
 
 		private:
 			GLFWwindow* mWindow;

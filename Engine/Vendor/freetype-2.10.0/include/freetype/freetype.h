@@ -4534,7 +4534,7 @@ FT_BEGIN_HEADER
    *   FT_RoundFix
    *   FT_CeilFix
    *   FT_FloorFix
-   *   FT_Vector_Transform
+   *   FT_Vector_Transform3D
    *   FT_Matrix_Multiply
    *   FT_Matrix_Invert
    *
@@ -4700,10 +4700,10 @@ FT_BEGIN_HEADER
   /**************************************************************************
    *
    * @function:
-   *   FT_Vector_Transform
+   *   FT_Vector_Transform3D
    *
    * @description:
-   *   Transform a single vector through a 2x2 matrix.
+   *   Transform3D a single vector through a 2x2 matrix.
    *
    * @inout:
    *   vector ::
@@ -4717,7 +4717,7 @@ FT_BEGIN_HEADER
    *   The result is undefined if either `vector` or `matrix` is invalid.
    */
   FT_EXPORT( void )
-  FT_Vector_Transform( FT_Vector*        vector,
+  FT_Vector_Transform3D( FT_Vector*        vector,
                        const FT_Matrix*  matrix );
 
 

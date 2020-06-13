@@ -45,5 +45,12 @@ namespace Engine
 			glfwSwapBuffers(mWindow);
 			#endif
 		}
+
+		std::string Context::GetAPIVersion() const
+		{
+			std::string version(reinterpret_cast<const char*>(glGetString(GL_VERSION)));
+
+			return version;
+		}
 	}
 }

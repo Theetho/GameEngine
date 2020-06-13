@@ -51,6 +51,14 @@ namespace Engine
 		: Color(color.r, color.g, color.b, color.a)
 	{}
 
+	Color::Color(const ImVec4 & imgui_color)
+		: Color(imgui_color.x, imgui_color.y, imgui_color.z, imgui_color.w)
+	{}
+
+	Color::Color(const ImVec4&& imgui_color) noexcept
+		: Color(imgui_color.x, imgui_color.y, imgui_color.z, imgui_color.w)
+	{}
+
 	Color& Color::operator=(const Color& color)
 	{
 		r = color.r;
@@ -67,6 +75,26 @@ namespace Engine
 		g = color.g;
 		b = color.b;
 		a = color.a;
+
+		return *this;
+	}
+
+	Color& Color::operator=(const ImVec4& imgui_color)
+	{
+		r = imgui_color.x;
+		g = imgui_color.y;
+		b = imgui_color.z;
+		a = imgui_color.w;
+
+		return *this;
+	}
+
+	Color& Color::operator=(const ImVec4&& imgui_color) noexcept
+	{
+		r = imgui_color.x;
+		g = imgui_color.y;
+		b = imgui_color.z;
+		a = imgui_color.w;
 
 		return *this;
 	}

@@ -53,5 +53,7 @@ namespace Engine
 		Attenuation mAttenuation;
 	protected:
 		void LoadGLUniforms(Ref<OpenGL::Shader> shader, unsigned int index) override;
+		virtual void OnLeftPanel(SceneObject* caller = nullptr, std::string label = "", int number = -1) override;
+		virtual void OnRightPanel() override;
 	};
 }

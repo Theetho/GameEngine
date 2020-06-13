@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "GameApplication.h"
-#include "Layers/BombermanLayer.h"
-#include "Layers/TerrainLayer.h"
+#include "Layers/GameLayer.h"
 
 GameApplication::GameApplication()
 	: Application()
@@ -9,15 +8,13 @@ GameApplication::GameApplication()
 	Engine::Shader::SetFolder("./Assets/Shaders/");
 	Engine::Texture::SetFolder("./Assets/Textures/");
 	Engine::Model::SetFolder("./Assets/Models/");
-	this->PushLayer(new BombermanLayer());
-	//this->PushLayer(new TerrainLayer());
+	this->GetWindow().Maximise();
 
-	//this->GetWindow().SetFullscreen(true);
+	this->PushLayer(new GameLayer());
 }
 
 GameApplication::~GameApplication()
-{
-}
+{}
 
 Engine::Application* Engine::CreateApplication()
 {

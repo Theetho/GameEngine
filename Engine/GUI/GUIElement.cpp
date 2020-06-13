@@ -42,15 +42,7 @@ namespace Engine
 			if (texture)
 			{
 				v1.texture_id = texture->GetId(); v2.texture_id = texture->GetId(); v3.texture_id = texture->GetId(); v4.texture_id = texture->GetId();
-				_mTextures.push_back(texture);
 			}
-			_mVertices.push_back(v1); _mVertices.push_back(v2); _mVertices.push_back(v3), _mVertices.push_back(v4);
-			_mIndices.push_back(0);
-			_mIndices.push_back(1);
-			_mIndices.push_back(2);
-			_mIndices.push_back(2);
-			_mIndices.push_back(1);
-			_mIndices.push_back(3);
 		}
 	}
 	
@@ -61,15 +53,9 @@ namespace Engine
 	void GUIElement::SetTexture(Ref<Texture2D> texture)
 	{
 		mTexture = texture;
-		_mTextures.clear();
-		_mTextures.push_back(texture);
-		for (auto& vertex : _mVertices)
-		{
-			vertex.texture_id = texture->GetId();
-		}
 	}
 
-	/*void GUIElement::Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const
+	void GUIElement::Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const
 	{
 		if (render_command->GetAPI() == API::OpenGL)
 		{
@@ -89,5 +75,5 @@ namespace Engine
 		{
 			render_command->SetDrawMode(DrawMode::TRIANGLES);
 		}
-	}*/
+	}
 }

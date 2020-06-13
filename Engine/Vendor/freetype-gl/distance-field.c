@@ -22,14 +22,14 @@ make_distance_mapd( double *data, unsigned int width, unsigned int height )
     double vmin = DBL_MAX;
     unsigned int i;
 
-    // Compute outside = edtaa3(bitmap); % Transform background (0's)
+    // Compute outside = edtaa3(bitmap); % Transform3D background (0's)
     computegradient( data, width, height, gx, gy);
     edtaa3(data, gx, gy, width, height, xdist, ydist, outside);
     for( i=0; i<width*height; ++i)
         if( outside[i] < 0.0 )
             outside[i] = 0.0;
 
-    // Compute inside = edtaa3(1-bitmap); % Transform foreground (1's)
+    // Compute inside = edtaa3(1-bitmap); % Transform3D foreground (1's)
     memset( gx, 0, sizeof(double)*width*height );
     memset( gy, 0, sizeof(double)*width*height );
     for( i=0; i<width*height; ++i)

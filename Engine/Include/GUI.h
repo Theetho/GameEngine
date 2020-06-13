@@ -1,4 +1,5 @@
 #pragma once
 
-#include "GUI/GUIElement.h"
-#include "GUI/TextRendering.h"
+#include "GUI/GUI.h"
+#include "GUI/Panel.h"
+#include "GUI/EngineGui.h"

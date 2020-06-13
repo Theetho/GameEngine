@@ -28,10 +28,12 @@ namespace Engine
 			mDirection = direction;
 		}
 	private:
-		float mCutOff;
+		float mCutOff = 12.5f;
 		Vec3  mDirection;
 
 		void LoadGLUniforms(Ref<OpenGL::Shader> shader, unsigned int index) override;
+		virtual void OnLeftPanel(SceneObject* caller = nullptr, std::string label = "", int number = -1) override;
+		virtual void OnRightPanel() override;
 	};
 }
 

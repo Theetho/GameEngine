@@ -2,12 +2,13 @@
 #include "Water.h"
 #include "Core/Application.h"
 #include "Core/Window.h"
-#include "Core/Camera3D.h"
 #include "Renderer/Buffer.h"
 #include "Renderer/Rendering.h"
 #include "API/OpenGL/Shader.h"
 #include "API/OpenGL/FrameBuffer.h"
 #include "API/OpenGL/Texture2D.h"
+#include "GameObject/Transform.h"
+#include "Core/Camera.h"
 
 #define REFLECTION_WIDTH  640
 #define REFLECTION_HEIGHT 360
@@ -18,22 +19,24 @@
 namespace Engine
 {
 	Water::Water(const Vec3& position, const Vec2& dimensions)
-		: GameObject(Transform(position + Vec3(dimensions.x / 2.0f, 0.0f, dimensions.y / 2.0f), Vec3(0.0f), Vec3(dimensions.x / 2.0f, 0.0f, dimensions.y / 2.0f)))
-		, mWaveMovement(0.0f)
+		: mWaveMovement(0.0f)
 	{
+		mTransform.SetPosition(position + Vec3(dimensions.x / 2.0f, 0.0f, dimensions.y / 2.0f));
+		mTransform.SetScale(Vec3(dimensions.x / 2.0f, 0.0f, dimensions.y / 2.0f));
+
 		this->CreateTile();
 		mRefraction = FrameBuffer::Create(REFRACTION_WIDTH, REFRACTION_HEIGHT);
 		mRefraction->CreateTextureAttachment();
 		mRefraction->CreateDepthAttachment();
-		
+
 		mReflection = FrameBuffer::Create(REFLECTION_WIDTH, REFLECTION_HEIGHT);
 		mReflection->CreateTextureAttachment();
 		mReflection->CreateRenderBuffer();
-		
-		mDUDVMap	= Texture2D::Create("Water/dudvmap.png", "water_dudv");
-		mNormalMap	= Texture2D::Create("Water/normalmap.png", "water_normal");
+
+		mDUDVMap = Texture2D::Create("Water/dudvmap.png", "water_dudv");
+		mNormalMap = Texture2D::Create("Water/normalmap.png", "water_normal");
 	}
-	
+
 	Water::~Water()
 	{}
 
@@ -58,18 +61,19 @@ namespace Engine
 	{
 		return mTransform.GetPosition();
 	}
-	
+
 	void Water::CreateTile()
 	{
 		mVertexArray = VertexArray::Create();
-		
+
 		std::vector<float> vertices = { -1, -1, -1, 1, 1, -1, 1, -1, -1, 1, 1, 1 };
+
 
 		auto vertex_buffer = VertexBuffer::Create(vertices.data(), vertices.size());
 
 		vertex_buffer->SetLayout(BufferLayout({
 			BufferElement(ShaderDataType::Float2, "inPosition"),
-		}));
+			}));
 
 		mVertexArray->AddVertexBuffer(vertex_buffer);
 	}
@@ -85,15 +89,17 @@ namespace Engine
 		Renderer::sSceneData.cliping_plane = Vec4(0, -1, 0, mTransform.GetPosition().y + 1);
 		mRefraction->Bind();
 		RenderCommand::Clear();
+		Renderer::BeginScene(camera);
 		Renderer::Render(true);
 		mRefraction->Unbind();
-		
+
 		camera.ReverseOnUpAxis(mTransform.GetPosition());
-		
+
 		// Reflection
 		Renderer::sSceneData.cliping_plane = Vec4(0, 1, 0, -mTransform.GetPosition().y);
 		mReflection->Bind();
 		RenderCommand::Clear();
+		Renderer::BeginScene(camera);
 		Renderer::Render(true);
 		mReflection->Unbind();
 
@@ -107,7 +113,14 @@ namespace Engine
 
 	void Water::Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const
 	{
-		GameObject::Render(render_command, shader);
+		/////// GameObject render's
+		if (render_command->GetAPI() == API::OpenGL)
+		{
+			auto& open_gl_shader = std::dynamic_pointer_cast<Engine::OpenGL::Shader>(shader);
+
+			open_gl_shader->UploadUniform("uModel", mTransform.GetModel());
+		}
+		///////
 
 		if (render_command->GetAPI() == API::OpenGL)
 		{
@@ -115,19 +128,19 @@ namespace Engine
 			auto ogl_shader = std::dynamic_pointer_cast<OpenGL::Shader>(shader);
 			ogl_shader->UploadUniform("uReflection", 0);
 			ogl_shader->UploadUniform("uRefraction", 1);
-			ogl_shader->UploadUniform("uDUDVMap"   , 2);
-			ogl_shader->UploadUniform("uNormalMap" , 3);
-			ogl_shader->UploadUniform("uDepthMap"  , 4);
+			ogl_shader->UploadUniform("uDUDVMap", 2);
+			ogl_shader->UploadUniform("uNormalMap", 3);
+			ogl_shader->UploadUniform("uDepthMap", 4);
 			ogl_shader->UploadUniform("uWaveMovement", mWaveMovement);
 			mReflection->GetTextureAttachment()->Bind(0);
 			mRefraction->GetTextureAttachment()->Bind(1);
-			mDUDVMap   ->Bind(2);
-			mNormalMap ->Bind(3);
+			mDUDVMap->Bind(2);
+			mNormalMap->Bind(3);
 			mRefraction->GetDepthAttachment()->Bind(4);
 		}
 
 		Renderable::Render(mVertexArray, render_command, shader);
-		
+
 		if (render_command->GetAPI() == API::OpenGL)
 		{
 			glDisable(GL_BLEND);

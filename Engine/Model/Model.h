@@ -31,7 +31,7 @@ namespace Engine
 		const std::vector<Mesh>::const_iterator begin() const;
 		std::vector<Mesh>::iterator end();
 		const std::vector<Mesh>::const_iterator end() const;
-	private:
+	protected:
 		static std::string sFolderPath;
 		std::string mPath;
 		std::string mName;

@@ -57,7 +57,7 @@ FT_BEGIN_HEADER
   /*    FT_Outline_Done                                                    */
   /*    FT_Outline_Copy                                                    */
   /*    FT_Outline_Translate                                               */
-  /*    FT_Outline_Transform                                               */
+  /*    FT_Outline_Transform3D                                               */
   /*    FT_Outline_Embolden                                                */
   /*    FT_Outline_Reverse                                                 */
   /*    FT_Outline_Check                                                   */
@@ -284,7 +284,7 @@ FT_BEGIN_HEADER
   /*************************************************************************/
   /*                                                                       */
   /* <Function>                                                            */
-  /*    FT_Outline_Transform                                               */
+  /*    FT_Outline_Transform3D                                               */
   /*                                                                       */
   /* <Description>                                                         */
   /*    Apply a simple 2x2 matrix to all of an outline's points.  Useful   */
@@ -301,7 +301,7 @@ FT_BEGIN_HEADER
   /*    outline's points.                                                  */
   /*                                                                       */
   FT_EXPORT( void )
-  FT_Outline_Transform( const FT_Outline*  outline,
+  FT_Outline_Transform3D( const FT_Outline*  outline,
                         const FT_Matrix*   matrix );
 
 

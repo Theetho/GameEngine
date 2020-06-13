@@ -1,7 +1,6 @@
 #include "EnginePch.h"
 #include "Terrain.h"
-#include "Component/Collider/TerrainCollider.h"
-#include "GameObject/Transform.h"
+//#include "Component/Collider/TerrainCollider.h"
 #include "Renderer/Texture/Texture2D.h"
 #include "Renderer/Buffer.h"
 #include "Renderer/Rendering/RenderCommand.h"
@@ -21,10 +20,11 @@ namespace Engine
 	};
 
 	Terrain::Terrain(const Vec2& grid_position, const char* height_map_path, const Vec2& dimension)
-		: GameObject(Transform(Vec3(grid_position.x * dimension.x, 0.f, grid_position.y * dimension.y), Vec3(0.0f), Vec3(1.0f)))
-		, mDimension(dimension)
+		: /*GameObject<3>(Transform3D(Vec3(grid_position.x * dimension.x, 0.f, grid_position.y * dimension.y), Vec3(0.0f), Vec3(1.0f)))
+		,*/ mDimension(dimension)
 		, mResolution(100.0f, 100.0f)
 	{
+		mTransform.SetPosition(Vec3(grid_position.x * dimension.x, 0.f, grid_position.y * dimension.y));
 		mHeightMap = Texture2D::Create(height_map_path);
 		//mHeightMap = Texture2D::Create("Heightmaps/3279_8_2_0.5_0.758.png");
 
@@ -35,7 +35,7 @@ namespace Engine
 
 		GenerateTerrain();
 
-		AddComponent<TerrainCollider>(CreateRef<TerrainCollider>(*this, mTransform.GetPosition()));
+		//AddComponent<TerrainCollider>(CreateRef<TerrainCollider>(*this, mTransform.GetPosition()));
 	}
 
 	Terrain::~Terrain()
@@ -211,7 +211,14 @@ namespace Engine
 
 	void Terrain::Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const
 	{
-		GameObject::Render(render_command, shader);
+		/////// GameObject render's
+		if (render_command->GetAPI() == API::OpenGL)
+		{
+			auto& open_gl_shader = std::dynamic_pointer_cast<Engine::OpenGL::Shader>(shader);
+
+			open_gl_shader->UploadUniform("uModel", mTransform.GetModel());
+		}
+		///////
 		Renderable::Render(mVertexArray, render_command, shader);
 	}
 

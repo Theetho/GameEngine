@@ -69,13 +69,13 @@ FT_BEGIN_HEADER
     FT_Bool             isCFF2;
     CF2_RenderingFlags  renderingFlags;
 
-    /* variables that depend on Transform:  */
+    /* variables that depend on Transform3D:  */
     /* the following have zero translation; */
     /* inner * outer = font * original      */
 
-    CF2_Matrix  currentTransform;  /* original client matrix           */
-    CF2_Matrix  innerTransform;    /* for hinting; erect, scaled       */
-    CF2_Matrix  outerTransform;    /* post hinting; includes rotations */
+    CF2_Matrix  currentTransform3D;  /* original client matrix           */
+    CF2_Matrix  innerTransform3D;    /* for hinting; erect, scaled       */
+    CF2_Matrix  outerTransform3D;    /* post hinting; includes rotations */
     CF2_Fixed   ppem;              /* transform-dependent              */
 
     /* variation data */
@@ -103,7 +103,7 @@ FT_BEGIN_HEADER
 
     FT_Int  darkenParams[8];              /* 1000 unit character space */
 
-    /* variables that depend on both FontDict and Transform */
+    /* variables that depend on both FontDict and Transform3D */
     CF2_Fixed  stdVW;     /* in character space; depends on dict entry */
     CF2_Fixed  stdHW;     /* in character space; depends on dict entry */
     CF2_Fixed  darkenX;                    /* character space units    */
