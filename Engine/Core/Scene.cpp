@@ -23,25 +23,29 @@ namespace Engine
 	void Scene::Render()
 	{
 		auto left_panel = Application::Get().GetEngineGUI().GetPanel("Left");
-		left_panel.Begin();
-		if (ImGui::TreeNode("Scene"))
+		auto tab = left_panel.GetOpenedTab();
+		if (tab == Tab::Scene)
 		{
-			int i = 0;
-			for (; i < mObjects.size(); ++i)
+			left_panel.Begin();
+			if (ImGui::TreeNode("Scene"))
 			{
-				mObjects[i]->OnLeftPanel(nullptr, "", i);
-			}
-			if (ImGui::TreeNode("Lights"))
-			{
-				for (int j = 0; j < mLights.size(); ++j)
+				int i = 0;
+				for (; i < mObjects.size(); ++i)
 				{
-					mLights[j]->OnLeftPanel(nullptr, "", j + i);
+					mObjects[i]->OnLeftPanel(nullptr, "", i);
+				}
+				if (ImGui::TreeNode("Lights"))
+				{
+					for (int j = 0; j < mLights.size(); ++j)
+					{
+						mLights[j]->OnLeftPanel(nullptr, "", j + i);
+					}
+					ImGui::TreePop();
 				}
 				ImGui::TreePop();
 			}
-			ImGui::TreePop();
+			left_panel.End();
 		}
-		left_panel.End();
 	}
 	void Scene::UpdateLights(Ref<Shader> shader)
 	{
@@ -71,7 +75,7 @@ namespace Engine
 			}
 
 			// Load the light in the shader
-			light->Load(shader, i);
+			light->IsActive() ? light->Load(shader, i) : light->Unload(shader, i);
 		}
 	}
 }

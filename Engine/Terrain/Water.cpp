@@ -33,8 +33,8 @@ namespace Engine
 		mReflection->CreateTextureAttachment();
 		mReflection->CreateRenderBuffer();
 
-		mDUDVMap = Texture2D::Create("Water/dudvmap.png", "water_dudv");
-		mNormalMap = Texture2D::Create("Water/normalmap.png", "water_normal");
+		mDUDVMap = Texture2D::Create("Water/newdudvmap.png", "water_dudv");
+		mNormalMap = Texture2D::Create("Water/newnormalmap.png", "water_normal");
 	}
 
 	Water::~Water()

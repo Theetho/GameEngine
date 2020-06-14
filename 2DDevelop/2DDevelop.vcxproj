@@ -142,16 +142,6 @@
     <ClInclude Include="Noise\NormalMap.h" />
     <ClInclude Include="Noise\stb_image.h" />
     <ClInclude Include="Noise\stb_image_write.h" />
-    <ClInclude Include="Physics\CBoxCollider.h" />
-    <ClInclude Include="Physics\CCircle.h" />
-    <ClInclude Include="Physics\CCollider.h" />
-    <ClInclude Include="Physics\CCollision.h" />
-    <ClInclude Include="Physics\CGameObject.h" />
-    <ClInclude Include="Physics\CMaths.h" />
-    <ClInclude Include="Physics\CPhysicsEngine.h" />
-    <ClInclude Include="Physics\CRectangle.h" />
-    <ClInclude Include="Physics\CRigidBody.h" />
-    <ClInclude Include="Physics\CSphereCollider.h" />
     <ClInclude Include="UILib\Button.h" />
     <ClInclude Include="UILib\Input.h" />
     <ClInclude Include="UILib\Slider.h" />
@@ -166,16 +156,6 @@
     <ClCompile Include="Noise\Main.cpp" />
     <ClCompile Include="Noise\NormalMap.cpp" />
     <ClCompile Include="Noise\stbi.cpp" />
-    <ClCompile Include="Physics\CBoxCollider.cpp" />
-    <ClCompile Include="Physics\CCircle.cpp" />
-    <ClCompile Include="Physics\CCollider.cpp" />
-    <ClCompile Include="Physics\CCollision.cpp" />
-    <ClCompile Include="Physics\CGameObject.cpp" />
-    <ClCompile Include="Physics\CMain.cpp" />
-    <ClCompile Include="Physics\CPhysicsEngine.cpp" />
-    <ClCompile Include="Physics\CRectangle.cpp" />
-    <ClCompile Include="Physics\CRigidBody.cpp" />
-    <ClCompile Include="Physics\CSphereCollider.cpp" />
     <ClCompile Include="UILib\UIElement.cpp" />
     <ClCompile Include="UILib\Window.cpp" />
   </ItemGroup>

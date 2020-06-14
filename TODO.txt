@@ -1,7 +1,16 @@
 Engine: 
+	Font rendering:
+		- Load and display font atlas : 3h -> DONE in 2h
+		- Display text from glyph on several quads (one for each character) -> Adapt renderer : 4h - ONGOING
+		- Batch all the text rendering inot single quad: 5h - TODO
+		
+	Renderer: 
+		- Add and clean font rendering: 10h + 2h - TODO
+		- Add PBR rendering support, with all other modification (mesh, model, ...) included: 15h - TODO
 
-- Improve/ Totally change the physic engine (collision, forces)
-- Learn blender and create awesome models
-- Implement PBR rendering (at first all models should have textures, then improve
-rendering).
-- Refacto/Improve the Renderer part
+	New System : Animations !
+		- Make research (assimp seems good): 10h - TODO
+		- Implement it: 15h - TODO
+
+Game: 
+	Finish Engine first ! :)

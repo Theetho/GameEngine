@@ -4,9 +4,6 @@
     <Filter Include="Noise">
       <UniqueIdentifier>{6323C10D-CF37-E9BE-98B9-8C1E048DE5EF}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Physics">
-      <UniqueIdentifier>{888B590D-F46A-D8A8-FD82-637F69E13E0A}</UniqueIdentifier>
-    </Filter>
     <Filter Include="UILib">
       <UniqueIdentifier>{DA7B2A0E-4690-52BF-0F12-F61E7BE54EF0}</UniqueIdentifier>
     </Filter>
@@ -26,36 +23,6 @@
     </ClInclude>
     <ClInclude Include="Noise\stb_image_write.h">
       <Filter>Noise</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\CBoxCollider.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\CCircle.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\CCollider.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\CCollision.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\CGameObject.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\CMaths.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\CPhysicsEngine.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\CRectangle.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\CRigidBody.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\CSphereCollider.h">
-      <Filter>Physics</Filter>
     </ClInclude>
     <ClInclude Include="UILib\Button.h">
       <Filter>UILib</Filter>
@@ -94,36 +61,6 @@
     </ClCompile>
     <ClCompile Include="Noise\stbi.cpp">
       <Filter>Noise</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics\CBoxCollider.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics\CCircle.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics\CCollider.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics\CCollision.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics\CGameObject.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics\CMain.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics\CPhysicsEngine.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics\CRectangle.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics\CRigidBody.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics\CSphereCollider.cpp">
-      <Filter>Physics</Filter>
     </ClCompile>
     <ClCompile Include="UILib\UIElement.cpp">
       <Filter>UILib</Filter>

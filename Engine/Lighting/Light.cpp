@@ -9,6 +9,7 @@ namespace Engine
 {
 	Light::Light(const Color& color)
 		: mColor(color)
+		, mActive(true)
 	{}
 
 	Light::~Light()
@@ -22,6 +23,17 @@ namespace Engine
 			LoadGLUniforms(std::dynamic_pointer_cast<OpenGL::Shader>(shader), index);
 		default:
 			break;
+		}
+	}
+
+	void Light::Unload(Ref<Shader> shader, unsigned int index)
+	{
+		switch (Renderer::GetAPI())
+		{
+			case API::OpenGL:
+				UnloadGLUniforms(std::dynamic_pointer_cast<OpenGL::Shader>(shader), index);
+			default:
+				break;
 		}
 	}
 
@@ -42,8 +54,16 @@ namespace Engine
 		shader->UploadUniform("uLights[" + std::to_string(index) + "].color", Vec3(mColor));
 	}
 
+	void Light::UnloadGLUniforms(Ref<OpenGL::Shader> shader, unsigned int index)
+	{
+		shader->Bind();
+		shader->UploadUniform("uLights[" + std::to_string(index) + "].id", 0);
+		shader->UploadUniform("uLights[" + std::to_string(index) + "].color", 0);
+	}
+
 	void Light::OnRightPanel()
 	{
+		ImGui::Checkbox("Active", &mActive);
 		ImGui::Text("Color");
 		ImGui::ColorEdit3("", (float*)&mColor);
 		ImGui::Separator();

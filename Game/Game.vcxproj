@@ -80,7 +80,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>ENGINE_WINDOWS;ENGINE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Engine\Vendor\assimp-5.0.0\include;..\Engine\Vendor\freetype-2.10.0\include;..\Engine\Vendor\glad\include;..\Engine\Vendor\GLFW\include;..\Engine\Vendor\spdlog\include;..;..\Engine\Vendor\glm;..\Engine\Vendor\stb;..\Engine\Vendor\freetype-gl;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Engine\Vendor\assimp-5.0.0\include;..\Engine\Vendor\freetype-2.10.0\include;..\Engine\Vendor\glad\include;..\Engine\Vendor\GLFW\include;..\Engine\Vendor\spdlog\include;..;..\Engine\Vendor\glm;..\Engine\Vendor\stb;..\Engine\Vendor\freetype-gl;..\Engine\Vendor\ImGui;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -99,7 +99,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>ENGINE_WINDOWS;ENGINE_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Engine\Vendor\assimp-5.0.0\include;..\Engine\Vendor\freetype-2.10.0\include;..\Engine\Vendor\glad\include;..\Engine\Vendor\GLFW\include;..\Engine\Vendor\spdlog\include;..;..\Engine\Vendor\glm;..\Engine\Vendor\stb;..\Engine\Vendor\freetype-gl;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Engine\Vendor\assimp-5.0.0\include;..\Engine\Vendor\freetype-2.10.0\include;..\Engine\Vendor\glad\include;..\Engine\Vendor\GLFW\include;..\Engine\Vendor\spdlog\include;..;..\Engine\Vendor\glm;..\Engine\Vendor\stb;..\Engine\Vendor\freetype-gl;..\Engine\Vendor\ImGui;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -122,7 +122,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>ENGINE_WINDOWS;ENGINE_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Engine\Vendor\assimp-5.0.0\include;..\Engine\Vendor\freetype-2.10.0\include;..\Engine\Vendor\glad\include;..\Engine\Vendor\GLFW\include;..\Engine\Vendor\spdlog\include;..;..\Engine\Vendor\glm;..\Engine\Vendor\stb;..\Engine\Vendor\freetype-gl;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Engine\Vendor\assimp-5.0.0\include;..\Engine\Vendor\freetype-2.10.0\include;..\Engine\Vendor\glad\include;..\Engine\Vendor\GLFW\include;..\Engine\Vendor\spdlog\include;..;..\Engine\Vendor\glm;..\Engine\Vendor\stb;..\Engine\Vendor\freetype-gl;..\Engine\Vendor\ImGui;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -140,51 +140,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Component\Movement.h" />
-    <ClInclude Include="Core\CameraFree.h" />
-    <ClInclude Include="Core\CameraLocked.h" />
     <ClInclude Include="Core\GameApplication.h" />
-    <ClInclude Include="GameObject\Bomb.h" />
-    <ClInclude Include="GameObject\Player.h" />
-    <ClInclude Include="Layers\BombermanLayer.h" />
-    <ClInclude Include="Layers\TerrainLayer.h" />
-    <ClInclude Include="Map\DestructibleWall.h" />
-    <ClInclude Include="Map\ExitCell.h" />
-    <ClInclude Include="Map\Floor.h" />
-    <ClInclude Include="Map\Map.h" />
-    <ClInclude Include="Map\Wall.h" />
-    <ClInclude Include="PatchVertexArray.h" />
-    <ClInclude Include="Terrain\Terrain.h" />
-    <ClInclude Include="Terrain\TerrainConfiguration.h" />
-    <ClInclude Include="Terrain\TerrainMaterial.h" />
-    <ClInclude Include="Terrain\TerrainNode.h" />
-    <ClInclude Include="Terrain\TerrainQuadTree.h" />
-    <ClInclude Include="Util\FileLoader.h" />
-    <ClInclude Include="Util\Node.h" />
+    <ClInclude Include="Layers\GameLayer.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Component\Movement.cpp" />
-    <ClCompile Include="Core\CameraFree.cpp" />
-    <ClCompile Include="Core\CameraLocked.cpp" />
     <ClCompile Include="Core\GameApplication.cpp" />
-    <ClCompile Include="GameObject\Bomb.cpp" />
-    <ClCompile Include="GameObject\Player.cpp" />
-    <ClCompile Include="Layers\BombermanLayer.cpp" />
-    <ClCompile Include="Layers\TerrainLayer.cpp" />
-    <ClCompile Include="Map\DestructibleWall.cpp" />
-    <ClCompile Include="Map\ExitCell.cpp" />
-    <ClCompile Include="Map\Floor.cpp" />
-    <ClCompile Include="Map\Map.cpp" />
-    <ClCompile Include="Map\Wall.cpp" />
-    <ClCompile Include="PatchVertexArray.cpp" />
-    <ClCompile Include="Terrain\Terrain.cpp" />
-    <ClCompile Include="Terrain\TerrainConfiguration.cpp" />
-    <ClCompile Include="Terrain\TerrainMaterial.cpp" />
-    <ClCompile Include="Terrain\TerrainNode.cpp" />
-    <ClCompile Include="Terrain\TerrainQuadTree.cpp" />
-    <ClCompile Include="Util\FileLoader.cpp" />
-    <ClCompile Include="Util\Node.cpp" />
+    <ClCompile Include="Layers\GameLayer.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

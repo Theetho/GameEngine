@@ -15,6 +15,7 @@ private:
 	void OnGui() override;
 
 	Engine::Scene mScene;
+	Engine::Color mClearColor;
 	Engine::Camera3D mCamera;
 	Engine::Cube mCube;
 	Engine::Ref<Engine::FrameBuffer> mFrameBuffer;

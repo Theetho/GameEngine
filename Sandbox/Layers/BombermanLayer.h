@@ -18,8 +18,11 @@ private:
 	Engine::Water							mLake;
 	std::vector<Engine::Ref<Engine::Light>> mLights;
 	Engine::Skybox							mSkybox;
-	Engine::GUIElement						mGui;
-	Engine::Font							mFont;
-	Engine::Text							mText;
+
+	// Hérité via Layer
+	void OnEngineGui() override;
+	//Engine::GUIElement						mGui;
+	//Engine::Font							mFont;
+	//Engine::Text							mText;
 };
 

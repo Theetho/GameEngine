@@ -8,8 +8,8 @@ BombermanLayer::BombermanLayer()
 	, mSkybox("Skyboxes/Day")
 	, mTerrain(Vec2(0, 0), "Heightmaps/generated_height_map.png", Vec2(200))
 	, mLake(Vec3(0.0f, 0.45f * 5.0f + 2.0f, 0.0f), Vec2(200))
-	, mFont("./Assets/Fonts/consola.ttf", 48)
-	, mGui(Vec2(0, 0), Vec2(0.5, 0.5))
+	/*, mFont("./Assets/Fonts/consola.ttf", 48)
+	, mGui(Vec2(0, 0), Vec2(0.5, 0.5))*/
 {}
 
 BombermanLayer::~BombermanLayer()
@@ -19,18 +19,18 @@ void BombermanLayer::OnAttach()
 {
 	(void)AssetManager::GetModelLibrary().Load("sphere/sphere.obj", "bomb");
 
-	//mCamera.AddComponent<RigidBody3D>(CreateRef<RigidBody3D>(mCamera));
+	mCamera.AddComponent<RigidBody3D>(CreateRef<RigidBody3D>(mCamera));
 	mCamera.AddComponent<Movement3D>(CreateRef<Movement3D>(mCamera, true));
 
 	mLights = {
 		CreateRef<DirectionalLight>(Vec3( 0.4, -0.5f, 0.0f))
 	};
 	
-	Text::SetGlobalFont(&mFont);
-	mText = Text("Ceci est une chaine test", { -1.0, 0.0 }, Color::Brown);
+	/*Text::SetGlobalFont(&mFont);
+	mText = Text("Ceci est une chaine test", { -1.0, 0.0 }, Color::Brown);*/
 	
-	Ref<Texture2D> gui_texture = AssetManager::GetTexture2DLibrary().Load("snow.jpg");
-	mGui.SetTexture(gui_texture);
+	/*Ref<Texture2D> gui_texture = AssetManager::GetTexture2DLibrary().Load("snow.jpg");
+	mGui.SetTexture(gui_texture);*/
 
 	Ref<Shader> shader		   = AssetManager::GetShaderLibrary().Load("lights_materials.glsl", "scene");
 	Ref<Shader> shader_pbr	   = AssetManager::GetShaderLibrary().Load("lights_PBR.glsl", "player");
@@ -54,7 +54,6 @@ void BombermanLayer::OnAttach()
 	shader_water->UploadUniform("uFar" , mCamera.Far);
 
 	RenderCommand::SetClearColor(Color(0, 200, 255));
-	Input::ToggleCursor();
 }
 
 void BombermanLayer::OnDetach()
@@ -80,7 +79,7 @@ void BombermanLayer::OnUpdate(const double& delta)
 	RenderCommand::Clear();
 
 	Renderer::Submit(shader_terrain, mTerrain);
-	Renderer::Submit(shader_skybox_colored, mSkybox);
+	Renderer::Submit(shader_skybox, mSkybox);
 	
 	Renderer::PrepareWater(mCamera, mLake);
 
@@ -98,6 +97,9 @@ void BombermanLayer::OnEvent(Engine::Event & event)
 }
 
 void BombermanLayer::OnGui()
+{}
+
+void BombermanLayer::OnEngineGui()
 {}
 
 /// FOR BOMBERMAN GAME

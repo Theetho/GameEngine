@@ -50,5 +50,16 @@ namespace Engine
 		int GetID() const override;
 
 		void LoadGLUniforms(Ref<OpenGL::Shader> shader) override;
+		inline void OnRightPanel() override
+		{
+			if (ImGui::CollapsingHeader("Material", ImGuiTreeNodeFlags_DefaultOpen))
+			{
+				ImGui::SliderFloat("Shininess", &mShininess, 1.0f, 1024.f);
+				ImGui::Separator();
+				ImGui::ColorEdit3("Ambient", (float*)&mAmbient);
+				ImGui::ColorEdit3("Diffuse", (float*)&mDiffuse);
+				ImGui::ColorEdit3("Specular", (float*)&mSpecular);
+			}
+		}
 	};
 }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject">
+      <UniqueIdentifier>{D652F52D-C20A-377B-2B12-10D717E9D16B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Layers">
+      <UniqueIdentifier>{157446C0-0116-7196-EAD0-84EAD611F8E6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map">
+      <UniqueIdentifier>{6307880B-CF10-887C-588C-9E7CC494937C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Terrain">
+      <UniqueIdentifier>{7AABC339-E68A-42D5-EFA2-CDAB5B01A936}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{23A78D7C-0FDE-8E0D-B8CA-7410A4E00A0F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Layers\BombermanLayer.h">
+      <Filter>Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="PatchVertexArray.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Core\SandboxApplication.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Layers\BombermanLayer.cpp">
+      <Filter>Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="PatchVertexArray.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Core\SandboxApplication.cpp" />
+  </ItemGroup>
+</Project>

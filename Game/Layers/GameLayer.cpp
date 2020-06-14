@@ -7,6 +7,7 @@ GameLayer::GameLayer()
 	: mCamera(Vec3(0.0, 2.0, 2.0))
 	, mCube()
 	, mScene()
+	, mClearColor(Color::Black)
 {}
 
 GameLayer::~GameLayer()
@@ -17,16 +18,14 @@ void GameLayer::OnAttach()
 	mCube.SetMaterial(CreateRef<RawMaterial>(RawMaterial::Bronze));
 	mCube.GetTransform().SetPosition(Vec3(0.f));
 
-	Camera3D::Fov = 90.f;
 	mCamera.AddComponent<RigidBody3D>(CreateRef<RigidBody3D>(mCamera));
 	mCamera.AddComponent<Movement3D>(CreateRef<Movement3D>(mCamera, true));
 
-	mScene.Push(&mCamera);
+	mScene.Push(&mCube);
 
 	auto shader = AssetManager::GetShaderLibrary().Load("../Engine/Assets/Shaders/lights_materials.glsl", "shader", false);
 
 	mScene.GetLights().push_back(CreateRef<DirectionalLight>(Vec3(1.0, 1.0, 0.0)));
-	mScene.GetLights().push_back(CreateRef<PointLight>(Vec3(-1.0, 1.0, 0.0)));
 	mScene.GetLights().push_back(CreateRef<SpotLight>(Vec3(0.0, 1.0, 0.0), Vec3(0.0, -1.0, 0.0)));
 
 	auto& playing_panel = Application::Get().GetEngineGUI().GetPanel("Playing");
@@ -35,7 +34,7 @@ void GameLayer::OnAttach()
 	mFrameBuffer->CreateTextureAttachment();
 	mFrameBuffer->CreateRenderBuffer();
 
-	RenderCommand::SetClearColor(Color::Black);
+	RenderCommand::SetClearColor(mClearColor);
 }
 
 void GameLayer::OnDetach()
@@ -76,8 +75,21 @@ void GameLayer::OnEngineGui()
 {
 	mScene.Render();
 
-	ImGui::ShowDemoWindow();
-
+	auto left_panel = Application::Get().GetEngineGUI().GetPanel("Left");
+	auto tab = left_panel.GetOpenedTab();
+	static bool clear_color = false;
+	
+	if (tab == Tab::Scene)
+	{
+		left_panel.Begin();
+		if (ImGui::TreeNode("Clear color"))
+		{
+			ImGui::ColorEdit3("", (float*)&mClearColor);
+			RenderCommand::SetClearColor(mClearColor);
+			ImGui::TreePop();
+		}
+		left_panel.End();
+	}
 	// Render the scene in the playing area
 	if (!Application::Get().IsPlaying())
 	{

@@ -5,3 +5,4 @@
 ./bin-int/*.tlog
 ./bin-int/*.pch
 ./bin
+*.pch

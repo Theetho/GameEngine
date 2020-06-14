@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Core/SceneObject.h"
+
 namespace Engine
 {
 	class Shader;
@@ -8,7 +10,7 @@ namespace Engine
 		class Shader;
 	}
 
-	class Material
+	class Material : public SceneObject
 	{
 	public:
 		void Load(Ref<Shader> shader);
@@ -21,7 +23,6 @@ namespace Engine
 		};
 
 		virtual int  GetID() const = 0;
-		
 		virtual void LoadGLUniforms(Ref<OpenGL::Shader> shader);
 	};
 }

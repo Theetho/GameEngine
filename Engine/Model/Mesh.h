@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Renderer/Rendering/Renderable.h"
+#include "Core/SceneObject.h"
 
 namespace Engine
 {
@@ -8,7 +9,7 @@ namespace Engine
 	class Material;
 	class VertexArray;
 
-	class Mesh : public Renderable
+	class Mesh : public Renderable, public SceneObject
 	{
 	public:
 		Mesh(std::vector<float>& vertices, std::vector<unsigned int>& indices, Ref<Material> material);
@@ -27,6 +28,13 @@ namespace Engine
 		Ref<VertexArray>		  mVertexArray;
 		
 		void Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const override;
+		
+		inline void OnLeftPanel(SceneObject* caller = nullptr, std::string label = "", int number = -1) override
+		{
+			SceneObject::OnLeftPanel(this, "Mesh " + number, number);
+		}
+
+		void OnRightPanel() override;
 	};
 }
 
