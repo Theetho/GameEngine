@@ -9,6 +9,7 @@ namespace Engine
 	class RenderCommand;
 	class Water;
 	class Camera3D;
+	class FrameBuffer;
 
 	class Renderer
 	{
@@ -18,7 +19,7 @@ namespace Engine
 		static void SetViewport(unsigned int width, unsigned int height);
 		static void BeginScene(Camera3D& camera);
 		static void Submit(Ref<Shader> shader, const Renderable& renderable);
-		static void PrepareWater(Camera3D& camera, Water& water);
+		static void PrepareWater(Camera3D& camera, Water& water, Ref<FrameBuffer> binded_framebuffer = nullptr);
 		static void Render();
 		static void EndScene();
 	private:

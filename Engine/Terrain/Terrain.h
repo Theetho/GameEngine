@@ -57,8 +57,12 @@ namespace Engine
 		Vec2			   mResolution; // Number of subdivision
 		float**			   mHeights;
 		Ref<VertexArray>   mVertexArray;
-		//Ref<Texture2D>	   mTexture;
 		Ref<Texture2D>	   mHeightMap;
+
+		virtual void OnLeftPanel(SceneObject* caller = nullptr, std::string label = "", int number = -1) override
+		{
+			SceneObject::OnLeftPanel(this, "Terrain", number);
+		}
 	};
 }
 

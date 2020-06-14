@@ -41,9 +41,9 @@ namespace Engine
 		sBatch[shader].push_back(&renderable);
 	}
 
-	void Renderer::PrepareWater(Camera3D& camera, Water& water)
+	void Renderer::PrepareWater(Camera3D& camera, Water& water, Ref<FrameBuffer> binded_framebuffer)
 	{
-		water.Prepare(camera);
+		water.Prepare(camera, binded_framebuffer);
 	}
 
 	void Renderer::PrepareShader(Ref<Shader> shader, bool clip)

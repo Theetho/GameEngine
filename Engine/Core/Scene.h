@@ -13,7 +13,7 @@ namespace Engine
 		~Scene();
 
 		void Render();
-		void UpdateLights(Ref<Shader> shader);
+		void UpdateLights(std::initializer_list<Ref<Shader>> shaders);
 		inline void Push(SceneObject* object)
 		{
 			mObjects.push_back(object);

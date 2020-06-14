@@ -14,12 +14,12 @@
 #define REFLECTION_HEIGHT 360
 #define REFRACTION_WIDTH  640
 #define REFRACTION_HEIGHT 360
-#define WAVE_SPEED 0.03
 
 namespace Engine
 {
 	Water::Water(const Vec3& position, const Vec2& dimensions)
 		: mWaveMovement(0.0f)
+		, mWaveSpeed(0.03f)
 	{
 		mTransform.SetPosition(position + Vec3(dimensions.x / 2.0f, 0.0f, dimensions.y / 2.0f));
 		mTransform.SetScale(Vec3(dimensions.x / 2.0f, 0.0f, dimensions.y / 2.0f));
@@ -42,7 +42,7 @@ namespace Engine
 
 	void Water::OnUpdate(const double& delta)
 	{
-		mWaveMovement += WAVE_SPEED * delta;
+		mWaveMovement += mWaveSpeed * delta;
 		if (mWaveMovement > 1.0f)
 			mWaveMovement -= 1.0f;
 	}
@@ -78,7 +78,7 @@ namespace Engine
 		mVertexArray->AddVertexBuffer(vertex_buffer);
 	}
 
-	void Water::Prepare(Camera3D& camera)
+	void Water::Prepare(Camera3D& camera, Ref<Engine::FrameBuffer> binded_framebuffer)
 	{
 		if (Renderer::GetAPI() == API::OpenGL)
 		{
@@ -91,7 +91,7 @@ namespace Engine
 		RenderCommand::Clear();
 		Renderer::BeginScene(camera);
 		Renderer::Render(true);
-		mRefraction->Unbind();
+		mRefraction->Unbind(binded_framebuffer);
 
 		camera.ReverseOnUpAxis(mTransform.GetPosition());
 
@@ -101,7 +101,7 @@ namespace Engine
 		RenderCommand::Clear();
 		Renderer::BeginScene(camera);
 		Renderer::Render(true);
-		mReflection->Unbind();
+		mReflection->Unbind(binded_framebuffer);
 
 		camera.ReverseOnUpAxis(mTransform.GetPosition());
 

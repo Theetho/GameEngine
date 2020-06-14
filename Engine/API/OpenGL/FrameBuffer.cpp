@@ -11,7 +11,6 @@ namespace Engine
 	{
 		FrameBuffer::FrameBuffer(unsigned int width, unsigned int height)
 			: Engine::FrameBuffer(width, height)
-			, mId(0)
 			, mTextureAttachment(0)
 			, mRenderBuffer(0)
 		{
@@ -36,10 +35,17 @@ namespace Engine
 			glViewport(0, 0, mWidth, mHeight);
 		}
 
-		void FrameBuffer::Unbind() const
+		void FrameBuffer::Unbind(Ref<Engine::FrameBuffer> binded_framebuffer) const
 		{
-			glBindFramebuffer(GL_FRAMEBUFFER, 0);
-			glViewport(0, 0, Application::Get().GetWindow().GetWidth(), Application::Get().GetWindow().GetHeight());
+			if (binded_framebuffer)
+			{
+				binded_framebuffer->Bind();
+			}
+			else
+			{
+				glBindFramebuffer(GL_FRAMEBUFFER, 0);
+				glViewport(0, 0, Application::Get().GetWindow().GetWidth(), Application::Get().GetWindow().GetHeight());
+			}
 		}
 
 		Ref<Engine::Texture2D> FrameBuffer::GetTextureAttachment(unsigned int slot) const

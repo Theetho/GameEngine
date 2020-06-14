@@ -43,7 +43,7 @@ void GameLayer::OnDetach()
 void GameLayer::OnUpdate(const double& delta)
 {
 	auto shader = AssetManager::GetShaderLibrary().Get("shader");
-	mScene.UpdateLights(shader);
+	mScene.UpdateLights({shader});
 
 	mCamera.OnUpdate(delta);
 

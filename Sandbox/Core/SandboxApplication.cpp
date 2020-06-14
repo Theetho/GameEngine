@@ -9,7 +9,7 @@ SandboxApplication::SandboxApplication()
 	Engine::Shader::SetFolder("./Assets/Shaders/");
 	Engine::Texture::SetFolder("./Assets/Textures/");
 	Engine::Model::SetFolder("./Assets/Models/");
-	this->GetWindow().SetSize({ 1600, 900 });
+	this->GetWindow().Maximise();
 	this->PushLayer(new BombermanLayer());
 
 	//this->GetWindow().SetFullscreen(true);

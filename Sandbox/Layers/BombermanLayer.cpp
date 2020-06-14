@@ -8,8 +8,6 @@ BombermanLayer::BombermanLayer()
 	, mSkybox("Skyboxes/Day")
 	, mTerrain(Vec2(0, 0), "Heightmaps/generated_height_map.png", Vec2(200))
 	, mLake(Vec3(0.0f, 0.45f * 5.0f + 2.0f, 0.0f), Vec2(200))
-	/*, mFont("./Assets/Fonts/consola.ttf", 48)
-	, mGui(Vec2(0, 0), Vec2(0.5, 0.5))*/
 {}
 
 BombermanLayer::~BombermanLayer()
@@ -17,21 +15,9 @@ BombermanLayer::~BombermanLayer()
 
 void BombermanLayer::OnAttach()
 {
-	(void)AssetManager::GetModelLibrary().Load("sphere/sphere.obj", "bomb");
-
 	mCamera.AddComponent<RigidBody3D>(CreateRef<RigidBody3D>(mCamera));
 	mCamera.AddComponent<Movement3D>(CreateRef<Movement3D>(mCamera, true));
-
-	mLights = {
-		CreateRef<DirectionalLight>(Vec3( 0.4, -0.5f, 0.0f))
-	};
 	
-	/*Text::SetGlobalFont(&mFont);
-	mText = Text("Ceci est une chaine test", { -1.0, 0.0 }, Color::Brown);*/
-	
-	/*Ref<Texture2D> gui_texture = AssetManager::GetTexture2DLibrary().Load("snow.jpg");
-	mGui.SetTexture(gui_texture);*/
-
 	Ref<Shader> shader		   = AssetManager::GetShaderLibrary().Load("lights_materials.glsl", "scene");
 	Ref<Shader> shader_pbr	   = AssetManager::GetShaderLibrary().Load("lights_PBR.glsl", "player");
 	Ref<Shader> shader_terrain = AssetManager::GetShaderLibrary().Load("terrain.glsl");
@@ -42,18 +28,29 @@ void BombermanLayer::OnAttach()
 	(void)AssetManager::GetShaderLibrary().Load("Skybox_Colored.glsl");
 	Ref<OpenGL::Shader> shader_water = std::dynamic_pointer_cast<OpenGL::Shader>(AssetManager::GetShaderLibrary().Load("water.glsl"));
 
-	for (int i = 0; i < mLights.size(); ++i)
-	{
-		mLights[i]->Load(shader, i);
-		mLights[i]->Load(shader_pbr, i);
-		mLights[i]->Load(shader_terrain, i);
-		mLights[i]->Load(shader_water, i);
-	}
+	mScene.GetLights().push_back(CreateRef<DirectionalLight>(Vec3(0.4, -0.5f, 0.0f)));
+	mScene.GetLights().push_back(CreateRef<SpotLight>(Vec3(0.0, 1.0, 0.0), Vec3(0.0, -1.0, 0.0)));
+
+	mScene.UpdateLights({
+		shader,
+		shader_pbr,
+		shader_terrain,
+		shader_water
+	});
 
 	shader_water->UploadUniform("uNear", mCamera.Near);
 	shader_water->UploadUniform("uFar" , mCamera.Far);
 
-	RenderCommand::SetClearColor(Color(0, 200, 255));
+	auto& playing_panel = Application::Get().GetEngineGUI().GetPanel("Playing");
+
+	mFrameBuffer = FrameBuffer::Create(playing_panel.GetSize().x, playing_panel.GetSize().x / Camera3D::AspectRatio);
+	mFrameBuffer->CreateTextureAttachment();
+	mFrameBuffer->CreateRenderBuffer();
+
+	mScene.Push(&mLake);
+	mScene.Push(&mTerrain);
+
+	RenderCommand::SetClearColor(mClearColor);
 }
 
 void BombermanLayer::OnDetach()
@@ -61,7 +58,6 @@ void BombermanLayer::OnDetach()
 
 void BombermanLayer::OnUpdate(const double& delta)
 {
-	//mPlayer.OnUpdate(delta);
 	mCamera.OnUpdate(delta);
 	mLake  .OnUpdate(delta);
 	
@@ -75,20 +71,39 @@ void BombermanLayer::OnUpdate(const double& delta)
 	Ref<Shader> shader_gui			  = AssetManager::GetShaderLibrary().Get("gui");
 	Ref<Shader> shader_text			  = AssetManager::GetShaderLibrary().Get("text");
 	
-	
+	mScene.UpdateLights({
+		shader,
+		shader_pbr,
+		shader_terrain,
+		shader_water
+	});
+
+	if (!Application::Get().IsPlaying())
+	{
+		mFrameBuffer->Bind();
+	}
 	RenderCommand::Clear();
 
 	Renderer::Submit(shader_terrain, mTerrain);
 	Renderer::Submit(shader_skybox, mSkybox);
 	
-	Renderer::PrepareWater(mCamera, mLake);
+	if (!Application::Get().IsPlaying())
+	{
+		Renderer::PrepareWater(mCamera, mLake, mFrameBuffer);
+	}
+	else
+	{
+		Renderer::PrepareWater(mCamera, mLake);
+	}
 
 	Renderer::BeginScene(mCamera);
 	Renderer::Submit(shader_water, mLake);
-	/*Renderer::Submit(shader_gui, mGui);
-	Renderer::Submit(shader_text, mText);*/
 	Renderer::Render();
 	Renderer::EndScene();
+	if (!Application::Get().IsPlaying())
+	{
+		mFrameBuffer->Unbind();
+	}
 }
 
 void BombermanLayer::OnEvent(Engine::Event & event)
@@ -100,7 +115,39 @@ void BombermanLayer::OnGui()
 {}
 
 void BombermanLayer::OnEngineGui()
-{}
+{
+	mScene.Render();
+
+	auto left_panel = Application::Get().GetEngineGUI().GetPanel("Left");
+	auto tab = left_panel.GetOpenedTab();
+	static bool clear_color = false;
+	
+	if (tab == Tab::Scene)
+	{
+		left_panel.Begin();
+		if (ImGui::TreeNode("Clear color"))
+		{
+			ImGui::ColorEdit3("", (float*)&mClearColor);
+			RenderCommand::SetClearColor(mClearColor);
+			ImGui::TreePop();
+		}
+		left_panel.End();
+	}
+	// Render the scene in the playing area
+	if (!Application::Get().IsPlaying())
+	{
+		auto playing_panel = Application::Get().GetEngineGUI().GetPanel("Playing");
+		auto scene_texture = mFrameBuffer->GetTextureAttachment();
+
+		playing_panel.Begin();
+		ImGui::Image((void*)(intptr_t)scene_texture->GetId()
+			, ImVec2(scene_texture->GetWidth(), scene_texture->GetHeight())
+			// Flip the texture
+			, ImVec2(-1, 1), ImVec2(0, 0)
+		);
+		playing_panel.End();
+	}
+}
 
 /// FOR BOMBERMAN GAME
 

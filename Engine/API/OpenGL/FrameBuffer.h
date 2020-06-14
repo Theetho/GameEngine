@@ -13,7 +13,7 @@ namespace Engine
 			~FrameBuffer();
 
 			void Bind() const override;
-			void Unbind() const override;
+			void Unbind(Ref<Engine::FrameBuffer> binded_framebuffer = nullptr) const override;
 
 			Ref<Engine::Texture2D> GetTextureAttachment(unsigned int slot) const override;
 			Ref<Engine::Texture2D> GetDepthAttachment(unsigned int slot) const override;

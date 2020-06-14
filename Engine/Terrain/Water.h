@@ -29,10 +29,24 @@ namespace Engine
 		Ref<Texture2D>	 mDUDVMap;
 		Ref<Texture2D>	 mNormalMap;
 		float			 mWaveMovement;
+		float			 mWaveSpeed;
 
 		void CreateTile();
-		void Prepare(Camera3D& camera);
+		void Prepare(Camera3D& camera, Ref<Engine::FrameBuffer> binded_framebuffer = nullptr);
 		void Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const override;
+
+		virtual void OnLeftPanel(SceneObject* caller = nullptr, std::string label = "", int number = -1) override
+		{
+			SceneObject::OnLeftPanel(this, "Water", number);
+		}
+
+		inline void OnRightPanel() override
+		{
+			GameObject3D::OnRightPanel();
+			ImGui::Separator();
+			ImGui::Text("Wave speed");
+			ImGui::DragFloat("", &mWaveSpeed, 0.005f, 0.0f, 1.0f);
+		}
 	};
 }
 

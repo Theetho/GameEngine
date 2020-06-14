@@ -16,9 +16,10 @@ private:
 	Engine::Camera3D						mCamera;
 	Engine::Terrain							mTerrain;
 	Engine::Water							mLake;
-	std::vector<Engine::Ref<Engine::Light>> mLights;
 	Engine::Skybox							mSkybox;
-
+	Engine::Scene mScene;
+	Engine::Color mClearColor;
+	Engine::Ref<Engine::FrameBuffer> mFrameBuffer;
 	// Hérité via Layer
 	void OnEngineGui() override;
 	//Engine::GUIElement						mGui;

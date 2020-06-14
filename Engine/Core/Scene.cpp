@@ -47,7 +47,8 @@ namespace Engine
 			left_panel.End();
 		}
 	}
-	void Scene::UpdateLights(Ref<Shader> shader)
+
+	void Scene::UpdateLights(std::initializer_list<Ref<Shader>> shaders)
 	{
 		for (int i = 0; i < mLights.size(); ++i)
 		{
@@ -71,11 +72,14 @@ namespace Engine
 				}
 				light = mLights[i];
 				// Reselect the modified light in the inspector
-				((SceneObject*)&*light)->mSelected = true;
+				((SceneObject*) & *light)->mSelected = true;
 			}
 
-			// Load the light in the shader
-			light->IsActive() ? light->Load(shader, i) : light->Unload(shader, i);
+			// Load the light in the shaders
+			for (auto& shader : shaders)
+			{
+				light->IsActive() ? light->Load(shader, i) : light->Unload(shader, i);
+			}
 		}
 	}
 }
