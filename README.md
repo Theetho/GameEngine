@@ -3,8 +3,8 @@ A C++ game engine with OpenGL.
 
 # Running the project
 To run the project (on Windows only), you can either:
-- Launch the .exe located in "./Game/"
-- Open the .sln in Visual Studio and run it in realease mode. Make sure to select "Game"
+- Launch the .exe located in "./SandBox/"
+- Open the .sln in Visual Studio and run it in realease mode. Make sure to select "SandBox"
 as the starting project.
 
 This will open a demo-game (a bomberman) that uses all the engine's features. 
@@ -12,9 +12,9 @@ This will open a demo-game (a bomberman) that uses all the engine's features.
 # Features that are currently available:
 - Model loading, with custom materials.
 - Lighting and skyboxes.
-- Collision dectection and response and basic physics.
+- Water and terrain generation.
+- UI for the engine.
 
 # Features that will be added to the Engine: 
-- More robust physics engine.
+- Physics engine.
 - Improved rendering engine, including PBR rendering.
-- UI engine.
