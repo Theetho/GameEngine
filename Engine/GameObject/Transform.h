@@ -127,15 +127,15 @@ namespace Engine
 
 		inline void OnRightPanel() override
 		{
-			if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
+			if (ImGui::CollapsingHeader(ApplyID("Transform"), ImGuiTreeNodeFlags_DefaultOpen))
 			{
 				ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 				ImGui::Text("Position");
-				ImGui::DragFloat3("", (float*)(&mPosition), 0.1f);
+				ImGui::DragFloat3(ApplyID("##Position"), (float*)(&mPosition), 0.1f);
 				ImGui::Text("Rotation");
-				ImGui::SliderFloat3("##2", (float*)(&mRotation), -360.0f, 360.f);
+				ImGui::SliderFloat3(ApplyID("##Rotation"), (float*)(&mRotation), -360.0f, 360.f);
 				ImGui::Text("Scale");
-				ImGui::DragFloat3("##3", (float*)(&mScale), 0.1f, 0.0f, std::numeric_limits<float>::max());
+				ImGui::DragFloat3(ApplyID("##Scale"), (float*)(&mScale), 0.1f, 0.0f, std::numeric_limits<float>::max());
 				ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
 			}
 		}

@@ -90,12 +90,13 @@ namespace Engine
 	)
 	{
 		Assimp::Importer importer;
+		auto flags = aiProcess_GenSmoothNormals | aiProcess_Triangulate | aiProcess_FlipUVs;
 
 		// Loading the model
 		const aiScene* scene = use_folder_path ? 
-			importer.ReadFile(sFolderPath + file_path, aiProcess_Triangulate | aiProcess_FlipUVs)
+			importer.ReadFile(sFolderPath + file_path, flags)
 			:
-			importer.ReadFile(file_path, aiProcess_Triangulate | aiProcess_FlipUVs)
+			importer.ReadFile(file_path, flags)
 			;
 
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
@@ -135,6 +136,8 @@ namespace Engine
 		std::vector<float> vertices;
 		std::vector<unsigned int> indices;
 		Ref<Material> materials;
+
+		std::cout << mesh->mNumAnimMeshes << " " <<  mesh->mNumBones << std::endl;
 
 		// Process vertices
 		for (unsigned int i = 0; i < mesh->mNumVertices; ++i)
@@ -184,19 +187,34 @@ namespace Engine
 		{
 			aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 			
-			std::vector<Ref<Texture2D>> ambientMaps = LoadMaterial(material,
-				aiTextureType_AMBIENT, "_height");
-			
-			std::vector<Ref<Texture2D>> diffuseMaps = LoadMaterial(material,
-				aiTextureType_DIFFUSE, "_diffuse");
+			if (material->GetTextureCount(aiTextureType_AMBIENT) ||
+				material->GetTextureCount(aiTextureType_DIFFUSE) ||
+				material->GetTextureCount(aiTextureType_SPECULAR) ||
+				material->GetTextureCount(aiTextureType_HEIGHT))
+			{
+				std::vector<Ref<Texture2D>> ambientMaps = LoadMaterial(material,
+					aiTextureType_AMBIENT, "_height");
 
-			std::vector<Ref<Texture2D>> specularMaps = LoadMaterial(material,
-				aiTextureType_SPECULAR, "_specular");
+				std::vector<Ref<Texture2D>> diffuseMaps = LoadMaterial(material,
+					aiTextureType_DIFFUSE, "_diffuse");
 
-			std::vector< Ref<Texture2D>> normalMaps = LoadMaterial(material, 
-				aiTextureType_HEIGHT, "_normal");
+				std::vector<Ref<Texture2D>> specularMaps = LoadMaterial(material,
+					aiTextureType_SPECULAR, "_specular");
 
-			materials = CreateRef<PBRMaterial>(ambientMaps, diffuseMaps, specularMaps, normalMaps);
+				std::vector< Ref<Texture2D>> normalMaps = LoadMaterial(material,
+					aiTextureType_HEIGHT, "_normal");
+
+				materials = CreateRef<PBRMaterial>(ambientMaps, diffuseMaps, specularMaps, normalMaps);
+			}
+			else
+			{
+				aiColor4D ambient, diffuse, specular;
+				aiGetMaterialColor(material, AI_MATKEY_COLOR_EMISSIVE, &ambient);
+				aiGetMaterialColor(material, AI_MATKEY_COLOR_DIFFUSE, &diffuse);
+				aiGetMaterialColor(material, AI_MATKEY_COLOR_SPECULAR, &specular);
+
+				materials = CreateRef<RawMaterial>(ambient, diffuse, specular);
+			}
 		}
 		else
 		{
@@ -212,7 +230,6 @@ namespace Engine
 	)
 	{
 		std::vector<Ref<Texture2D>> textures;
-
 		for (unsigned int i = 0; i < mat->GetTextureCount(type); ++i)
 		{
 			aiString str;

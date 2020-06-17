@@ -120,14 +120,14 @@ namespace Engine
 		bool mIsReversed;
 		inline void OnRightPanel() override
 		{
-			if (ImGui::CollapsingHeader("Movement", ImGuiTreeNodeFlags_DefaultOpen))
+			if (ImGui::CollapsingHeader(ApplyID("Movement"), ImGuiTreeNodeFlags_DefaultOpen))
 			{
 				ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
-				ImGui::Checkbox("Reversed", &mIsReversed);
+				ImGui::Checkbox(ApplyID("Reversed"), &mIsReversed);
 				ImGui::Text("Velocity");
-				ImGui::DragFloat("Max", &mSpeed.max, 0.1f, mSpeed.min, std::numeric_limits<float>::max());
-				ImGui::DragFloat("Min", &mSpeed.min, 0.1f, 0.f, mSpeed.max);
-				ImGui::DragFloat("Angular", &mSpeed.angular, 0.1f, 0.0f, std::numeric_limits<float>::max());
+				ImGui::DragFloat(ApplyID("Max"), &mSpeed.max, 0.1f, mSpeed.min, std::numeric_limits<float>::max());
+				ImGui::DragFloat(ApplyID("Min"), &mSpeed.min, 0.1f, 0.f, mSpeed.max);
+				ImGui::DragFloat(ApplyID("Angular"), &mSpeed.angular, 0.1f, 0.0f, std::numeric_limits<float>::max());
 				ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
 			}
 		}

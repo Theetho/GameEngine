@@ -59,9 +59,9 @@ namespace Engine
 		Ref<VertexArray>   mVertexArray;
 		Ref<Texture2D>	   mHeightMap;
 
-		virtual void OnLeftPanel(SceneObject* caller = nullptr, std::string label = "", int number = -1) override
+		virtual void OnLeftPanel(SceneObject* caller = nullptr, std::string label = "") override
 		{
-			SceneObject::OnLeftPanel(this, "Terrain", number);
+			SceneObject::OnLeftPanel(this, "Terrain");
 		}
 	};
 }

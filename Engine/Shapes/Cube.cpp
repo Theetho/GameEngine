@@ -7,13 +7,13 @@ namespace Engine
 {
 	Cube::Cube(float scale)
 		: GameObject3D()
-		, Model("../Engine/Assets/Models/Cube/Cube.obj", "cube", false)
+		, Model("../Engine/Assets/Models/Character/model.dae", "cube", false)
 	{
 		mTransform.SetScale(scale);
 	}
 	Cube::Cube(const Vec3& scale)
 		: GameObject3D()
-		, Model("../Engine/Assets/Models/Cube/Cube.obj", "cube", false)
+		, Model("../Engine/Assets/Models/Character/model.dae", "cube", false)
 	{
 		mTransform.SetScale(scale);
 	}

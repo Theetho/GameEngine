@@ -17,9 +17,9 @@ namespace Engine
 		static API GetAPI();
 		static void SetDrawMode(DrawMode draw_mode);
 		static void SetViewport(unsigned int width, unsigned int height);
-		static void BeginScene(Camera3D& camera);
+		static void BeginScene(Ref<Camera3D> camera);
 		static void Submit(Ref<Shader> shader, const Renderable& renderable);
-		static void PrepareWater(Camera3D& camera, Water& water, Ref<FrameBuffer> binded_framebuffer = nullptr);
+		static void PrepareWater(Ref<Camera3D> camera, Water& water);
 		static void Render();
 		static void EndScene();
 	private:

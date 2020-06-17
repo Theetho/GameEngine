@@ -8,7 +8,7 @@ public:
 
 	void OnAttach() override;
 	void OnDetach() override;
-	void OnUpdate(const double& delta) override;
+	void OnUpdate(Engine::Ref<Engine::Camera3D> camera, const double& delta) override;
 	void OnEvent(Engine::Event& event) override;
 	void OnEngineGui() override;
 private:
@@ -16,8 +16,6 @@ private:
 
 	Engine::Scene mScene;
 	Engine::Color mClearColor;
-	Engine::Camera3D mCamera;
 	Engine::Cube mCube;
-	Engine::Ref<Engine::FrameBuffer> mFrameBuffer;
 };
 

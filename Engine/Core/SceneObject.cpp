@@ -6,16 +6,19 @@
 namespace Engine
 {
 	bool* SceneObject::sCurrentlySelected = nullptr;
+	uint SceneObject::sCount = 0;
 
-	void SceneObject::OnLeftPanel(SceneObject* caller, std::string label, int number)
+	SceneObject::SceneObject()
+		: mSceneID(sCount++)
+	{}
+
+	void SceneObject::OnLeftPanel(SceneObject* caller, std::string label)
 	{
-		if (!caller && number == -1) return;
+		if (!caller) return;
 
 		auto right_panel = Application::Get().GetEngineGUI().GetPanel("Right");
 
-		if (number >= 0) label += "##" + std::to_string(number);
-
-		ImGui::Selectable(label.c_str(), &mSelected);
+		ImGui::Selectable(ApplyID(label), &mSelected);
 		if (mSelected)
 		{
 			if (sCurrentlySelected && sCurrentlySelected != &mSelected) *sCurrentlySelected = false;

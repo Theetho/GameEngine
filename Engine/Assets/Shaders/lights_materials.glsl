@@ -33,6 +33,7 @@ layout(location = 0) out vec4 outColor;
 struct Light
 {
 	int id;
+	float minDiffuseFactor;
 
 	vec3 color;
 	vec3 position;
@@ -68,7 +69,7 @@ vec4 CalculateDirectionalLight(Light light)
 
 	vec3 normal = normalize(vNormal);
 	vec3 lightDirection = normalize(- light.direction);
-	float diffuseFactor = max(dot(normal, lightDirection), 0.0);
+	float diffuseFactor = max(dot(normal, lightDirection), light.minDiffuseFactor);
 	vec3 diffuseColor = diffuseFactor * light.color * uMaterial.diffuse;
 
 	vec3 toCameraVector = normalize(uCameraPosition - vFragmentPosition);
@@ -92,7 +93,7 @@ vec4 CalculatePointLight(Light light)
 	float d = length(lightDirection);
 	float attenuation = 1.0 / (light.constant + light.linear * d + light.quadratic * pow(d, 2));
 
-	float diffuseFactor = max(dot(normal, lightDirection), 0.0);
+	float diffuseFactor = max(dot(normal, lightDirection), light.minDiffuseFactor);
 	vec3 diffuseColor = diffuseFactor * attenuation * light.color * uMaterial.diffuse;
 
 	vec3 toCameraVector = normalize(uCameraPosition - vFragmentPosition);
@@ -120,7 +121,7 @@ vec4 CalculateSpotLight(Light light)
 		float d = length(lightDirection);
 		float attenuation = 1.0 / (light.constant + light.linear * d + light.quadratic * pow(d, 2));		
 
-		float diffuseFactor = max(dot(normal, lightDirection), 0.0);
+		float diffuseFactor = max(dot(normal, lightDirection), light.minDiffuseFactor);
 		vec3 diffuseColor = diffuseFactor * attenuation * light.color * uMaterial.diffuse;
 		
 		vec3 toCameraVector = normalize(uCameraPosition - vFragmentPosition);

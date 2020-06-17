@@ -21,18 +21,26 @@ namespace Engine
 		virtual void Unload(Ref<Shader> shader, unsigned int index);
 
 		virtual int GetID() const = 0;
-		virtual const Color& GetColor() const;
+		const Color& GetColor() const;
+		inline float GetMinDiffuseFactor() const
+		{
+			return mMinDiffuseFactor;
+		}
 
-		virtual void SetColor(const Color& color);
-		virtual inline bool ShouldChangeType() const
+		void SetColor(const Color& color);
+		inline void SetMinDiffuseFactor(float factor)
+		{
+			mMinDiffuseFactor = factor;
+		}
+		inline bool ShouldChangeType() const
 		{
 			return (mRequestedType != (int)LightID::None && GetID() != mRequestedType);
 		}
-		virtual inline int GetRequestedType() const
+		inline int GetRequestedType() const
 		{
 			return mRequestedType;
 		}
-		virtual inline bool& IsActive()
+		inline bool& IsActive()
 		{
 			return mActive;
 		}
@@ -47,6 +55,7 @@ namespace Engine
 	private:
 		Color mColor;
 		bool mActive;
+		float mMinDiffuseFactor = 0.1f;
 	protected:
 		virtual void LoadGLUniforms(Ref<OpenGL::Shader> shader, unsigned int index);
 		virtual void UnloadGLUniforms(Ref<OpenGL::Shader> shader, unsigned int index);

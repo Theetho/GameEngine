@@ -1,6 +1,7 @@
 #include "EnginePch.h"
 #include "Color.h"
 
+
 namespace Engine
 {
 	Color Color::White(1.0f, 1.0f, 1.0f);
@@ -59,6 +60,14 @@ namespace Engine
 		: Color(imgui_color.x, imgui_color.y, imgui_color.z, imgui_color.w)
 	{}
 
+	Color::Color(const aiColor4D & ai_color)
+		: Color(ai_color.r, ai_color.g, ai_color.b, ai_color.a)
+	{}
+
+	Color::Color(const aiColor4D&& ai_color) noexcept
+		: Color(ai_color.r, ai_color.g, ai_color.b, ai_color.a)
+	{}
+
 	Color& Color::operator=(const Color& color)
 	{
 		r = color.r;
@@ -95,6 +104,26 @@ namespace Engine
 		g = imgui_color.y;
 		b = imgui_color.z;
 		a = imgui_color.w;
+
+		return *this;
+	}
+
+	Color& Color::operator=(const aiColor4D& ai_color)
+	{
+		r = ai_color.r;
+		g = ai_color.g;
+		b = ai_color.b;
+		a = ai_color.a;
+
+		return *this;
+	}
+
+	Color& Color::operator=(const aiColor4D&& ai_color) noexcept
+	{
+		r = ai_color.r;
+		g = ai_color.g;
+		b = ai_color.b;
+		a = ai_color.a;
 
 		return *this;
 	}

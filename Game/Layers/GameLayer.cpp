@@ -4,10 +4,9 @@
 using namespace Engine;
 
 GameLayer::GameLayer()
-	: mCamera(Vec3(0.0, 2.0, 2.0))
-	, mCube()
+	: mCube()
 	, mScene()
-	, mClearColor(Color::Black)
+	, mClearColor(Color::Aqua)
 {}
 
 GameLayer::~GameLayer()
@@ -15,24 +14,18 @@ GameLayer::~GameLayer()
 
 void GameLayer::OnAttach()
 {
-	mCube.SetMaterial(CreateRef<RawMaterial>(RawMaterial::Bronze));
+	//mCube.SetMaterial(CreateRef<RawMaterial>(RawMaterial::Bronze));
 	mCube.GetTransform().SetPosition(Vec3(0.f));
-
-	mCamera.AddComponent<RigidBody3D>(CreateRef<RigidBody3D>(mCamera));
-	mCamera.AddComponent<Movement3D>(CreateRef<Movement3D>(mCamera, true));
+	mCube.GetTransform().SetRotation('x', -90.0f);
 
 	mScene.Push(&mCube);
 
 	auto shader = AssetManager::GetShaderLibrary().Load("../Engine/Assets/Shaders/lights_materials.glsl", "shader", false);
 
-	mScene.GetLights().push_back(CreateRef<DirectionalLight>(Vec3(1.0, 1.0, 0.0)));
-	mScene.GetLights().push_back(CreateRef<SpotLight>(Vec3(0.0, 1.0, 0.0), Vec3(0.0, -1.0, 0.0)));
-
-	auto& playing_panel = Application::Get().GetEngineGUI().GetPanel("Playing");
-
-	mFrameBuffer = FrameBuffer::Create(playing_panel.GetSize().x, playing_panel.GetSize().x / Camera3D::AspectRatio);
-	mFrameBuffer->CreateTextureAttachment();
-	mFrameBuffer->CreateRenderBuffer();
+	mScene.GetLights().push_back(CreateRef<DirectionalLight>(Vec3( 1.0, -1.0,  0.0), Color(0.3f)));
+	/*mScene.GetLights().push_back(CreateRef<DirectionalLight>(Vec3(-1.0, -1.0,  0.0), Color(0.4f)));
+	mScene.GetLights().push_back(CreateRef<DirectionalLight>(Vec3( 0.0, -1.0, -1.0), Color(0.4f)));
+	mScene.GetLights().push_back(CreateRef<DirectionalLight>(Vec3( 0.0, -1.0,  1.0), Color(0.4f)));*/
 
 	RenderCommand::SetClearColor(mClearColor);
 }
@@ -40,35 +33,24 @@ void GameLayer::OnAttach()
 void GameLayer::OnDetach()
 {}
 
-void GameLayer::OnUpdate(const double& delta)
+void GameLayer::OnUpdate(Ref<Camera3D> camera, const double& delta)
 {
 	auto shader = AssetManager::GetShaderLibrary().Get("shader");
 	mScene.UpdateLights({shader});
 
-	mCamera.OnUpdate(delta);
-
-	if (!Application::Get().IsPlaying())
-	{
-		mFrameBuffer->Bind();
-	}
+	camera->OnUpdate(delta);
 
 	RenderCommand::Clear();
 
-	Renderer::BeginScene(mCamera);
+	Renderer::BeginScene(camera);
 	Renderer::Submit(shader, mCube);
 	
 	Renderer::Render();
 	Renderer::EndScene();
-
-	if (!Application::Get().IsPlaying())
-	{
-		mFrameBuffer->Unbind();
-	}
 }
 
 void GameLayer::OnEvent(Engine::Event& event)
 {
-	mCamera.OnEvent(event);
 }
 
 void GameLayer::OnEngineGui()
@@ -89,20 +71,6 @@ void GameLayer::OnEngineGui()
 			ImGui::TreePop();
 		}
 		left_panel.End();
-	}
-	// Render the scene in the playing area
-	if (!Application::Get().IsPlaying())
-	{
-		auto playing_panel = Application::Get().GetEngineGUI().GetPanel("Playing");
-		auto scene_texture = mFrameBuffer->GetTextureAttachment();
-
-		playing_panel.Begin();
-		ImGui::Image((void*)(intptr_t)scene_texture->GetId()
-			, ImVec2(scene_texture->GetWidth(), scene_texture->GetHeight())
-			// Flip the texture
-			, ImVec2(-1, 1), ImVec2(0, 0)
-		);
-		playing_panel.End();
 	}
 }
 

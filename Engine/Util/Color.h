@@ -1,5 +1,7 @@
 #pragma once
 
+#include "assimp/color4.h"
+
 namespace Engine
 {
 	// Color are always returned with fields between
@@ -16,10 +18,14 @@ namespace Engine
 		Color(const Color&& color) noexcept;
 		Color(const ImVec4& imgui_color);
 		Color(const ImVec4&& imgui_color) noexcept;
+		Color(const aiColor4D& imgui_color);
+		Color(const aiColor4D&& imgui_color) noexcept;
 		Color& operator=(const Color& color);
 		Color& operator=(const Color&& color) noexcept;
 		Color& operator=(const ImVec4& imgui_color);
 		Color& operator=(const ImVec4&& imgui_color) noexcept;
+		Color& operator=(const aiColor4D& imgui_color);
+		Color& operator=(const aiColor4D&& imgui_color) noexcept;
 		Color operator+(const Color& color) const;
 		Color operator-(const Color& color) const;
 		Color operator/(const Color& color) const;

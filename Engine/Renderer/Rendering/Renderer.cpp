@@ -2,7 +2,7 @@
 #include "Renderer/Rendering.h"
 #include "API/OpenGL/Shader.h"
 #include "Terrain/Water.h"
-#include "Core/Camera.h"
+#include "Core/Camera/Camera3D.h"
 
 namespace Engine
 {
@@ -28,12 +28,12 @@ namespace Engine
 		sRenderCommand->SetViewport(width, height);
 	}
 
-	void Renderer::BeginScene(Camera3D& camera)
+	void Renderer::BeginScene(Ref<Camera3D> camera)
 	{
-		sSceneData.view = camera.GetViewMatrix();
-		sSceneData.projection = camera.GetProjectionMatrix();
-		sSceneData.camera_position = camera.GetTransform().GetPosition();
-		sSceneData.view_projection = sSceneData.projection * sSceneData.view;
+		sSceneData.view = camera->GetViewMatrix();
+		sSceneData.projection = camera->GetProjectionMatrix();
+		sSceneData.camera_position = camera->GetPosition();
+		sSceneData.view_projection = camera->GetProjectionViewMatrix();
 	}
 
 	void Renderer::Submit(Ref<Shader> shader, const Renderable& renderable)
@@ -41,9 +41,9 @@ namespace Engine
 		sBatch[shader].push_back(&renderable);
 	}
 
-	void Renderer::PrepareWater(Camera3D& camera, Water& water, Ref<FrameBuffer> binded_framebuffer)
+	void Renderer::PrepareWater(Ref<Camera3D> camera, Water& water)
 	{
-		water.Prepare(camera, binded_framebuffer);
+		water.Prepare(camera);
 	}
 
 	void Renderer::PrepareShader(Ref<Shader> shader, bool clip)

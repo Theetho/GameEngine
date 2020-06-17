@@ -13,7 +13,14 @@ namespace Engine
 
 		virtual void Bind() const = 0;
 		virtual void Unbind(Ref<FrameBuffer> binded_framebuffer = nullptr) const = 0;
-		
+		inline uint GetWidth() const
+		{
+			return mWidth;
+		}
+		inline uint GetHeight() const
+		{
+			return mHeight;
+		}
 		virtual Ref<Texture2D> GetTextureAttachment(unsigned int slot = 0) const = 0;
 		virtual Ref<Texture2D> GetDepthAttachment(unsigned int slot = 0) const = 0;
 		virtual inline uint GetID()

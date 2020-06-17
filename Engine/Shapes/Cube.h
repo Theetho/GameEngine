@@ -14,9 +14,9 @@ namespace Engine
 
 	private:
 		void Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const override;
-		inline void OnLeftPanel(SceneObject* caller = nullptr, std::string label = "", int number = -1) override
+		inline void OnLeftPanel(SceneObject* caller = nullptr, std::string label = "") override
 		{
-			SceneObject::OnLeftPanel(this, "Cube", number);
+			SceneObject::OnLeftPanel(this, "Cube");
 		}
 
 		inline void OnRightPanel() override

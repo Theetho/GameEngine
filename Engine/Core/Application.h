@@ -5,15 +5,15 @@
 namespace Engine
 {
 	class Event;
-	class Layer;
 	class Window;
 	class CollisionSystem;
 	class EngineGUI;
+	class FrameBuffer;
 
 	class Application
 	{
 	public:
-		Application();
+		Application(Ref<Camera3D> camera = nullptr);
 		virtual ~Application();
 
 		static Application& Get();
@@ -29,9 +29,15 @@ namespace Engine
 		
 		Window& GetWindow();
 		EngineGUI& GetEngineGUI();
+		Ref<FrameBuffer> GetBoundFrameBuffer();
 	private:
-		static Application*	   sInstance;
+		static Application* sInstance;
 		
+		// Engine setup to display the application 
+		// in engine mode.
+		Ref<Camera3D> mEngineCamera;
+		Ref<FrameBuffer> mFrameBuffer;
+
 		Scope<Window>		   mWindow;
 		Ref<CollisionSystem>   mCollisionSystem;
 		Scope<EngineGUI>	   mEngineGUI;
@@ -49,7 +55,9 @@ namespace Engine
 		double				   mFpsCap = 1.0 / 60.0;
 
 		void ManageTime();
+		void RenderPlayPanel();
 	protected:
+		Ref<Camera3D> mApplicationCamera;
 		void OnEngineGUIRender();
 	};
 

@@ -36,7 +36,7 @@ namespace Engine
 
 	Texture2D::~Texture2D()
 	{
-		stbi_image_free(mData);
+		//stbi_image_free(mData);
 	}
 
 	Ref<Texture2D> Texture2D::Create(const std::string& file_path, const std::string& name, bool use_folder_path)

@@ -41,17 +41,17 @@ namespace Engine
 		shader->UploadUniform("uLights[" + std::to_string(index) + "].cutOff"   , glm::cos(glm::radians(mCutOff)));
 		shader->UploadUniform("uLights[" + std::to_string(index) + "].direction", mDirection);
 	}
-	void SpotLight::OnLeftPanel(SceneObject* caller, std::string label, int number)
+	void SpotLight::OnLeftPanel(SceneObject* caller, std::string label)
 	{
-		SceneObject::OnLeftPanel(this, "Spot light", number);
+		SceneObject::OnLeftPanel(this, "Spot light");
 	}
 	void SpotLight::OnRightPanel()
 	{
 		PointLight::OnRightPanel();
 		ImGui::Separator();
-		ImGui::DragFloat("Cut off", &mCutOff, 0.1f, 0.0f, 10000.0f);
+		ImGui::DragFloat(ApplyID("Cut off"), &mCutOff, 0.1f, 0.0f, 10000.0f);
 		ImGui::Separator();
-		ImGui::Text("Direction");
-		ImGui::DragFloat3("##35", (float*)&mDirection, 0.1f, -1.0f, 1.0f);
+		ImGui::Text(ApplyID("Direction"));
+		ImGui::DragFloat3(ApplyID(""), (float*)&mDirection, 0.1f, -1.0f, 1.0f);
 	}
 }

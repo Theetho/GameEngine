@@ -46,6 +46,13 @@ namespace Engine
 		}
 		~GameObject() {}
 
+		virtual void OnUpdate(const double& delta)
+		{
+			UpdateComponents(delta);
+		}
+		virtual void OnEvent(Event& event)
+		{};
+
 		Transform<dimension>& GetTransform()
 		{
 			return mTransform;
@@ -117,9 +124,9 @@ namespace Engine
 			}
 		}
 
-		virtual void OnLeftPanel(SceneObject* caller = nullptr, std::string label = "", int number = -1) override
+		virtual void OnLeftPanel(SceneObject* caller = nullptr, std::string label = "") override
 		{
-			SceneObject::OnLeftPanel(this, "GameObject", number);
+			SceneObject::OnLeftPanel(this, "GameObject");
 		}
 
 		inline void OnRightPanel() override
@@ -133,28 +140,10 @@ namespace Engine
 		}
 	};
 
-	class GameObject2D : public GameObject<2>
-	{
-	public:
-		virtual void OnUpdate(const double& delta)
-		{
-			UpdateComponents(delta);
-		}
-		virtual void OnEvent(Event& event)
-		{};
-	protected:
-	};
-	class GameObject3D : public GameObject<3>
-	{
-	public:
-		virtual void OnUpdate(const double& delta)
-		{
-			UpdateComponents(delta);
-		}
-		virtual void OnEvent(Event& event)
-		{};
-	protected:
-	};
+	template class GameObject<2>;
+	template class GameObject<3>;
 
+	using GameObject2D = GameObject<2>;
+	using GameObject3D = GameObject<3>;
 }
 

@@ -88,12 +88,12 @@ namespace Engine
 
 		inline void OnRightPanel() override
 		{
-			if (ImGui::CollapsingHeader("Rigidbody", ImGuiTreeNodeFlags_DefaultOpen))
+			if (ImGui::CollapsingHeader(ApplyID("Rigidbody"), ImGuiTreeNodeFlags_DefaultOpen))
 			{
 				ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
-				ImGui::Checkbox("Gravity", &mUseGravity);
-				ImGui::Checkbox("Kinematic", &mIsKinematic);
-				ImGui::DragFloat("Mass", &mMass, 0.1f, 0.f, std::numeric_limits<float>::max());
+				ImGui::Checkbox(ApplyID("Gravity"), &mUseGravity);
+				ImGui::Checkbox(ApplyID("Kinematic"), &mIsKinematic);
+				ImGui::DragFloat(ApplyID("Mass"), &mMass, 0.1f, 0.f, std::numeric_limits<float>::max());
 				ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
 			}
 		}

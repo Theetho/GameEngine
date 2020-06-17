@@ -47,20 +47,20 @@ namespace Engine
 		shader->UploadUniform("uLights[" + std::to_string(index) + "].linear",	   mAttenuation.linear);
 		shader->UploadUniform("uLights[" + std::to_string(index) + "].quadratic", mAttenuation.quadratic);
 	}
-	void PointLight::OnLeftPanel(SceneObject* caller, std::string label, int number)
+	void PointLight::OnLeftPanel(SceneObject* caller, std::string label)
 	{
-		SceneObject::OnLeftPanel(this, "Point light", number);
+		SceneObject::OnLeftPanel(this, "Point light");
 	}
 	void PointLight::OnRightPanel()
 	{
 		Light::OnRightPanel();
 		ImGui::Separator();
 		ImGui::Text("Attenuation");
-		ImGui::SliderFloat("Quadratic", &mAttenuation.quadratic, 0.0f, 10.0f);
-		ImGui::SliderFloat("Linear", &mAttenuation.linear, 0.0f, 10.0f);
-		ImGui::SliderFloat("Constant", &mAttenuation.constant, 0.0f, 10.0f);
+		ImGui::SliderFloat(ApplyID("Quadratic"), &mAttenuation.quadratic, 0.0f, 10.0f);
+		ImGui::SliderFloat(ApplyID("Linear"), &mAttenuation.linear, 0.0f, 10.0f);
+		ImGui::SliderFloat(ApplyID("Constant"), &mAttenuation.constant, 0.0f, 10.0f);
 		ImGui::Separator();
 		ImGui::Text("Position");
-		ImGui::DragFloat3("", (float*)&mPosition);
+		ImGui::DragFloat3(ApplyID(""), (float*)&mPosition);
 	}
 }

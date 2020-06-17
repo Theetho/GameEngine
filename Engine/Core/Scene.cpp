@@ -32,13 +32,13 @@ namespace Engine
 				int i = 0;
 				for (; i < mObjects.size(); ++i)
 				{
-					mObjects[i]->OnLeftPanel(nullptr, "", i);
+					mObjects[i]->OnLeftPanel();
 				}
 				if (ImGui::TreeNode("Lights"))
 				{
 					for (int j = 0; j < mLights.size(); ++j)
 					{
-						mLights[j]->OnLeftPanel(nullptr, "", j + i);
+						mLights[j]->OnLeftPanel();
 					}
 					ImGui::TreePop();
 				}

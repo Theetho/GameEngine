@@ -6,6 +6,7 @@
 #include "Renderer/Rendering/Renderer.h"
 #include "GUI/GUI.h"
 #include "GUI/EngineGUI.h"
+#include "Renderer/Buffer/FrameBuffer.h"
 
 #define BindFunction(x) std::bind(&x, this, std::placeholders::_1)
 
@@ -17,9 +18,14 @@ namespace Engine
 {
 	Application* Application::sInstance = nullptr;
 
-	Application::Application()
+	Application::Application(Ref<Camera3D> camera)
 		: mLayerStack()
+		, mApplicationCamera(camera)
+		, mEngineCamera(CreateRef<Camera>())
 	{
+		// if (mApplicationCamera == nullptr) mApplicationCamera = CreateRef<Camera3D>(Vec3(0, 2, 2));
+		if (mApplicationCamera == nullptr) mApplicationCamera = CreateRef<Camera3D>(Vec3(100.0f, 20.0f, 100.0f));
+		
 		mTimeManager.mTime = GetEngineTime;
 
 		ENGINE_ASSERT(!sInstance, "Application already created");
@@ -32,6 +38,11 @@ namespace Engine
 		GUI::Begin();
 		mEngineGUI->Initialize();
 		GUI::End();
+
+		auto& playing_panel = mEngineGUI->GetPanel("Playing");
+		mFrameBuffer = FrameBuffer::Create(playing_panel.GetSize().x, playing_panel.GetSize().x / mEngineCamera->GetAspectRatio());
+		mFrameBuffer->CreateTextureAttachment();
+		mFrameBuffer->CreateRenderBuffer();
 	}
 
 	Application::~Application()
@@ -50,12 +61,19 @@ namespace Engine
 			mTimeManager.mTime = GetEngineTime;
 
 			Input::UpdateMouse();
-	
+
 			// --- Updates ---
+			if (!mPlaying) mFrameBuffer->Bind();
 			for (Layer* layer : mLayerStack)
 			{
-				layer->OnUpdate(mTimeManager.mDeltaTime);
+				mPlaying 
+				? 
+				layer->OnUpdate(mApplicationCamera, mTimeManager.mDeltaTime) 
+				: 
+				layer->OnUpdate(mEngineCamera, mTimeManager.mDeltaTime)
+				;
 			}
+			if (!mPlaying) mFrameBuffer->Unbind();
 			// ---------------
 
 			if (!mPlaying)
@@ -66,6 +84,7 @@ namespace Engine
 				{
 					layer->OnEngineGui();
 				}
+				RenderPlayPanel();
 				GUI::End();
 			}
 
@@ -108,6 +127,14 @@ namespace Engine
 			Renderer::SetViewport(event.mSizeEvent.width, event.mSizeEvent.height);
 		}
 		
+		// Update cameras
+		mPlaying
+		?
+		mApplicationCamera->OnEvent(event)
+		:
+		mEngineCamera->OnEvent(event)
+		;
+
 		if (!mLayerStack.IsEmpty())
 		{
 			auto layer = mLayerStack.end();
@@ -116,7 +143,6 @@ namespace Engine
 				(*--layer)->OnEvent(event);
 			}
 		}
-		
 	}
 
 	void Application::PushLayer(Layer* layer)
@@ -139,6 +165,11 @@ namespace Engine
 		return *mEngineGUI;
 	}
 
+	Ref<FrameBuffer> Application::GetBoundFrameBuffer()
+	{
+		return mPlaying ? nullptr : mFrameBuffer;
+	}
+
 	void Application::ManageTime()
 	{
 		mTimeManager.mTimeSpent += mTimeManager.mDeltaTime;
@@ -150,6 +181,20 @@ namespace Engine
 			mTimeManager.mTimeSpent -= 1.0;
 			mTimeManager.mFrames = 0.0;
 		}
+	}
+
+	void Application::RenderPlayPanel()
+	{
+		auto playing_panel = mEngineGUI->GetPanel("Playing");
+		auto scene_texture = mFrameBuffer->GetTextureAttachment();
+
+		playing_panel.Begin();
+		ImGui::Image((void*)(intptr_t)scene_texture->GetId()
+			, ImVec2(scene_texture->GetWidth(), scene_texture->GetHeight())
+			// Flip the texture
+			, ImVec2(-1, 1), ImVec2(0, 0)
+		);
+		playing_panel.End();
 	}
 
 	void Application::OnEngineGUIRender()

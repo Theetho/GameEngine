@@ -4,7 +4,6 @@
 #include "Renderer/Rendering/RendererAPI.h"
 #include "API/OpenGL/Shader.h"
 
-
 namespace Engine
 {
 	Light::Light(const Color& color)
@@ -50,6 +49,7 @@ namespace Engine
 	void Light::LoadGLUniforms(Ref<OpenGL::Shader> shader, unsigned int index)
 	{
 		shader->Bind();
+		shader->UploadUniform("uLights[" + std::to_string(index) + "].minDiffuseFactor", mMinDiffuseFactor);
 		shader->UploadUniform("uLights[" + std::to_string(index) + "].id"   , this->GetID());
 		shader->UploadUniform("uLights[" + std::to_string(index) + "].color", Vec3(mColor));
 	}
@@ -63,19 +63,21 @@ namespace Engine
 
 	void Light::OnRightPanel()
 	{
-		ImGui::Checkbox("Active", &mActive);
+		ImGui::Checkbox(ApplyID("Active"), &mActive);
 		ImGui::Text("Color");
-		ImGui::ColorEdit3("", (float*)&mColor);
+		ImGui::ColorEdit3(ApplyID("##Color"), (float*)&mColor);
+		ImGui::Text("Min diffuse factor");
+		ImGui::SliderFloat(ApplyID("##DiffuseFactor"), &mMinDiffuseFactor, 0.0f, 1.0f);
 		ImGui::Separator();
 
 		std::unordered_map<int, const char*> items = {
 			{(int)LightID::Directional, "Directional"},
-			{(int)LightID::Point, "Point" }, 
+			{(int)LightID::Point, "Point" },
 			{(int)LightID::Spot, "Spot" }
 		};
 
-		const char* item_current = items[this->GetID()]; 
-		if (ImGui::BeginCombo("", item_current))
+		const char* item_current = items[this->GetID()];
+		if (ImGui::BeginCombo(ApplyID(""), item_current))
 		{
 			for (auto& item : items)
 			{

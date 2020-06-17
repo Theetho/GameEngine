@@ -1,6 +1,6 @@
 #include "EnginePch.h"
 #include "Matrix.h"
-#include "Core/Camera.h"
+#include "Core/Camera/Camera3D.h"
 
 namespace Engine
 {
@@ -26,7 +26,7 @@ namespace Engine
 		matrix = glm::rotate(matrix, glm::radians(camera->GetPitch()), { 1, 0, 0 });
 		matrix = glm::rotate(matrix, glm::radians(camera->GetYaw()),   { 0, 1, 0 });
 		matrix = glm::rotate(matrix, glm::radians(camera->GetRoll()),  { 0, 0, 1 });
-		matrix = glm::translate(matrix, - camera->GetTransform().GetPosition());
+		matrix = glm::translate(matrix, - camera->GetPosition());
 
 		return matrix;
 	}

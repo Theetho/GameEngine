@@ -32,12 +32,12 @@ namespace Engine
 		float			 mWaveSpeed;
 
 		void CreateTile();
-		void Prepare(Camera3D& camera, Ref<Engine::FrameBuffer> binded_framebuffer = nullptr);
+		void Prepare(Ref<Camera3D> camera);
 		void Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const override;
 
-		virtual void OnLeftPanel(SceneObject* caller = nullptr, std::string label = "", int number = -1) override
+		virtual void OnLeftPanel(SceneObject* caller = nullptr, std::string label = "") override
 		{
-			SceneObject::OnLeftPanel(this, "Water", number);
+			SceneObject::OnLeftPanel(this, "Water");
 		}
 
 		inline void OnRightPanel() override

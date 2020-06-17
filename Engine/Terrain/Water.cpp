@@ -8,7 +8,7 @@
 #include "API/OpenGL/FrameBuffer.h"
 #include "API/OpenGL/Texture2D.h"
 #include "GameObject/Transform.h"
-#include "Core/Camera.h"
+#include "Core/Camera/Camera3D.h"
 
 #define REFLECTION_WIDTH  640
 #define REFLECTION_HEIGHT 360
@@ -78,7 +78,7 @@ namespace Engine
 		mVertexArray->AddVertexBuffer(vertex_buffer);
 	}
 
-	void Water::Prepare(Camera3D& camera, Ref<Engine::FrameBuffer> binded_framebuffer)
+	void Water::Prepare(Ref<Camera3D> camera)
 	{
 		if (Renderer::GetAPI() == API::OpenGL)
 		{
@@ -91,9 +91,9 @@ namespace Engine
 		RenderCommand::Clear();
 		Renderer::BeginScene(camera);
 		Renderer::Render(true);
-		mRefraction->Unbind(binded_framebuffer);
+		mRefraction->Unbind(Application::Get().GetBoundFrameBuffer());
 
-		camera.ReverseOnUpAxis(mTransform.GetPosition());
+		camera->ReverseOnUpAxis(mTransform.GetPosition());
 
 		// Reflection
 		Renderer::sSceneData.cliping_plane = Vec4(0, 1, 0, -mTransform.GetPosition().y);
@@ -101,9 +101,9 @@ namespace Engine
 		RenderCommand::Clear();
 		Renderer::BeginScene(camera);
 		Renderer::Render(true);
-		mReflection->Unbind(binded_framebuffer);
+		mReflection->Unbind(Application::Get().GetBoundFrameBuffer());
 
-		camera.ReverseOnUpAxis(mTransform.GetPosition());
+		camera->ReverseOnUpAxis(mTransform.GetPosition());
 
 		if (Renderer::GetAPI() == API::OpenGL)
 		{

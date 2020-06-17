@@ -160,7 +160,8 @@
     <ClInclude Include="Component\RigidBody.h" />
     <ClInclude Include="Core\Application.h" />
     <ClInclude Include="Core\AssetManager.h" />
-    <ClInclude Include="Core\Camera.h" />
+    <ClInclude Include="Core\Camera\Camera.h" />
+    <ClInclude Include="Core\Camera\Camera3D.h" />
     <ClInclude Include="Core\EntryPoint.h" />
     <ClInclude Include="Core\Event.h" />
     <ClInclude Include="Core\Input.h" />
@@ -226,6 +227,7 @@
     <ClInclude Include="Renderer\Texture\Texture.h" />
     <ClInclude Include="Renderer\Texture\Texture2D.h" />
     <ClInclude Include="Shapes\Cube.h" />
+    <ClInclude Include="Util\Smoother.h" />
     <ClInclude Include="Terrain\Terrain.h" />
     <ClInclude Include="Terrain\Water.h" />
     <ClInclude Include="Util\Benchmark.h" />
@@ -641,7 +643,8 @@
     <ClCompile Include="API\OpenGL\VertexBuffer.cpp" />
     <ClCompile Include="Core\Application.cpp" />
     <ClCompile Include="Core\AssetManager.cpp" />
-    <ClCompile Include="Core\Camera.cpp" />
+    <ClCompile Include="Core\Camera\Camera.cpp" />
+    <ClCompile Include="Core\Camera\Camera3D.cpp" />
     <ClCompile Include="Core\Event.cpp" />
     <ClCompile Include="Core\Input.cpp" />
     <ClCompile Include="Core\LayerStack.cpp" />
