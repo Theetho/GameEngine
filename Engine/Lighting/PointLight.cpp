@@ -61,6 +61,6 @@ namespace Engine
 		ImGui::SliderFloat(ApplyID("Constant"), &mAttenuation.constant, 0.0f, 10.0f);
 		ImGui::Separator();
 		ImGui::Text("Position");
-		ImGui::DragFloat3(ApplyID(""), (float*)&mPosition);
+		ImGui::DragFloat3(ApplyID("##Position"), (float*)&mPosition);
 	}
 }

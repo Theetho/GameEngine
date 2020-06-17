@@ -12,6 +12,13 @@ namespace Engine
 
 		void OnUpdate(const double& delta) override;
 		void OnEvent(Event& event) override;
+
+		inline void SetPosition(const Vec3& position) override
+		{
+			mPosition = position;
+			mMovement.position.SetTarget(position);
+		}
+
 	private:
 		// Smooth are used to create smoother rotation and translation
 		// with the camera.

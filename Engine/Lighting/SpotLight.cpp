@@ -52,6 +52,6 @@ namespace Engine
 		ImGui::DragFloat(ApplyID("Cut off"), &mCutOff, 0.1f, 0.0f, 10000.0f);
 		ImGui::Separator();
 		ImGui::Text(ApplyID("Direction"));
-		ImGui::DragFloat3(ApplyID(""), (float*)&mDirection, 0.1f, -1.0f, 1.0f);
+		ImGui::DragFloat3(ApplyID("##Direction"), (float*)&mDirection, 0.1f, -1.0f, 1.0f);
 	}
 }

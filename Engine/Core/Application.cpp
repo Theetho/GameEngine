@@ -23,9 +23,11 @@ namespace Engine
 		, mApplicationCamera(camera)
 		, mEngineCamera(CreateRef<Camera>())
 	{
-		// if (mApplicationCamera == nullptr) mApplicationCamera = CreateRef<Camera3D>(Vec3(0, 2, 2));
-		if (mApplicationCamera == nullptr) mApplicationCamera = CreateRef<Camera3D>(Vec3(100.0f, 20.0f, 100.0f));
-		
+	//	auto cameras_position = Vec3(0, 2, 0);
+		auto cameras_position = Vec3(0, 40, 0);
+
+		if (mApplicationCamera == nullptr) mApplicationCamera = CreateRef<Camera3D>(cameras_position);
+
 		mTimeManager.mTime = GetEngineTime;
 
 		ENGINE_ASSERT(!sInstance, "Application already created");
@@ -194,6 +196,15 @@ namespace Engine
 			// Flip the texture
 			, ImVec2(-1, 1), ImVec2(0, 0)
 		);
+
+		ImGui::Text(R"(- Controls:
+	* F1 to toggle engine/game mode.
+	* In engine mode:
+		- LSHIFT + middle mouse to translate the view.
+		- Middle mouse to rotate the view.
+		- Mouse wheel to zoom in/out.
+	* In game mode.
+		- Move the mouse to rotate the view.)");
 		playing_panel.End();
 	}
 

@@ -64,6 +64,11 @@ namespace Engine
 			return mProjectionMatrix * mViewMatrix;
 		}
 	
+		inline virtual void SetPosition(const Vec3& position)
+		{
+			mPosition = position;
+		}
+
 		void virtual OnUpdate(const double& delta);
 		void virtual OnEvent(Event& event);
 
