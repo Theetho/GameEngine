@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/SceneObject.h"
+#include "Core/Scene/SceneObject.h"
 #include "Core/Event.h"
 #include "Util/Matrix.h"
 
@@ -72,6 +72,11 @@ namespace Engine
 		void virtual OnUpdate(const double& delta);
 		void virtual OnEvent(Event& event);
 
+		virtual inline void UpdateViewMatrix()
+		{
+			mViewMatrix = Matrix::View(this);
+		}
+
 		void Rotate(const Vec2& offset);
 		void ReverseOnUpAxis(const Vec3& position);
 	protected:
@@ -86,10 +91,6 @@ namespace Engine
 		float mNear = 0.2f, mFar = 400.0f, mAspectRatio = 16.0f/9.0f, mFov = 70.0f;
 		static const float MAX_PITCH, MAX_YAW, MAX_ROLL;
 
-		virtual inline void UpdateViewMatrix()
-		{
-			mViewMatrix = Matrix::View(this);
-		}
 		virtual inline void UpdateProjectionMatrix()
 		{
 			mProjectionMatrix = Matrix::Projection(mFov, mAspectRatio, mNear, mFar);
@@ -105,11 +106,8 @@ namespace Engine
 			if (mYaw < 0.0f)		 mYaw += MAX_YAW;
 			else if (mYaw > MAX_YAW) mYaw -= MAX_YAW;
 		}
-		inline void OnLeftPanel(SceneObject* caller = nullptr, std::string label = "") override
-		{
-			SceneObject::OnLeftPanel(this, "Camera");
-		}
-		inline void OnRightPanel() override
+
+		inline void OnUiSelected() override
 		{
 			if (ImGui::CollapsingHeader(ApplyID("Camera"), ImGuiTreeNodeFlags_DefaultOpen))
 			{

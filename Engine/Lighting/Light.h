@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/SceneObject.h"
+#include "Core/Scene/SceneObject.h"
 
 namespace Engine
 {
@@ -59,7 +59,39 @@ namespace Engine
 	protected:
 		virtual void LoadGLUniforms(Ref<OpenGL::Shader> shader, unsigned int index);
 		virtual void UnloadGLUniforms(Ref<OpenGL::Shader> shader, unsigned int index);
-		void OnRightPanel() override;
+		inline void OnUiSelected() override
+		{
+			ImGui::Checkbox(ApplyID("Active"), &mActive);
+			ImGui::Text("Color");
+			ImGui::ColorEdit3(ApplyID("##Color"), (float*)&mColor);
+			ImGui::Text("Min diffuse factor");
+			ImGui::SliderFloat(ApplyID("##DiffuseFactor"), &mMinDiffuseFactor, 0.0f, 1.0f);
+			ImGui::Separator();
+
+			std::unordered_map<int, const char*> items = {
+				{(int)LightID::Directional, "Directional"},
+				{(int)LightID::Point, "Point" },
+				{(int)LightID::Spot, "Spot" }
+			};
+
+			const char* item_current = items[this->GetID()];
+			ImGui::Text("Type");
+			if (ImGui::BeginCombo(ApplyID("##Type"), item_current))
+			{
+				for (auto& item : items)
+				{
+					bool is_selected = (item_current == item.second);
+					if (ImGui::Selectable(item.second, is_selected))
+					{
+						item_current = item.second;
+						mRequestedType = item.first;
+					}
+					if (is_selected)
+						ImGui::SetItemDefaultFocus();
+				}
+				ImGui::EndCombo();
+			}
+		}
 	private:
 		int mRequestedType = (int)LightID::None;
 	};

@@ -21,12 +21,15 @@ namespace Engine
 	Application::Application(Ref<Camera3D> camera)
 		: mLayerStack()
 		, mApplicationCamera(camera)
-		, mEngineCamera(CreateRef<Camera>())
+		, mEngineCamera(CreateRef<ArcBallCamera>())
+		, mScene(CreateScope<Scene>())
 	{
-	//	auto cameras_position = Vec3(0, 2, 0);
+	//	auto cameras_position = Vec3(0, 2, 2);
 		auto cameras_position = Vec3(0, 40, 0);
 
 		if (mApplicationCamera == nullptr) mApplicationCamera = CreateRef<Camera3D>(cameras_position);
+		mScene->Clear();
+		mScene->Push(mApplicationCamera.get());
 
 		mTimeManager.mTime = GetEngineTime;
 
@@ -50,9 +53,9 @@ namespace Engine
 	Application::~Application()
 	{}
 
-	Application& Application::Get()
+	Application* Application::Get()
 	{
-		return *sInstance;
+		return sInstance;
 	}
 	
 	void Application::Run()
@@ -65,6 +68,7 @@ namespace Engine
 			Input::UpdateMouse();
 
 			// --- Updates ---
+			mScene->UpdateLights();
 			if (!mPlaying) mFrameBuffer->Bind();
 			for (Layer* layer : mLayerStack)
 			{
@@ -78,10 +82,12 @@ namespace Engine
 			if (!mPlaying) mFrameBuffer->Unbind();
 			// ---------------
 
+			// Render the engine UI
 			if (!mPlaying)
 			{
 				GUI::Begin();
 				mEngineGUI->Render();
+				mScene->OnUiRender();
 				for (Layer* layer : mLayerStack)
 				{
 					layer->OnEngineGui();
@@ -118,6 +124,7 @@ namespace Engine
 			{
 				mPlaying = !mPlaying;
 				Input::ToggleCursor();
+				if (mPlaying) mApplicationCamera->UpdateViewMatrix();
 				event.SetIsHandled(true);
 			}
 		}
@@ -165,6 +172,11 @@ namespace Engine
 	EngineGUI& Application::GetEngineGUI()
 	{
 		return *mEngineGUI;
+	}
+
+	Scene& Application::GetScene()
+	{
+		return *mScene;
 	}
 
 	Ref<FrameBuffer> Application::GetBoundFrameBuffer()

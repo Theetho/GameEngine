@@ -50,7 +50,7 @@ namespace Engine
 		int GetID() const override;
 
 		void LoadGLUniforms(Ref<OpenGL::Shader> shader) override;
-		inline void OnRightPanel() override
+		inline void OnUiRender() override
 		{
 			if (ImGui::CollapsingHeader(ApplyID("Material"), ImGuiTreeNodeFlags_DefaultOpen))
 			{

@@ -14,30 +14,18 @@ BombermanLayer::~BombermanLayer()
 
 void BombermanLayer::OnAttach()
 {
-	Ref<Shader> shader		   = AssetManager::GetShaderLibrary().Load("lights_materials.glsl", "scene");
-	Ref<Shader> shader_pbr	   = AssetManager::GetShaderLibrary().Load("lights_PBR.glsl", "player");
-	Ref<Shader> shader_terrain = AssetManager::GetShaderLibrary().Load("terrain.glsl");
+	(void)AssetManager::GetShaderLibrary().Load("lights_materials.glsl", "scene");
+	(void)AssetManager::GetShaderLibrary().Load("lights_PBR.glsl", "player");
+	(void)AssetManager::GetShaderLibrary().Load("terrain.glsl");
 	(void)AssetManager::GetShaderLibrary().Load("skybox.glsl");
 	(void)AssetManager::GetShaderLibrary().Load("colliders.glsl");
 	(void)AssetManager::GetShaderLibrary().Load("gui.glsl");
 	(void)AssetManager::GetShaderLibrary().Load("text.glsl");
 	(void)AssetManager::GetShaderLibrary().Load("Skybox_Colored.glsl");
-	Ref<OpenGL::Shader> shader_water = std::dynamic_pointer_cast<OpenGL::Shader>(AssetManager::GetShaderLibrary().Load("water.glsl"));
+	(void)AssetManager::GetShaderLibrary().Load("water.glsl");
 
-	mScene.GetLights().push_back(CreateRef<DirectionalLight>(Vec3(0.4, -0.5f, 0.0f)));
-	mScene.GetLights().push_back(CreateRef<SpotLight>(Vec3(0.0, 1.0, 0.0), Vec3(0.0, -1.0, 0.0)));
-
-	mScene.UpdateLights({
-		shader,
-		shader_pbr,
-		shader_terrain,
-		shader_water
-	});
-
-	auto& playing_panel = Application::Get().GetEngineGUI().GetPanel("Playing");
-
-	mScene.Push(&mLake);
-	mScene.Push(&mTerrain);
+	Application::Get()->GetScene().AddLight(CreateRef<DirectionalLight>(Vec3(0.4, -0.5f, 0.0f)));
+	Application::Get()->GetScene().AddLight(CreateRef<PointLight>(Vec3(-1.0, 1.0, 0.0)));
 
 	RenderCommand::SetClearColor(mClearColor);
 }
@@ -60,13 +48,6 @@ void BombermanLayer::OnUpdate(Ref<Camera3D> camera, const double& delta)
 	Ref<Shader> shader_gui			  = AssetManager::GetShaderLibrary().Get("gui");
 	Ref<Shader> shader_text			  = AssetManager::GetShaderLibrary().Get("text");
 	
-	mScene.UpdateLights({
-		shader,
-		shader_pbr,
-		shader_terrain,
-		shader_water
-	});
-
 	shader_water->Bind();
 	shader_water->UploadUniform("uNear", camera->GetNear());
 	shader_water->UploadUniform("uFar", camera->GetFar());
@@ -97,9 +78,7 @@ void BombermanLayer::OnGui()
 
 void BombermanLayer::OnEngineGui()
 {
-	mScene.Render();
-
-	auto left_panel = Application::Get().GetEngineGUI().GetPanel("Left");
+	auto left_panel = Application::Get()->GetEngineGUI().GetPanel("Left");
 	auto tab = left_panel.GetOpenedTab();
 	static bool clear_color = false;
 	
@@ -111,8 +90,8 @@ void BombermanLayer::OnEngineGui()
 			if (ImGui::Checkbox("Texture", &mShowSkybox)) mShowSky = false;
 			if (ImGui::Checkbox("Sky", &mShowSky)) mShowSkybox = false;
 			ImGui::Text("Clear color");
-			ImGui::ColorEdit3("", (float*)&mClearColor);
-			RenderCommand::SetClearColor(mClearColor);
+			if (ImGui::ColorEdit3("", (float*)&mClearColor)) 
+				RenderCommand::SetClearColor(mClearColor);
 			ImGui::TreePop();
 		}
 		left_panel.End();

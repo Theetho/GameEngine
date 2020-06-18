@@ -1503,11 +1503,12 @@
     <ClInclude Include="GUI\GUI.h" />
     <ClInclude Include="GUI\Panel.h" />
     <ClInclude Include="GUI\EngineGui.h" />
-    <ClInclude Include="Core\Scene.h" />
-    <ClInclude Include="Core\SceneObject.h" />
     <ClInclude Include="Util\Smoother.h" />
-    <ClInclude Include="Core\Camera\Camera.h" />
     <ClInclude Include="Core\Camera\Camera3D.h" />
+    <ClInclude Include="Core\Camera\ArcBallCamera.h" />
+    <ClInclude Include="Core\Scene\Scene.h" />
+    <ClInclude Include="Core\Scene\SceneObject.h" />
+    <ClInclude Include="Core\Scene\EditableObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API\OpenGL\Context.cpp">
@@ -1727,10 +1728,11 @@
     <ClCompile Include="GUI\GUI.cpp" />
     <ClCompile Include="GUI\Panel.cpp" />
     <ClCompile Include="GUI\EngineGui.cpp" />
-    <ClCompile Include="Core\Scene.cpp" />
-    <ClCompile Include="Core\SceneObject.cpp" />
-    <ClCompile Include="Core\Camera\Camera.cpp" />
     <ClCompile Include="Core\Camera\Camera3D.cpp" />
+    <ClCompile Include="Core\Camera\ArcBallCamera.cpp" />
+    <ClCompile Include="Core\Scene\SceneObject.cpp" />
+    <ClCompile Include="Core\Scene\Scene.cpp" />
+    <ClCompile Include="Core\Scene\EditableObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Vendor\ImGui\LICENSE.txt">

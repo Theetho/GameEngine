@@ -14,7 +14,7 @@ namespace Engine
 		: mAtlas()
 		, mFont()
 		, mAtlasTexture(nullptr)
-		, mScale(Application::Get().GetWindow().GetWidth() / 2.0f, Application::Get().GetWindow().GetHeight() / 1.375f)
+		, mScale(Application::Get()->GetWindow().GetWidth() / 2.0f, Application::Get()->GetWindow().GetHeight() / 1.375f)
 	{
 		Vec2 dimensions(size * FONT_TEXTURE_MULTIPLIER);
 		mAtlas = texture_atlas_new(dimensions.x, dimensions.y, 1);

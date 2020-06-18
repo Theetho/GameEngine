@@ -53,8 +53,8 @@ namespace Engine
 		LoadMaterial(shader);
 		Renderable::Render(mVertexArray, render_command, shader);
 	}
-	void Mesh::OnRightPanel()
+	void Mesh::OnUiRender()
 	{
-		SceneObject::RenderChild(*mMaterial);
+		EditableObject::Render(mMaterial.get());
 	}
 }

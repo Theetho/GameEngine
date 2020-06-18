@@ -6,14 +6,6 @@
 
 namespace Engine
 {
-	/*class CollisionSystem;*/
-	//template<int dimension>
-	//struct Velocity
-	//{
-	//	Vec<dimension> regular;
-	//	Vec<dimension> angular;
-	//};
-
 	template<int dimension>
 	class RigidBody : public Component<dimension>
 	{
@@ -24,12 +16,6 @@ namespace Engine
 			, mVelocity()
 			, mAngularVelocity()
 		{
-			/*auto box    = std::dynamic_pointer_cast<Collider>(game_object.GetComponent<BoxCollider>());
-			auto sphere = std::dynamic_pointer_cast<Collider>(game_object.GetComponent<SphereCollider>());
-			if (box)
-				box->AttachRigidBody();
-			if (sphere)
-				sphere->AttachRigidBody();*/
 		}
 		~RigidBody()
 		{}
@@ -86,7 +72,7 @@ namespace Engine
 
 		Transform<dimension>& mTransform;
 
-		inline void OnRightPanel() override
+		void OnUiRender() override
 		{
 			if (ImGui::CollapsingHeader(ApplyID("Rigidbody"), ImGuiTreeNodeFlags_DefaultOpen))
 			{

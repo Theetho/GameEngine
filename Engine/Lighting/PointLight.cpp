@@ -47,20 +47,4 @@ namespace Engine
 		shader->UploadUniform("uLights[" + std::to_string(index) + "].linear",	   mAttenuation.linear);
 		shader->UploadUniform("uLights[" + std::to_string(index) + "].quadratic", mAttenuation.quadratic);
 	}
-	void PointLight::OnLeftPanel(SceneObject* caller, std::string label)
-	{
-		SceneObject::OnLeftPanel(this, "Point light");
-	}
-	void PointLight::OnRightPanel()
-	{
-		Light::OnRightPanel();
-		ImGui::Separator();
-		ImGui::Text("Attenuation");
-		ImGui::SliderFloat(ApplyID("Quadratic"), &mAttenuation.quadratic, 0.0f, 10.0f);
-		ImGui::SliderFloat(ApplyID("Linear"), &mAttenuation.linear, 0.0f, 10.0f);
-		ImGui::SliderFloat(ApplyID("Constant"), &mAttenuation.constant, 0.0f, 10.0f);
-		ImGui::Separator();
-		ImGui::Text("Position");
-		ImGui::DragFloat3(ApplyID("##Position"), (float*)&mPosition);
-	}
 }

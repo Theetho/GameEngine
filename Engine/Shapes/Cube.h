@@ -5,7 +5,7 @@
 
 namespace Engine
 {
-	class Cube : public GameObject3D, public Model, public SceneObject
+	class Cube : public GameObject3D, public Model
 	{
 	public:
 		Cube(float scale = 1.0f);
@@ -14,16 +14,12 @@ namespace Engine
 
 	private:
 		void Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const override;
-		inline void OnLeftPanel(SceneObject* caller = nullptr, std::string label = "") override
+		
+		inline void OnUiSelected() override
 		{
-			SceneObject::OnLeftPanel(this, "Cube");
-		}
-
-		inline void OnRightPanel() override
-		{
-			GameObject3D::OnRightPanel();
+			GameObject3D::OnUiSelected();
 			ImGui::Separator();
-			Model::OnRightPanel();
+			Model::OnUiRender();
 		}
 	};
 }

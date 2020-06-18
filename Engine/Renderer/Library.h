@@ -6,6 +6,8 @@
 
 namespace Engine
 {
+	class Scene;
+
 	template<typename T>
 	class Library
 	{
@@ -41,7 +43,13 @@ namespace Engine
 		{
 			return mReferences.find(name) != mReferences.end();
 		}
-	protected:
+	private:
+		friend class Scene;
+		inline std::unordered_map<std::string, Ref<T>>& GetList()
+		{
+			return mReferences;
+		}
+
 		std::unordered_map<std::string, Ref<T>> mReferences;
 
 		inline std::string ExtractName(const std::string& file_path)

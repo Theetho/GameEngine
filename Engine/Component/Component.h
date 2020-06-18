@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/SceneObject.h"
+#include "Core/Scene/EditableObject.h"
 
 namespace Engine
 {
@@ -10,7 +10,7 @@ namespace Engine
 	/// Abstract base class
 
 	template<int dimension>
-	class Component : public SceneObject
+	class Component : public EditableObject
 	{
 	public:
 		Component(GameObject<dimension>& game_object)

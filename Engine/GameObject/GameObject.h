@@ -3,7 +3,7 @@
 #include "EnginePch.h"
 #include "Include/Component.h"
 #include "Transform.h"
-#include "Core/SceneObject.h"
+#include "Core/Scene/SceneObject.h"
 
 namespace Engine
 {
@@ -124,18 +124,13 @@ namespace Engine
 			}
 		}
 
-		virtual void OnLeftPanel(SceneObject* caller = nullptr, std::string label = "") override
+		inline void OnUiSelected()
 		{
-			SceneObject::OnLeftPanel(this, "GameObject");
-		}
-
-		inline void OnRightPanel() override
-		{
-			SceneObject::RenderChild(mTransform);
+			EditableObject::Render(&mTransform);
 			for (auto& kv : mComponents)
 			{
 				ImGui::Separator();
-				SceneObject::RenderChild(*kv.second);
+				EditableObject::Render(kv.second.get());
 			}
 		}
 	};

@@ -1,10 +1,10 @@
 #include "EnginePch.h"
-#include "Camera.h"
+#include "ArcBallCamera.h"
 #include "Core/Input.h"
 
 namespace Engine
 {
-	Camera::Camera()
+	ArcBallCamera::ArcBallCamera()
 		: Camera3D(Vec3())
 	{
 		mMovement.position.SetTarget(mPosition);
@@ -14,9 +14,9 @@ namespace Engine
 		mSensitivity.yaw = 0.3f;
 		mSensitivity.roll = 0.3f;
 	}
-	Camera::~Camera()
+	ArcBallCamera::~ArcBallCamera()
 	{}
-	void Camera::OnUpdate(const double& delta)
+	void ArcBallCamera::OnUpdate(const double& delta)
 	{
 		CalculatePitch(delta);
 		CalculateAngleAroundPlayer(delta);
@@ -28,7 +28,7 @@ namespace Engine
 		UpdateViewMatrix();
 	}
 
-	void Camera::OnEvent(Event& event)
+	void ArcBallCamera::OnEvent(Event& event)
 	{
 		Camera3D::OnEvent(event);
 
@@ -51,7 +51,7 @@ namespace Engine
 		}
 	}
 
-	void Camera::CalculateCameraPosition()
+	void ArcBallCamera::CalculateCameraPosition()
 	{
 		float horizontal_distance = CalculateHorizontalDistance();
 		float vertical_distance = CalculateVerticalDistance();
@@ -61,7 +61,7 @@ namespace Engine
 		mPosition.z = mTarget.z + (float)(horizontal_distance * std::cos(glm::radians((float)mAngleAroundTarget)));
 	}
 
-	void Camera::CalculatePitch(const double& delta)
+	void ArcBallCamera::CalculatePitch(const double& delta)
 	{
 		if (Input::IsMouseButtonPressed(ENGINE_MOUSE_BUTTON_MIDDLE) &&
 			!Input::IsKeyPressed(ENGINE_KEY_LEFT_SHIFT))
@@ -74,7 +74,7 @@ namespace Engine
 		mPitch = (float)mSmoothPitch;
 	}
 
-	void Camera::CalculateAngleAroundPlayer(const double& delta)
+	void ArcBallCamera::CalculateAngleAroundPlayer(const double& delta)
 	{
 		if (Input::IsMouseButtonPressed(ENGINE_MOUSE_BUTTON_MIDDLE) &&
 			!Input::IsKeyPressed(ENGINE_KEY_LEFT_SHIFT))
@@ -85,14 +85,14 @@ namespace Engine
 		mAngleAroundTarget.Update(delta);
 	}
 
-	void Camera::CalculateDistance(const double& delta)
+	void ArcBallCamera::CalculateDistance(const double& delta)
 	{
 		mDistanceAroundTarget.Update(delta);
 		mMovement.position.Update(Vec3(delta));
 		mMovement.target.Update(Vec3(delta));
 	}
 
-	void Camera::CalculateTarget()
+	void ArcBallCamera::CalculateTarget()
 	{
 		// Change the translation speed depending on the distance to the target
 		// and ensure it is not to low.

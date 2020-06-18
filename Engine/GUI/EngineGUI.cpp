@@ -21,7 +21,7 @@ namespace Engine
 			ImGuiWindowFlags_NoResize |
 			ImGuiWindowFlags_NoTitleBar |
 			ImGuiWindowFlags_NoBringToFrontOnFocus;
-		Window& window = Application::Get().GetWindow();
+		Window& window = Application::Get()->GetWindow();
 
 		float main_menu_height = 0.f;
 		if (ImGui::BeginMainMenuBar())

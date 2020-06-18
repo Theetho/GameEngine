@@ -91,7 +91,7 @@ namespace Engine
 		RenderCommand::Clear();
 		Renderer::BeginScene(camera);
 		Renderer::Render(true);
-		mRefraction->Unbind(Application::Get().GetBoundFrameBuffer());
+		mRefraction->Unbind(Application::Get()->GetBoundFrameBuffer());
 
 		camera->ReverseOnUpAxis(mTransform.GetPosition());
 
@@ -101,7 +101,7 @@ namespace Engine
 		RenderCommand::Clear();
 		Renderer::BeginScene(camera);
 		Renderer::Render(true);
-		mReflection->Unbind(Application::Get().GetBoundFrameBuffer());
+		mReflection->Unbind(Application::Get()->GetBoundFrameBuffer());
 
 		camera->ReverseOnUpAxis(mTransform.GetPosition());
 

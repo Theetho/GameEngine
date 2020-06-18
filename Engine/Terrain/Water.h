@@ -35,17 +35,12 @@ namespace Engine
 		void Prepare(Ref<Camera3D> camera);
 		void Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const override;
 
-		virtual void OnLeftPanel(SceneObject* caller = nullptr, std::string label = "") override
+		inline void OnUiSelected() override
 		{
-			SceneObject::OnLeftPanel(this, "Water");
-		}
-
-		inline void OnRightPanel() override
-		{
-			GameObject3D::OnRightPanel();
+			GameObject3D::OnUiSelected();
 			ImGui::Separator();
 			ImGui::Text("Wave speed");
-			ImGui::DragFloat("", &mWaveSpeed, 0.005f, 0.0f, 1.0f);
+			ImGui::DragFloat(ApplyID("##WaveSpeed"), &mWaveSpeed, 0.005f, 0.0f, 1.0f);
 		}
 	};
 }

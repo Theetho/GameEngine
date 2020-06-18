@@ -16,7 +16,6 @@ private:
 	Engine::Terrain							mTerrain;
 	Engine::Water							mLake;
 	Engine::Skybox							mSkybox;
-	Engine::Scene mScene;
 	Engine::Color mClearColor;
 
 	bool mShowSkybox = true;

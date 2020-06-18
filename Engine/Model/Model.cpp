@@ -266,11 +266,11 @@ namespace Engine
 			Renderable::Render(&mesh, render_command, shader);
 		}
 	}
-	void Model::OnRightPanel()
+	void Model::OnUiRender()
 	{
 		for (int i = 0; i < mMeshes.size(); ++i)
 		{
-			SceneObject::RenderChild(mMeshes[i]);
+			EditableObject::Render(&mMeshes[i]);
 		}
 	}
 }

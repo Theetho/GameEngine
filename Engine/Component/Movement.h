@@ -118,7 +118,8 @@ namespace Engine
 		Speed mSpeed;
 		// For camera for example;
 		bool mIsReversed;
-		inline void OnRightPanel() override
+		
+		void OnUiRender() override
 		{
 			if (ImGui::CollapsingHeader(ApplyID("Movement"), ImGuiTreeNodeFlags_DefaultOpen))
 			{

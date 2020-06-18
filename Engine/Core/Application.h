@@ -9,6 +9,7 @@ namespace Engine
 	class CollisionSystem;
 	class EngineGUI;
 	class FrameBuffer;
+	class Scene;
 
 	class Application
 	{
@@ -16,7 +17,7 @@ namespace Engine
 		Application(Ref<Camera3D> camera = nullptr);
 		virtual ~Application();
 
-		static Application& Get();
+		static Application* Get();
 
 		void Run();
 		void OnEvent(Event& event);
@@ -29,6 +30,7 @@ namespace Engine
 		
 		Window& GetWindow();
 		EngineGUI& GetEngineGUI();
+		Scene& GetScene();
 		Ref<FrameBuffer> GetBoundFrameBuffer();
 	private:
 		static Application* sInstance;
@@ -41,6 +43,7 @@ namespace Engine
 		Scope<Window>		   mWindow;
 		Ref<CollisionSystem>   mCollisionSystem;
 		Scope<EngineGUI>	   mEngineGUI;
+		Scope<Scene>			  mScene;
 		bool				   mRunning = true;
 		bool				   mPlaying = false;
 		LayerStack			   mLayerStack;

@@ -160,7 +160,7 @@
     <ClInclude Include="Component\RigidBody.h" />
     <ClInclude Include="Core\Application.h" />
     <ClInclude Include="Core\AssetManager.h" />
-    <ClInclude Include="Core\Camera\Camera.h" />
+    <ClInclude Include="Core\Camera\ArcBallCamera.h" />
     <ClInclude Include="Core\Camera\Camera3D.h" />
     <ClInclude Include="Core\EntryPoint.h" />
     <ClInclude Include="Core\Event.h" />
@@ -169,8 +169,9 @@
     <ClInclude Include="Core\Layer.h" />
     <ClInclude Include="Core\LayerStack.h" />
     <ClInclude Include="Core\Log.h" />
-    <ClInclude Include="Core\Scene.h" />
-    <ClInclude Include="Core\SceneObject.h" />
+    <ClInclude Include="Core\Scene\EditableObject.h" />
+    <ClInclude Include="Core\Scene\Scene.h" />
+    <ClInclude Include="Core\Scene\SceneObject.h" />
     <ClInclude Include="Core\Window.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="EnginePch.h" />
@@ -643,14 +644,15 @@
     <ClCompile Include="API\OpenGL\VertexBuffer.cpp" />
     <ClCompile Include="Core\Application.cpp" />
     <ClCompile Include="Core\AssetManager.cpp" />
-    <ClCompile Include="Core\Camera\Camera.cpp" />
+    <ClCompile Include="Core\Camera\ArcBallCamera.cpp" />
     <ClCompile Include="Core\Camera\Camera3D.cpp" />
     <ClCompile Include="Core\Event.cpp" />
     <ClCompile Include="Core\Input.cpp" />
     <ClCompile Include="Core\LayerStack.cpp" />
     <ClCompile Include="Core\Log.cpp" />
-    <ClCompile Include="Core\Scene.cpp" />
-    <ClCompile Include="Core\SceneObject.cpp" />
+    <ClCompile Include="Core\Scene\EditableObject.cpp" />
+    <ClCompile Include="Core\Scene\Scene.cpp" />
+    <ClCompile Include="Core\Scene\SceneObject.cpp" />
     <ClCompile Include="Core\Window.cpp" />
     <ClCompile Include="EnginePch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

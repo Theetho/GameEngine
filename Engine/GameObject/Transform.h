@@ -2,13 +2,13 @@
 
 #include "EnginePch.h"
 #include "Util/Matrix.h"
-#include "Core/SceneObject.h"
+#include "Core/Scene/EditableObject.h"
 
 
 namespace Engine
 {
 	template<int dimension>
-	class Transform : public SceneObject
+	class Transform : public EditableObject
 	{
 	public:
 		Transform() 
@@ -125,7 +125,8 @@ namespace Engine
 		Vec<dimension> mRotation;
 		Vec<dimension> mScale;
 
-		inline void OnRightPanel() override
+		//inline void OnRightPanel() override
+		inline void OnUiRender() override
 		{
 			if (ImGui::CollapsingHeader(ApplyID("Transform"), ImGuiTreeNodeFlags_DefaultOpen))
 			{

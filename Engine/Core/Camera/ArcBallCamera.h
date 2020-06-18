@@ -4,11 +4,11 @@
 
 namespace Engine
 {
-	class Camera : public Camera3D
+	class ArcBallCamera : public Camera3D
 	{
 	public:
-		Camera();
-		virtual ~Camera();
+		ArcBallCamera();
+		virtual ~ArcBallCamera();
 
 		void OnUpdate(const double& delta) override;
 		void OnEvent(Event& event) override;

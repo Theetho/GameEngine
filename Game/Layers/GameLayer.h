@@ -14,7 +14,6 @@ public:
 private:
 	void OnGui() override;
 
-	Engine::Scene mScene;
 	Engine::Color mClearColor;
 	Engine::Cube mCube;
 };

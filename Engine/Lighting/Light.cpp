@@ -3,13 +3,18 @@
 #include "Renderer/Rendering/Renderer.h"
 #include "Renderer/Rendering/RendererAPI.h"
 #include "API/OpenGL/Shader.h"
+#include "Core/Application.h"
+#include "Core/Scene/Scene.h"
 
 namespace Engine
 {
 	Light::Light(const Color& color)
 		: mColor(color)
 		, mActive(true)
-	{}
+	{
+		if (Application::Get())
+			Application::Get()->GetScene().Remove((SceneObject*)this);
+	}
 
 	Light::~Light()
 	{}
@@ -59,38 +64,5 @@ namespace Engine
 		shader->Bind();
 		shader->UploadUniform("uLights[" + std::to_string(index) + "].id", 0);
 		shader->UploadUniform("uLights[" + std::to_string(index) + "].color", 0);
-	}
-
-	void Light::OnRightPanel()
-	{
-		ImGui::Checkbox(ApplyID("Active"), &mActive);
-		ImGui::Text("Color");
-		ImGui::ColorEdit3(ApplyID("##Color"), (float*)&mColor);
-		ImGui::Text("Min diffuse factor");
-		ImGui::SliderFloat(ApplyID("##DiffuseFactor"), &mMinDiffuseFactor, 0.0f, 1.0f);
-		ImGui::Separator();
-
-		std::unordered_map<int, const char*> items = {
-			{(int)LightID::Directional, "Directional"},
-			{(int)LightID::Point, "Point" },
-			{(int)LightID::Spot, "Spot" }
-		};
-
-		const char* item_current = items[this->GetID()];
-		if (ImGui::BeginCombo(ApplyID(""), item_current))
-		{
-			for (auto& item : items)
-			{
-				bool is_selected = (item_current == item.second);
-				if (ImGui::Selectable(item.second, is_selected))
-				{
-					item_current = item.second;
-					mRequestedType = item.first;
-				}
-				if (is_selected)
-					ImGui::SetItemDefaultFocus();
-			}
-			ImGui::EndCombo();
-		}
 	}
 }

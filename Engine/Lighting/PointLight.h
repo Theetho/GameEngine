@@ -53,7 +53,17 @@ namespace Engine
 		Attenuation mAttenuation;
 	protected:
 		void LoadGLUniforms(Ref<OpenGL::Shader> shader, unsigned int index) override;
-		virtual void OnLeftPanel(SceneObject* caller = nullptr, std::string label = "") override;
-		virtual void OnRightPanel() override;
+		inline virtual void OnUiSelected() override
+		{
+			Light::OnUiSelected();
+			ImGui::Separator();
+			ImGui::Text("Attenuation");
+			ImGui::SliderFloat(ApplyID("Quadratic"), &mAttenuation.quadratic, 0.0f, 10.0f);
+			ImGui::SliderFloat(ApplyID("Linear"), &mAttenuation.linear, 0.0f, 10.0f);
+			ImGui::SliderFloat(ApplyID("Constant"), &mAttenuation.constant, 0.0f, 10.0f);
+			ImGui::Separator();
+			ImGui::Text("Position");
+			ImGui::DragFloat3(ApplyID("##Position"), (float*)&mPosition);
+		}
 	};
 }

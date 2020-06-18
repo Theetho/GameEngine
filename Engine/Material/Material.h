@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/SceneObject.h"
+#include "Core/Scene/EditableObject.h"
 
 namespace Engine
 {
@@ -10,7 +10,7 @@ namespace Engine
 		class Shader;
 	}
 
-	class Material : public SceneObject
+	class Material : public EditableObject
 	{
 	public:
 		void Load(Ref<Shader> shader);

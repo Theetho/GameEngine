@@ -27,7 +27,7 @@ namespace Engine
 		int GetID() const override;
 
 		void LoadGLUniforms(Ref<OpenGL::Shader> shader) override;
-		inline void OnRightPanel() override
+		inline void OnUiRender() override
 		{
 			ImGui::Text("Nothing for now");
 		}

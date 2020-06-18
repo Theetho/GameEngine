@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Renderer/Rendering/Renderable.h"
-#include "Core/SceneObject.h"
+#include "Core/Scene/EditableObject.h"
 #include "assimp/scene.h"
 
 namespace Engine
@@ -11,7 +11,7 @@ namespace Engine
 	
 	class Texture2D;
 
-	class Model : public Renderable, public SceneObject
+	class Model : public Renderable, public EditableObject
 	{
 	public:
 		Model(const std::string& file_path, const std::string& name, bool use_folder_path);
@@ -53,12 +53,7 @@ namespace Engine
 
 		void Render(Ref<RenderCommand> render_command, Ref<Shader> shader) const override;
 
-		inline void OnLeftPanel(SceneObject* caller = nullptr, std::string label = "") override
-		{
-			SceneObject::OnLeftPanel(this, "Model");
-		}
-
-		void OnRightPanel() override;
+		void OnUiRender() override;
 	};
 }
 

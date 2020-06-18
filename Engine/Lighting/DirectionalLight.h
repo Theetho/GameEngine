@@ -18,7 +18,12 @@ namespace Engine
 		Vec3 mDirection;
 
 		void LoadGLUniforms(Ref<OpenGL::Shader> shader, unsigned int index) override;
-		virtual void OnLeftPanel(SceneObject* caller = nullptr, std::string label = "") override;
-		virtual void OnRightPanel() override;
+		inline void OnUiSelected() override
+		{
+			Light::OnUiSelected();
+			ImGui::Separator();
+			ImGui::Text("Direction");
+			ImGui::DragFloat3(ApplyID("##Direction"), (float*)&mDirection, 0.1f, -1.0f, 1.0f);
+		}
 	};
 }

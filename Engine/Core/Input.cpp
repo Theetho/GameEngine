@@ -70,7 +70,7 @@ namespace Engine
 	bool InputWindows::IsKeyPressedImplementation(int keycode) const
 	{
 		auto window = static_cast<GLFWwindow*>(
-			Application::Get().GetWindow().GetOSWindow()
+			Application::Get()->GetWindow().GetOSWindow()
 		);
 		int key_state = glfwGetKey(window, keycode);
 		
@@ -80,7 +80,7 @@ namespace Engine
 	bool InputWindows::IsMouseButtonPressedImplementation(int button) const
 	{
 		auto window = static_cast<GLFWwindow*>(
-			Application::Get().GetWindow().GetOSWindow()
+			Application::Get()->GetWindow().GetOSWindow()
 		);
 		int button_state = glfwGetMouseButton(window, button);
 
@@ -92,7 +92,7 @@ namespace Engine
 		mCursor = !mCursor;
 
 		auto window = static_cast<GLFWwindow*>(
-			Application::Get().GetWindow().GetOSWindow()
+			Application::Get()->GetWindow().GetOSWindow()
 		);
 		mCursor
 		?
@@ -105,7 +105,7 @@ namespace Engine
 	void InputWindows::UpdateMouseImplementation()
 	{
 		auto window = static_cast<GLFWwindow*>(
-			Application::Get().GetWindow().GetOSWindow()
+			Application::Get()->GetWindow().GetOSWindow()
 		);
 		double x, y;
 		glfwGetCursorPos(window, &x, &y);

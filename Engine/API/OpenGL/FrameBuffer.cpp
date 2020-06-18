@@ -44,7 +44,7 @@ namespace Engine
 			else
 			{
 				glBindFramebuffer(GL_FRAMEBUFFER, 0);
-				glViewport(0, 0, Application::Get().GetWindow().GetWidth(), Application::Get().GetWindow().GetHeight());
+				glViewport(0, 0, Application::Get()->GetWindow().GetWidth(), Application::Get()->GetWindow().GetHeight());
 			}
 		}
 
