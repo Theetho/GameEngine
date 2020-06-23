@@ -62,17 +62,21 @@ namespace Engine
 			return mTransform;
 		}
 
-		template<typename T>
-		void AddComponent(Ref<Component<dimension>> component)
+		template<typename T, typename ... Args>
+		Ref<T> AddComponent(Args&& ... args)
 		{
 			static_assert(std::is_base_of<Component<dimension>, T>::value, "T is not a component");
 
 			auto* type = &typeid(T);
 
+			Ref<Component<dimension>> component = std::make_shared<T>(*this, std::forward<Args>(args)...);
+
 			if (mComponents.find(*type) == mComponents.end())
 			{
 				mComponents[*type] = component;
 			}
+
+			return std::dynamic_pointer_cast<T>(component);
 		}
 		template<typename T>
 		void RemoveComponent()

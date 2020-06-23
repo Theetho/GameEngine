@@ -9,7 +9,7 @@ namespace Engine
 		class Shader : public Engine::Shader
 		{
 		public:
-			Shader(const std::string& file_path, const std::string& name, bool use_folder_path);
+			Shader(const std::string& file_path);
 			virtual ~Shader();
 
 			void Bind() const;
@@ -26,11 +26,11 @@ namespace Engine
 			unsigned int mId;
 			std::unordered_map<std::string, int> mUniformLocations;
 
-			int			 GetUniformLocation(const std::string& name);
-			void		 RetrieveAllUniformLocation();
-			void		 AddUniformLocation(const std::string& name);
-			void		 Link(const std::vector<unsigned int>& ids);
-			unsigned int Compile(const std::string& source_file, GLenum shader_type);
+			int	 GetUniformLocation(const std::string& name);
+			void RetrieveAllUniformLocation();
+			void AddUniformLocation(const std::string& name);
+			void Link(const std::vector<unsigned int>& ids);
+			uint Compile(const std::string& source_file, GLenum shader_type);
 			
 			std::unordered_map<GLenum, std::string> ReadFile(const std::string& file_path) override;
 		};

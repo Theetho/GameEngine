@@ -9,7 +9,7 @@ namespace Engine
 		class CubeMap : public Engine::CubeMap
 		{
 		public:
-			CubeMap(const std::string& folder_path, const std::string& name, bool use_folder_path);
+			CubeMap(const std::string& folder_path);
 			~CubeMap();
 
 			void Bind(unsigned int slot = 0) const override;

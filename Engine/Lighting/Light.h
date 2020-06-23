@@ -55,7 +55,7 @@ namespace Engine
 	private:
 		Color mColor;
 		bool mActive;
-		float mMinDiffuseFactor = 0.1f;
+		float mMinDiffuseFactor = 0.3f;
 	protected:
 		virtual void LoadGLUniforms(Ref<OpenGL::Shader> shader, unsigned int index);
 		virtual void UnloadGLUniforms(Ref<OpenGL::Shader> shader, unsigned int index);
@@ -64,7 +64,7 @@ namespace Engine
 			ImGui::Checkbox(ApplyID("Active"), &mActive);
 			ImGui::Text("Color");
 			ImGui::ColorEdit3(ApplyID("##Color"), (float*)&mColor);
-			ImGui::Text("Min diffuse factor");
+			ImGui::Text("Diffuse factor");
 			ImGui::SliderFloat(ApplyID("##DiffuseFactor"), &mMinDiffuseFactor, 0.0f, 1.0f);
 			ImGui::Separator();
 

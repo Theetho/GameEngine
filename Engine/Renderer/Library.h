@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Model/Model.h"
+#include "Model/Mesh.h"
 #include "Renderer/Shader.h"
 #include "Renderer/Texture/Texture2D.h"
 
@@ -15,7 +15,7 @@ namespace Engine
 		inline virtual ~Library()
 		{}
 
-		inline void   Add(const Ref<T>& t)
+		inline void Add(const Ref<T>& t)
 		{
 			if (!Exists(t->GetName()))
 				mReferences[t->GetName()] = t;
@@ -27,7 +27,7 @@ namespace Engine
 
 			if (!Exists(name))
 			{
-				mReferences[name] = T::Create(file_path, name, use_folder_path);
+				mReferences[name] = T::Create(use_folder_path ? sFolderPath + file_path : file_path);
 			}
 
 			return mReferences[name];
@@ -43,8 +43,11 @@ namespace Engine
 		{
 			return mReferences.find(name) != mReferences.end();
 		}
+
+		static void SetFolder(const std::string& path);
 	private:
 		friend class Scene;
+		static std::string sFolderPath;
 		inline std::unordered_map<std::string, Ref<T>>& GetList()
 		{
 			return mReferences;
@@ -64,8 +67,17 @@ namespace Engine
 		}
 	};
 
+	template<class T>
+	std::string Library<T>::sFolderPath = "";
+
+	template<class T>
+	void Library<T>::SetFolder(const std::string& path)
+	{
+		sFolderPath = path;
+	}
+
 	typedef Library<Shader> ShaderLibrary;
 	typedef Library<Texture2D> Texture2DLibrary;
-	typedef Library<Model> ModelLibrary;
+	typedef Library<Mesh> MeshLibrary;
 }
 

@@ -5,6 +5,7 @@
 #include "assimp/Importer.hpp"
 #include "assimp/postProcess.h"
 #include "Mesh.h"
+#include "Animation/Bone.h"
 #include "Include/Material.h"
 
 namespace Engine
@@ -21,7 +22,12 @@ namespace Engine
 	}
 
 	Model::~Model()
-	{}
+	{
+		for (auto mesh : mMeshes)
+		{
+			delete mesh;
+		}
+	}
 
 	Ref<Model> Model::Create( const std::string& file_path, const std::string& name, bool use_folder_path)
 	{
@@ -45,7 +51,7 @@ namespace Engine
 		return mName;
 	}
 
-	const std::vector<Mesh>& Model::GetMeshes() const
+	const std::vector<Mesh*>& Model::GetMeshes() const
 	{
 		return mMeshes;
 	}
@@ -55,22 +61,22 @@ namespace Engine
 		return mSize;
 	}
 
-	std::vector<Mesh>::iterator Model::begin()
+	std::vector<Mesh*>::iterator Model::begin()
 	{
 		return mMeshes.begin();
 	}
 
-	const std::vector<Mesh>::const_iterator Model::begin() const
+	const std::vector<Mesh*>::const_iterator Model::begin() const
 	{
 		return mMeshes.cbegin();
 	}
 
-	std::vector<Mesh>::iterator Model::end()
+	std::vector<Mesh*>::iterator Model::end()
 	{
 		return mMeshes.end();
 	}
 
-	const std::vector<Mesh>::const_iterator Model::end() const
+	const std::vector<Mesh*>::const_iterator Model::end() const
 	{
 		return mMeshes.cend();
 	}
@@ -79,7 +85,7 @@ namespace Engine
 	{
 		for (auto& mesh : mMeshes)
 		{
-			mesh.SetMaterial(material);
+			mesh->SetMaterial(material);
 		}
 	}
 
@@ -128,7 +134,7 @@ namespace Engine
 		}
 	}
 
-	Mesh Model::ProcessMesh(
+	Mesh* Model::ProcessMesh(
 		aiMesh* mesh,
 		const aiScene* scene
 	)
@@ -136,8 +142,6 @@ namespace Engine
 		std::vector<float> vertices;
 		std::vector<unsigned int> indices;
 		Ref<Material> materials;
-
-		std::cout << mesh->mNumAnimMeshes << " " <<  mesh->mNumBones << std::endl;
 
 		// Process vertices
 		for (unsigned int i = 0; i < mesh->mNumVertices; ++i)
@@ -182,8 +186,9 @@ namespace Engine
 				indices.push_back(face.mIndices[j]);
 			}
 		}
+	
 		// Process material
-		if (mesh->mMaterialIndex > 0)
+		if (scene->HasMaterials())
 		{
 			aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 			
@@ -221,8 +226,19 @@ namespace Engine
 			materials = CreateRef<RawMaterial>();
 		}
 
-		return Mesh(vertices, indices, materials);
+		// Process bones
+		/*if (mesh->HasBones())
+		{
+			for (uint i = 0; i < mesh->mNumBones; ++i)
+			{
+				vertices.push_back(mesh->mBones[i].)
+			}
+			return new AnimatedMesh(vertices, indices, materials);
+		}
+		else*/
+			return new Mesh(vertices, indices, materials);
 	}
+
 	std::vector<Ref<Texture2D>> Model::LoadMaterial(
 		aiMaterial* mat, 
 		const aiTextureType& type,
@@ -234,7 +250,7 @@ namespace Engine
 		{
 			aiString str;
 			mat->GetTexture(type, i, &str);
-			Ref<Texture2D> texture = AssetManager::GetTexture2DLibrary().Load(sFolderPath + mPath + str.C_Str(), str.C_Str() + name, false);
+			Ref<Texture2D> texture = AssetManager::GetTexture2DLibrary().Load(/*sFolderPath + */mPath + str.C_Str(), str.C_Str() + name, false);
 			textures.push_back(texture);
 		}
 
@@ -263,14 +279,14 @@ namespace Engine
 	{
 		for (auto& mesh : mMeshes)
 		{
-			Renderable::Render(&mesh, render_command, shader);
+			Renderable::Render(mesh, render_command, shader);
 		}
 	}
 	void Model::OnUiRender()
 	{
 		for (int i = 0; i < mMeshes.size(); ++i)
 		{
-			EditableObject::Render(&mMeshes[i]);
+			EditableObject::Render(mMeshes[i]);
 		}
 	}
 }

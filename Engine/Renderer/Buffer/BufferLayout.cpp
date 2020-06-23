@@ -3,6 +3,11 @@
 
 namespace Engine
 {
+	BufferLayout::BufferLayout()
+		: mElements()
+		, mStride(0)
+	{}
+	
 	BufferLayout::BufferLayout(
 		const std::initializer_list<BufferElement>& elements
 	)
@@ -48,6 +53,7 @@ namespace Engine
 	void BufferLayout::CalculateOffSetsAndStride()
 	{
 		unsigned int offset = 0;
+		mStride = 0;
 
 		for (auto& element : mElements)
 		{

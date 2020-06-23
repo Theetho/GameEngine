@@ -9,22 +9,22 @@ namespace Engine
 	{
 		class Shader;
 	}
-	class Model;
+	class Mesh;
 	class CubeMap;
 
 	class Skybox : public Renderable
 	{
 	public:
-		Skybox(const std::string& file_path, const std::string& name = "", float size = 1.f, bool use_folder_path = true);
+		Skybox(const std::string& file_path);
 		~Skybox();
 
 		void Load(Ref<Shader> shader);
 		void Bind(unsigned int slot = 0) const;
 
-		Ref<Model> GetModel() const;
+		Ref<Mesh> GetMesh() const;
 	private:
 		Ref<CubeMap> mCubeMap;
-		Ref<Model>	 mModel;
+		Ref<Mesh>	 mMesh;
 
 		void LoadOpenGL(Ref<OpenGL::Shader> shader);
 

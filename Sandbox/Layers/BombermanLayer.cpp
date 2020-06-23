@@ -4,7 +4,7 @@
 using namespace Engine;
 
 BombermanLayer::BombermanLayer()
-	: mSkybox("Skyboxes/Day")
+	: mSkybox("../Sandbox/Assets/Textures/Skyboxes/Day")
 	, mTerrain(Vec2(-0.5f, -0.5f), "Heightmaps/generated_height_map.png", Vec2(200))
 	, mLake(Vec3(-100.0f, 0.45f * 5.0f + 2.0f, -100.0f), Vec2(200))
 {}
@@ -25,7 +25,6 @@ void BombermanLayer::OnAttach()
 	(void)AssetManager::GetShaderLibrary().Load("water.glsl");
 
 	Application::Get()->GetScene().AddLight(CreateRef<DirectionalLight>(Vec3(0.4, -0.5f, 0.0f)));
-	Application::Get()->GetScene().AddLight(CreateRef<PointLight>(Vec3(-1.0, 1.0, 0.0)));
 
 	RenderCommand::SetClearColor(mClearColor);
 }

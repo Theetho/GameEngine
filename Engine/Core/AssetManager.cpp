@@ -5,7 +5,7 @@ namespace Engine
 {
 	ShaderLibrary	 AssetManager::sShaderLibrary;
 	Texture2DLibrary AssetManager::sTexture2DLibrary;
-	ModelLibrary	 AssetManager::sModelLibrary;
+	MeshLibrary		 AssetManager::sMeshLibrary;
 
 	ShaderLibrary& AssetManager::GetShaderLibrary()
 	{
@@ -17,8 +17,8 @@ namespace Engine
 		return sTexture2DLibrary;
 	}
 	
-	ModelLibrary& AssetManager::GetModelLibrary()
+	MeshLibrary& AssetManager::GetMeshLibrary()
 	{
-		return sModelLibrary;
+		return sMeshLibrary;
 	}
 }

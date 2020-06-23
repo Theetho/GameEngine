@@ -4,13 +4,13 @@
 #include "Core/AssetManager.h"
 #include "Renderer/Texture/CubeMap.h"
 #include "API/OpenGL/Shader.h"
-#include "Model/Model.h"
+#include "Model/Mesh.h"
 
 namespace Engine
 {
-	Skybox::Skybox(const std::string& file_path, const std::string& name, float size, bool use_folder_path)
-		: mCubeMap(CubeMap::Create(file_path, name, use_folder_path))
-		, mModel(AssetManager::GetModelLibrary().Load("cube/cube.obj"))
+	Skybox::Skybox(const std::string& file_path)
+		: mCubeMap(CubeMap::Create(file_path))
+		, mMesh(AssetManager::GetMeshLibrary().Load("cube/cube.obj"))
 	{}
 
 	Skybox::~Skybox()
@@ -32,9 +32,9 @@ namespace Engine
 		mCubeMap->Bind(slot);
 	}
 
-	Ref<Model> Skybox::GetModel() const
+	Ref<Mesh> Skybox::GetMesh() const
 	{
-		return mModel;
+		return mMesh;
 	}
 
 	void Skybox::LoadOpenGL(Ref<OpenGL::Shader> shader)
@@ -51,7 +51,7 @@ namespace Engine
 			glDepthFunc(GL_LEQUAL);
 		}
 
-		Renderable::Render(mModel, render_command, shader);
+		Renderable::Render(mMesh, render_command, shader);
 
 		if (render_command->GetAPI() == API::OpenGL)
 		{

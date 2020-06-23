@@ -8,18 +8,16 @@
 
 namespace Engine
 {
-	Texture2D::Texture2D(const std::string& file_path, const std::string& name, bool use_folder_path)
-		: Texture(file_path, name, use_folder_path)
+	Texture2D::Texture2D(const std::string& file_path)
+		: Texture(file_path)
 		, mWidth(0)
 		, mHeight(0)
 	{
-		std::string path = use_folder_path ? sFolder + file_path : file_path;
-
 		ENGINE_ASSERT(sFolder != "", "No folder for the textures files");
 
 		//stbi_set_flip_vertically_on_load(true);
 
-		mData = stbi_load(path.c_str(), &mWidth, &mHeight, &mChannels, 0);
+		mData = stbi_load(file_path.c_str(), &mWidth, &mHeight, &mChannels, 0);
 
 		if (!mData)
 		{
@@ -36,17 +34,18 @@ namespace Engine
 
 	Texture2D::~Texture2D()
 	{
-		//stbi_image_free(mData);
+		if (mData)
+			stbi_image_free(mData);
 	}
 
-	Ref<Texture2D> Texture2D::Create(const std::string& file_path, const std::string& name, bool use_folder_path)
+	Ref<Texture2D> Texture2D::Create(const std::string& file_path)
 	{
 		switch (Renderer::GetAPI())
 		{
 		case Engine::API::None:
 			ENGINE_ASSERT(false, "Api not supported");
 		case Engine::API::OpenGL:
-			return CreateRef<OpenGL::Texture2D>(file_path, name, use_folder_path);
+			return CreateRef<OpenGL::Texture2D>(file_path);
 		}
 	}
 

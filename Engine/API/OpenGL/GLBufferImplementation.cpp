@@ -36,9 +36,7 @@ namespace Engine
 		inline void Buffer<type, T>::GLSetData(std::vector<T> data)
 		{
 			glBindBuffer(type, mId);
-			//glMapBuffer(type, GL_WRITE_ONLY);
 			glBufferSubData(type, 0, sizeof(T) * data.size(), data.data());
-			//glUnmapBuffer(type);
 			glBindBuffer(type, 0);
 		}
 

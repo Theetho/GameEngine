@@ -70,6 +70,22 @@ namespace Engine
 		unsigned int   size;
 		bool		   normalized;
 
+		inline bool IsIntBased() const
+		{
+			return type == ShaderDataType::Int  ||
+				   type == ShaderDataType::Int2 ||
+				   type == ShaderDataType::Int3 ||
+				   type == ShaderDataType::Int4;
+		}
+
+		inline bool IsFloatBased() const
+		{
+			return type == ShaderDataType::Float ||
+				type == ShaderDataType::Float2 ||
+				type == ShaderDataType::Float3 ||
+				type == ShaderDataType::Float4;
+		}
+
 		BufferElement(
 			const ShaderDataType& type = ShaderDataType::None,
 			const std::string& name = "",
@@ -109,11 +125,18 @@ namespace Engine
 	class BufferLayout
 	{
 	public:
+		BufferLayout();
 		BufferLayout(const std::initializer_list<BufferElement>& elements);
 		~BufferLayout();
 
 		const std::vector<BufferElement>& GetElements() const;
 		unsigned int GetStride() const;
+
+		inline void AddElement(const BufferElement& element)
+		{
+			mElements.push_back(element);
+			CalculateOffSetsAndStride();
+		}
 
 		std::vector<BufferElement>::iterator begin();
 		std::vector<BufferElement>::iterator end();

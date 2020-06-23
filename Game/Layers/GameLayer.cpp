@@ -13,12 +13,27 @@ GameLayer::~GameLayer()
 
 void GameLayer::OnAttach()
 {
+	mCube.LoadMesh("../Engine/Assets/Models/Bob/boblampclean.md5mesh");
+	auto animator = mCube.AddComponent<Animator>(mCube.GetMesh());
+	animator->SetCurrentAnimation(0);
 	mCube.GetTransform().SetPosition(Vec3(0.f));
 	mCube.GetTransform().SetRotation('x', -90.0f);
+	mCube.GetTransform().SetScale(0.2f);
 
-	auto shader = AssetManager::GetShaderLibrary().Load("../Engine/Assets/Shaders/lights_materials.glsl", "shader", false);
+	mCube2.LoadMesh("../Engine/Assets/Models/THM/model.dae");
+	(void)mCube2.AddComponent<Animator>(mCube2.GetMesh());
+	mCube2.GetTransform().SetPosition(Vec3(0.f, 0.f, 5.0f));
+	mCube2.GetTransform().SetRotation('x', -90.0f);
 
-	Application::Get()->GetScene().AddLight(CreateRef<DirectionalLight>(Vec3(1.0, -1.0, 0.0), Color(0.3f)));
+	mCube3.LoadMesh("../Engine/Assets/Models/Character/model.dae");
+	mCube3.GetTransform().SetPosition(Vec3(5.f, 0.f, 0.f));
+	mCube3.GetTransform().SetRotation('x', -90.0f);
+	mCube3.GetTransform().SetScale(2.0f);
+
+	(void)AssetManager::GetShaderLibrary().Load("../Engine/Assets/Shaders/lights_materials.glsl", "shader", false);
+	(void)AssetManager::GetShaderLibrary().Load("../Engine/Assets/Shaders/lights_PBR.glsl", "PBR", false);
+
+	Application::Get()->GetScene().AddLight(CreateRef<DirectionalLight>(Vec3(1.0, -1.0, 0.0)));
 
 	RenderCommand::SetClearColor(mClearColor);
 }
@@ -29,13 +44,19 @@ void GameLayer::OnDetach()
 void GameLayer::OnUpdate(Ref<Camera3D> camera, const double& delta)
 {
 	auto shader = AssetManager::GetShaderLibrary().Get("shader");
+	auto pbr    = AssetManager::GetShaderLibrary().Get("PBR");
 	
 	camera->OnUpdate(delta);
+	mCube.OnUpdate(delta);
+	mCube2.OnUpdate(delta);
+	mCube3.OnUpdate(delta);
 
 	RenderCommand::Clear();
 
 	Renderer::BeginScene(camera);
-	Renderer::Submit(shader, mCube);
+	Renderer::Submit(pbr, mCube);
+	Renderer::Submit(pbr, mCube2);
+	Renderer::Submit(shader, mCube3);
 	
 	Renderer::Render();
 	Renderer::EndScene();

@@ -9,11 +9,11 @@ namespace Engine
 	public:
 		static ShaderLibrary&    GetShaderLibrary();
 		static Texture2DLibrary& GetTexture2DLibrary();
-		static ModelLibrary&	 GetModelLibrary();
+		static MeshLibrary&	     GetMeshLibrary();
 	private:
-		static ShaderLibrary sShaderLibrary;
+		static ShaderLibrary	sShaderLibrary;
 		static Texture2DLibrary sTexture2DLibrary;
-		static ModelLibrary sModelLibrary;
+		static MeshLibrary		sMeshLibrary;
 	};
 }
 

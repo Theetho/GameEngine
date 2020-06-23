@@ -2,6 +2,7 @@
 #include "Water.h"
 #include "Core/Application.h"
 #include "Core/Window.h"
+#include "Core/AssetManager.h"
 #include "Renderer/Buffer.h"
 #include "Renderer/Rendering.h"
 #include "API/OpenGL/Shader.h"
@@ -33,8 +34,8 @@ namespace Engine
 		mReflection->CreateTextureAttachment();
 		mReflection->CreateRenderBuffer();
 
-		mDUDVMap = Texture2D::Create("Water/newdudvmap.png", "water_dudv");
-		mNormalMap = Texture2D::Create("Water/newnormalmap.png", "water_normal");
+		mDUDVMap   = AssetManager::GetTexture2DLibrary().Load("Water/newdudvmap.png", "water_dudv");
+		mNormalMap = AssetManager::GetTexture2DLibrary().Load("Water/newnormalmap.png", "water_normal");
 	}
 
 	Water::~Water()

@@ -5,9 +5,9 @@
 GameApplication::GameApplication()
 	: Application()
 {
-	Engine::Shader::SetFolder("./Assets/Shaders/");
-	Engine::Texture::SetFolder("./Assets/Textures/");
-	Engine::Model::SetFolder("./Assets/Models/");
+	Engine::AssetManager::GetShaderLibrary().SetFolder("./Assets/Shaders/");
+	Engine::AssetManager::GetTexture2DLibrary().SetFolder("./Assets/Textures/");
+	Engine::AssetManager::GetMeshLibrary().SetFolder("./Assets/Models/");
 	this->GetWindow().Maximise();
 
 	this->PushLayer(new GameLayer());

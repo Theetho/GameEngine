@@ -4,21 +4,41 @@
 layout(location = 0) in vec3 inPosition;
 layout(location = 1) in vec2 inTextureCoords;
 layout(location = 2) in vec3 inNormal;
+layout(location = 3) in vec4 inBonesID;
+layout(location = 4) in vec4 inWeights;
 
 out vec2 vTextureCoords;
 out vec3 vNormal;
 out vec3 vFragmentPosition;
 
+const int MAX_BONES = 100;
+
 uniform mat4 uViewProjection;
 uniform mat4 uModel;
 uniform vec4 uClipingPlane;
+uniform mat4 uBones[MAX_BONES];
 
 void main()
 {
+	mat4 BoneTransform = mat4(0.0f);
+
+	BoneTransform = uBones[int(inBonesID[0])] * inWeights[0];
+	BoneTransform	  += uBones[int(inBonesID[1])] * inWeights[1];
+	BoneTransform	  += uBones[int(inBonesID[2])] * inWeights[2];
+	BoneTransform	  += uBones[int(inBonesID[3])] * inWeights[3];
+	
+	// No bones or no animation linked
+	if (BoneTransform == mat4(0.0f))
+		BoneTransform = mat4(1.0f);
+
+	vec4 actualPosition = BoneTransform * vec4(inPosition, 1.0);
+	vec3 actualNormal   = (BoneTransform * vec4(inNormal, 1.0)).xyz;
+
 	vTextureCoords = inTextureCoords;
-	vNormal = (uModel * vec4(inNormal, 0.0)).xyz;
-	vFragmentPosition = vec3(uModel * vec4(inPosition, 1.0));
-	vec4 world_position = uModel * vec4(inPosition, 1.0);
+	vNormal = (uModel * vec4(actualNormal, 0.0)).xyz;
+	vFragmentPosition = vec3(uModel * actualPosition);
+
+	vec4 world_position = uModel * actualPosition;
 
 	gl_ClipDistance[0] = dot(world_position, uClipingPlane);
 	gl_Position = uViewProjection * world_position;

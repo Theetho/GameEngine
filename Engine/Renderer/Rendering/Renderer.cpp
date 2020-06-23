@@ -52,22 +52,21 @@ namespace Engine
 
 		if (sRenderCommand->GetAPI() == API::OpenGL)
 		{
-			auto& open_gl_shader = std::dynamic_pointer_cast<Engine::OpenGL::Shader>(shader);
-			open_gl_shader->UploadUniform("uCameraPosition", (sSceneData.camera_position));
-			open_gl_shader->UploadUniform("uViewProjection", (sSceneData.view_projection));
+			shader->UploadUniform("uCameraPosition", (sSceneData.camera_position));
+			shader->UploadUniform("uViewProjection", (sSceneData.view_projection));
 			if (clip)
-				open_gl_shader->UploadUniform("uClipingPlane", (sSceneData.cliping_plane));
+				shader->UploadUniform("uClipingPlane", (sSceneData.cliping_plane));
 		}
 	}
 
 	void Renderer::Render(bool clip)
 	{
-		for (auto iterator : sBatch)
+		for (auto& iterator : sBatch)
 		{
 			sShader = iterator.first;
 			PrepareShader(sShader, clip);
 
-			for (auto renderable : iterator.second)
+			for (auto& renderable : iterator.second)
 			{
 				renderable->Render(sRenderCommand, sShader);
 			}
@@ -76,12 +75,12 @@ namespace Engine
 
 	void Renderer::Render()
 	{
-		for (auto iterator : sBatch)
+		for (auto& iterator : sBatch)
 		{
 			sShader = iterator.first;
 			PrepareShader(sShader);
 
-			for (auto renderable : iterator.second)
+			for (auto& renderable : iterator.second)
 			{
 				renderable->Render(sRenderCommand, sShader);
 			}

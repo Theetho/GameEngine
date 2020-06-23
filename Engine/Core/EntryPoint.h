@@ -10,8 +10,6 @@ namespace Engine
 	{
 		Engine::Log::Initialize();
 		Engine::Input::Create();
-		Engine::Shader::SetFolder("../Engine/Assets/Shaders/");
-		Engine::Texture::SetFolder("../Engine/Assets/Textures/");
 	}
 }
 

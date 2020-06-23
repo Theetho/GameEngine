@@ -230,12 +230,6 @@
     <ClInclude Include="Material\RawMaterial.h">
       <Filter>Material</Filter>
     </ClInclude>
-    <ClInclude Include="Model\Mesh.h">
-      <Filter>Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Model\Model.h">
-      <Filter>Model</Filter>
-    </ClInclude>
     <ClInclude Include="Renderer\Buffer.h">
       <Filter>Renderer</Filter>
     </ClInclude>
@@ -1509,6 +1503,8 @@
     <ClInclude Include="Core\Scene\Scene.h" />
     <ClInclude Include="Core\Scene\SceneObject.h" />
     <ClInclude Include="Core\Scene\EditableObject.h" />
+    <ClInclude Include="Component\Animator.h" />
+    <ClInclude Include="Model\Mesh.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API\OpenGL\Context.cpp">
@@ -1592,12 +1588,6 @@
     </ClCompile>
     <ClCompile Include="Material\RawMaterial.cpp">
       <Filter>Material</Filter>
-    </ClCompile>
-    <ClCompile Include="Model\Mesh.cpp">
-      <Filter>Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Model\Model.cpp">
-      <Filter>Model</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Buffer\BufferLayout.cpp">
       <Filter>Renderer\Buffer</Filter>
@@ -1733,6 +1723,8 @@
     <ClCompile Include="Core\Scene\SceneObject.cpp" />
     <ClCompile Include="Core\Scene\Scene.cpp" />
     <ClCompile Include="Core\Scene\EditableObject.cpp" />
+    <ClCompile Include="Component\Animator.cpp" />
+    <ClCompile Include="Model\Mesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Vendor\ImGui\LICENSE.txt">

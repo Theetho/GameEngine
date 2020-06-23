@@ -3,7 +3,7 @@
 namespace Engine
 {
 	class Camera3D;
-	
+
 	class Matrix
 	{
 	public:
@@ -13,4 +13,5 @@ namespace Engine
 		/*static Mat4 View(const Camera2D& camera);*/
 		static Mat4 Projection(double field_of_view = 70.0, double aspect_ratio = 16.0 / 9.0, double _near = 0.4, double _far = 1000.0);
 	};
+
 }

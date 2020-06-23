@@ -5,8 +5,8 @@ namespace Engine
 {
 	namespace OpenGL
 	{
-		Texture2D::Texture2D(const std::string& file_path, const std::string& name, bool use_folder_path)
-			: Engine::Texture2D(file_path, name, use_folder_path)
+		Texture2D::Texture2D(const std::string& file_path)
+			: Engine::Texture2D(file_path)
 			, mId(0)
 		{
 			GLenum internal_format = 0, format = 0;

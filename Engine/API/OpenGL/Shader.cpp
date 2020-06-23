@@ -5,12 +5,12 @@ namespace Engine
 {
 	namespace OpenGL
 	{
-		Shader::Shader(const std::string& file_path, const std::string& name, bool use_folder_path)
-			: Engine::Shader(file_path, name, use_folder_path)
+		Shader::Shader(const std::string& file_path)
+			: Engine::Shader(file_path)
 			, mId(0)
 		{
 			// Retrieve the source code of every shaders
-			auto shader_sources = use_folder_path ? ReadFile(sFolderPath + file_path) : ReadFile(file_path);
+			auto shader_sources = ReadFile(file_path);
 
 			std::vector<unsigned int> ids;
 

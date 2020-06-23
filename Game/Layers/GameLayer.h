@@ -16,5 +16,7 @@ private:
 
 	Engine::Color mClearColor;
 	Engine::Cube mCube;
+	Engine::Cube mCube2;
+	Engine::Cube mCube3;
 };
 

@@ -1,7 +1,6 @@
 #include "EnginePch.h"
 #include "Terrain.h"
-//#include "Component/Collider/TerrainCollider.h"
-#include "Renderer/Texture/Texture2D.h"
+#include "Core/AssetManager.h"
 #include "Renderer/Buffer.h"
 #include "Renderer/Rendering/RenderCommand.h"
 #include "Renderer/Rendering/RendererAPI.h"
@@ -12,30 +11,22 @@ namespace Engine
 	const const std::map<const char*, Terrain::Biome> Terrain::sBiome{
 		{ "Deep_Water", Biome(0.30f, 4.00f, Color(10 , 75 , 120))},
 		{ "Water",		Biome(0.45f, 5.00f, Color(15 , 100, 190))},
-		//{ "Deep_Water", Biome(0.30f, 4.00f, Color(170, 125, 50 ))},
-		//{ "Water",		Biome(0.45f, 5.00f, Color(200 ,160, 80 ))},
 		{ "Sand",		Biome(0.50f, 10.0f, Color(250, 245, 170))},
 		{ "Grass_1",	Biome(0.65f, 12.0f, Color(100, 200, 0  ))},
 		{ "Grass_2",	Biome(1.00f, 14.0f, Color(75 , 150, 0  ))},
 	};
 
 	Terrain::Terrain(const Vec2& grid_position, const char* height_map_path, const Vec2& dimension)
-		: /*GameObject<3>(Transform3D(Vec3(grid_position.x * dimension.x, 0.f, grid_position.y * dimension.y), Vec3(0.0f), Vec3(1.0f)))
-		,*/ mDimension(dimension)
+		: mDimension(dimension)
 		, mResolution(100.0f, 100.0f)
 	{
 		mTransform.SetPosition(Vec3(grid_position.x * dimension.x, 0.f, grid_position.y * dimension.y));
-		mHeightMap = Texture2D::Create(height_map_path);
-		//mHeightMap = Texture2D::Create("Heightmaps/3279_8_2_0.5_0.758.png");
+		mHeightMap = AssetManager::GetTexture2DLibrary().Load(height_map_path, "terrain-height-map");
 
 		if (mHeightMap)
 			mResolution = Vec2(mHeightMap->GetWidth(), mHeightMap->GetHeight());
 
-		//mTexture = Texture2D::Create("lawn.png");
-
 		GenerateTerrain();
-
-		//AddComponent<TerrainCollider>(CreateRef<TerrainCollider>(*this, mTransform.GetPosition()));
 	}
 
 	Terrain::~Terrain()

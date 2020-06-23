@@ -8,6 +8,7 @@ namespace Engine
 {
 	class Mesh;
 	class Material;
+	class Bone;
 	
 	class Texture2D;
 
@@ -23,20 +24,21 @@ namespace Engine
 		virtual void SetName(const std::string& name);
 
 		virtual const std::string& GetName() const;
-		virtual const std::vector<Mesh>& GetMeshes() const;
+		virtual const std::vector<Mesh*>& GetMeshes() const;
 		virtual const Vec3& GetSize() const;
 
 		void SetMaterial(Ref<Material> material);
 
-		std::vector<Mesh>::iterator begin();
-		const std::vector<Mesh>::const_iterator begin() const;
-		std::vector<Mesh>::iterator end();
-		const std::vector<Mesh>::const_iterator end() const;
+		std::vector<Mesh*>::iterator begin();
+		const std::vector<Mesh*>::const_iterator begin() const;
+		std::vector<Mesh*>::iterator end();
+		const std::vector<Mesh*>::const_iterator end() const;
 	protected:
 		static std::string sFolderPath;
 		std::string mPath;
 		std::string mName;
-		std::vector<Mesh> mMeshes;
+		std::vector<Mesh*> mMeshes;
+		Bone* mRootBone = nullptr;
 		Vec3 mSize;
 		struct Dimension
 		{
@@ -47,7 +49,7 @@ namespace Engine
 		
 		void LoadModel(const std::string& file_path, bool use_folder_path);
 		void ProcessNode(aiNode* node, const aiScene* scene);
-		Mesh ProcessMesh(aiMesh* mesh, const aiScene* scene);
+		Mesh* ProcessMesh(aiMesh* mesh, const aiScene* scene);
 		std::vector<Ref<Texture2D>> LoadMaterial(aiMaterial* mat, const aiTextureType& type, const std::string& name);
 		void UpdateDimensions(const Vec3& vector);
 
