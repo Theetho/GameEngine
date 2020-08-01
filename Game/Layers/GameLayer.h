@@ -15,8 +15,8 @@ private:
 	void OnGui() override;
 
 	Engine::Color mClearColor;
-	Engine::Cube mCube;
-	Engine::Cube mCube2;
-	Engine::Cube mCube3;
+	std::vector<std::shared_ptr<Engine::GameObject<2>>> mObjects;
+	Engine::Camera2D mCamera;
+	Engine::Renderer2D mRenderer;
 };
 

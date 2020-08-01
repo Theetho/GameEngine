@@ -2,6 +2,7 @@
 
 #include "Core/Application.h"
 #include "Core/AssetManager.h"
+#include "Core/Camera/Camera2D.h"
 #include "Core/Camera/Camera3D.h"
 #include "Core/Camera/ArcBallCamera.h"
 #include "Core/Event.h"

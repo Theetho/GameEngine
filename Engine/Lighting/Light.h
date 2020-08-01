@@ -14,8 +14,7 @@ namespace Engine
 	class Light : public SceneObject
 	{
 	public:
-		explicit Light(const Color& color = Color::White);
-		virtual ~Light();
+		CREATOR(Light)
 
 		virtual void Load(Ref<Shader> shader, unsigned int index);
 		virtual void Unload(Ref<Shader> shader, unsigned int index);
@@ -57,6 +56,10 @@ namespace Engine
 		bool mActive;
 		float mMinDiffuseFactor = 0.3f;
 	protected:
+		friend class Scene;
+		explicit Light(const Color& color = Color::White);
+		virtual ~Light();
+
 		virtual void LoadGLUniforms(Ref<OpenGL::Shader> shader, unsigned int index);
 		virtual void UnloadGLUniforms(Ref<OpenGL::Shader> shader, unsigned int index);
 		inline void OnUiSelected() override
@@ -94,5 +97,6 @@ namespace Engine
 		}
 	private:
 		int mRequestedType = (int)LightID::None;
+		void _AddToScene();
 	};
 }

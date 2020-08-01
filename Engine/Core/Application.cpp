@@ -22,14 +22,13 @@ namespace Engine
 		: mLayerStack()
 		, mApplicationCamera(camera)
 		, mEngineCamera(CreateRef<ArcBallCamera>())
-		, mScene(CreateScope<Scene>())
+		, mScene(CreateRef<Scene>())
 	{
-	//	auto cameras_position = Vec3(0, 2, 2);
 		auto cameras_position = Vec3(0, 40, 0);
 
 		if (mApplicationCamera == nullptr) mApplicationCamera = CreateRef<Camera3D>(cameras_position);
 		mScene->Clear();
-		mScene->Push(mApplicationCamera.get());
+		mScene->AddObject(mApplicationCamera);
 
 		mTimeManager.mTime = GetEngineTime;
 
@@ -174,9 +173,9 @@ namespace Engine
 		return *mEngineGUI;
 	}
 
-	Scene& Application::GetScene()
+	Ref<Scene> Application::GetScene()
 	{
-		return *mScene;
+		return mScene;
 	}
 
 	Ref<FrameBuffer> Application::GetBoundFrameBuffer()

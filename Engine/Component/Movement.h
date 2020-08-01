@@ -31,7 +31,7 @@ namespace Engine
 					return;
 			}
 
-			Transform<dimension>& transform = mRigidBody->GetTransform();
+			Ref<Transform<dimension>> transform = mRigidBody->GetTransform();
 			Vec<dimension>& velocity = mRigidBody->GetVelocity();
 			for (uint i = 0; i < velocity.length(); ++i)
 			{
@@ -97,7 +97,7 @@ namespace Engine
 					velocity[2] += mSpeed.current * delta;
 				}
 
-				float theta = glm::radians(mIsReversed ? 180 - transform.GetRotation().y : transform.GetRotation().y);
+				float theta = glm::radians(mIsReversed ? 180 - transform->GetRotation().y : transform->GetRotation().y);
 				float dx = velocity[0] * sin(theta) - velocity[2] * cos(theta);
 				float dz = velocity[0] * cos(theta) + velocity[2] * sin(theta);
 
@@ -119,17 +119,15 @@ namespace Engine
 		// For camera for example;
 		bool mIsReversed;
 		
-		void OnUiRender() override
+		inline void OnUiRender() override
 		{
 			if (ImGui::CollapsingHeader(ApplyID("Movement"), ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 				ImGui::Checkbox(ApplyID("Reversed"), &mIsReversed);
 				ImGui::Text("Velocity");
 				ImGui::DragFloat(ApplyID("Max"), &mSpeed.max, 0.1f, mSpeed.min, std::numeric_limits<float>::max());
 				ImGui::DragFloat(ApplyID("Min"), &mSpeed.min, 0.1f, 0.f, mSpeed.max);
 				ImGui::DragFloat(ApplyID("Angular"), &mSpeed.angular, 0.1f, 0.0f, std::numeric_limits<float>::max());
-				ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
 			}
 		}
 	};

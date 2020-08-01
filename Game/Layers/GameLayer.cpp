@@ -4,38 +4,51 @@
 using namespace Engine;
 
 GameLayer::GameLayer()
-	: mCube()
-	, mClearColor(Color::Aqua)
-{}
+	: mClearColor(Color::Aqua)
+	, mCamera(0.0f, 0.0f, 0.0f, 0.0f)
+{
+	float aspect_ratio = Application::Get()->GetWindow().GetWidth() / Application::Get()->GetWindow().GetHeight();
+	mCamera.SetProjection(-aspect_ratio, aspect_ratio, -1.0f, 1.0f);
+}
 
 GameLayer::~GameLayer()
 {}
 
 void GameLayer::OnAttach()
 {
-	mCube.LoadMesh("../Engine/Assets/Models/Bob/boblampclean.md5mesh");
-	auto animator = mCube.AddComponent<Animator>(mCube.GetMesh());
-	animator->SetCurrentAnimation(0);
-	mCube.GetTransform().SetPosition(Vec3(0.f));
-	mCube.GetTransform().SetRotation('x', -90.0f);
-	mCube.GetTransform().SetScale(0.2f);
-
-	mCube2.LoadMesh("../Engine/Assets/Models/THM/model.dae");
-	(void)mCube2.AddComponent<Animator>(mCube2.GetMesh());
-	mCube2.GetTransform().SetPosition(Vec3(0.f, 0.f, 5.0f));
-	mCube2.GetTransform().SetRotation('x', -90.0f);
-
-	mCube3.LoadMesh("../Engine/Assets/Models/Character/model.dae");
-	mCube3.GetTransform().SetPosition(Vec3(5.f, 0.f, 0.f));
-	mCube3.GetTransform().SetRotation('x', -90.0f);
-	mCube3.GetTransform().SetScale(2.0f);
-
-	(void)AssetManager::GetShaderLibrary().Load("../Engine/Assets/Shaders/lights_materials.glsl", "shader", false);
-	(void)AssetManager::GetShaderLibrary().Load("../Engine/Assets/Shaders/lights_PBR.glsl", "PBR", false);
-
-	Application::Get()->GetScene().AddLight(CreateRef<DirectionalLight>(Vec3(1.0, -1.0, 0.0)));
-
 	RenderCommand::SetClearColor(mClearColor);
+
+	float factor = 8.f;
+	
+	Vec2 quad_size(2.0f / factor, 2.0f / factor);
+	Ref<Texture2D> colors[4] = {
+		AssetManager::GetTexture2DLibrary().Load("../Sandbox/Assets/Textures/Skyboxes/Day/1 - right.jpg", "right", false),
+		AssetManager::GetTexture2DLibrary().Load("../Sandbox/Assets/Textures/Skyboxes/Day/2 - left.jpg", "left", false),
+		AssetManager::GetTexture2DLibrary().Load("../Sandbox/Assets/Textures/Skyboxes/Day/3 - top.jpg", "top", false),
+		AssetManager::GetTexture2DLibrary().Load("../Sandbox/Assets/Textures/Skyboxes/Day/6 - back.jpg", "back", false)
+	};
+	uint i = 0;
+	
+	auto scene = Application::Get()->GetScene();
+
+	for (int x = 0; x < factor; ++x) {
+		for (int y = 0; y < factor; ++y) {
+			auto object = scene->AddObject<GameObject<2>>();// Instanciator::Create<GameObject2D>();//GameObject2D::Create();
+			object->AddComponent<Sprite>(colors[(x + y) % 4]);
+	
+			Vec2 position = (Vec2(x, y) / factor) * 2.0f;
+			
+			auto transform = object->GetComponent<Transform2D>();
+
+			transform->SetPosition(position);
+			transform->SetScale(quad_size);
+			// object->SetShowOnEditor(false);
+	
+			mObjects.push_back(object);
+		}
+	}
+
+	Application::Get()->GetScene()->AddLight<DirectionalLight>(Vec3(1.0));
 }
 
 void GameLayer::OnDetach()
@@ -43,23 +56,15 @@ void GameLayer::OnDetach()
 
 void GameLayer::OnUpdate(Ref<Camera3D> camera, const double& delta)
 {
-	auto shader = AssetManager::GetShaderLibrary().Get("shader");
-	auto pbr    = AssetManager::GetShaderLibrary().Get("PBR");
-	
-	camera->OnUpdate(delta);
-	mCube.OnUpdate(delta);
-	mCube2.OnUpdate(delta);
-	mCube3.OnUpdate(delta);
-
 	RenderCommand::Clear();
+	mRenderer.Begin(mCamera);
 
-	Renderer::BeginScene(camera);
-	Renderer::Submit(pbr, mCube);
-	Renderer::Submit(pbr, mCube2);
-	Renderer::Submit(shader, mCube3);
-	
-	Renderer::Render();
-	Renderer::EndScene();
+	for (auto& object : mObjects) {
+		mRenderer.Submit(object);
+	}
+	// mRenderer.Submit(&mObject);
+
+	mRenderer.End();
 }
 
 void GameLayer::OnEvent(Engine::Event& event)

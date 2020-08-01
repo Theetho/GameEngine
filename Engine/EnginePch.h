@@ -32,6 +32,24 @@
 	#define ENGINE_ASSERT(x, ...)
 	#define APP_ASSERT(x, ...)
 #endif
+#define CREATOR(type) private:\
+friend class std::shared_ptr<type>;\
+public:\
+template<typename ... Args>\
+static inline std::shared_ptr<type> Create(Args&& ... args) {\
+	return std::shared_ptr<type>(new type(std::forward<Args>(args)...));\
+}
+#define CREATOR_NO_ARGS(type) private:\
+friend class std::shared_ptr<type>;\
+public:\
+template<typename ... Args>\
+static inline std::shared_ptr<type> Create(Args&& ... args) {\
+	return std::shared_ptr<type>(new type(std::forward<Args>(args)...));\
+}\
+static inline std::shared_ptr<type> CreateNoArgs() {\
+	return std::shared_ptr<type>(new type());\
+}
+
 
 namespace Engine
 {

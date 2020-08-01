@@ -21,10 +21,10 @@ namespace Engine
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		}
 
-		void Renderer::Draw(const VertexArray& vertex_array)
+		void Renderer::Draw(const VertexArray& vertex_array, uint indice_count)
 		{
-			if (vertex_array.IsIndexed())
-				glDrawElements(TranslateDrawMode(), vertex_array.GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+			if (vertex_array.IsIndexed() || indice_count)
+				glDrawElements(TranslateDrawMode(), indice_count ? indice_count : vertex_array.GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 			else
 				glDrawArrays(TranslateDrawMode(), 0, vertex_array.GetVertexBuffers()[0]->GetCount());
 		}

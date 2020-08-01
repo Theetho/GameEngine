@@ -11,8 +11,10 @@ namespace Engine
 {
 	Scene::Scene()
 	{}
+
 	Scene::~Scene()
-	{}
+	{
+	}
 
 	void Scene::OnUiRender()
 	{
@@ -23,15 +25,15 @@ namespace Engine
 			left_panel.Begin();
 			if (ImGui::TreeNode("Scene"))
 			{
-				for (auto& scene : mSceneObjects)
+				for (auto& object : mSceneObjects)
 				{
-					scene->OnUiRender();
+					EditableObject::Render(object);
 				}
 				if (ImGui::TreeNode("Lights"))
 				{
 					for (auto& light : mLights)
 					{
-						light->OnUiRender();
+						EditableObject::Render(light);
 					}
 					ImGui::TreePop();
 				}
@@ -44,8 +46,10 @@ namespace Engine
 
 	void Scene::UpdateLights()
 	{
+		if (mLights.size() == 0) return;
+
 		int i = 0;
-		for (auto& light : mLights)
+		for (Ref<Light>& light : mLights)
 		{
 			// Switch the current light's type
 			if (light->ShouldChangeType())
@@ -53,18 +57,18 @@ namespace Engine
 				switch (light->GetRequestedType())
 				{
 					case (int)Light::LightID::Directional:
-						light.reset(new DirectionalLight(Vec3(1.0, -1.0, 0.0)));
+						light = DirectionalLight::Create(Vec3(1.0, -1.0, 0.0));// .reset(new DirectionalLight(Vec3(1.0, -1.0, 0.0)));
 						break;
 					case (int)Light::LightID::Point:
-						light.reset(new PointLight(Vec3(-1.0, 1.0, 0.0)));
+						light = PointLight::Create(Vec3(-1.0, 1.0, 0.0));
 						break;
 					case (int)Light::LightID::Spot:
-						light.reset(new SpotLight(Vec3(0.0, 1.0, 0.0), Vec3(0.0, -1.0, 0.0)));
+						light = SpotLight::Create(Vec3(0.0, 1.0, 0.0), Vec3(0.0, -1.0, 0.0)); // .reset(new SpotLight(Vec3(0.0, 1.0, 0.0), Vec3(0.0, -1.0, 0.0)));
 						break;
 					default: break;
 				}
 				// Reselect the modified light in the inspector
-				((SceneObject*)light.get())->mSelected = true;
+				light->mSelected = true;
 			}
 
 			// Load the light in the shaders

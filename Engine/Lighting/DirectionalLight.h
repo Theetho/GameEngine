@@ -7,7 +7,7 @@ namespace Engine
 	class DirectionalLight : public Light
 	{
 	public:
-		DirectionalLight(const Vec3& direction, const Color& color = Color::White);
+		CREATOR(DirectionalLight)
 		~DirectionalLight();
 
 		virtual int GetID() const override;
@@ -15,6 +15,9 @@ namespace Engine
 
 		void SetDirection(const Vec3& direction);
 	private:
+		friend class Scene;
+		DirectionalLight(const Vec3& direction, const Color& color = Color::White);
+
 		Vec3 mDirection;
 
 		void LoadGLUniforms(Ref<OpenGL::Shader> shader, unsigned int index) override;

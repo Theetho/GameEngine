@@ -17,6 +17,7 @@ namespace Engine
 
 			void UploadUniform(const std::string& uniform_name, int value) override;
 			void UploadUniform(const std::string& uniform_name, float value) override;
+			void UploadUniform(const std::string& uniform_name, int* value, uint count) override;
 			void UploadUniform(const std::string& uniform_name, const Vec2& vector) override;
 			void UploadUniform(const std::string& uniform_name, const Vec3& vector) override;
 			void UploadUniform(const std::string& uniform_name, const Vec4& vector) override;

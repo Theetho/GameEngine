@@ -22,6 +22,7 @@ namespace Engine
 		  *  600	  1.0	   0.007	 0.0002
 		  *  3250	  1.0	   0.0014	 0.000007	  
 		  */
+		CREATOR(PointLight)
 		struct Attenuation
 		{
 			float quadratic;
@@ -38,8 +39,6 @@ namespace Engine
 				, constant(constant)
 			{}
 		};
-
-		PointLight(const Vec3& position, const Attenuation& attenuation = Attenuation(), const Color& color = Color::White);
 		virtual ~PointLight();
 
 		virtual int				   GetID() const override;
@@ -52,6 +51,9 @@ namespace Engine
 		Vec3		mPosition;
 		Attenuation mAttenuation;
 	protected:
+		friend class Scene;
+		PointLight(const Vec3& position, const Attenuation& attenuation = Attenuation(), const Color& color = Color::White);
+
 		void LoadGLUniforms(Ref<OpenGL::Shader> shader, unsigned int index) override;
 		inline virtual void OnUiSelected() override
 		{

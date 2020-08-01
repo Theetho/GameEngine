@@ -24,7 +24,7 @@ void BombermanLayer::OnAttach()
 	(void)AssetManager::GetShaderLibrary().Load("Skybox_Colored.glsl");
 	(void)AssetManager::GetShaderLibrary().Load("water.glsl");
 
-	Application::Get()->GetScene().AddLight(CreateRef<DirectionalLight>(Vec3(0.4, -0.5f, 0.0f)));
+	Application::Get()->GetScene()->AddLight<DirectionalLight>(Vec3(0.4, -0.5f, 0.0f));
 
 	RenderCommand::SetClearColor(mClearColor);
 }

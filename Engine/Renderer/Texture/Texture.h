@@ -5,8 +5,12 @@ namespace Engine
 	class Texture
 	{
 	public:
-		Texture(const std::string& file_path/*, const std::string& name = "", bool use_folder_path = true*/);
+		Texture(const std::string& file_path);
 		virtual ~Texture();
+
+		inline const std::string& GetPath() const {
+			return mPath;
+		}
 
 		virtual void Bind(unsigned int slot = 0) const = 0;  
 		virtual void Unbind() const = 0;
@@ -17,6 +21,7 @@ namespace Engine
 	protected:
 		// Used for internal texture, that are not stored in any library
 		Texture();
+		std::string mPath;
 	};
 }
 

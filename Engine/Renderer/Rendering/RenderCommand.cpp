@@ -31,13 +31,13 @@ namespace Engine
 		sRenderer->Clear();
 	}
 	
-	void RenderCommand::Draw(const VertexArray& vertex_array)
+	void RenderCommand::Draw(const VertexArray& vertex_array, uint indice_count)
 	{
-		sRenderer->Draw(vertex_array);
+		sRenderer->Draw(vertex_array, indice_count);
 	}
 
-	void RenderCommand::Draw(Ref<VertexArray> vertex_array)
+	void RenderCommand::Draw(Ref<VertexArray> vertex_array, uint indice_count)
 	{
-		sRenderer->Draw(*vertex_array);
+		sRenderer->Draw(*vertex_array, indice_count);
 	}
 }

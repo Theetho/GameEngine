@@ -12,11 +12,11 @@ namespace Engine
 	public:
 		RigidBody(GameObject<dimension>& game_object)
 			: Component(game_object)
-			, mTransform(game_object.GetTransform())
+			, mTransform(game_object.GetComponent<Transform<dimension>>())
 			, mVelocity()
 			, mAngularVelocity()
-		{
-		}
+		{}
+
 		~RigidBody()
 		{}
 
@@ -44,19 +44,19 @@ namespace Engine
 		{
 			return mAngularVelocity;
 		}
-		inline Transform<dimension>& GetTransform()
+		inline Ref<Transform<dimension>> GetTransform()
 		{
 			return mTransform;
 		}
-		inline const Transform<dimension>& GetTransform() const
+		inline const Ref<Transform<dimension>> GetTransform() const
 		{
 			return mTransform;
 		}
 	
 		inline void OnUpdate(const double& delta) override
 		{
-			Vec<dimension>& position = mTransform.GetPosition();
-			Vec<dimension>& rotation = mTransform.GetRotation();
+			Vec<dimension>& position = mTransform->GetPosition();
+			Vec<dimension>& rotation = mTransform->GetRotation();
 
 			position += mVelocity;
 			rotation += mAngularVelocity;
@@ -70,17 +70,15 @@ namespace Engine
 		Vec<dimension> mVelocity;
 		Vec<dimension> mAngularVelocity;
 
-		Transform<dimension>& mTransform;
+		Ref<Transform<dimension>> mTransform;
 
-		void OnUiRender() override
+		inline void OnUiRender() override
 		{
 			if (ImGui::CollapsingHeader(ApplyID("Rigidbody"), ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 				ImGui::Checkbox(ApplyID("Gravity"), &mUseGravity);
 				ImGui::Checkbox(ApplyID("Kinematic"), &mIsKinematic);
 				ImGui::DragFloat(ApplyID("Mass"), &mMass, 0.1f, 0.f, std::numeric_limits<float>::max());
-				ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
 			}
 		}
 	};

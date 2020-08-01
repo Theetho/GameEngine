@@ -24,7 +24,6 @@
     <ClInclude Include="Layers\BombermanLayer.h">
       <Filter>Layers</Filter>
     </ClInclude>
-    <ClInclude Include="PatchVertexArray.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Core\SandboxApplication.h" />
   </ItemGroup>
@@ -32,7 +31,6 @@
     <ClCompile Include="Layers\BombermanLayer.cpp">
       <Filter>Layers</Filter>
     </ClCompile>
-    <ClCompile Include="PatchVertexArray.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Core\SandboxApplication.cpp" />
   </ItemGroup>

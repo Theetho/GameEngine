@@ -142,13 +142,11 @@
   <ItemGroup>
     <ClInclude Include="Core\SandboxApplication.h" />
     <ClInclude Include="Layers\BombermanLayer.h" />
-    <ClInclude Include="PatchVertexArray.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\SandboxApplication.cpp" />
     <ClCompile Include="Layers\BombermanLayer.cpp" />
-    <ClCompile Include="PatchVertexArray.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

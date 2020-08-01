@@ -20,7 +20,7 @@ namespace Engine
 		: mDimension(dimension)
 		, mResolution(100.0f, 100.0f)
 	{
-		mTransform.SetPosition(Vec3(grid_position.x * dimension.x, 0.f, grid_position.y * dimension.y));
+		GetComponent<Transform3D>()->SetPosition(Vec3(grid_position.x * dimension.x, 0.f, grid_position.y * dimension.y));
 		mHeightMap = AssetManager::GetTexture2DLibrary().Load(height_map_path, "terrain-height-map");
 
 		if (mHeightMap)
@@ -207,7 +207,7 @@ namespace Engine
 		{
 			auto& open_gl_shader = std::dynamic_pointer_cast<Engine::OpenGL::Shader>(shader);
 
-			open_gl_shader->UploadUniform("uModel", mTransform.GetModel());
+			open_gl_shader->UploadUniform("uModel", GetComponent<Transform3D>()->GetModel());
 		}
 		///////
 		Renderable::Render(mVertexArray, render_command, shader);

@@ -9,15 +9,31 @@ namespace Engine
 {
 	bool* SceneObject::sCurrentlySelected = nullptr;
 
-	SceneObject::SceneObject()
+	SceneObject::SceneObject(bool do_register)
 		: EditableObject()
 	{
-		if (Application::Get())
-			Application::Get()->GetScene().Push(this);
+		/*if (do_register && Application::Get() && Application::Get()->GetScene())
+			Application::Get()->GetScene()->Push(this);*/
 	}
 
 	SceneObject::~SceneObject()
+	{
+	}
+
+	SceneObject::SceneObject(const SceneObject& other)
+		: EditableObject()
+		, mSelected(false)
 	{}
+
+	SceneObject::SceneObject(const SceneObject&& other) noexcept
+		: EditableObject(std::forward<const EditableObject>(other))
+		, mSelected(false)
+	{}
+
+	bool SceneObject::operator==(const SceneObject& other) const
+	{
+		return this->mSceneID == other.mSceneID;
+	}
 
 	void SceneObject::OnUiRender()
 	{

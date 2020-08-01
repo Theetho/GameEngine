@@ -30,7 +30,7 @@ namespace Engine
 		
 		Window& GetWindow();
 		EngineGUI& GetEngineGUI();
-		Scene& GetScene();
+		Ref<Scene> GetScene();
 		Ref<FrameBuffer> GetBoundFrameBuffer();
 	private:
 		static Application* sInstance;
@@ -43,7 +43,7 @@ namespace Engine
 		Scope<Window>		   mWindow;
 		Ref<CollisionSystem>   mCollisionSystem;
 		Scope<EngineGUI>	   mEngineGUI;
-		Scope<Scene>			  mScene;
+		Ref<Scene>			   mScene;
 		bool				   mRunning = true;
 		bool				   mPlaying = false;
 		LayerStack			   mLayerStack;

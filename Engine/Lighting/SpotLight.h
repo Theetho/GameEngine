@@ -10,13 +10,7 @@ namespace Engine
 	class SpotLight : public PointLight
 	{
 	public:
-		SpotLight(
-			const Vec3& position,
-			const Vec3& direction,
-			float cut_off = 12.5f,
-			const Attenuation& attenuation = Attenuation(),
-			const Color& color = Color::White
-		);
+		CREATOR(SpotLight)
 		~SpotLight();
 
 		int			GetID() const override;
@@ -28,6 +22,15 @@ namespace Engine
 			mDirection = direction;
 		}
 	private:
+		friend class Scene;
+		SpotLight(
+			const Vec3& position,
+			const Vec3& direction,
+			float cut_off = 12.5f,
+			const Attenuation& attenuation = Attenuation(),
+			const Color& color = Color::White
+		);
+
 		float mCutOff = 12.5f;
 		Vec3  mDirection;
 

@@ -50,8 +50,6 @@ namespace Engine
 	{
 		if (ImGui::CollapsingHeader(ApplyID("Animator"), ImGuiTreeNodeFlags_DefaultOpen))
 		{
-			ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
-			
 			ImGui::Text("Animation: ");
 			ImGui::SameLine();
 			ImGui::Text(mCurrentAnimation->mName != "" ? mCurrentAnimation->mName.c_str() : "No name");
@@ -66,7 +64,6 @@ namespace Engine
 
 			ImGui::Text("Speed");
 			ImGui::SliderFloat(ApplyID("##Speed"), &mSpeed, 0.0, 10.0);
-			ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
 		}
 	}
 }

@@ -67,6 +67,11 @@ namespace Engine
 			glUniform1f(GetUniformLocation(uniform_name.c_str()), value);
 		}
 
+		void Shader::UploadUniform(const std::string& uniform_name, int* value, uint count)
+		{
+			glUniform1iv(GetUniformLocation(uniform_name.c_str()), count, value);
+		}
+
 		void Shader::UploadUniform(const std::string& uniform_name, const Vec2& vector)
 		{
 			glUniform2f(GetUniformLocation(uniform_name.c_str()), vector.x, vector.y);

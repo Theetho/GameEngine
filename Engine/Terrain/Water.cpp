@@ -8,7 +8,6 @@
 #include "API/OpenGL/Shader.h"
 #include "API/OpenGL/FrameBuffer.h"
 #include "API/OpenGL/Texture2D.h"
-#include "GameObject/Transform.h"
 #include "Core/Camera/Camera3D.h"
 
 #define REFLECTION_WIDTH  640
@@ -22,8 +21,9 @@ namespace Engine
 		: mWaveMovement(0.0f)
 		, mWaveSpeed(0.03f)
 	{
-		mTransform.SetPosition(position + Vec3(dimensions.x / 2.0f, 0.0f, dimensions.y / 2.0f));
-		mTransform.SetScale(Vec3(dimensions.x / 2.0f, 0.0f, dimensions.y / 2.0f));
+		auto transform = GetComponent<Transform3D>();
+		transform->SetPosition(position + Vec3(dimensions.x / 2.0f, 0.0f, dimensions.y / 2.0f));
+		transform->SetScale(Vec3(dimensions.x / 2.0f, 0.0f, dimensions.y / 2.0f));
 
 		this->CreateTile();
 		mRefraction = FrameBuffer::Create(REFRACTION_WIDTH, REFRACTION_HEIGHT);
@@ -60,7 +60,7 @@ namespace Engine
 
 	const Vec3& Water::GetPosition() const
 	{
-		return mTransform.GetPosition();
+		return GetComponent<Transform3D>()->GetPosition();
 	}
 
 	void Water::CreateTile()
@@ -86,25 +86,27 @@ namespace Engine
 			glEnable(GL_CLIP_DISTANCE0);
 		}
 
+		auto transform = GetComponent<Transform3D>();
+
 		// Refraction
-		Renderer::sSceneData.cliping_plane = Vec4(0, -1, 0, mTransform.GetPosition().y + 1);
+		Renderer::sSceneData.cliping_plane = Vec4(0, -1, 0, transform->GetPosition().y + 1);
 		mRefraction->Bind();
 		RenderCommand::Clear();
 		Renderer::BeginScene(camera);
 		Renderer::Render(true);
 		mRefraction->Unbind(Application::Get()->GetBoundFrameBuffer());
 
-		camera->ReverseOnUpAxis(mTransform.GetPosition());
+		camera->ReverseOnUpAxis(transform->GetPosition());
 
 		// Reflection
-		Renderer::sSceneData.cliping_plane = Vec4(0, 1, 0, -mTransform.GetPosition().y);
+		Renderer::sSceneData.cliping_plane = Vec4(0, 1, 0, - transform->GetPosition().y);
 		mReflection->Bind();
 		RenderCommand::Clear();
 		Renderer::BeginScene(camera);
 		Renderer::Render(true);
 		mReflection->Unbind(Application::Get()->GetBoundFrameBuffer());
 
-		camera->ReverseOnUpAxis(mTransform.GetPosition());
+		camera->ReverseOnUpAxis(transform->GetPosition());
 
 		if (Renderer::GetAPI() == API::OpenGL)
 		{
@@ -119,7 +121,7 @@ namespace Engine
 		{
 			auto& open_gl_shader = std::dynamic_pointer_cast<Engine::OpenGL::Shader>(shader);
 
-			open_gl_shader->UploadUniform("uModel", mTransform.GetModel());
+			open_gl_shader->UploadUniform("uModel", GetComponent<Transform3D>()->GetModel());
 		}
 		///////
 

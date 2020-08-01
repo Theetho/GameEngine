@@ -9,12 +9,10 @@
 namespace Engine
 {
 	Light::Light(const Color& color)
-		: mColor(color)
+		: SceneObject(false)
+		, mColor(color)
 		, mActive(true)
-	{
-		if (Application::Get())
-			Application::Get()->GetScene().Remove((SceneObject*)this);
-	}
+	{}
 
 	Light::~Light()
 	{}

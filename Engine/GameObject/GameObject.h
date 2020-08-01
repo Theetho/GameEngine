@@ -1,51 +1,45 @@
 #pragma once
 
-#include "EnginePch.h"
-#include "Include/Component.h"
-#include "Transform.h"
+#include "Component/Transform.h"
 #include "Core/Scene/SceneObject.h"
 
 namespace Engine
 {
-	struct Collision;
 	class Event;
 
 	template<int dimension>
 	class GameObject : public SceneObject
 	{
-	public:
+		CREATOR(GameObject<dimension>);
+	protected:
 		GameObject()
-			: mTransform(Transform<dimension>())
+			: SceneObject()
 			, mComponents()
-		{}
-		GameObject(const Transform<dimension>& transform)
-			: mTransform(transform)
-			, mComponents()
-		{}
+		{
+			AddComponent<Transform<dimension>>();
+		}
+	public:
+		virtual ~GameObject() {}
 		GameObject(const GameObject<dimension>& gameObject)
-			: mTransform(gameObject.mTransform)
+			: SceneObject()
 			, mComponents(gameObject.mComponents)
 		{}
 		GameObject(const GameObject<dimension>&& gameObject) noexcept
-			: mTransform(gameObject.mTransform)
+			: SceneObject()
 			, mComponents(gameObject.mComponents)
 		{}
 		GameObject& operator=(const GameObject<dimension>& gameObject)
 		{
-			mTransform = gameObject.mTransform;
 			mComponents = gameObject.mComponents;
 
 			return *this;
 		}
 		GameObject& operator=(const GameObject<dimension>&& gameObject) noexcept
 		{
-			mTransform = gameObject.mTransform;
 			mComponents = gameObject.mComponents;
 
 			return *this;
 		}
-		~GameObject() {}
-
 		virtual void OnUpdate(const double& delta)
 		{
 			UpdateComponents(delta);
@@ -53,13 +47,16 @@ namespace Engine
 		virtual void OnEvent(Event& event)
 		{};
 
-		Transform<dimension>& GetTransform()
-		{
-			return mTransform;
-		}
-		const Transform<dimension>& GetTransform() const
-		{
-			return mTransform;
+		template<typename T>
+		void AddComponent(Ref<T> component) {
+			static_assert(std::is_base_of<Component<dimension>, T>::value, "T is not a component");
+
+			auto* type = &typeid(T);
+
+			if (mComponents.find(*type) == mComponents.end())
+			{
+				mComponents[*type] = component;
+			}
 		}
 
 		template<typename T, typename ... Args>
@@ -78,6 +75,7 @@ namespace Engine
 
 			return std::dynamic_pointer_cast<T>(component);
 		}
+
 		template<typename T>
 		void RemoveComponent()
 		{
@@ -86,6 +84,7 @@ namespace Engine
 			if (mComponents.find(typeid(T)) != mComponents.end())
 				mComponents.erase(typeid(T));
 		}
+
 		template<typename T>
 		Ref<T> GetComponent()
 		{
@@ -101,6 +100,7 @@ namespace Engine
 
 			return std::shared_ptr<T>();
 		}
+
 		template<typename T>
 		const Ref<T> GetComponent() const
 		{
@@ -117,7 +117,6 @@ namespace Engine
 			return std::shared_ptr<T>();
 		}
 	protected:
-		Transform<dimension> mTransform;
 		std::unordered_map<std::type_index, Ref<Component<dimension>>> mComponents;
 
 		void UpdateComponents(const double& delta)
@@ -130,11 +129,10 @@ namespace Engine
 
 		inline void OnUiSelected()
 		{
-			EditableObject::Render(&mTransform);
 			for (auto& kv : mComponents)
 			{
 				ImGui::Separator();
-				EditableObject::Render(kv.second.get());
+				EditableObject::Render(kv.second);
 			}
 		}
 	};

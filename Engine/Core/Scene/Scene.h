@@ -15,28 +15,40 @@ namespace Engine
 		void UpdateLights();
 
 		inline void Clear()
-		{
-			mSceneObjects.clear();
+		{}
+
+		inline void AddObject(Ref<SceneObject> scene_object) {
+			mSceneObjects.insert(scene_object);
 		}
-		inline void Push(SceneObject* object)
-		{
-			mSceneObjects.push_back(object);
+
+		template<class T, class ... Args>
+		inline std::shared_ptr<T> AddObject(Args&& ... args) {
+			static_assert(std::is_base_of<SceneObject, T>::value, "T is not a SceneObject");
+
+			auto scene_object = T::Create(std::forward<Args>(args)...);
+
+			mSceneObjects.insert(scene_object);
+			return scene_object;
 		}
-		inline void Remove(SceneObject* object)
-		{
-			mSceneObjects.remove(object);
+
+		inline void RemoveObject(Ref<SceneObject> scene_object) {
+			if (!mSceneObjects.count(scene_object)) return;
+
+			mSceneObjects.erase(scene_object);
 		}
-		inline void AddLight(Ref<Light> light)
-		{
-			Remove((SceneObject*)light.get());
-			mLights.push_back(light);
+
+		template<class T, class ... Args>
+		inline void AddLight(Args&& ... args) {
+			static_assert(std::is_base_of<Light, T>::value, "T is not a Light");
+
+			mLights.push_back(T::Create(std::forward<Args>(args)...));
 		}
-		inline void RemoveLight(Ref<Light> light)
-		{
+
+		inline void RemoveLight(Ref<Light> light) {
 			mLights.remove(light);
 		}
 	private:
-		std::list<SceneObject*> mSceneObjects;
+		std::set<Ref<SceneObject>> mSceneObjects;
 		std::list<Ref<Light>> mLights;
 	};
 }

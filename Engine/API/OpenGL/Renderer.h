@@ -13,7 +13,7 @@ namespace Engine
 			~Renderer();
 
 			void Clear() override;
-			void Draw(const VertexArray& vertex_array) override;
+			void Draw(const VertexArray& vertex_array, uint indice_count) override;
 
 			void SetDrawMode(DrawMode draw_mode) override;
 			void SetViewport(unsigned int width, unsigned int height) override;

@@ -10,7 +10,7 @@ namespace Engine
 		: GameObject3D()
 		, mMesh()
 	{
-		mTransform.SetScale(scale);
+		GetComponent<Transform3D>()->SetScale(scale);
 		//mMesh.LoadFromFile("../Engine/Assets/Models/Bob/boblampclean.md5mesh");
 		//mMesh.LoadFromFile("../Engine/Assets/Models/THM/model.dae");
 		//mMesh.LoadMesh("../Engine/Assets/Models/Bob/boblampclean.md5mesh");
@@ -20,7 +20,7 @@ namespace Engine
 		: GameObject3D()
 		, mMesh()
 	{
-		mTransform.SetScale(scale);
+		GetComponent<Transform3D>()->SetScale(scale);
 		//mMesh.LoadFromFile("../Engine/Assets/Models/Bob/boblampclean.md5mesh");
 		//mMesh.LoadFromFile("../Engine/Assets/Models/THM/model.dae");
 		//mMesh.LoadMesh("../Engine/Assets/Models/Bob/boblampclean.md5mesh");
@@ -45,7 +45,7 @@ namespace Engine
 		{
 			auto& open_gl_shader = std::dynamic_pointer_cast<Engine::OpenGL::Shader>(shader);
 
-			open_gl_shader->UploadUniform("uModel", mTransform.GetModel());
+			open_gl_shader->UploadUniform("uModel", GetComponent<Transform3D>()->GetModel());
 		}
 
 		Renderable::Render(&mMesh, render_command, shader);

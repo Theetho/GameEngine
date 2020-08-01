@@ -32,6 +32,19 @@ namespace Engine
 
 			return mReferences[name];
 		}
+
+		inline Ref<T> Load(const std::string& file_path, bool use_folder_path)
+		{
+			std::string name = ExtractName(file_path);
+
+			if (!Exists(name))
+			{
+				mReferences[name] = T::Create(use_folder_path ? sFolderPath + file_path : file_path);
+			}
+
+			return mReferences[name];
+		}
+
 		inline Ref<T> Get(const std::string& name)
 		{
 			if (Exists(name))
@@ -42,6 +55,15 @@ namespace Engine
 		inline bool   Exists(const std::string& name)
 		{
 			return mReferences.find(name) != mReferences.end();
+		}
+		inline std::string GetName(Ref<T> element) {
+			for (auto& it : mReferences) {
+				if (it.second != element) continue;
+
+				return it.first;
+			}
+
+			return "undefined";
 		}
 
 		static void SetFolder(const std::string& path);

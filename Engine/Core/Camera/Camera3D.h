@@ -111,7 +111,6 @@ namespace Engine
 		{
 			if (ImGui::CollapsingHeader(ApplyID("Camera"), ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 				ImGui::Text("Position");
 				ImGui::DragFloat3(ApplyID("##Position"), (float*)(&mPosition), 0.1f);
 				ImGui::Text("Angles");

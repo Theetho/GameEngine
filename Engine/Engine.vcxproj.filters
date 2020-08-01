@@ -158,18 +158,6 @@
     </ClInclude>
     <ClInclude Include="Engine.h" />
     <ClInclude Include="EnginePch.h" />
-    <ClInclude Include="GUI\GUIElement.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="GUI\TextRendering.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\GameObject.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\Transform.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="Include\Component.h">
       <Filter>Include</Filter>
     </ClInclude>
@@ -1492,8 +1480,6 @@
     </ClInclude>
     <ClInclude Include="Shapes\Cube.h" />
     <ClInclude Include="Include\Shapes.h" />
-    <ClInclude Include="GUI\TextRendering\Font.h" />
-    <ClInclude Include="GUI\TextRendering\Text.h" />
     <ClInclude Include="GUI\GUI.h" />
     <ClInclude Include="GUI\Panel.h" />
     <ClInclude Include="GUI\EngineGui.h" />
@@ -1505,6 +1491,11 @@
     <ClInclude Include="Core\Scene\EditableObject.h" />
     <ClInclude Include="Component\Animator.h" />
     <ClInclude Include="Model\Mesh.h" />
+    <ClInclude Include="Component\Sprite.h" />
+    <ClInclude Include="Renderer\2D\Renderer2D.h" />
+    <ClInclude Include="Core\Camera\Camera2D.h" />
+    <ClInclude Include="GameObject\GameObject.h" />
+    <ClInclude Include="Component\Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API\OpenGL\Context.cpp">
@@ -1514,9 +1505,6 @@
       <Filter>API\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="API\OpenGL\FrameBuffer.cpp">
-      <Filter>API\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="API\OpenGL\GLBufferImplementation.cpp">
       <Filter>API\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="API\OpenGL\IndexBuffer.cpp">
@@ -1562,9 +1550,6 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="EnginePch.cpp" />
-    <ClCompile Include="GUI\GUIElement.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
     <ClCompile Include="Lighting\DirectionalLight.cpp">
       <Filter>Lighting</Filter>
     </ClCompile>
@@ -1713,8 +1698,6 @@
       <Filter>Vendor\stb</Filter>
     </ClCompile>
     <ClCompile Include="Shapes\Cube.cpp" />
-    <ClCompile Include="GUI\TextRendering\Font.cpp" />
-    <ClCompile Include="GUI\TextRendering\Text.cpp" />
     <ClCompile Include="GUI\GUI.cpp" />
     <ClCompile Include="GUI\Panel.cpp" />
     <ClCompile Include="GUI\EngineGui.cpp" />
@@ -1725,6 +1708,10 @@
     <ClCompile Include="Core\Scene\EditableObject.cpp" />
     <ClCompile Include="Component\Animator.cpp" />
     <ClCompile Include="Model\Mesh.cpp" />
+    <ClCompile Include="Component\Sprite.cpp" />
+    <ClCompile Include="Renderer\2D\Renderer2D.cpp" />
+    <ClCompile Include="API\OpenGL\GLBufferImplementation.cpp" />
+    <ClCompile Include="Core\Camera\Camera2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Vendor\ImGui\LICENSE.txt">

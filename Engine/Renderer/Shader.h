@@ -14,6 +14,7 @@ namespace Engine
 		virtual void Unbind() const = 0;
 		
 		virtual void UploadUniform(const std::string& uniform_name, int value) = 0;
+		virtual void UploadUniform(const std::string& uniform_name, int* value, uint count) = 0;
 		virtual void UploadUniform(const std::string& uniform_name, float value) = 0;
 		virtual void UploadUniform(const std::string& uniform_name, const Vec2& vector) = 0;
 		virtual void UploadUniform(const std::string& uniform_name, const Vec3& vector) = 0;
